@@ -20,6 +20,13 @@ const buttonTheme = {
         bg: mode("brand.50", "brand.900")(props),
       },
     }),
+    secondary: (props) => ({
+      bg: mode("secondary.400", "secondary.500")(props),
+      color: "white",
+      _hover: {
+        bg: mode("secondary.500", "secondary.600")(props),
+      },
+    }),
   },
   defaultProps: {
     colorScheme: "brand",

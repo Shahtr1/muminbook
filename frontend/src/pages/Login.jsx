@@ -1,12 +1,14 @@
 import {
-  Box,
   Button,
-  Container,
+  Divider,
   Flex,
   FormControl,
-  FormLabel,
-  Heading,
+  Icon,
+  Image,
   Input,
+  InputGroup,
+  InputRightAddon,
+  InputRightElement,
   Link as ChakraLink,
   Stack,
   Text,
@@ -15,12 +17,15 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/lib/services/api.js";
+import { GoEye, GoEyeClosed } from "react-icons/go";
 
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
+
   const redirectUrl = location.state?.redirectUrl || "/";
 
   const {
@@ -36,33 +41,56 @@ const Login = () => {
     },
   });
 
+  const togglePassword = () => setShow(!show);
+
   return (
-    <Flex minH="100vh" align="center" justify="center">
-      <Container mx="auto" maxW="md" py={12} px={6} textAlign="center">
-        <Heading fontSize="4xl" mb={8}>
-          Sign into your account
-        </Heading>
-        <Box rounded="lg" bg="white.700" boxShadow="lg" p={8}>
-          {isError && (
-            <Box mb={3} color="red.400">
-              Invalid email or password
-            </Box>
-          )}
-          <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
+    <Flex
+      minH="100vh"
+      maxW="1000"
+      align="center"
+      justify={{ base: "center", md: "space-between" }}
+      flexDir={{ base: "column", md: "row" }}
+      mx="auto"
+      px={20}
+      gap={{ base: 2, sm: 5, md: 20, lg: 40 }}
+    >
+      <Stack spacing={2} alignItems={{ base: "center", md: "unset" }}>
+        <Image
+          w={{ base: 150, md: 200 }}
+          src="/images/logo-with-image.png"
+          alt="Muminbook Logo"
+        />
+        <Text
+          fontSize={{ base: "xs", sm: "sm", md: "lg" }}
+          maxW={400}
+          textAlign={{ base: "center", md: "unset" }}
+        >
+          Muminbook helps you connect, learn and grow in faith.
+        </Text>
+      </Stack>
+      <Stack
+        rounded="lg"
+        bg="white"
+        boxShadow="md"
+        p={3}
+        minW={280}
+        maxW={280}
+        spacing={3}
+      >
+        <Stack spacing={2}>
+          <FormControl id="email">
+            <Input
+              type="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email address"
+            />
+          </FormControl>
+          <FormControl id="password">
+            <InputGroup>
               <Input
-                type="email"
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email address"
-              />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
+                type={show ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={(e) =>
@@ -70,38 +98,54 @@ const Login = () => {
                 }
                 placeholder="Password"
               />
-            </FormControl>
-
-            <ChakraLink
-              as={Link}
-              to="/password/forgot"
-              fontSize="sm"
-              textAlign={{ base: "center", sm: "right" }}
-            >
-              Forgot password?
-            </ChakraLink>
-            <Button
-              my={2}
-              isDisabled={!email || password.length < 6}
-              isLoading={isPending}
-              onClick={() =>
-                signIn({
-                  email,
-                  password,
-                })
-              }
-            >
-              Sign in
-            </Button>
-            <Text align="center" fontSize="sm" color="text.muted">
-              Don&apos;t have an account?{" "}
-              <ChakraLink as={Link} to="/register">
-                Sign up
-              </ChakraLink>
+              {password && (
+                <InputRightElement cursor="pointer" onClick={togglePassword}>
+                  {show ? (
+                    <GoEyeClosed color="#444648" />
+                  ) : (
+                    <GoEye color="#444648" />
+                  )}
+                </InputRightElement>
+              )}
+            </InputGroup>
+          </FormControl>
+          {isError && (
+            <Text color="red.400" textAlign="center" fontSize="xs">
+              Invalid email or password
             </Text>
-          </Stack>
-        </Box>
-      </Container>
+          )}
+          <Button
+            isDisabled={!email || password.length < 6}
+            isLoading={isPending}
+            onClick={() =>
+              signIn({
+                email,
+                password,
+              })
+            }
+          >
+            Sign in
+          </Button>
+        </Stack>
+
+        <ChakraLink
+          as={Link}
+          to="/password/forgot"
+          fontSize="xs"
+          textAlign="center"
+        >
+          Forgot password?
+        </ChakraLink>
+        <Divider />
+        <Button
+          onClick={() => navigate("/register")}
+          variant="secondary"
+          w="fit-content"
+          mx="auto"
+        >
+          Create new account
+        </Button>
+      </Stack>
     </Flex>
   );
 };
