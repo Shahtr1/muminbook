@@ -3,11 +3,9 @@ import {
   Divider,
   Flex,
   FormControl,
-  Icon,
   Image,
   Input,
   InputGroup,
-  InputRightAddon,
   InputRightElement,
   Link as ChakraLink,
   Stack,
@@ -69,7 +67,7 @@ const Login = () => {
         </Text>
       </Stack>
       <Stack
-        rounded="lg"
+        rounded="md"
         bg="white"
         boxShadow="md"
         p={3}
