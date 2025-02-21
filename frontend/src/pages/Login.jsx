@@ -24,7 +24,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const redirectUrl = location.state?.redirectUrl || "/";
 
@@ -41,7 +41,7 @@ const Login = () => {
     },
   });
 
-  const togglePassword = () => setShow(!show);
+  const togglePassword = () => setShowPassword(!showPassword);
 
   return (
     <>
@@ -87,22 +87,24 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email address"
+                size={{ base: "sm", md: "md" }}
               />
             </FormControl>
             <FormControl id="password">
               <InputGroup>
                 <Input
-                  type={show ? "text" : "password"}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyDown={(e) =>
                     e.key === "Enter" && signIn({ email, password })
                   }
                   placeholder="Password"
+                  size={{ base: "sm", md: "md" }}
                 />
                 {password && (
                   <InputRightElement cursor="pointer" onClick={togglePassword}>
-                    {show ? (
+                    {showPassword ? (
                       <GoEyeClosed color="#444648" />
                     ) : (
                       <GoEye color="#444648" />
@@ -119,6 +121,7 @@ const Login = () => {
             <Button
               isDisabled={!email || password.length < 6}
               isLoading={isPending}
+              size={{ base: "sm", md: "md" }}
               onClick={() =>
                 signIn({
                   email,
@@ -144,6 +147,7 @@ const Login = () => {
             variant="secondary"
             w="fit-content"
             mx="auto"
+            size={{ base: "sm", md: "md" }}
           >
             Create new account
           </Button>
