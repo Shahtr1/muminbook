@@ -42,7 +42,7 @@ const Register = () => {
         <Heading fontSize="4xl" mb={8}>
           Create an account
         </Heading>
-        <Box rounded="lg" boxShadow="lg" p={8}>
+        <Box rounded="md" boxShadow="md" p={8}>
           {isError && (
             <Box mb={3} color="red.400">
               {error?.message || "An error occurred"}
