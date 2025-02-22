@@ -219,7 +219,7 @@ const Register = () => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-            <Text fontSize="0.6rem">
+            <Text fontSize="0.6rem" mx="auto">
               By clicking Sign Up, you agree to our{" "}
               <ChakraLink as={Link} to="/terms" fontWeight="semibold">
                 Terms
