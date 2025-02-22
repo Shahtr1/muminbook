@@ -68,11 +68,15 @@ const Register = () => {
       password,
       confirmPassword,
       dateOfBirth,
+      gender,
     });
   };
 
   const handleDateChange = (timestamp) => {
-    setDateOfBirth(timestamp);
+    if (timestamp) {
+      setDateOfBirth(timestamp);
+      removeError("dateOfBirth");
+    }
   };
 
   const removeError = (field) => {
@@ -115,36 +119,63 @@ const Register = () => {
             spacing={2}
           >
             <Flex gap={1}>
-              <FormControl id="firstname">
+              <FormControl id="firstname" isInvalid={!!errors?.firstname}>
                 <Input
                   autoFocus
                   value={firstname}
-                  onChange={(e) => setFirstname(e.target.value)}
+                  onChange={(e) => {
+                    setFirstname(e.target.value);
+                    removeError("firstname");
+                  }}
                   placeholder="Firstname"
                   size={{ base: "sm", md: "md" }}
                 />
+                <FormErrorMessage>{errors?.firstname}</FormErrorMessage>
               </FormControl>
-              <FormControl id="lastname">
+              <FormControl id="lastname" isInvalid={!!errors?.lastname}>
                 <Input
                   value={lastname}
-                  onChange={(e) => setLastname(e.target.value)}
+                  onChange={(e) => {
+                    setLastname(e.target.value);
+                    removeError("lastname");
+                  }}
                   placeholder="Lastname"
                   size={{ base: "sm", md: "md" }}
                 />
+                <FormErrorMessage>{errors?.lastname}</FormErrorMessage>
               </FormControl>
             </Flex>
 
-            <XDate onDateChange={handleDateChange} label="Date of birth" />
+            <XDate
+              onDateChange={handleDateChange}
+              errorMessage={errors?.dateOfBirth}
+              label="Date of birth"
+            />
 
-            <FormControl id="gender">
+            <FormControl id="gender" isInvalid={!!errors?.gender}>
               <FormLabel fontSize={{ base: "xs", md: "sm" }}>Gender</FormLabel>
-              <RadioGroup onChange={setGender} w="100%">
+              <RadioGroup
+                onChange={(value) => {
+                  setGender(value);
+                  if (value !== "custom") removeError("gender");
+                }}
+                w="100%"
+              >
                 <HStack spacing="1" justifyContent="space-between">
-                  <XRadio value="male" label="Male" />
-                  <XRadio value="female" label="Female" />
-                  <XRadio value="custom" label="Custom" />
+                  <XRadio hasError={errors?.gender} value="male" label="Male" />
+                  <XRadio
+                    hasError={errors?.gender}
+                    value="female"
+                    label="Female"
+                  />
+                  <XRadio
+                    hasError={errors?.gender}
+                    value="custom"
+                    label="Custom"
+                  />
                 </HStack>
               </RadioGroup>
+              <FormErrorMessage>{errors?.gender}</FormErrorMessage>
             </FormControl>
             {gender === "custom" && (
               <Box fontSize={{ base: "0.6rem", md: "0.8rem" }}>
@@ -159,7 +190,7 @@ const Register = () => {
               </Box>
             )}
 
-            <FormControl id="email" isInvalid={!!errors.email}>
+            <FormControl id="email" isInvalid={!!errors?.email}>
               <Input
                 type="email"
                 value={email}
@@ -170,54 +201,69 @@ const Register = () => {
                 placeholder="Email address"
                 size={{ base: "sm", md: "md" }}
               />
-              <FormErrorMessage>{errors.email}</FormErrorMessage>
+              <FormErrorMessage>{errors?.email}</FormErrorMessage>
             </FormControl>
 
-            <FormControl id="password">
+            <FormControl id="password" isInvalid={!!errors?.password}>
               <InputGroup>
                 <Input
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    removeError("password");
+                  }}
                   placeholder="New password"
                   size={{ base: "sm", md: "md" }}
                 />
-                <InputRightElement
-                  cursor="pointer"
-                  onClick={togglePassword}
-                  height="100%"
-                >
-                  {showPassword ? (
-                    <GoEyeClosed color="#444648" />
-                  ) : (
-                    <GoEye color="#444648" />
-                  )}
-                </InputRightElement>
+                {password && (
+                  <InputRightElement
+                    cursor="pointer"
+                    onClick={togglePassword}
+                    height="100%"
+                  >
+                    {showPassword ? (
+                      <GoEyeClosed color="#444648" />
+                    ) : (
+                      <GoEye color="#444648" />
+                    )}
+                  </InputRightElement>
+                )}
               </InputGroup>
+              <FormErrorMessage>{errors?.password}</FormErrorMessage>
             </FormControl>
 
-            <FormControl id="confirmPassword">
+            <FormControl
+              id="confirmPassword"
+              isInvalid={!!errors?.confirmPassword}
+            >
               <InputGroup>
                 <Input
                   type={showConfirmPassword ? "text" : "password"}
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    removeError("confirmPassword");
+                  }}
                   placeholder="Confirm password"
                   size={{ base: "sm", md: "md" }}
                   onKeyDown={(e) => e.key === "Enter" && processAndRegister()}
                 />
-                <InputRightElement
-                  height="100%"
-                  cursor="pointer"
-                  onClick={toggleCPassword}
-                >
-                  {showConfirmPassword ? (
-                    <GoEyeClosed color="#444648" />
-                  ) : (
-                    <GoEye color="#444648" />
-                  )}
-                </InputRightElement>
+                {confirmPassword && (
+                  <InputRightElement
+                    height="100%"
+                    cursor="pointer"
+                    onClick={toggleCPassword}
+                  >
+                    {showConfirmPassword ? (
+                      <GoEyeClosed color="#444648" />
+                    ) : (
+                      <GoEye color="#444648" />
+                    )}
+                  </InputRightElement>
+                )}
               </InputGroup>
+              <FormErrorMessage>{errors?.confirmPassword}</FormErrorMessage>
             </FormControl>
             <Text fontSize="0.6rem" mx="auto">
               By clicking Sign Up, you agree to our{" "}
