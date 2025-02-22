@@ -33,8 +33,13 @@ import { hashValue } from "../utils/bcrypt";
 import RoleModel, { RoleDocument } from "../models/role.model";
 import RoleType from "../constants/roleType";
 import UserRoleModel from "../models/user-role.model";
+import Gender from "../constants/gender";
 
 export type CreateAccountParams = {
+  firstname: string;
+  lastname: string;
+  dateOfBirth: Date;
+  gender: string;
   email: string;
   password: string;
   userAgent?: string;
@@ -46,6 +51,10 @@ export const createAccount = async (data: CreateAccountParams) => {
   appAssert(!existingUser, CONFLICT, "Email already in use");
 
   const user = await UserModel.create({
+    firstname: data.firstname,
+    lastname: data.lastname,
+    dateOfBirth: data.dateOfBirth,
+    gender: data.gender,
     email: data.email,
     password: data.password,
   });

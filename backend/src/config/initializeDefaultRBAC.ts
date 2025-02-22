@@ -1,7 +1,14 @@
 import RoleModel from "../models/role.model";
 import RoleType from "../constants/roleType";
 import UserModel from "../models/user.model";
-import { ADMIN_EMAIL, ADMIN_PASSWORD } from "../constants/env";
+import {
+  ADMIN_DATE_OF_BIRTH,
+  ADMIN_EMAIL,
+  ADMIN_FIRSTNAME,
+  ADMIN_GENDER,
+  ADMIN_LASTNAME,
+  ADMIN_PASSWORD,
+} from "../constants/env";
 import UserRoleModel from "../models/user-role.model";
 
 const initializeDefaultRBAC = async () => {
@@ -26,6 +33,10 @@ const initializeDefaultRBAC = async () => {
     let admin = await UserModel.findOne({ email: ADMIN_EMAIL });
     if (!admin) {
       admin = await UserModel.create({
+        firstname: ADMIN_FIRSTNAME,
+        lastname: ADMIN_LASTNAME,
+        dateOfBirth: ADMIN_DATE_OF_BIRTH,
+        gender: ADMIN_GENDER,
         email: ADMIN_EMAIL,
         password: ADMIN_PASSWORD,
         verified: true,
