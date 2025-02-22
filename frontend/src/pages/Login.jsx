@@ -71,7 +71,7 @@ const Login = () => {
           </Text>
         </Stack>
         <Stack
-          rounded="md"
+          rounded="sm"
           bg={useColorModeValue("white", "gray.800")}
           boxShadow="md"
           p={3}
@@ -103,7 +103,11 @@ const Login = () => {
                   size={{ base: "sm", md: "md" }}
                 />
                 {password && (
-                  <InputRightElement cursor="pointer" onClick={togglePassword}>
+                  <InputRightElement
+                    height="100%"
+                    cursor="pointer"
+                    onClick={togglePassword}
+                  >
                     {showPassword ? (
                       <GoEyeClosed color="#444648" />
                     ) : (

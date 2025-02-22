@@ -16,6 +16,9 @@ import { setNavigate } from "./lib/services/navigation.js";
 import { PrivateRoute } from "./lib/services/PrivateRoute.jsx";
 import { Settings } from "./pages/Settings.jsx";
 import { Helmet } from "react-helmet-async";
+import { Terms } from "@/pages/Terms.jsx";
+import { Cookies } from "@/pages/Cookies.jsx";
+import { PrivacyPolicy } from "@/pages/PrivacyPolicy.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -51,6 +54,10 @@ function App() {
         <Route path="/email/verify/:code" element={<VerifyEmail />}></Route>
         <Route path="/password/forgot" element={<ForgotPassword />}></Route>
         <Route path="/password/reset" element={<ResetPassword />}></Route>
+
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/cookies" element={<Cookies />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </>
   );
