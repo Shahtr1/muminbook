@@ -4,75 +4,102 @@ import { useMutation } from "@tanstack/react-query";
 import {
   Alert,
   AlertIcon,
-  Box,
   Button,
-  Container,
   Flex,
   FormControl,
-  FormLabel,
-  Heading,
+  FormErrorMessage,
+  Image,
   Input,
   Link as ChakraLink,
   Stack,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { sendPasswordResetEmail } from "../lib/services/api.js";
+import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     mutate: sendPasswordReset,
     isPending,
     isSuccess,
-    isError,
-    error,
   } = useMutation({
     mutationFn: sendPasswordResetEmail,
+    onError: ({ errors }) => {
+      if (errors && errors.length > 0) {
+        errors.forEach((err) => {
+          if (err?.message?.includes("email")) {
+            setErrorMessage(err.message);
+          }
+        });
+      }
+    },
   });
+
+  const processAndSend = (email) => {
+    setErrorMessage("");
+    sendPasswordReset(email);
+  };
+
   return (
-    <Flex minH="100vh" align="center" justify="center">
-      <Container mx="auto" maxW="md" py={12} px={6} textAlign="center">
-        <Heading fontSize="4xl" mb={8}>
-          Reset your password
-        </Heading>
-        <Box rounded="lg" boxShadow="lg" p={8}>
-          {isError && (
-            <Box mb={3} color="red.400">
-              {error?.message || "An error occurred"}
-            </Box>
-          )}
-          <Stack spacing={4}>
+    <>
+      <DarkModeToggle position="absolute" inset="10px 20px auto auto" />
+      <Flex minH="100vh" align="center" justify="center">
+        <Stack spacing={8} align="center">
+          <Image
+            w={{ base: 150, md: 200 }}
+            src="/images/logo-text.png"
+            alt="Muminbook Logo"
+          />
+          <Stack
+            rounded="sm"
+            bg={useColorModeValue("white", "gray.800")}
+            boxShadow="md"
+            p={3}
+            minW={{ base: 300, sm: 400 }}
+            maxW={{ base: 300, sm: 400 }}
+            spacing={2}
+          >
             {isSuccess ? (
-              <Alert status="success" borderRadius={12}>
+              <Alert status="success" borderRadius="sm">
                 <AlertIcon />
                 Email sent! Check your inbox for further instructions.
               </Alert>
             ) : (
               <>
-                <FormControl id="email">
-                  <FormLabel>Email address</FormLabel>
+                <FormControl id="email" isInvalid={!!errorMessage}>
                   <Input
-                    type="email"
                     autoFocus
+                    type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setErrorMessage("");
+                    }}
+                    placeholder="Email address"
+                    size={{ base: "sm", md: "md" }}
                     onKeyDown={(e) =>
-                      e.key === "Enter" && sendPasswordReset(email)
+                      e.key === "Enter" && processAndSend(email)
                     }
                   />
+                  <FormErrorMessage>{errorMessage}</FormErrorMessage>
                 </FormControl>
+
                 <Button
                   my={2}
+                  size={{ base: "sm", md: "md" }}
                   isLoading={isPending}
                   isDisabled={!email}
-                  onClick={() => sendPasswordReset(email)}
+                  onClick={() => processAndSend(email)}
                 >
                   Reset password
                 </Button>
               </>
             )}
 
-            <Text align="center" fontSize="sm" color="text.muted">
+            <Text align="center" fontSize="sm">
               Go back to{" "}
               <ChakraLink as={Link} to="/login" replace>
                 Sign in
@@ -83,9 +110,9 @@ const ForgotPassword = () => {
               </ChakraLink>
             </Text>
           </Stack>
-        </Box>
-      </Container>
-    </Flex>
+        </Stack>
+      </Flex>
+    </>
   );
 };
 
