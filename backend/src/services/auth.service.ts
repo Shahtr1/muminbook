@@ -203,6 +203,47 @@ export const refreshUserAccessToken = async (refreshToken: string) => {
   return { accessToken, newRefreshToken };
 };
 
+export const sendVerifyEmailLink = async (email: string) => {
+  try {
+    const user = await UserModel.findOne({ email });
+    appAssert(user, NOT_FOUND, "User not found");
+
+    const userId = user._id;
+
+    const fiveMinAgo = fiveMinutesAgo();
+    const count = await VerificationCodeModel.countDocuments({
+      userId,
+      type: VerificationCodeType.EmailVerification,
+      createdAt: { $gt: fiveMinAgo },
+    });
+
+    appAssert(
+      count < 1,
+      TOO_MANY_REQUESTS,
+      "Too many requests, please try again later",
+    );
+
+    const verificationCode = await VerificationCodeModel.create({
+      userId,
+      type: VerificationCodeType.EmailVerification,
+      expiresAt: oneYearFromNow(),
+    });
+
+    const url = `${APP_ORIGIN}/email/verify/${verificationCode._id}`;
+
+    const { error } = await sendMail({
+      to: user.email,
+      ...getVerifyEmailTemplate(url),
+    });
+
+    // Email error
+    if (error) console.log(error);
+  } catch (error: any) {
+    console.log("sendVerifyEmailLink: ", error.message);
+    return {};
+  }
+};
+
 export const verifyEmail = async (code: string) => {
   const validCode = await VerificationCodeModel.findOne({
     _id: code,

@@ -1,15 +1,14 @@
 import {
   Alert,
   AlertIcon,
-  Container,
   Flex,
-  Spinner,
-  VStack,
-  Link as ChakraLink,
-  Text,
   Image,
-  useColorModeValue,
+  Link as ChakraLink,
+  Spinner,
   Stack,
+  Text,
+  useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 import { Link, useParams } from "react-router-dom";
 import { verifyEmail } from "../lib/services/api.js";
@@ -52,7 +51,7 @@ const VerifyEmail = () => {
                 {isError && (
                   <Text>
                     The link is either invalid or expired.{" "}
-                    <ChakraLink as={Link} to="/password/reset" replace>
+                    <ChakraLink as={Link} to="/email/reverify" replace>
                       Get a new link
                     </ChakraLink>
                   </Text>

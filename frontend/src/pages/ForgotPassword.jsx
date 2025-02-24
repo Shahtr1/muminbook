@@ -21,6 +21,7 @@ import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [unknownError, setUnknownError] = useState(false);
   const {
     mutate: sendPasswordReset,
     isPending,
@@ -28,18 +29,22 @@ const ForgotPassword = () => {
   } = useMutation({
     mutationFn: sendPasswordResetEmail,
     onError: ({ errors }) => {
+      let hasError = false;
       if (errors && errors.length > 0) {
         errors.forEach((err) => {
           if (err?.message?.includes("email")) {
+            hasError = true;
             setErrorMessage(err.message);
           }
         });
       }
+      setUnknownError(!hasError);
     },
   });
 
   const processAndSend = (email) => {
     setErrorMessage("");
+    setUnknownError(false);
     sendPasswordReset(email);
   };
 
@@ -62,8 +67,14 @@ const ForgotPassword = () => {
             maxW={{ base: 300, sm: 400 }}
             spacing={2}
           >
+            {unknownError && (
+              <Alert status="error" borderRadius="sm">
+                <AlertIcon />
+                Something went wrong!
+              </Alert>
+            )}
             {isSuccess ? (
-              <Alert status="success">
+              <Alert status="success" borderRadius="sm">
                 <AlertIcon />
                 Email sent! Check your inbox for further instructions.
               </Alert>
@@ -76,6 +87,7 @@ const ForgotPassword = () => {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
+                      setUnknownError(false);
                       setErrorMessage("");
                     }}
                     placeholder="Email address"

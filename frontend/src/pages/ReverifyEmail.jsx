@@ -20,14 +20,33 @@ import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
 
 const ReverifyEmail = () => {
   const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [unknownError, setUnknownError] = useState(false);
   const {
     mutate: sendEmailReverify,
     isPending,
     isSuccess,
-    isError,
   } = useMutation({
     mutationFn: reverifyEmail,
+    onError: ({ errors }) => {
+      let hasError = false;
+      if (errors && errors.length > 0) {
+        errors.forEach((err) => {
+          if (err?.message?.includes("email")) {
+            hasError = true;
+            setErrorMessage(err.message);
+          }
+        });
+      }
+      setUnknownError(!hasError);
+    },
   });
+
+  const processAndSend = (email) => {
+    setErrorMessage("");
+    setUnknownError(false);
+    sendEmailReverify(email);
+  };
 
   return (
     <>
@@ -48,7 +67,13 @@ const ReverifyEmail = () => {
             maxW={{ base: 300, sm: 400 }}
             spacing={2}
           >
-            {isSuccess || isError ? (
+            {unknownError && (
+              <Alert status="error" borderRadius="sm">
+                <AlertIcon />
+                Something went wrong!
+              </Alert>
+            )}
+            {isSuccess ? (
               <Alert status="success">
                 <AlertIcon />
                 If this email exists, please check your inbox for further
@@ -56,18 +81,23 @@ const ReverifyEmail = () => {
               </Alert>
             ) : (
               <>
-                <FormControl id="email">
+                <FormControl id="email" isInvalid={!!errorMessage}>
                   <Input
                     autoFocus
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setErrorMessage("");
+                      setUnknownError(false);
+                    }}
                     placeholder="Email address to reverify"
                     size={{ base: "sm", md: "md" }}
                     onKeyDown={(e) =>
-                      e.key === "Enter" && sendEmailReverify(email)
+                      e.key === "Enter" && processAndSend(email)
                     }
                   />
+                  <FormErrorMessage>{errorMessage}</FormErrorMessage>
                 </FormControl>
 
                 <Button
@@ -75,7 +105,7 @@ const ReverifyEmail = () => {
                   size={{ base: "sm", md: "md" }}
                   isLoading={isPending}
                   isDisabled={!email}
-                  onClick={() => sendEmailReverify(email)}
+                  onClick={() => processAndSend(email)}
                 >
                   Reverify Email
                 </Button>
