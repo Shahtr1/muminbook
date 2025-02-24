@@ -1,14 +1,17 @@
 import {
   Alert,
   AlertIcon,
-  Container,
   Flex,
-  Text,
-  VStack,
+  Image,
   Link as ChakraLink,
+  Stack,
+  Text,
+  useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ResetPasswordForm } from "../components/ResetPasswordForm.jsx";
+import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
 
 export const ResetPassword = () => {
   const [searchParams] = useSearchParams();
@@ -18,23 +21,42 @@ export const ResetPassword = () => {
   const linkIsValid = code && exp && exp > now;
 
   return (
-    <Flex minH="100vh" justify="center">
-      <Container mx="auto" maxW="md" py={12} px={6} textAlign="center">
-        {linkIsValid ? (
-          <ResetPasswordForm code={code} />
-        ) : (
-          <VStack align="center" spacing={6}>
-            <Alert status="error" w="fit-content" borderRadius={12}>
-              <AlertIcon />
-              Invalid Link
-            </Alert>
-            <Text color="gray.400">The link is either invalid or expired.</Text>
-            <ChakraLink as={Link} to="/password/forget" replace>
-              Request a new password reset link
-            </ChakraLink>
-          </VStack>
-        )}
-      </Container>
-    </Flex>
+    <>
+      <DarkModeToggle position="absolute" inset="10px 20px auto auto" />
+
+      <Flex minH="100vh" align="center" justify="center">
+        <Stack spacing={8} align="center">
+          <Image
+            w={{ base: 150, md: 200 }}
+            src="/images/logo-text.png"
+            alt="Muminbook Logo"
+          />
+          <Alert status="error" w="fit-content" borderRadius="sm">
+            <AlertIcon />
+            Invalid Link
+          </Alert>
+          <Stack
+            rounded="sm"
+            bg={useColorModeValue("white", "gray.800")}
+            boxShadow="md"
+            p={3}
+            minW={{ base: 300, sm: 400 }}
+            maxW={{ base: 300, sm: 400 }}
+            spacing={2}
+          >
+            {linkIsValid ? (
+              <ResetPasswordForm code={code} />
+            ) : (
+              <VStack align="center" spacing={4}>
+                <Text>The link is either invalid or expired.</Text>
+                <ChakraLink as={Link} to="/password/forgot" replace>
+                  Request a new password reset link
+                </ChakraLink>
+              </VStack>
+            )}
+          </Stack>
+        </Stack>
+      </Flex>
+    </>
   );
 };

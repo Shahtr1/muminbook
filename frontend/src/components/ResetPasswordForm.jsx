@@ -4,19 +4,26 @@ import {
   AlertIcon,
   Box,
   Button,
+  Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Link as ChakraLink,
   Stack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { resetPassword } from "../lib/services/api.js";
+import { GoEye, GoEyeClosed } from "react-icons/go";
+import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
 
 export const ResetPasswordForm = ({ code }) => {
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     mutate: resetUserPassword,
@@ -27,31 +34,30 @@ export const ResetPasswordForm = ({ code }) => {
   } = useMutation({
     mutationFn: resetPassword,
   });
+
+  const togglePassword = () => setShowPassword(!showPassword);
+
   return (
     <>
-      <Heading fontSize="4xl" mb={8}>
-        Change your password
-      </Heading>
-      <Box rounded="lg" bg="gray.700" boxShadow="lg" p={8}>
-        {isError && (
-          <Box mb={3} color="red.400">
-            {error?.message || "An error occurred"}
-          </Box>
-        )}
-        {isSuccess ? (
-          <Box>
-            <Alert status="success" borderRadius={12} mb={3}>
-              <AlertIcon />
-              Password updated successfully!
-            </Alert>
-            <ChakraLink as={Link} to="/login" replace>
-              Sign in
-            </ChakraLink>
-          </Box>
-        ) : (
-          <Stack spacing={4}>
-            <FormControl id="password">
-              <FormLabel>New Password</FormLabel>
+      {isError && (
+        <Box mb={3} color="red.400" mx="auto">
+          {error?.message || "An error occurred"}
+        </Box>
+      )}
+      {isSuccess ? (
+        <Flex w="100%" align="center" flexDirection="column">
+          <Alert status="success" borderRadius="sm" mb={3}>
+            <AlertIcon />
+            Password updated successfully!
+          </Alert>
+          <ChakraLink as={Link} to="/login" replace>
+            Sign in
+          </ChakraLink>
+        </Flex>
+      ) : (
+        <>
+          <FormControl id="password">
+            <InputGroup>
               <Input
                 type="password"
                 value={password}
@@ -61,21 +67,33 @@ export const ResetPasswordForm = ({ code }) => {
                   resetUserPassword({ password, verificationCode: code })
                 }
                 autoFocus
+                placeholder="New Password"
+                size={{ base: "sm", md: "md" }}
               />
-            </FormControl>
-            <Button
-              my={2}
-              isLoading={isPending}
-              isDisabled={password.length < 6}
-              onClick={() =>
-                resetUserPassword({ password, verificationCode: code })
-              }
-            >
-              Reset Password
-            </Button>
-          </Stack>
-        )}
-      </Box>
+              {password && (
+                <InputRightElement
+                  height="100%"
+                  cursor="pointer"
+                  onClick={togglePassword}
+                >
+                  <XEyeIcon show={showPassword} />
+                </InputRightElement>
+              )}
+            </InputGroup>
+          </FormControl>
+          <Button
+            my={2}
+            isLoading={isPending}
+            isDisabled={password.length < 6}
+            onClick={() =>
+              resetUserPassword({ password, verificationCode: code })
+            }
+            size={{ base: "sm", md: "md" }}
+          >
+            Reset Password
+          </Button>
+        </>
+      )}
     </>
   );
 };

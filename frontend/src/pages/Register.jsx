@@ -24,6 +24,7 @@ import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { XDate } from "@/components/form/XDate.jsx";
 import { XRadio } from "@/components/form/XRadio.jsx";
+import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -222,11 +223,7 @@ const Register = () => {
                     onClick={togglePassword}
                     height="100%"
                   >
-                    {showPassword ? (
-                      <GoEyeClosed color="#444648" />
-                    ) : (
-                      <GoEye color="#444648" />
-                    )}
+                    <XEyeIcon show={showPassword} />
                   </InputRightElement>
                 )}
               </InputGroup>
@@ -255,11 +252,7 @@ const Register = () => {
                     cursor="pointer"
                     onClick={toggleCPassword}
                   >
-                    {showConfirmPassword ? (
-                      <GoEyeClosed color="#444648" />
-                    ) : (
-                      <GoEye color="#444648" />
-                    )}
+                    <XEyeIcon show={showConfirmPassword} />
                   </InputRightElement>
                 )}
               </InputGroup>

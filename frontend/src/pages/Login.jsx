@@ -18,6 +18,7 @@ import { useMutation } from "@tanstack/react-query";
 import { login } from "@/lib/services/api.js";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
+import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
 
 const Login = () => {
   const location = useLocation();
@@ -108,11 +109,7 @@ const Login = () => {
                     cursor="pointer"
                     onClick={togglePassword}
                   >
-                    {showPassword ? (
-                      <GoEyeClosed color="#444648" />
-                    ) : (
-                      <GoEye color="#444648" />
-                    )}
+                    <XEyeIcon show={showPassword} />
                   </InputRightElement>
                 )}
               </InputGroup>
