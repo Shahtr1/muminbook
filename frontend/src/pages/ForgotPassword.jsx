@@ -63,7 +63,7 @@ const ForgotPassword = () => {
             spacing={2}
           >
             {isSuccess ? (
-              <Alert status="success" borderRadius="sm">
+              <Alert status="success">
                 <AlertIcon />
                 Email sent! Check your inbox for further instructions.
               </Alert>

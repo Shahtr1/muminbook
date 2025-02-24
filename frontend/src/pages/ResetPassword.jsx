@@ -31,7 +31,7 @@ export const ResetPassword = () => {
             src="/images/logo-text.png"
             alt="Muminbook Logo"
           />
-          <Alert status="error" w="fit-content" borderRadius="sm">
+          <Alert status="error" w="fit-content">
             <AlertIcon />
             Invalid Link
           </Alert>

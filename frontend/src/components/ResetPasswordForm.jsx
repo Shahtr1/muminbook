@@ -46,7 +46,7 @@ export const ResetPasswordForm = ({ code }) => {
       )}
       {isSuccess ? (
         <Flex w="100%" align="center" flexDirection="column">
-          <Alert status="success" borderRadius="sm" mb={3}>
+          <Alert status="success" mb={3}>
             <AlertIcon />
             Password updated successfully!
           </Alert>
