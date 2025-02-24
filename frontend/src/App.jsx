@@ -5,21 +5,21 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
-import VerifyEmail from "./pages/VerifyEmail.jsx";
-import ForgotPassword from "./pages/ForgotPassword.jsx";
-import { ResetPassword } from "./pages/ResetPassword.jsx";
+import Login from "./pages/auth/Login.jsx";
+import Register from "./pages/auth/Register.jsx";
+import VerifyEmail from "./pages/auth/VerifyEmail.jsx";
+import ForgotPassword from "./pages/auth/ForgotPassword.jsx";
+import { ResetPassword } from "./pages/auth/ResetPassword.jsx";
 import { AppContainer } from "./components/AppContainer.jsx";
 import { Dashboard } from "./pages/Dashboard.jsx";
 import { setNavigate } from "./lib/services/navigation.js";
 import { PrivateRoute } from "./lib/services/PrivateRoute.jsx";
 import { Settings } from "./pages/Settings.jsx";
 import { Helmet } from "react-helmet-async";
-import { Terms } from "@/pages/Terms.jsx";
-import { Cookies } from "@/pages/Cookies.jsx";
-import { PrivacyPolicy } from "@/pages/PrivacyPolicy.jsx";
-import ReverifyEmail from "@/pages/ReverifyEmail.jsx";
+import { Terms } from "@/pages/official/Terms.jsx";
+import { Cookies } from "@/pages/official/Cookies.jsx";
+import { PrivacyPolicy } from "@/pages/official/PrivacyPolicy.jsx";
+import ReverifyEmail from "@/pages/auth/ReverifyEmail.jsx";
 
 function App() {
   const navigate = useNavigate();
