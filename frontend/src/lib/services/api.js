@@ -5,6 +5,8 @@ export const logout = async () => API.get("/auth/logout");
 export const register = async (data) => API.post("/auth/register", data);
 export const verifyEmail = async (verificationCode) =>
   API.get(`/auth/email/verify/${verificationCode}`);
+export const reverifyEmail = async (email) =>
+  API.post("/auth/email/reverify", { email });
 export const sendPasswordResetEmail = async (email) =>
   API.post("/auth/password/forgot", { email });
 export const resetPassword = async ({ verificationCode, password }) =>

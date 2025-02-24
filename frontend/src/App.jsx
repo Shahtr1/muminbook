@@ -19,6 +19,7 @@ import { Helmet } from "react-helmet-async";
 import { Terms } from "@/pages/Terms.jsx";
 import { Cookies } from "@/pages/Cookies.jsx";
 import { PrivacyPolicy } from "@/pages/PrivacyPolicy.jsx";
+import ReverifyEmail from "@/pages/ReverifyEmail.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/email/verify/:code" element={<VerifyEmail />}></Route>
+        <Route path="/email/reverify" element={<ReverifyEmail />}></Route>
         <Route path="/password/forgot" element={<ForgotPassword />}></Route>
         <Route path="/password/reset" element={<ResetPassword />}></Route>
 
