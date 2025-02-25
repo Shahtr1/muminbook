@@ -28,8 +28,10 @@ const colors = {
     secondary: "#90949C",
   },
   icon: {
-    dark: "#fff",
-    light: "#216660",
+    dark: "#cecece",
+    darkActive: "#fff",
+    light: "#518D88",
+    lightActive: "#216660",
   },
 };
 

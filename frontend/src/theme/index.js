@@ -21,7 +21,7 @@ const styles = {
   global: (props) => ({
     body: {
       color: mode("black", "whiteAlpha.900")(props),
-      bg: mode("white", "gray.900")(props),
+      bg: mode("#f4f2ee", "gray.900")(props),
       fontFamily: "'Nunito Sans', sans-serif",
     },
   }),
