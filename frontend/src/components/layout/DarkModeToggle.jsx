@@ -1,7 +1,13 @@
-import { IconButton, MoonIcon, SunIcon, useColorMode } from "@chakra-ui/icons";
+import { IconButton, useColorMode } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-export const DarkModeToggle = ({ position, inset }) => {
+export const DarkModeToggle = ({
+  position,
+  inset,
+  disableInteraction = false,
+}) => {
   const { colorMode, toggleColorMode } = useColorMode();
+
   return (
     <IconButton
       aria-label="Toggle Dark Mode"
@@ -17,6 +23,8 @@ export const DarkModeToggle = ({ position, inset }) => {
       size="lg"
       position={position}
       inset={inset}
+      _hover={disableInteraction ? { bg: "transparent" } : undefined}
+      _active={disableInteraction ? { transform: "none" } : undefined}
     />
   );
 };

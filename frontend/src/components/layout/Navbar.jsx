@@ -75,7 +75,6 @@ export const Navbar = () => {
                 />
                 <Text
                   fontSize="12px"
-                  fontWeight="medium"
                   color={colorMode === "light" ? "icon.light" : "icon.dark"}
                 >
                   {item.label}
@@ -84,7 +83,7 @@ export const Navbar = () => {
             );
           })}
 
-          <DarkModeToggle />
+          <DarkModeToggle disableInteraction={true} />
         </Flex>
       </Flex>
     </Flex>
