@@ -1,6 +1,7 @@
 import { Flex, Image, Text, useColorMode, VStack } from "@chakra-ui/react";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export const Navbar = () => {
   const { colorMode } = useColorMode();
@@ -15,6 +16,38 @@ export const Navbar = () => {
   ];
 
   const hoverColor = colorMode === "light" ? "brand.500" : "whiteAlpha.200";
+
+  const [preloadedImages, setPreloadedImages] = useState({});
+
+  useEffect(() => {
+    const loadImages = async () => {
+      const images = {};
+
+      await Promise.all(
+        navItems.map((item) => {
+          return new Promise((resolve) => {
+            const lightImg = new window.Image();
+            const darkImg = new window.Image();
+
+            lightImg.src = `/images/icons/${item.icon}-light.svg`;
+            darkImg.src = `/images/icons/${item.icon}-dark.svg`;
+
+            lightImg.onload = darkImg.onload = () => {
+              images[item.icon] = {
+                light: darkImg.src,
+                dark: lightImg.src,
+              };
+              resolve();
+            };
+          });
+        }),
+      );
+
+      setPreloadedImages(images);
+    };
+
+    loadImages();
+  }, []);
 
   return (
     <Flex
@@ -70,7 +103,10 @@ export const Navbar = () => {
                 <Image
                   w={5}
                   h={5}
-                  src={`/images/icons/${item.icon}-${colorMode === "light" ? "dark" : "light"}.svg`}
+                  src={
+                    preloadedImages[item.icon]?.[colorMode] ||
+                    `/images/icons/${item.icon}-${colorMode === "light" ? "dark" : "light"}.svg`
+                  }
                   alt={item.label}
                 />
                 <Text
