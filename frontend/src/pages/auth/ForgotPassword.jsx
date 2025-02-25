@@ -15,7 +15,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { sendPasswordResetEmail } from "../../lib/services/api.js";
+import { sendPasswordResetEmail } from "@/lib/services/api.js";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 
 const ForgotPassword = () => {

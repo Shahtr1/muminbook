@@ -2,6 +2,8 @@ import { Flex, Image, Text, useColorMode, VStack } from "@chakra-ui/react";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { UserMenu } from "@/components/layout/UserMenu.jsx";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 export const Navbar = () => {
   const { colorMode } = useColorMode();
@@ -9,14 +11,18 @@ export const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
-    { label: "Dashboard", icon: "dashboard", link: "/dashboard" },
-    { label: "Reading", icon: "reading", link: "/reading" },
-    { label: "Notifications", icon: "bell", link: "#" },
-    { label: "Me", icon: "user", link: "#" },
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      icon: "dashboard",
+      link: "/dashboard",
+    },
+    { id: "reading", label: "Reading", icon: "reading", link: "/reading" },
+    { id: "notifications", label: "Notifications", icon: "bell", link: "#" },
+    { id: "user-menu", label: "Me", icon: "user", link: "#" },
   ];
 
   const hoverColor = colorMode === "light" ? "brand.500" : "whiteAlpha.200";
-
   const [preloadedImages, setPreloadedImages] = useState({});
 
   useEffect(() => {
@@ -66,19 +72,21 @@ export const Navbar = () => {
             w={150}
             src="/images/logo-with-image.png"
             alt="Muminbook Logo"
+            onClick={() => navigate("/")}
+            cursor="pointer"
           />
         </Flex>
 
         <Flex>
-          {navItems.map((item, index) => {
+          {navItems.map((item) => {
             const isActive =
               location.pathname === item.link ||
               (location.pathname === "/" && item.link === "/dashboard");
 
-            return (
+            const navContent = (
               <VStack
-                key={index}
                 w={90}
+                key={item.id}
                 spacing={0}
                 justify="center"
                 borderBottom="2px solid"
@@ -91,13 +99,15 @@ export const Navbar = () => {
                 }
                 cursor="pointer"
                 transition="border-bottom-width 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out"
-                _hover={{
-                  borderBottomWidth: "2px",
-                  borderBottomColor: hoverColor,
-                }}
-                _active={{
-                  transform: "scale(0.99)",
-                }}
+                _hover={
+                  isActive
+                    ? {}
+                    : {
+                        borderBottomWidth: "2px",
+                        borderBottomColor: hoverColor,
+                      }
+                }
+                _active={{ transform: "scale(0.99)" }}
                 onClick={() => navigate(item.link)}
               >
                 <Image
@@ -105,17 +115,32 @@ export const Navbar = () => {
                   h={5}
                   src={
                     preloadedImages[item.icon]?.[colorMode] ||
-                    `/images/icons/${item.icon}-${colorMode === "light" ? "dark" : "light"}.svg`
+                    `/images/icons/${item.icon}-${
+                      colorMode === "light" ? "dark" : "light"
+                    }.svg`
                   }
                   alt={item.label}
                 />
-                <Text
-                  fontSize="12px"
-                  color={colorMode === "light" ? "icon.light" : "icon.dark"}
-                >
-                  {item.label}
-                </Text>
+                <Flex align={"end"}>
+                  <Text
+                    fontSize="12px"
+                    color={colorMode === "light" ? "icon.light" : "icon.dark"}
+                  >
+                    {item.label}
+                  </Text>
+                  {item.id === "user-menu" && (
+                    <ChevronDownIcon
+                      color={colorMode === "light" ? "icon.light" : "icon.dark"}
+                    />
+                  )}
+                </Flex>
               </VStack>
+            );
+
+            return item.id === "user-menu" ? (
+              <UserMenu key={item.id}>{navContent}</UserMenu>
+            ) : (
+              <>{navContent}</>
             );
           })}
 

@@ -1,28 +1,33 @@
-import { Avatar, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { Flex, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/lib/services/api.js";
 import queryClient from "@/config/queryClient.js";
+import useAuth from "@/hooks/useAuth.js";
 
-export const UserMenu = (props) => {
-  const { role } = props;
+export const UserMenu = ({ children }) => {
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const roles = user?.roles || [];
 
   const { mutate: signOut } = useMutation({
     mutationFn: logout,
-    onSettled: () => {
+    onMutate: () => {
       queryClient.clear();
+    },
+    onSettled: () => {
       navigate("/login", { replace: true });
     },
   });
+
   return (
-    <Menu isLazy placement="right-start">
-      <MenuButton position="absolute" left="1.5rem" bottom="1.5rem">
-        <Avatar src="#" />
+    <Menu isLazy placement="bottom-end">
+      <MenuButton as={Flex} align="center" cursor="pointer">
+        {children}
       </MenuButton>
       <MenuList>
         <MenuItem onClick={() => navigate("/")}>Profile</MenuItem>
-        {role === "admin" && (
+        {roles.includes("admin") && (
           <MenuItem onClick={() => navigate("/settings")}>Settings</MenuItem>
         )}
         <MenuItem onClick={signOut}>Logout</MenuItem>

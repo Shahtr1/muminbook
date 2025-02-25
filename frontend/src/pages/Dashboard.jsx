@@ -1,9 +1,11 @@
-import { Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 export const Dashboard = () => {
   return (
     <>
-      <Text> Dashboard</Text>
+      <Flex minH="100vh" align="center" justify="center">
+        Coming Soon...
+      </Flex>
     </>
   );
 };
