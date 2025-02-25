@@ -1,6 +1,6 @@
 import useSessions from "../hooks/useSessions.js";
 import { Container, Heading, Spinner, Text, VStack } from "@chakra-ui/react";
-import SessionCard from "../components/SessionCard.jsx";
+import SessionCard from "@/components/layout/SessionCard.jsx";
 
 export const Settings = () => {
   const { sessions, isPending, isSuccess, isError } = useSessions();

@@ -16,7 +16,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { reverifyEmail } from "../../lib/services/api.js";
-import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
+import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 
 const ReverifyEmail = () => {
   const [email, setEmail] = useState("");

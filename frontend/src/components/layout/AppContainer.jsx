@@ -1,7 +1,8 @@
-import useAuth from "../hooks/useAuth.js";
+import useAuth from "../../hooks/useAuth.js";
 import { Box, Center, Spinner } from "@chakra-ui/react";
 import { Navigate, Outlet } from "react-router-dom";
 import { UserMenu } from "./UserMenu.jsx";
+import { Navbar } from "@/components/layout/Navbar.jsx";
 
 export const AppContainer = () => {
   const { user, isLoading } = useAuth();
@@ -10,7 +11,8 @@ export const AppContainer = () => {
       <Spinner mb={4} />
     </Center>
   ) : user ? (
-    <Box p={4} minH="100vh">
+    <Box minH="100vh" pt="navbar-height">
+      <Navbar />
       <UserMenu role={user?.role} />
       <Outlet />
     </Box>

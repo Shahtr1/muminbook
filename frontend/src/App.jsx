@@ -10,16 +10,16 @@ import Register from "./pages/auth/Register.jsx";
 import VerifyEmail from "./pages/auth/VerifyEmail.jsx";
 import ForgotPassword from "./pages/auth/ForgotPassword.jsx";
 import { ResetPassword } from "./pages/auth/ResetPassword.jsx";
-import { AppContainer } from "./components/AppContainer.jsx";
+import { AppContainer } from "./components/layout/AppContainer.jsx";
 import { Dashboard } from "./pages/Dashboard.jsx";
 import { setNavigate } from "./lib/services/navigation.js";
-import { PrivateRoute } from "./lib/services/PrivateRoute.jsx";
-import { Settings } from "./pages/Settings.jsx";
 import { Helmet } from "react-helmet-async";
 import { Terms } from "@/pages/official/Terms.jsx";
 import { Cookies } from "@/pages/official/Cookies.jsx";
 import { PrivacyPolicy } from "@/pages/official/PrivacyPolicy.jsx";
 import ReverifyEmail from "@/pages/auth/ReverifyEmail.jsx";
+import { Forbidden } from "@/pages/auth/Forbidden.jsx";
+import { Reading } from "@/pages/Reading.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -42,16 +42,12 @@ function App() {
       <Routes>
         <Route path="/" element={<AppContainer />}>
           <Route index element={<Navigate to="dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route
-            path="settings"
-            element={
-              <PrivateRoute Component={Settings} allowedRoutes={["admin"]} />
-            }
-          />
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/reading" element={<Reading />}></Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
+        <Route path="/forbidden" element={<Forbidden />}></Route>
         <Route path="/email/verify/:code" element={<VerifyEmail />}></Route>
         <Route path="/email/reverify" element={<ReverifyEmail />}></Route>
         <Route path="/password/forgot" element={<ForgotPassword />}></Route>

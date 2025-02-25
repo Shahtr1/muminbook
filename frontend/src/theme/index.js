@@ -10,6 +10,7 @@ import textTheme from "@/theme/textTheme.js";
 import colors from "@/theme/colors.js";
 import formLabelTheme from "@/theme/formLabelTheme.js";
 import alertTheme from "@/theme/alertTheme.js";
+import spacings from "@/theme/spacings.js";
 
 const config = {
   initialColorMode: "light",
@@ -43,6 +44,7 @@ const theme = extendTheme({
   styles,
   colors,
   components,
+  ...spacings,
 });
 
 export default theme;

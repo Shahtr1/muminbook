@@ -16,8 +16,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/lib/services/api.js";
-import { GoEye, GoEyeClosed } from "react-icons/go";
-import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
+import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
 
 const Login = () => {
@@ -49,7 +48,7 @@ const Login = () => {
       <DarkModeToggle position="absolute" inset="10px 20px auto auto" />
       <Flex
         minH="100vh"
-        maxW="1000"
+        maxW="x-max-width"
         align="center"
         justify={{ base: "center", md: "space-between" }}
         flexDir={{ base: "column", md: "row" }}

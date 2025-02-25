@@ -11,18 +11,18 @@ export const getUserHandler = catchErrors(async (req, res) => {
 
   const user = await UserModel.findById(req.userId);
   appAssert(user, NOT_FOUND, "User not found");
+
   const userId = user._id;
 
-  const userRole = await UserRoleModel.findOne({
-    userId,
-  }).populate<{ roleId: RoleDocument }>("roleId");
+  const userRoles = await UserRoleModel.find({ userId }).populate<{
+    roleId: RoleDocument;
+  }>("roleId");
 
-  appAssert(
-    userRole?.roleId,
-    NOT_FOUND,
-    "User is not mapped to a role or role not found",
-  );
+  appAssert(userRoles.length > 0, NOT_FOUND, "User has no assigned roles");
 
-  const role = userRole.roleId;
-  return res.status(OK).json({ ...user.omitPassword(), role: role.type });
+  const roles = userRoles
+    .map((userRole) => userRole.roleId?.type)
+    .filter(Boolean);
+
+  return res.status(OK).json({ ...user.omitPassword(), roles });
 });

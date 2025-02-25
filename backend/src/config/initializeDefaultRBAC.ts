@@ -13,13 +13,15 @@ import UserRoleModel from "../models/user-role.model";
 
 const initializeDefaultRBAC = async () => {
   try {
-    const userRole = await RoleModel.findOne({ type: RoleType.User });
+    let userRole = await RoleModel.findOne({ type: RoleType.User });
     if (!userRole) {
-      await RoleModel.create({
+      userRole = await RoleModel.create({
         type: RoleType.User,
         description: "This is the role assigned to user",
       });
     }
+
+    const userRoleId = userRole._id;
 
     let adminRole = await RoleModel.findOne({ type: RoleType.Admin });
     if (!adminRole) {
@@ -53,6 +55,18 @@ const initializeDefaultRBAC = async () => {
       await UserRoleModel.create({
         userId: adminId,
         roleId: adminRoleId,
+      });
+    }
+
+    const existingUserRoleForAdmin = await UserRoleModel.findOne({
+      userId: adminId,
+      roleId: userRoleId,
+    });
+
+    if (!existingUserRoleForAdmin) {
+      await UserRoleModel.create({
+        userId: adminId,
+        roleId: userRoleId,
       });
     }
   } catch (error) {

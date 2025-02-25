@@ -20,8 +20,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { register } from "../../lib/services/api.js";
-import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
-import { GoEye, GoEyeClosed } from "react-icons/go";
+import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { XDate } from "@/components/form/XDate.jsx";
 import { XRadio } from "@/components/form/XRadio.jsx";
 import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";

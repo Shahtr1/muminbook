@@ -6,19 +6,14 @@ import {
   Button,
   Flex,
   FormControl,
-  FormLabel,
-  Heading,
   Input,
   InputGroup,
   InputRightElement,
   Link as ChakraLink,
-  Stack,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { resetPassword } from "../lib/services/api.js";
-import { GoEye, GoEyeClosed } from "react-icons/go";
+import { resetPassword } from "../../lib/services/api.js";
 import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
 
 export const ResetPasswordForm = ({ code }) => {

@@ -10,8 +10,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Link, useSearchParams } from "react-router-dom";
-import { ResetPasswordForm } from "../../components/ResetPasswordForm.jsx";
-import { DarkModeToggle } from "@/components/DarkModeToggle.jsx";
+import { ResetPasswordForm } from "../../components/form/ResetPasswordForm.jsx";
+import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 
 export const ResetPassword = () => {
   const [searchParams] = useSearchParams();

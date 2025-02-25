@@ -27,6 +27,10 @@ const colors = {
     primary: "#444648",
     secondary: "#90949C",
   },
+  icon: {
+    dark: "#fff",
+    light: "#216660",
+  },
 };
 
 export default colors;
