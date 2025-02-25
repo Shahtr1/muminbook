@@ -1,7 +1,7 @@
 import { Flex, Image, Text, useColorMode, VStack } from "@chakra-ui/react";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { UserMenu } from "@/components/layout/UserMenu.jsx";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
@@ -87,6 +87,7 @@ export const Navbar = () => {
               <VStack
                 w={90}
                 key={item.id}
+                id={item.id} // ✅ Unique ID added here
                 spacing={0}
                 justify="center"
                 borderBottom="2px solid"
@@ -138,9 +139,11 @@ export const Navbar = () => {
             );
 
             return item.id === "user-menu" ? (
-              <UserMenu key={item.id}>{navContent}</UserMenu>
+              <UserMenu key={item.id} id={item.id}>
+                {navContent}
+              </UserMenu>
             ) : (
-              <>{navContent}</>
+              <Fragment key={item.id}>{navContent}</Fragment>
             );
           })}
 
