@@ -31,9 +31,10 @@ export const Navbar = () => {
       icon: (active) => <BellSVG active={active} />,
       link: "#",
       active: true,
+      dropdown: "notifications",
     },
     {
-      id: "user-menu",
+      id: "user",
       label: "Me",
       icon: (active) =>
         user.gender === "female" ? (
@@ -42,6 +43,7 @@ export const Navbar = () => {
           <MaleSVG active={active} />
         ),
       link: "#",
+      dropdown: "user-menu",
     },
   ];
 

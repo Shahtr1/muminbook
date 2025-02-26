@@ -22,7 +22,17 @@ export const UserMenu = ({ children }) => {
 
   return (
     <Menu isLazy placement="bottom-end">
-      <MenuButton as={Flex} align="center" cursor="pointer">
+      <MenuButton
+        as={Flex}
+        align="center"
+        cursor="pointer"
+        height="100%"
+        sx={{
+          "> span": {
+            height: "100%",
+          },
+        }}
+      >
         {children}
       </MenuButton>
       <MenuList>

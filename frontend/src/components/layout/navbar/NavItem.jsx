@@ -1,6 +1,7 @@
 import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Fragment, useState } from "react";
+import { UserMenu } from "@/components/layout/UserMenu.jsx";
 
 export const NavItem = ({ item }) => {
   const navigate = useNavigate();
@@ -9,30 +10,44 @@ export const NavItem = ({ item }) => {
 
   const [hovering, setHovering] = useState(false);
 
-  return (
-    <Flex
-      gap={0}
-      key={item.id}
-      flexDir="column"
-      onClick={() => navigate(item.link)}
-      justify="end"
-      align="center"
-      h="100%"
-      w="80px"
-      borderBottom="2px solid"
-      borderColor={item.active ? activeColor : "transparent"}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-      cursor="pointer"
-    >
-      {item.icon(hovering || item.active)}
-      <Text
-        fontSize="xs"
-        fontWeight="medium"
-        color={item.active || hovering ? activeColor : defaultColor}
+  const dropdown = item.dropdown;
+
+  const navContent = () => {
+    return (
+      <Flex
+        gap={0}
+        key={item.id}
+        flexDir="column"
+        onClick={() => navigate(item.link)}
+        justify="end"
+        align="center"
+        h="100%"
+        w="80px"
+        borderBottom="2px solid"
+        borderColor={item.active ? activeColor : "transparent"}
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+        cursor="pointer"
       >
-        {item.label}
-      </Text>
-    </Flex>
+        {item.icon(hovering || item.active)}
+        <Text
+          fontSize="xs"
+          fontWeight="medium"
+          color={item.active || hovering ? activeColor : defaultColor}
+        >
+          {item.label}
+        </Text>
+      </Flex>
+    );
+  };
+
+  return (
+    <>
+      {dropdown === "user-menu" ? (
+        <UserMenu>{navContent()}</UserMenu>
+      ) : (
+        <Fragment>{navContent()}</Fragment>
+      )}
+    </>
   );
 };
