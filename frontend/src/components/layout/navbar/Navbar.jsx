@@ -58,7 +58,7 @@ export const Navbar = () => {
       bg={colorMode === "light" ? "white" : "gray.800"}
       justify="center"
     >
-      <Flex justify="space-between" width="full" maxW="x-max-width">
+      <Flex justify="space-between" width="full" maxW="x-max-width" px={2}>
         <Flex align="center" height="100%">
           <Image
             w={150}
