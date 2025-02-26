@@ -1,4 +1,4 @@
-import { Flex, Image, useColorMode } from "@chakra-ui/react";
+import { Divider, Flex, Image, useColorMode } from "@chakra-ui/react";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { BellSVG } from "@/components/svgs/BellSVG.jsx";
 import { NavItem } from "@/components/layout/navbar/NavItem.jsx";
@@ -74,7 +74,14 @@ export const Navbar = () => {
           {navItems.map((item) => (
             <NavItem key={item.id} item={item} />
           ))}
-          <DarkModeToggle disableInteraction={true} />
+          <Divider
+            orientation="vertical"
+            h="100%"
+            backgroundColor={
+              colorMode === "light" ? "gray.300" : "whiteAlpha.300"
+            }
+          />
+          <DarkModeToggle disableInteraction={true} navbar={true} />
         </Flex>
       </Flex>
     </Flex>

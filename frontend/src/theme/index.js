@@ -11,6 +11,7 @@ import colors from "@/theme/colors.js";
 import formLabelTheme from "@/theme/formLabelTheme.js";
 import alertTheme from "@/theme/alertTheme.js";
 import spacings from "@/theme/spacings.js";
+import menuItemTheme from "@/theme/menuItemTheme.js";
 
 const config = {
   initialColorMode: "light",
@@ -37,6 +38,7 @@ const components = {
   Checkbox: checkboxTheme,
   Text: textTheme,
   FormLabel: formLabelTheme,
+  Menu: menuItemTheme,
 };
 
 const theme = extendTheme({

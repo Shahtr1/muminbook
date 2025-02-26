@@ -1,8 +1,19 @@
-import { Flex, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Divider,
+  useColorModeValue,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "@/lib/services/api.js";
 import { AUTH } from "@/hooks/useAuth.js";
+import { decodeHTML } from "@/utils/decodeHTML.js";
 
 export const UserMenu = ({ children }) => {
   const queryClient = useQueryClient();
@@ -20,8 +31,31 @@ export const UserMenu = ({ children }) => {
     },
   });
 
+  const menuItems = [
+    {
+      id: "admin",
+      label: "Admin",
+      link: "/admin",
+    },
+    {
+      id: "edit-profile",
+      label: "Edit Profile",
+      link: "/profile",
+    },
+    {
+      id: "settings-and-privacy",
+      label: "Settings & Privacy",
+      link: "/settings-and-privacy",
+    },
+    {
+      id: "help",
+      label: "Help",
+      link: "/help",
+    },
+  ];
+
   return (
-    <Menu isLazy placement="bottom-end">
+    <Menu isLazy placement="bottom-end" variant="underline">
       <MenuButton
         as={Flex}
         align="center"
@@ -35,12 +69,27 @@ export const UserMenu = ({ children }) => {
       >
         {children}
       </MenuButton>
-      <MenuList>
-        <MenuItem onClick={() => navigate("/")}>Profile</MenuItem>
-        {roles.includes("admin") && (
-          <MenuItem onClick={() => navigate("/settings")}>Settings</MenuItem>
-        )}
-        <MenuItem onClick={signOut}>Logout</MenuItem>
+
+      <MenuList minWidth="150px">
+        <Text fontWeight="medium" pl={2.5}>
+          Account
+        </Text>
+        {menuItems
+          .filter(
+            (item) =>
+              !item.roles || item.roles.some((role) => roles.includes(role)),
+          )
+          .map((item) => (
+            <MenuItem py={1} key={item.id} onClick={() => navigate(item.link)}>
+              {item.label}
+            </MenuItem>
+          ))}
+
+        <Divider />
+
+        <MenuItem color="red.500" fontWeight="bold" onClick={signOut}>
+          Logout
+        </MenuItem>
       </MenuList>
     </Menu>
   );
