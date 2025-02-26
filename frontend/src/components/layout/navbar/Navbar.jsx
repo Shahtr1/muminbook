@@ -6,9 +6,12 @@ import { DashboardSVG } from "@/components/svgs/DashboardSVG.jsx";
 import { ReadingSVG } from "@/components/svgs/ReadingSVG.jsx";
 import { MaleSVG } from "@/components/svgs/MaleSVG.jsx";
 import { FemaleSVG } from "@/components/svgs/FemaleSVG.jsx";
+import { useQueryClient } from "@tanstack/react-query";
+import { AUTH } from "@/hooks/useAuth.js";
 
 export const Navbar = () => {
-  const user = { gender: "female" };
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData([AUTH]);
   const { colorMode } = useColorMode();
 
   const navItems = [

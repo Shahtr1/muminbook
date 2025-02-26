@@ -1,12 +1,14 @@
 import { Flex, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "@/lib/services/api.js";
-import queryClient from "@/config/queryClient.js";
+import { AUTH } from "@/hooks/useAuth.js";
 
 export const UserMenu = ({ children }) => {
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData([AUTH]);
   const navigate = useNavigate();
-  const roles = [];
+  const roles = user?.roles || [];
 
   const { mutate: signOut } = useMutation({
     mutationFn: logout,

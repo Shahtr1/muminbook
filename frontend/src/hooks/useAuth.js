@@ -1,14 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUser } from "../lib/services/api.js";
 
 export const AUTH = "auth";
 
 const useAuth = (opts = {}) => {
+  const queryClient = useQueryClient();
+
   const { data: user, ...rest } = useQuery({
     queryKey: [AUTH],
-    queryFn: getUser,
+    queryFn: async () => {
+      const userData = await getUser();
+      queryClient.setQueryData([AUTH], userData);
+      return userData;
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
     ...opts,
   });
+
   return { user, ...rest };
 };
 
