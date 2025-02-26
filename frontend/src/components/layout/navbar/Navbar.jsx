@@ -6,8 +6,10 @@ import { DashboardSVG } from "@/components/svgs/DashboardSVG.jsx";
 import { ReadingSVG } from "@/components/svgs/ReadingSVG.jsx";
 import { MaleSVG } from "@/components/svgs/MaleSVG.jsx";
 import { FemaleSVG } from "@/components/svgs/FemaleSVG.jsx";
+import useAuth from "@/hooks/useAuth.js";
 
 export const Navbar = () => {
+  const { user } = useAuth();
   const { colorMode } = useColorMode();
 
   const navItems = [
@@ -33,13 +35,12 @@ export const Navbar = () => {
     {
       id: "user-menu",
       label: "Me",
-      icon: (active) => <MaleSVG active={active} />,
-      link: "#",
-    },
-    {
-      id: "user-menu",
-      label: "Me",
-      icon: (active) => <FemaleSVG active={active} />,
+      icon: (active) =>
+        user.gender === "female" ? (
+          <FemaleSVG active={active} />
+        ) : (
+          <MaleSVG active={active} />
+        ),
       link: "#",
     },
   ];
