@@ -1,12 +1,48 @@
 import { Flex, Image, useColorMode } from "@chakra-ui/react";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
-import { usePreloadImages } from "@/hooks/usePreloadImages";
-import { navItems } from "@/data/navitems.js";
-import { NavItem } from "./NavItem";
+import { BellSVG } from "@/components/svgs/BellSVG.jsx";
+import { NavItem } from "@/components/layout/navbar/NavItem.jsx";
+import { DashboardSVG } from "@/components/svgs/DashboardSVG.jsx";
+import { ReadingSVG } from "@/components/svgs/ReadingSVG.jsx";
+import { MaleSVG } from "@/components/svgs/MaleSVG.jsx";
+import { FemaleSVG } from "@/components/svgs/FemaleSVG.jsx";
 
 export const Navbar = () => {
   const { colorMode } = useColorMode();
-  const preloadedImages = usePreloadImages(navItems);
+
+  const navItems = [
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      icon: () => <DashboardSVG dimensions={"25px"} />,
+      link: "/dashboard",
+    },
+    {
+      id: "reading",
+      label: "Reading",
+      icon: () => <ReadingSVG dimensions={"25px"} />,
+      link: "/reading",
+    },
+    {
+      id: "notifications",
+      label: "Notifications",
+      icon: () => <BellSVG dimensions={"25px"} />,
+      link: "#",
+      active: true,
+    },
+    {
+      id: "user-menu",
+      label: "Me",
+      icon: () => <MaleSVG dimensions={"25px"} />,
+      link: "#",
+    },
+    {
+      id: "user-menu",
+      label: "Me",
+      icon: () => <FemaleSVG dimensions={"25px"} />,
+      link: "#",
+    },
+  ];
 
   return (
     <Flex
@@ -19,7 +55,7 @@ export const Navbar = () => {
       bg={colorMode === "light" ? "white" : "gray.800"}
       justify="center"
     >
-      <Flex justify="space-between" align="end" width="full" maxW="x-max-width">
+      <Flex justify="space-between" width="full" maxW="x-max-width">
         <Flex align="center" height="100%">
           <Image
             w={150}
@@ -29,13 +65,9 @@ export const Navbar = () => {
           />
         </Flex>
 
-        <Flex>
+        <Flex h="100%">
           {navItems.map((item) => (
-            <NavItem
-              key={item.id}
-              item={item}
-              images={preloadedImages[item.icon] || {}}
-            />
+            <NavItem key={item.id} item={item} />
           ))}
           <DarkModeToggle disableInteraction={true} />
         </Flex>

@@ -24,14 +24,8 @@ const colors = {
     900: "#4c1705",
   },
   text: {
-    primary: "#444648",
-    secondary: "#90949C",
-  },
-  icon: {
-    dark: "#cecece",
-    darkActive: "#fff",
-    light: "#518D88",
-    lightActive: "#216660",
+    primary: "#343637",
+    secondary: "#797C82",
   },
 };
 

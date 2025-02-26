@@ -11,13 +11,7 @@ export const DarkModeToggle = ({
   return (
     <IconButton
       aria-label="Toggle Dark Mode"
-      icon={
-        colorMode === "light" ? (
-          <MoonIcon color="icon.lightActive" />
-        ) : (
-          <SunIcon color="icon.darkActive" />
-        )
-      }
+      icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
       onClick={toggleColorMode}
       variant="ghost"
       size="lg"
