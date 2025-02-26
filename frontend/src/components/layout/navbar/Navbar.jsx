@@ -14,32 +14,32 @@ export const Navbar = () => {
     {
       id: "dashboard",
       label: "Dashboard",
-      icon: () => <DashboardSVG />,
+      icon: (active) => <DashboardSVG active={active} />,
       link: "/dashboard",
     },
     {
       id: "reading",
       label: "Reading",
-      icon: () => <ReadingSVG />,
+      icon: (active) => <ReadingSVG active={active} />,
       link: "/reading",
     },
     {
       id: "notifications",
       label: "Notifications",
-      icon: () => <BellSVG />,
+      icon: (active) => <BellSVG active={active} />,
       link: "#",
       active: true,
     },
     {
       id: "user-menu",
       label: "Me",
-      icon: () => <MaleSVG />,
+      icon: (active) => <MaleSVG active={active} />,
       link: "#",
     },
     {
       id: "user-menu",
       label: "Me",
-      icon: () => <FemaleSVG />,
+      icon: (active) => <FemaleSVG active={active} />,
       link: "#",
     },
   ];

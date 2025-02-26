@@ -1,15 +1,15 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-export const SVG = ({ dimensions, viewBox, children }) => {
-  const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.800");
-  const hoverColor = useColorModeValue("text.primary", "white");
+export const SVG = ({ dimensions, viewBox, children, active }) => {
+  const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
+  const primaryColor = useColorModeValue("text.primary", "white");
 
-  const [color, setColor] = useState(defaultColor);
+  const [color, setColor] = useState(active ? primaryColor : defaultColor);
 
   useEffect(() => {
-    setColor(defaultColor);
-  }, [defaultColor]);
+    setColor(active ? primaryColor : defaultColor);
+  }, [defaultColor, primaryColor, active]);
 
   return (
     <Box
@@ -21,8 +21,8 @@ export const SVG = ({ dimensions, viewBox, children }) => {
       xmlns="http://www.w3.org/2000/svg"
       cursor="pointer"
       overflow="visible"
-      onMouseEnter={() => setColor(hoverColor)}
-      onMouseLeave={() => setColor(defaultColor)}
+      onMouseEnter={() => setColor(primaryColor)}
+      onMouseLeave={() => setColor(active ? primaryColor : defaultColor)}
     >
       {children}
     </Box>
