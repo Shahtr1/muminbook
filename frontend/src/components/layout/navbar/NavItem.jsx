@@ -19,10 +19,12 @@ export const NavItem = ({ item }) => {
         key={item.id}
         flexDir="column"
         onClick={() => navigate(item.link)}
-        justify="end"
+        justify={{ base: "center", md: "end" }}
+        pb={{ base: 2, md: "unset" }}
+        pr={{ base: 1, md: "unset" }}
         align="center"
         h="100%"
-        w="80px"
+        w={{ base: "45px", sm: "65px", md: "80px" }}
         borderBottom="2px solid"
         borderColor={item.active ? activeColor : "transparent"}
         onMouseEnter={() => setHovering(true)}
@@ -31,6 +33,7 @@ export const NavItem = ({ item }) => {
       >
         {item.icon(hovering || item.active)}
         <Text
+          display={{ base: "none", md: "block" }}
           fontSize="xs"
           fontWeight="medium"
           color={item.active || hovering ? activeColor : defaultColor}

@@ -1,28 +1,33 @@
-import { Box, useColorModeValue } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Box, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 
-export const SVG = ({ dimensions, viewBox, children, active }) => {
-  const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
-  const primaryColor = useColorModeValue("text.primary", "white");
+export const SVG = ({ dimensions, children, active }) => {
+  const responsiveViewBox = useBreakpointValue({
+    base: "0 0 48 48",
+    md: "0 0 68 68",
+  });
 
-  const [color, setColor] = useState(active ? primaryColor : defaultColor);
-
-  useEffect(() => {
-    setColor(active ? primaryColor : defaultColor);
-  }, [defaultColor, primaryColor, active]);
+  const color = useColorModeValue(
+    active ? "text.primary" : "text.secondary",
+    active ? "white" : "whiteAlpha.700",
+  );
 
   return (
     <Box
       as="svg"
       width={dimensions}
       height={dimensions}
-      viewBox="0 0 68 68"
+      viewBox={responsiveViewBox}
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
       cursor="pointer"
       overflow="visible"
-      onMouseEnter={() => setColor(primaryColor)}
-      onMouseLeave={() => setColor(active ? primaryColor : defaultColor)}
+      onMouseEnter={(e) =>
+        e.currentTarget.setAttribute(
+          "fill",
+          useColorModeValue("text.primary", "white"),
+        )
+      }
+      onMouseLeave={(e) => e.currentTarget.setAttribute("fill", color)}
     >
       {children}
     </Box>
