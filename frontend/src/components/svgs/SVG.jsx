@@ -16,7 +16,7 @@ export const SVG = ({ dimensions, viewBox, children, active }) => {
       as="svg"
       width={dimensions}
       height={dimensions}
-      viewBox={viewBox}
+      viewBox="0 0 58 58"
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
       cursor="pointer"
