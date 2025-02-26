@@ -8,11 +8,13 @@ import { MaleSVG } from "@/components/svgs/MaleSVG.jsx";
 import { FemaleSVG } from "@/components/svgs/FemaleSVG.jsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { AUTH } from "@/hooks/useAuth.js";
+import { useLocation } from "react-router-dom";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
   const { colorMode } = useColorMode();
+  const location = useLocation();
 
   const navItems = [
     {
@@ -32,14 +34,13 @@ export const Navbar = () => {
       label: "Notifications",
       icon: (active) => <BellSVG active={active} />,
       link: "#",
-      active: true,
       dropdown: "notifications",
     },
     {
       id: "user",
       label: "Me",
       icon: (active) =>
-        user.gender === "female" ? (
+        user?.gender === "female" ? (
           <FemaleSVG active={active} />
         ) : (
           <MaleSVG active={active} />
@@ -71,9 +72,13 @@ export const Navbar = () => {
         </Flex>
 
         <Flex h="100%">
-          {navItems.map((item) => (
-            <NavItem key={item.id} item={item} />
-          ))}
+          {navItems.map((item) => {
+            const isActive = location.pathname === item.link; // Determine if the item is active
+            return (
+              <NavItem key={item.id} item={{ ...item, active: isActive }} />
+            );
+          })}
+
           <Divider
             orientation="vertical"
             h="100%"

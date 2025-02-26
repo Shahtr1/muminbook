@@ -34,6 +34,7 @@ export const UserMenu = ({ children }) => {
       id: "admin",
       label: "Admin",
       link: "/admin",
+      roles: ["admin"],
     },
     {
       id: "edit-profile",
