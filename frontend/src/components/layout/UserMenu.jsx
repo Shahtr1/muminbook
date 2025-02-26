@@ -3,12 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/lib/services/api.js";
 import queryClient from "@/config/queryClient.js";
-import useAuth from "@/hooks/useAuth.js";
 
 export const UserMenu = ({ children }) => {
-  const { user } = useAuth();
   const navigate = useNavigate();
-  const roles = user?.roles || [];
+  const roles = [];
 
   const { mutate: signOut } = useMutation({
     mutationFn: logout,

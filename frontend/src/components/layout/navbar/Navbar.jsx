@@ -6,10 +6,9 @@ import { DashboardSVG } from "@/components/svgs/DashboardSVG.jsx";
 import { ReadingSVG } from "@/components/svgs/ReadingSVG.jsx";
 import { MaleSVG } from "@/components/svgs/MaleSVG.jsx";
 import { FemaleSVG } from "@/components/svgs/FemaleSVG.jsx";
-import useAuth from "@/hooks/useAuth.js";
 
 export const Navbar = () => {
-  const { user } = useAuth();
+  const user = { gender: "female" };
   const { colorMode } = useColorMode();
 
   const navItems = [
