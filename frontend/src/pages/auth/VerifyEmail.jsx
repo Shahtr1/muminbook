@@ -10,8 +10,8 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { Link, useParams } from "react-router-dom";
-import { verifyEmail } from "../../lib/services/api.js";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { verifyEmail } from "@/lib/services/api.js";
 import { useQuery } from "@tanstack/react-query";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 
@@ -21,15 +21,18 @@ const VerifyEmail = () => {
     queryKey: ["emailVerification", code],
     queryFn: () => verifyEmail(code),
   });
+  const navigate = useNavigate();
   return (
     <>
       <DarkModeToggle position="absolute" inset="10px 20px auto auto" />
       <Flex minH="100vh" align="center" justify="center">
         <Stack spacing={8} align="center">
           <Image
+            cursor="pointer"
             w={{ base: 150, md: 200 }}
             src="/images/logo-text.png"
             alt="Muminbook Logo"
+            onClick={() => navigate("/")}
           />
           <Alert status={isSuccess ? "success" : "error"} w="fit-content">
             <AlertIcon />

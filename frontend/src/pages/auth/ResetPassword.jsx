@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ResetPasswordForm } from "../../components/form/ResetPasswordForm.jsx";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 
@@ -20,6 +20,8 @@ export const ResetPassword = () => {
   const now = Date.now();
   const linkIsValid = code && exp && exp > now;
 
+  const navigate = useNavigate();
+
   return (
     <>
       <DarkModeToggle position="absolute" inset="10px 20px auto auto" />
@@ -27,9 +29,11 @@ export const ResetPassword = () => {
       <Flex minH="100vh" align="center" justify="center">
         <Stack spacing={8} align="center">
           <Image
+            cursor="pointer"
             w={{ base: 150, md: 200 }}
             src="/images/logo-text.png"
             alt="Muminbook Logo"
+            onClick={() => navigate("/")}
           />
           <Alert status="error" w="fit-content">
             <AlertIcon />

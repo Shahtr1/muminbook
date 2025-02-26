@@ -2,6 +2,7 @@ const alertTheme = {
   baseStyle: {
     container: {
       borderRadius: "sm",
+      fontSize: "sm",
     },
   },
   variants: {

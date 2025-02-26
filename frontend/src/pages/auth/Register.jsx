@@ -19,11 +19,12 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { register } from "../../lib/services/api.js";
+import { register } from "@/lib/services/api.js";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { XDate } from "@/components/form/XDate.jsx";
 import { XRadio } from "@/components/form/XRadio.jsx";
 import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
+import { XAlert } from "@/components/layout/XAlert.jsx";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -38,19 +39,22 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { mutate: createAccount, isPending } = useMutation({
     mutationFn: register,
     onSuccess: () => {
       navigate("/", { replace: true });
     },
-    onError: ({ errors }) => {
+    onError: ({ errors, message }) => {
       if (errors && errors.length > 0) {
         const errorMap = {};
         errors.forEach((err) => {
           errorMap[err.path] = err.message;
         });
         setErrors(errorMap);
+      } else if (message) {
+        setErrorMessage(message);
       }
     },
   });
@@ -60,6 +64,7 @@ const Register = () => {
 
   const processAndRegister = () => {
     setErrors({});
+    setErrorMessage("");
 
     createAccount({
       firstname,
@@ -105,10 +110,13 @@ const Register = () => {
       <Flex minH="100vh" align="center" justify="center">
         <Stack spacing={8} align="center">
           <Image
+            cursor="pointer"
             w={{ base: 150, md: 200 }}
             src="/images/logo-text.png"
             alt="Muminbook Logo"
+            onClick={() => navigate("/")}
           />
+
           <Stack
             rounded="sm"
             bg={useColorModeValue("white", "gray.800")}
@@ -118,6 +126,9 @@ const Register = () => {
             maxW={{ base: 300, sm: 400 }}
             spacing={2}
           >
+            {errorMessage && (
+              <XAlert status="error" message={errorMessage}></XAlert>
+            )}
             <Flex gap={1}>
               <FormControl id="firstname" isInvalid={!!errors?.firstname}>
                 <Input

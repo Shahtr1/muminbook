@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import {
   Alert,
@@ -15,8 +15,9 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { reverifyEmail } from "../../lib/services/api.js";
+import { reverifyEmail } from "@/lib/services/api.js";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
+import { XAlert } from "@/components/layout/XAlert.jsx";
 
 const ReverifyEmail = () => {
   const [email, setEmail] = useState("");
@@ -44,9 +45,10 @@ const ReverifyEmail = () => {
 
   const processAndSend = (email) => {
     setErrorMessage("");
-    setUnknownError(false);
     sendEmailReverify(email);
   };
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -54,9 +56,11 @@ const ReverifyEmail = () => {
       <Flex minH="100vh" align="center" justify="center">
         <Stack spacing={8} align="center">
           <Image
+            cursor="pointer"
             w={{ base: 150, md: 200 }}
             src="/images/logo-text.png"
             alt="Muminbook Logo"
+            onClick={() => navigate("/")}
           />
           <Stack
             rounded="sm"
@@ -68,10 +72,7 @@ const ReverifyEmail = () => {
             spacing={2}
           >
             {unknownError && (
-              <Alert status="error" borderRadius="sm">
-                <AlertIcon />
-                Something went wrong!
-              </Alert>
+              <XAlert status="error" message="Something went wrong!"></XAlert>
             )}
             {isSuccess ? (
               <Alert status="success">
@@ -89,7 +90,6 @@ const ReverifyEmail = () => {
                     onChange={(e) => {
                       setEmail(e.target.value);
                       setErrorMessage("");
-                      setUnknownError(false);
                     }}
                     placeholder="Email address to reverify"
                     size={{ base: "sm", md: "md" }}

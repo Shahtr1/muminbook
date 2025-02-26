@@ -18,6 +18,7 @@ import { useMutation } from "@tanstack/react-query";
 import { login } from "@/lib/services/api.js";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
+import { XAlert } from "@/components/layout/XAlert.jsx";
 
 const Login = () => {
   const location = useLocation();
@@ -61,6 +62,8 @@ const Login = () => {
             w={{ base: 150, md: 200 }}
             src="/images/logo-with-image.png"
             alt="Muminbook Logo"
+            onClick={() => navigate("/")}
+            cursor="pointer"
           />
           <Text
             fontSize={{ base: "xs", sm: "sm", md: "lg" }}
@@ -80,6 +83,12 @@ const Login = () => {
           spacing={3}
         >
           <Stack spacing={2}>
+            {isError && (
+              <XAlert
+                status="error"
+                message="Invalid email or password"
+              ></XAlert>
+            )}
             <FormControl id="email">
               <Input
                 type="email"
@@ -113,11 +122,7 @@ const Login = () => {
                 )}
               </InputGroup>
             </FormControl>
-            {isError && (
-              <Text color="red.400" textAlign="center" fontSize="xs">
-                Invalid email or password
-              </Text>
-            )}
+
             <Button
               isDisabled={!email || password.length < 6}
               isLoading={isPending}

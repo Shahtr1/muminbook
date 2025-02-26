@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import {
   Alert,
@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { sendPasswordResetEmail } from "@/lib/services/api.js";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
+import { XAlert } from "@/components/layout/XAlert.jsx";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -44,9 +45,10 @@ const ForgotPassword = () => {
 
   const processAndSend = (email) => {
     setErrorMessage("");
-    setUnknownError(false);
     sendPasswordReset(email);
   };
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -57,6 +59,8 @@ const ForgotPassword = () => {
             w={{ base: 150, md: 200 }}
             src="/images/logo-text.png"
             alt="Muminbook Logo"
+            onClick={() => navigate("/")}
+            cursor="pointer"
           />
           <Stack
             rounded="sm"
@@ -68,10 +72,7 @@ const ForgotPassword = () => {
             spacing={2}
           >
             {unknownError && (
-              <Alert status="error" borderRadius="sm">
-                <AlertIcon />
-                Something went wrong!
-              </Alert>
+              <XAlert status="error" message="Something went wrong!"></XAlert>
             )}
             {isSuccess ? (
               <Alert status="success" borderRadius="sm">
@@ -87,7 +88,6 @@ const ForgotPassword = () => {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      setUnknownError(false);
                       setErrorMessage("");
                     }}
                     placeholder="Email address"

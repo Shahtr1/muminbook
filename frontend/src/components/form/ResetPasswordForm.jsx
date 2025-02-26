@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Alert,
   AlertIcon,
-  Box,
   Button,
   Flex,
   FormControl,
@@ -13,8 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { resetPassword } from "../../lib/services/api.js";
+import { resetPassword } from "@/lib/services/api.js";
 import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
+import { XAlert } from "@/components/layout/XAlert.jsx";
 
 export const ResetPasswordForm = ({ code }) => {
   const [password, setPassword] = useState("");
@@ -35,9 +35,10 @@ export const ResetPasswordForm = ({ code }) => {
   return (
     <>
       {isError && (
-        <Box mb={3} color="red.400" mx="auto">
-          {error?.message || "An error occurred"}
-        </Box>
+        <XAlert
+          status="error"
+          message={error?.message || "An error occurred"}
+        ></XAlert>
       )}
       {isSuccess ? (
         <Flex w="100%" align="center" flexDirection="column">
