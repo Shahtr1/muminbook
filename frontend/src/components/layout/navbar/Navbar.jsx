@@ -21,6 +21,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Search2Icon } from "@chakra-ui/icons";
 import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
+import { navigate } from "@/lib/services/navigation.js";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -95,6 +96,7 @@ export const Navbar = () => {
             alt="Muminbook Logo"
             cursor="pointer"
             display={{ base: "block", md: "none" }}
+            onClick={() => navigate("/")}
           />
 
           <Image
