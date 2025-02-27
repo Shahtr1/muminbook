@@ -13,7 +13,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "@/lib/services/api.js";
 import { AUTH } from "@/hooks/useAuth.js";
 
-export const UserMenu = ({ children }) => {
+export const UserMenu = ({ children, onOpen, onClose }) => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
   const navigate = useNavigate();
@@ -30,31 +30,24 @@ export const UserMenu = ({ children }) => {
   });
 
   const menuItems = [
-    {
-      id: "admin",
-      label: "Admin",
-      link: "/admin",
-      roles: ["admin"],
-    },
-    {
-      id: "edit-profile",
-      label: "Edit Profile",
-      link: "/profile",
-    },
+    { id: "admin", label: "Admin", link: "/admin", roles: ["admin"] },
+    { id: "edit-profile", label: "Edit Profile", link: "/profile" },
     {
       id: "settings-and-privacy",
       label: "Settings & Privacy",
       link: "/settings-and-privacy",
     },
-    {
-      id: "help",
-      label: "Help",
-      link: "/help",
-    },
+    { id: "help", label: "Help", link: "/help" },
   ];
 
   return (
-    <Menu isLazy placement="bottom-end" variant="underline">
+    <Menu
+      isLazy
+      placement="bottom-end"
+      variant="underline"
+      onOpen={onOpen}
+      onClose={onClose}
+    >
       <MenuButton
         as={Flex}
         align="center"

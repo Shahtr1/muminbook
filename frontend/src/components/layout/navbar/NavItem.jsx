@@ -1,9 +1,8 @@
-import { UserMenu } from "@/components/layout/UserMenu.jsx";
 import { useNavigate } from "react-router-dom";
 import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
-export const NavItem = ({ item }) => {
+export const NavItem = ({ item, activeBorderColor, children }) => {
   const navigate = useNavigate();
   const activeColor = useColorModeValue("text.primary", "white");
   const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
@@ -11,29 +10,31 @@ export const NavItem = ({ item }) => {
   const [hovering, setHovering] = useState(false);
   const IconComponent = item.icon;
 
-  const dropdown = item.dropdown;
+  return (
+    <Flex
+      gap={0}
+      key={item.id}
+      flexDir="column"
+      onClick={() => navigate(item.link)}
+      justify={{ base: "center", md: "end" }}
+      pb={{ base: 2, md: "unset" }}
+      pr={{ base: 1, md: "unset" }}
+      align="center"
+      h="100%"
+      w={{ base: "45px", sm: "65px", md: "80px" }}
+      borderBottom="2px solid"
+      borderColor={
+        item.active ? (activeBorderColor ?? activeColor) : "transparent"
+      }
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      cursor="pointer"
+    >
+      <IconComponent active={hovering || item.active} />
 
-  const navContent = () => {
-    return (
-      <Flex
-        gap={0}
-        key={item.id}
-        flexDir="column"
-        onClick={() => navigate(item.link)}
-        justify={{ base: "center", md: "end" }}
-        pb={{ base: 2, md: "unset" }}
-        pr={{ base: 1, md: "unset" }}
-        align="center"
-        h="100%"
-        w={{ base: "45px", sm: "65px", md: "80px" }}
-        borderBottom="2px solid"
-        borderColor={item.active ? activeColor : "transparent"}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-        cursor="pointer"
-      >
-        <IconComponent active={hovering || item.active} />
-
+      {children ? (
+        children
+      ) : (
         <Text
           display={{ base: "none", md: "block" }}
           fontSize="xs"
@@ -42,13 +43,7 @@ export const NavItem = ({ item }) => {
         >
           {item.label}
         </Text>
-      </Flex>
-    );
-  };
-
-  return dropdown === "user-menu" ? (
-    <UserMenu>{navContent()}</UserMenu>
-  ) : (
-    <Fragment>{navContent()}</Fragment>
+      )}
+    </Flex>
   );
 };

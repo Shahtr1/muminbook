@@ -5,6 +5,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Text,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -19,9 +20,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { AUTH } from "@/hooks/useAuth.js";
 import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { Search2Icon } from "@chakra-ui/icons";
+import { ChevronDownIcon, Search2Icon } from "@chakra-ui/icons";
 import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
 import { navigate } from "@/lib/services/navigation.js";
+import { UserMenu } from "@/components/layout/UserMenu.jsx";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -31,8 +33,10 @@ export const Navbar = () => {
 
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const searchIconColor = useColorModeValue("gray.500", "whiteAlpha.700");
+  const [openMenu, setOpenMenu] = useState(null);
+
   const activeColor = useColorModeValue("text.primary", "white");
+  const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
 
   const searchInputRef = useRef(null);
 
@@ -113,7 +117,7 @@ export const Navbar = () => {
             transition="all 0.3s ease-in-out"
           >
             <InputLeftElement height="100%">
-              <Search2Icon color={searchIconColor} />
+              <Search2Icon color={defaultColor} />
             </InputLeftElement>
             <Input
               ref={searchInputRef}
@@ -136,7 +140,7 @@ export const Navbar = () => {
           <Search2Icon
             w={{ base: "45px", sm: "65px" }}
             fontSize={25}
-            color={searchIconColor}
+            color={defaultColor}
             cursor="pointer"
             display={{ base: "block", md: "none" }}
             _hover={{ color: activeColor }}
@@ -144,8 +148,43 @@ export const Navbar = () => {
           />
 
           {navItems.map((item) => {
-            const isActive = location.pathname === item.link;
-            return (
+            const isActive =
+              location.pathname === item.link || openMenu === item.id;
+
+            return item?.dropdown === "user-menu" ? (
+              <UserMenu
+                key={item.id}
+                onOpen={() => setOpenMenu(item.id)}
+                onClose={() => setOpenMenu(null)}
+              >
+                <Flex
+                  position="relative"
+                  height="100%"
+                  align="center"
+                  justify="center"
+                >
+                  <NavItem
+                    item={{ ...item, active: isActive }}
+                    activeBorderColor="transparent"
+                  >
+                    <Flex align="end">
+                      <Text
+                        display={{ base: "none", md: "block" }}
+                        fontSize="xs"
+                        fontWeight="medium"
+                        color={openMenu ? activeColor : defaultColor}
+                      >
+                        {item.label}
+                      </Text>
+                      <ChevronDownIcon
+                        color={openMenu ? activeColor : defaultColor}
+                        display={{ base: "none", md: "block" }}
+                      />
+                    </Flex>
+                  </NavItem>
+                </Flex>
+              </UserMenu>
+            ) : (
               <NavItem key={item.id} item={{ ...item, active: isActive }} />
             );
           })}
