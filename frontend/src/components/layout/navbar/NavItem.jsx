@@ -1,7 +1,7 @@
-import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { Fragment, useState } from "react";
 import { UserMenu } from "@/components/layout/UserMenu.jsx";
+import { useNavigate } from "react-router-dom";
+import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import { Fragment, useState } from "react";
 
 export const NavItem = ({ item }) => {
   const navigate = useNavigate();
@@ -9,6 +9,7 @@ export const NavItem = ({ item }) => {
   const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
 
   const [hovering, setHovering] = useState(false);
+  const IconComponent = item.icon;
 
   const dropdown = item.dropdown;
 
@@ -31,7 +32,8 @@ export const NavItem = ({ item }) => {
         onMouseLeave={() => setHovering(false)}
         cursor="pointer"
       >
-        {item.icon(hovering || item.active)}
+        <IconComponent active={hovering || item.active} />
+
         <Text
           display={{ base: "none", md: "block" }}
           fontSize="xs"
@@ -44,13 +46,9 @@ export const NavItem = ({ item }) => {
     );
   };
 
-  return (
-    <>
-      {dropdown === "user-menu" ? (
-        <UserMenu>{navContent()}</UserMenu>
-      ) : (
-        <Fragment>{navContent()}</Fragment>
-      )}
-    </>
+  return dropdown === "user-menu" ? (
+    <UserMenu>{navContent()}</UserMenu>
+  ) : (
+    <Fragment>{navContent()}</Fragment>
   );
 };

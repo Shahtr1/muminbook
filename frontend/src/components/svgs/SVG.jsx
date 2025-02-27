@@ -1,4 +1,5 @@
 import { Box, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
+import { useState } from "react";
 
 export const SVG = ({ dimensions, children, active }) => {
   const responsiveViewBox = useBreakpointValue({
@@ -6,10 +7,10 @@ export const SVG = ({ dimensions, children, active }) => {
     md: "0 0 68 68",
   });
 
-  const color = useColorModeValue(
-    active ? "text.primary" : "text.secondary",
-    active ? "white" : "whiteAlpha.700",
-  );
+  const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
+  const activeColor = useColorModeValue("text.primary", "white");
+
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Box
@@ -17,17 +18,12 @@ export const SVG = ({ dimensions, children, active }) => {
       width={dimensions}
       height={dimensions}
       viewBox={responsiveViewBox}
-      fill={color}
+      fill={isHovered || active ? activeColor : defaultColor}
       xmlns="http://www.w3.org/2000/svg"
       cursor="pointer"
       overflow="visible"
-      onMouseEnter={(e) =>
-        e.currentTarget.setAttribute(
-          "fill",
-          useColorModeValue("text.primary", "white"),
-        )
-      }
-      onMouseLeave={(e) => e.currentTarget.setAttribute("fill", color)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {children}
     </Box>

@@ -45,37 +45,32 @@ export const Navbar = () => {
     {
       id: "dashboard",
       label: "Dashboard",
-      icon: (active) => <DashboardSVG active={active} />,
+      icon: DashboardSVG,
       link: "/dashboard",
     },
     {
       id: "reading",
       label: "Reading",
-      icon: (active) => <ReadingSVG active={active} />,
+      icon: ReadingSVG,
       link: "/reading",
     },
     {
       id: "features",
       label: "Features",
-      icon: (active) => <FeaturesSVG active={active} />,
+      icon: FeaturesSVG,
       link: "#",
     },
     {
       id: "notifications",
       label: "Notifications",
-      icon: (active) => <BellSVG active={active} />,
+      icon: BellSVG,
       link: "#",
       dropdown: "notifications",
     },
     {
       id: "user",
       label: "Me",
-      icon: (active) =>
-        user?.gender === "female" ? (
-          <FemaleSVG active={active} />
-        ) : (
-          <MaleSVG active={active} />
-        ),
+      icon: user?.gender === "female" ? FemaleSVG : MaleSVG,
       link: "#",
       dropdown: "user-menu",
     },
