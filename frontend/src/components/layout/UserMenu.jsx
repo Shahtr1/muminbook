@@ -19,6 +19,8 @@ export const UserMenu = ({ children, onOpen, onClose }) => {
   const navigate = useNavigate();
   const roles = user?.roles || [];
 
+  const username = user?.firstname + " " + user?.lastname;
+
   const { mutate: signOut } = useMutation({
     mutationFn: logout,
     onMutate: () => {
@@ -62,10 +64,35 @@ export const UserMenu = ({ children, onOpen, onClose }) => {
         {children}
       </MenuButton>
 
-      <MenuList minWidth="150px">
-        <Text fontWeight="medium" pl={2.5}>
+      <MenuList minW="150px" maxW="250px">
+        <Text
+          fontSize="17px"
+          fontWeight="medium"
+          px={2.5}
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          maxW="230px"
+          display="block"
+          pb={2}
+        >
+          {username}
+        </Text>
+
+        <Divider
+          backgroundColor={useColorModeValue("gray.300", "whiteAlpha.300")}
+        />
+
+        <Text
+          fontSize="14px"
+          fontWeight="medium"
+          pl={2.5}
+          pt={1}
+          color="text.secondary"
+        >
           Account
         </Text>
+
         {menuItems
           .filter(
             (item) =>
@@ -73,7 +100,7 @@ export const UserMenu = ({ children, onOpen, onClose }) => {
           )
           .map((item) => (
             <MenuItem py={1} key={item.id} onClick={() => navigate(item.link)}>
-              {item.label}
+              <Text fontSize="13px">{item.label}</Text>
             </MenuItem>
           ))}
 
