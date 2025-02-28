@@ -116,7 +116,7 @@ export const UserMenu = ({
           backgroundColor={useColorModeValue("gray.300", "whiteAlpha.300")}
         />
 
-        <MenuItem color="red.500" fontWeight="bold" onClick={signOut}>
+        <MenuItem color="red.500" fontWeight="medium" onClick={signOut}>
           Logout
         </MenuItem>
       </MenuList>
