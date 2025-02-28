@@ -1,5 +1,4 @@
 import {
-  Divider,
   Flex,
   Image,
   Input,
@@ -24,6 +23,8 @@ import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
 import { navigate } from "@/lib/services/navigation.js";
 import { NavUserMenuItem } from "@/components/layout/navbar/NavUserMenuItem.jsx";
 import { NavNotifMenuItem } from "@/components/layout/navbar/NavNotifMenuItem.jsx";
+import { NavFeaturesMenuItem } from "@/components/layout/navbar/NavFeaturesMenuItem.jsx";
+import { XDivider } from "@/components/layout/XDivider.jsx";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -69,14 +70,12 @@ export const Navbar = () => {
       label: "Notifications",
       icon: BellSVG,
       link: "#",
-      dropdown: "notifications",
     },
     {
       id: "user",
       label: "Me",
       icon: user?.gender === "female" ? FemaleSVG : MaleSVG,
       link: "#",
-      dropdown: "user-menu",
     },
   ];
 
@@ -149,11 +148,13 @@ export const Navbar = () => {
           {navItems.map((item) => {
             const isActive = location.pathname === item.link;
 
-            switch (item?.dropdown) {
-              case "user-menu":
-                return <NavUserMenuItem item={{ ...item }} />;
+            switch (item?.id) {
+              case "user":
+                return <NavUserMenuItem key={item.id} item={{ ...item }} />;
               case "notifications":
-                return <NavNotifMenuItem item={{ ...item }} />;
+                return <NavNotifMenuItem key={item.id} item={{ ...item }} />;
+              case "features":
+                return <NavFeaturesMenuItem key={item.id} item={{ ...item }} />;
 
               default:
                 return (
@@ -161,13 +162,7 @@ export const Navbar = () => {
                 );
             }
           })}
-          <Divider
-            orientation="vertical"
-            h="100%"
-            backgroundColor={
-              colorMode === "light" ? "gray.300" : "whiteAlpha.300"
-            }
-          />
+          <XDivider orientation="vertical" height="100%" />
           <DarkModeToggle disableInteraction={true} navbar={true} />
         </Flex>
       </Flex>

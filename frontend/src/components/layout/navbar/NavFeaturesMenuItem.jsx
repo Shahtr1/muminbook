@@ -1,9 +1,9 @@
 import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { NavItem } from "@/components/layout/navbar/NavItem.jsx";
-import { NotificationMenu } from "@/components/layout/menus/NotificationMenu.jsx";
+import { FeaturesMenu } from "@/components/layout/menus/FeaturesMenu.jsx";
 
-export const NavNotifMenuItem = ({ item }) => {
+export const NavFeaturesMenuItem = ({ item }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [hoverMenu, setHoverMenu] = useState(false);
 
@@ -11,7 +11,7 @@ export const NavNotifMenuItem = ({ item }) => {
   const defaultColor = useColorModeValue("default.light", "default.dark");
 
   return (
-    <NotificationMenu
+    <FeaturesMenu
       key={item.id}
       onOpen={() => setOpenMenu(item.id)}
       onClose={() => setOpenMenu(null)}
@@ -42,6 +42,6 @@ export const NavNotifMenuItem = ({ item }) => {
           </Flex>
         </NavItem>
       </Flex>
-    </NotificationMenu>
+    </FeaturesMenu>
   );
 };

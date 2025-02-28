@@ -1,17 +1,16 @@
 import {
-  Divider,
   Flex,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "@/lib/services/api.js";
 import { AUTH } from "@/hooks/useAuth.js";
+import { XDivider } from "@/components/layout/XDivider.jsx";
 
 export const UserMenu = ({
   children,
@@ -87,9 +86,7 @@ export const UserMenu = ({
           {username}
         </Text>
 
-        <Divider
-          backgroundColor={useColorModeValue("gray.300", "whiteAlpha.300")}
-        />
+        <XDivider />
 
         <Text
           fontSize="14px"
@@ -112,9 +109,7 @@ export const UserMenu = ({
             </MenuItem>
           ))}
 
-        <Divider
-          backgroundColor={useColorModeValue("gray.300", "whiteAlpha.300")}
-        />
+        <XDivider />
 
         <MenuItem color="red.500" fontWeight="medium" onClick={signOut}>
           Logout

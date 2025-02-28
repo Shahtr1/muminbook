@@ -1,6 +1,5 @@
 import {
   Button,
-  Divider,
   Flex,
   FormControl,
   Image,
@@ -19,6 +18,7 @@ import { login } from "@/lib/services/api.js";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
 import { XAlert } from "@/components/layout/XAlert.jsx";
+import { XDivider } from "@/components/layout/XDivider.jsx";
 
 const Login = () => {
   const location = useLocation();
@@ -146,7 +146,7 @@ const Login = () => {
           >
             Forgot password?
           </ChakraLink>
-          <Divider />
+          <XDivider />
           <Button
             onClick={() => navigate("/register")}
             variant="secondary"
