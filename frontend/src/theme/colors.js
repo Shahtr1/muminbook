@@ -1,3 +1,7 @@
+const whiteAlpha700 = "rgba(255, 255, 255, 0.7)";
+const primaryText = "#343637";
+const secondaryText = "#797C82";
+
 const colors = {
   brand: {
     50: "#e3fdfc",
@@ -5,7 +9,7 @@ const colors = {
     200: "#97ede6",
     300: "#6ae2d9",
     400: "#44d7cc",
-    500: "#27A69F", // Primary color
+    500: "#27A69F", // Main primary color
     600: "#1e857f",
     700: "#166561",
     800: "#0e4443",
@@ -24,8 +28,16 @@ const colors = {
     900: "#4c1705",
   },
   text: {
-    primary: "#343637",
-    secondary: "#797C82",
+    primary: primaryText,
+    secondary: secondaryText,
+  },
+  active: {
+    light: primaryText,
+    dark: "#fff",
+  },
+  default: {
+    light: secondaryText,
+    dark: whiteAlpha700,
   },
 };
 

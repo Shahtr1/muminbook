@@ -7,8 +7,8 @@ export const SVG = ({ dimensions, children, active }) => {
     md: "0 0 68 68",
   });
 
-  const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
-  const activeColor = useColorModeValue("text.primary", "white");
+  const defaultColor = useColorModeValue("default.light", "default.dark");
+  const activeColor = useColorModeValue("active.light", "active.dark");
 
   const [isHovered, setIsHovered] = useState(false);
 

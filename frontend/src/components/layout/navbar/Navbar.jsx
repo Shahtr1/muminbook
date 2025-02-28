@@ -5,7 +5,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Text,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -20,10 +19,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { AUTH } from "@/hooks/useAuth.js";
 import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDownIcon, Search2Icon } from "@chakra-ui/icons";
+import { Search2Icon } from "@chakra-ui/icons";
 import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
 import { navigate } from "@/lib/services/navigation.js";
-import { UserMenu } from "@/components/layout/UserMenu.jsx";
+import { NavUserMenuItem } from "@/components/layout/navbar/NavUserMenuItem.jsx";
+import { NavNotifMenuItem } from "@/components/layout/navbar/NavNotifMenuItem.jsx";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -33,11 +33,9 @@ export const Navbar = () => {
 
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const [openMenu, setOpenMenu] = useState(null);
-  const [hoverMenu, setHoverMenu] = useState(null);
 
-  const activeColor = useColorModeValue("text.primary", "white");
-  const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
+  const activeColor = useColorModeValue("active.light", "active.dark");
+  const defaultColor = useColorModeValue("default.light", "default.dark");
 
   const searchInputRef = useRef(null);
 
@@ -149,60 +147,19 @@ export const Navbar = () => {
           />
 
           {navItems.map((item) => {
-            const isActive =
-              location.pathname === item.link || openMenu === item.id;
+            const isActive = location.pathname === item.link;
 
-            return item?.dropdown === "user-menu" ? (
-              <UserMenu
-                key={item.id}
-                onOpen={() => setOpenMenu(item.id)}
-                onClose={() => setOpenMenu(null)}
-                onMouseEnter={() => setHoverMenu(item.id)}
-                onMouseLeave={() => {
-                  setHoverMenu(null);
-                }}
-              >
-                <Flex
-                  position="relative"
-                  height="100%"
-                  align="center"
-                  justify="center"
-                >
-                  <NavItem
-                    item={{
-                      ...item,
-                      active: isActive || hoverMenu === item.id,
-                    }}
-                    activeBorderColor="transparent"
-                  >
-                    <Flex align="end">
-                      <Text
-                        display={{ base: "none", md: "block" }}
-                        fontSize="xs"
-                        fontWeight="medium"
-                        color={
-                          openMenu || hoverMenu === item.id
-                            ? activeColor
-                            : defaultColor
-                        }
-                      >
-                        {item.label}
-                      </Text>
-                      <ChevronDownIcon
-                        color={
-                          openMenu || hoverMenu === item.id
-                            ? activeColor
-                            : defaultColor
-                        }
-                        display={{ base: "none", md: "block" }}
-                      />
-                    </Flex>
-                  </NavItem>
-                </Flex>
-              </UserMenu>
-            ) : (
-              <NavItem key={item.id} item={{ ...item, active: isActive }} />
-            );
+            switch (item?.dropdown) {
+              case "user-menu":
+                return <NavUserMenuItem item={{ ...item }} />;
+              case "notifications":
+                return <NavNotifMenuItem item={{ ...item }} />;
+
+              default:
+                return (
+                  <NavItem key={item.id} item={{ ...item, active: isActive }} />
+                );
+            }
           })}
           <Divider
             orientation="vertical"

@@ -4,8 +4,8 @@ import { useState } from "react";
 
 export const NavItem = ({ item, activeBorderColor, children }) => {
   const navigate = useNavigate();
-  const activeColor = useColorModeValue("text.primary", "white");
-  const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
+  const activeColor = useColorModeValue("active.light", "active.dark");
+  const defaultColor = useColorModeValue("default.light", "default.dark");
 
   const [hovering, setHovering] = useState(false);
   const IconComponent = item.icon;
