@@ -13,7 +13,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "@/lib/services/api.js";
 import { AUTH } from "@/hooks/useAuth.js";
 
-export const UserMenu = ({ children, onOpen, onClose }) => {
+export const UserMenu = ({
+  children,
+  onOpen,
+  onClose,
+  onMouseEnter,
+  onMouseLeave,
+}) => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
   const navigate = useNavigate();
@@ -60,6 +66,8 @@ export const UserMenu = ({ children, onOpen, onClose }) => {
             height: "100%",
           },
         }}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
         {children}
       </MenuButton>

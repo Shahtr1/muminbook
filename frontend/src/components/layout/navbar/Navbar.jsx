@@ -34,6 +34,7 @@ export const Navbar = () => {
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
+  const [hoverMenu, setHoverMenu] = useState(null);
 
   const activeColor = useColorModeValue("text.primary", "white");
   const defaultColor = useColorModeValue("text.secondary", "whiteAlpha.700");
@@ -156,6 +157,10 @@ export const Navbar = () => {
                 key={item.id}
                 onOpen={() => setOpenMenu(item.id)}
                 onClose={() => setOpenMenu(null)}
+                onMouseEnter={() => setHoverMenu(item.id)}
+                onMouseLeave={() => {
+                  setHoverMenu(null);
+                }}
               >
                 <Flex
                   position="relative"
@@ -164,7 +169,10 @@ export const Navbar = () => {
                   justify="center"
                 >
                   <NavItem
-                    item={{ ...item, active: isActive }}
+                    item={{
+                      ...item,
+                      active: isActive || hoverMenu === item.id,
+                    }}
                     activeBorderColor="transparent"
                   >
                     <Flex align="end">
@@ -172,12 +180,20 @@ export const Navbar = () => {
                         display={{ base: "none", md: "block" }}
                         fontSize="xs"
                         fontWeight="medium"
-                        color={openMenu ? activeColor : defaultColor}
+                        color={
+                          openMenu || hoverMenu === item.id
+                            ? activeColor
+                            : defaultColor
+                        }
                       >
                         {item.label}
                       </Text>
                       <ChevronDownIcon
-                        color={openMenu ? activeColor : defaultColor}
+                        color={
+                          openMenu || hoverMenu === item.id
+                            ? activeColor
+                            : defaultColor
+                        }
                         display={{ base: "none", md: "block" }}
                       />
                     </Flex>
