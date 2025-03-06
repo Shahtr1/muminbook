@@ -1,11 +1,15 @@
 import {
+  Box,
   Flex,
+  Grid,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Text,
 } from "@chakra-ui/react";
+import { FamilyTreeSVG } from "@/components/svgs/FamilyTreeSVG.jsx";
+import { useNavigate } from "react-router-dom";
 
 export const FeaturesMenu = ({
   children,
@@ -14,10 +18,16 @@ export const FeaturesMenu = ({
   onMouseEnter,
   onMouseLeave,
 }) => {
+  const navigate = useNavigate();
   const featureItems = [
-    { id: "hadiths", label: "Hadiths" },
-    { id: "sunnah", label: "Sunnah" },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
   ];
+
   return (
     <Menu isLazy placement="bottom-end" onOpen={onOpen} onClose={onClose}>
       <MenuButton
@@ -36,12 +46,46 @@ export const FeaturesMenu = ({
         {children}
       </MenuButton>
 
-      <MenuList>
-        {featureItems.map((item) => (
-          <MenuItem key={item.id}>
-            <Text fontSize="13px">{item.label}</Text>
-          </MenuItem>
-        ))}
+      <MenuList
+        p={3}
+        maxH="250px"
+        overflowY="auto"
+        width="fit-content"
+        sx={{
+          button: {
+            height: "auto",
+            padding: "0",
+          },
+        }}
+      >
+        <Grid templateColumns="repeat(3, 1fr)" gap={5}>
+          {featureItems.map((item) => (
+            <MenuItem
+              key={item.id}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexShrink={0}
+              whiteSpace="nowrap"
+              h={50}
+            >
+              <Flex
+                onClick={() => navigate(item.link)}
+                borderRadius="sm"
+                padding={3}
+                align="center"
+                gap={2}
+              >
+                <Box backgroundColor="brand.500" padding={1} borderRadius="sm">
+                  <item.icon />
+                </Box>
+                <Text color="brand.500" fontWeight="medium" ml={2} mx="auto">
+                  {item.label}
+                </Text>
+              </Flex>
+            </MenuItem>
+          ))}
+        </Grid>
       </MenuList>
     </Menu>
   );

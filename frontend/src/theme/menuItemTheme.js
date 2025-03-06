@@ -20,6 +20,7 @@ const menuItemTheme = {
         _hover: {
           bg: "transparent",
           textDecoration: "underline",
+          borderRadius: "sm",
         },
       },
     }),
@@ -28,6 +29,7 @@ const menuItemTheme = {
         _hover: {
           bg: mode("gray.100", "gray.700")(props),
           color: mode("gray.900", "white")(props),
+          borderRadius: "sm",
         },
       },
     }),
