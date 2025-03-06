@@ -8,24 +8,19 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
-import { BellSVG } from "@/components/svgs/BellSVG.jsx";
 import { NavItem } from "@/components/layout/navbar/NavItem.jsx";
-import { DashboardSVG } from "@/components/svgs/DashboardSVG.jsx";
-import { ReadingSVG } from "@/components/svgs/ReadingSVG.jsx";
-import { MaleSVG } from "@/components/svgs/MaleSVG.jsx";
-import { FemaleSVG } from "@/components/svgs/FemaleSVG.jsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { AUTH } from "@/hooks/useAuth.js";
 import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Search2Icon } from "@chakra-ui/icons";
-import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
 import { navigate } from "@/lib/services/navigation.js";
 import { XDivider } from "@/components/layout/XDivider.jsx";
 import { NavMenuItem } from "@/components/layout/navbar/NavMenuItem.jsx";
 import { NotificationMenu } from "@/components/layout/menus/NotificationMenu.jsx";
 import { UserMenu } from "@/components/layout/menus/UserMenu.jsx";
 import { FeaturesMenu } from "@/components/layout/menus/FeaturesMenu.jsx";
+import { navItems } from "@/components/data/navbarItems.js";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -46,39 +41,6 @@ export const Navbar = () => {
       searchInputRef.current?.focus();
     }
   }, [isFocused]);
-
-  const navItems = [
-    {
-      id: "dashboard",
-      label: "Dashboard",
-      icon: DashboardSVG,
-      link: "/dashboard",
-    },
-    {
-      id: "reading",
-      label: "Reading",
-      icon: ReadingSVG,
-      link: "/reading",
-    },
-    {
-      id: "features",
-      label: "Features",
-      icon: FeaturesSVG,
-      link: "/features/family-tree",
-    },
-    {
-      id: "notifications",
-      label: "Notifications",
-      icon: BellSVG,
-      link: "notifications",
-    },
-    {
-      id: "user",
-      label: "Me",
-      icon: user?.gender === "female" ? FemaleSVG : MaleSVG,
-      link: "account",
-    },
-  ];
 
   return (
     <Flex
@@ -146,7 +108,7 @@ export const Navbar = () => {
             onClick={() => setIsFocused(true)}
           />
 
-          {navItems.map((item) => {
+          {navItems(user).map((item) => {
             const isActive = location.pathname === item.link;
 
             switch (item?.id) {

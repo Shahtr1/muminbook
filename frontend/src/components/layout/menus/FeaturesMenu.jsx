@@ -8,8 +8,8 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import { FamilyTreeSVG } from "@/components/svgs/FamilyTreeSVG.jsx";
 import { useNavigate } from "react-router-dom";
+import { featureItems } from "@/components/data/featureItems.js";
 
 export const FeaturesMenu = ({
   children,
@@ -19,14 +19,6 @@ export const FeaturesMenu = ({
   onMouseLeave,
 }) => {
   const navigate = useNavigate();
-  const featureItems = [
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-  ];
 
   return (
     <Menu isLazy placement="bottom-end" onOpen={onOpen} onClose={onClose}>
@@ -62,7 +54,7 @@ export const FeaturesMenu = ({
           templateColumns={{ base: "repeat(2, 1fr)", sm: "repeat(3, 1fr)" }}
           gap={{ base: 2, sm: 5 }}
         >
-          {featureItems.map((item) => (
+          {featureItems().map((item) => (
             <MenuItem
               key={item.id}
               display="flex"
@@ -80,7 +72,7 @@ export const FeaturesMenu = ({
                 gap={2}
               >
                 <Box backgroundColor="brand.500" padding={1} borderRadius="sm">
-                  <item.icon />
+                  <item.icon activeColor="white" />
                 </Box>
                 <Text color="brand.500" fontWeight="medium" ml={2} mx="auto">
                   {item.label}
