@@ -21,10 +21,11 @@ import { useEffect, useRef, useState } from "react";
 import { Search2Icon } from "@chakra-ui/icons";
 import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
 import { navigate } from "@/lib/services/navigation.js";
-import { NavUserMenuItem } from "@/components/layout/navbar/NavUserMenuItem.jsx";
-import { NavNotifMenuItem } from "@/components/layout/navbar/NavNotifMenuItem.jsx";
-import { NavFeaturesMenuItem } from "@/components/layout/navbar/NavFeaturesMenuItem.jsx";
 import { XDivider } from "@/components/layout/XDivider.jsx";
+import { NavMenuItem } from "@/components/layout/navbar/NavMenuItem.jsx";
+import { NotificationMenu } from "@/components/layout/menus/NotificationMenu.jsx";
+import { UserMenu } from "@/components/layout/menus/UserMenu.jsx";
+import { FeaturesMenu } from "@/components/layout/menus/FeaturesMenu.jsx";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -63,19 +64,19 @@ export const Navbar = () => {
       id: "features",
       label: "Features",
       icon: FeaturesSVG,
-      link: "#",
+      link: "/features/family-tree",
     },
     {
       id: "notifications",
       label: "Notifications",
       icon: BellSVG,
-      link: "#",
+      link: "notifications",
     },
     {
       id: "user",
       label: "Me",
       icon: user?.gender === "female" ? FemaleSVG : MaleSVG,
-      link: "#",
+      link: "account",
     },
   ];
 
@@ -150,11 +151,33 @@ export const Navbar = () => {
 
             switch (item?.id) {
               case "user":
-                return <NavUserMenuItem key={item.id} item={{ ...item }} />;
+                return (
+                  <NavMenuItem
+                    key={item.id}
+                    item={{ ...item }}
+                    active={isActive}
+                    MenuComponent={UserMenu}
+                    showIcon={true}
+                  />
+                );
               case "notifications":
-                return <NavNotifMenuItem key={item.id} item={{ ...item }} />;
+                return (
+                  <NavMenuItem
+                    key={item.id}
+                    item={{ ...item }}
+                    active={isActive}
+                    MenuComponent={NotificationMenu}
+                  />
+                );
               case "features":
-                return <NavFeaturesMenuItem key={item.id} item={{ ...item }} />;
+                return (
+                  <NavMenuItem
+                    key={item.id}
+                    item={{ ...item }}
+                    active={isActive}
+                    MenuComponent={FeaturesMenu}
+                  />
+                );
 
               default:
                 return (

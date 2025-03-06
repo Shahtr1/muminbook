@@ -20,6 +20,8 @@ import { PrivacyPolicy } from "@/pages/company/PrivacyPolicy.jsx";
 import ReverifyEmail from "@/pages/auth/ReverifyEmail.jsx";
 import { Forbidden } from "@/pages/auth/Forbidden.jsx";
 import { Reading } from "@/pages/Reading.jsx";
+import { Features } from "@/pages/Features.jsx";
+import { FamilyTree } from "@/components/layout/features/FamilyTree.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ function App() {
     const pathSegments = location.pathname.split("/").filter(Boolean);
     const mainPath = pathSegments.length > 0 ? pathSegments[0] : "home";
 
-    return `mb | ${mainPath.charAt(0).toUpperCase() + mainPath.slice(1)}`;
+    return `${mainPath.charAt(0).toUpperCase() + mainPath.slice(1)}`;
   };
 
   return (
@@ -44,6 +46,13 @@ function App() {
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/reading" element={<Reading />}></Route>
+          <Route path="/features" element={<Features />}>
+            <Route index element={<Navigate to="family-tree" />} />
+            <Route
+              path="/features/family-tree"
+              element={<FamilyTree />}
+            ></Route>
+          </Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>

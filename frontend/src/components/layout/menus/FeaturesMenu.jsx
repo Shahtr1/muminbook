@@ -26,66 +26,6 @@ export const FeaturesMenu = ({
       icon: () => FamilyTreeSVG({ activeColor: "white" }),
       link: "/features/family-tree",
     },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
-    {
-      id: "family-tree",
-      label: "Family Tree",
-      icon: () => FamilyTreeSVG({ activeColor: "white" }),
-      link: "/features/family-tree",
-    },
   ];
 
   return (
