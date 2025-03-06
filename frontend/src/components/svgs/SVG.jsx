@@ -7,12 +7,11 @@ export const SVG = ({
   active = true,
   activeColor = useColorModeValue("active.light", "active.dark"),
   defaultColor = useColorModeValue("default.light", "default.dark"),
-}) => {
-  const responsiveViewBox = useBreakpointValue({
+  viewBox = useBreakpointValue({
     base: "0 0 48 48",
     md: "0 0 68 68",
-  });
-
+  }),
+}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -20,7 +19,7 @@ export const SVG = ({
       as="svg"
       width={dimensions}
       height={dimensions}
-      viewBox={responsiveViewBox}
+      viewBox={viewBox}
       fill={isHovered || active ? activeColor : defaultColor}
       xmlns="http://www.w3.org/2000/svg"
       cursor="pointer"

@@ -8,6 +8,7 @@ export const FamilyTreeSVG = ({ active, activeColor }) => {
         active={active}
         style={{ borderRadius: "0" }}
         activeColor={activeColor}
+        viewBox="0 0 68 68"
       >
         <g transform="scale(2.5) translate(2,3)">
           <path

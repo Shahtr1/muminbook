@@ -26,6 +26,66 @@ export const FeaturesMenu = ({
       icon: () => FamilyTreeSVG({ activeColor: "white" }),
       link: "/features/family-tree",
     },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
+    {
+      id: "family-tree",
+      label: "Family Tree",
+      icon: () => FamilyTreeSVG({ activeColor: "white" }),
+      link: "/features/family-tree",
+    },
   ];
 
   return (
@@ -47,7 +107,7 @@ export const FeaturesMenu = ({
       </MenuButton>
 
       <MenuList
-        p={3}
+        p={{ base: 1, sm: 2 }}
         maxH="250px"
         overflowY="auto"
         width="fit-content"
@@ -58,7 +118,10 @@ export const FeaturesMenu = ({
           },
         }}
       >
-        <Grid templateColumns="repeat(3, 1fr)" gap={5}>
+        <Grid
+          templateColumns={{ base: "repeat(2, 1fr)", sm: "repeat(3, 1fr)" }}
+          gap={{ base: 2, sm: 5 }}
+        >
           {featureItems.map((item) => (
             <MenuItem
               key={item.id}
