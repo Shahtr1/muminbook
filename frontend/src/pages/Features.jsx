@@ -1,11 +1,15 @@
+import { Sidebar } from "@/components/layout/Sidebar.jsx";
+import { Box, Flex } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
-import { Box, Text } from "@chakra-ui/react";
+import { featureItems } from "@/components/data/featureItems.js";
 
 export const Features = () => {
   return (
-    <Box h="100%">
-      <Text>Features</Text>
-      <Outlet />
-    </Box>
+    <Flex width="full" maxW="x-max-width" mx="auto">
+      <Sidebar label={"Features"} items={featureItems()} />
+      <Box>
+        <Outlet />
+      </Box>
+    </Flex>
   );
 };
