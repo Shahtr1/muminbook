@@ -69,7 +69,7 @@ export const Sidebar = ({
         css={
           !isOpen && {
             scrollbarWidth: "none",
-            "-ms-overflow-style": "none",
+            msOverflowStyle: "none",
             "&::-webkit-scrollbar": {
               display: "none",
             },
