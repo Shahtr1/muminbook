@@ -22,19 +22,23 @@ export const Sidebar = ({
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const bgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("text-primary", "whiteAlpha.900"); // ✅ Always call the hook
+
   const flexDirection = isSmallScreen ? "row" : "column";
   const height = isSmallScreen
     ? "auto"
     : `calc(100vh - ${theme.sizes["navbar-height"]})`;
+  const width = isSmallScreen ? "100%" : isOpen ? "250px" : "auto";
+  const padding = isSmallScreen ? 0 : isOpen ? pOpen : pClose;
 
   return (
     <Flex
       position="relative"
       flexDirection={flexDirection}
       h={height}
-      w={isOpen ? "250px" : "auto"}
+      w={width}
       backgroundColor={bgColor}
-      p={isOpen ? pOpen : pClose}
+      p={padding}
       pl={0}
       gap={3}
     >
@@ -64,10 +68,11 @@ export const Sidebar = ({
 
       <Flex
         flexDir={flexDirection}
-        gap={3}
+        gap={isSmallScreen ? 5 : 3}
+        px={isSmallScreen && 5}
         overflowY="auto"
         css={
-          !isOpen && {
+          (!isOpen || isSmallScreen) && {
             scrollbarWidth: "none",
             msOverflowStyle: "none",
             "&::-webkit-scrollbar": {
@@ -85,27 +90,27 @@ export const Sidebar = ({
               align="center"
               justify={!isOpen && "center"}
               gap={2}
-              py={2}
+              py={isSmallScreen ? "10px" : 2}
               cursor="pointer"
-              pl={isOpen ? pOpen : pClose}
-              borderLeft="4px solid"
+              pl={padding}
+              borderLeft={!isSmallScreen && "4px solid"}
+              borderBottom={isSmallScreen && "2px solid"}
               borderColor={active ? "brand.500" : "transparent"}
               onClick={() => navigate(item.link)}
               direction={!isOpen && "column"}
               border={!isOpen && "none"}
             >
-              <item.icon
-                activeColor={
-                  active
-                    ? "brand.500"
-                    : useColorModeValue("text-primary", "whiteAlpha.900")
-                }
-                smallSize={isOpen}
-              />
+              {!isSmallScreen && (
+                <item.icon
+                  activeColor={active ? "brand.500" : textColor}
+                  smallSize={isOpen}
+                />
+              )}
               <Text
                 color={active && "brand.500"}
-                fontSize={isOpen ? 18 : 11}
-                fontWeight="600"
+                fontSize={isSmallScreen ? 12 : isOpen ? 18 : 11}
+                fontWeight={isSmallScreen ? "500" : "600"}
+                whiteSpace="nowrap"
               >
                 {item.label}
               </Text>
