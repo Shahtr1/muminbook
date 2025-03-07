@@ -1,6 +1,6 @@
 import { SVG } from "@/components/svgs/SVG.jsx";
 
-export const FamilyTreeSVG = ({ active, activeColor }) => {
+export const FamilyTreeSVG = ({ active, activeColor, smallSize = true }) => {
   return (
     <>
       <SVG
@@ -10,7 +10,9 @@ export const FamilyTreeSVG = ({ active, activeColor }) => {
         activeColor={activeColor}
         viewBox="0 0 68 68"
       >
-        <g transform="scale(2.5) translate(2,3)">
+        <g
+          transform={`${smallSize ? "scale(2.5) translate(2,3)" : "scale(3) translate(0,3)"}`}
+        >
           <path
             fillRule="evenodd"
             clipRule="evenodd"
