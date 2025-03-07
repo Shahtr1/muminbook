@@ -5,8 +5,8 @@ import {
   useColorModeValue,
   useTheme,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 export const Sidebar = ({
@@ -18,6 +18,7 @@ export const Sidebar = ({
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme();
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
@@ -30,6 +31,17 @@ export const Sidebar = ({
     : `calc(100vh - ${theme.sizes["navbar-height"]})`;
   const width = isSmallScreen ? "100%" : isOpen ? "250px" : "auto";
   const padding = isSmallScreen ? 0 : isOpen ? pOpen : pClose;
+
+  const activeItemRef = useRef(null);
+
+  useEffect(() => {
+    if (activeItemRef.current) {
+      activeItemRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [location.pathname]);
 
   return (
     <Flex
@@ -69,7 +81,6 @@ export const Sidebar = ({
       <Flex
         flexDir={flexDirection}
         gap={isSmallScreen ? 5 : 3}
-        px={isSmallScreen && 5}
         overflowY="auto"
         css={
           (!isOpen || isSmallScreen) && {
@@ -87,12 +98,14 @@ export const Sidebar = ({
           return (
             <Flex
               key={index}
+              ref={active ? activeItemRef : null}
               align="center"
               justify={!isOpen && "center"}
               gap={2}
               py={isSmallScreen ? "10px" : 2}
               cursor="pointer"
               pl={padding}
+              px={isSmallScreen && 2}
               borderLeft={!isSmallScreen && "4px solid"}
               borderBottom={isSmallScreen && "2px solid"}
               borderColor={active ? "brand.500" : "transparent"}

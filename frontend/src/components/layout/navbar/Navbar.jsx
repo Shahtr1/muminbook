@@ -115,7 +115,7 @@ export const Navbar = () => {
           />
 
           {navItems(user).map((item) => {
-            const isActive = location.pathname === item.link;
+            const isActive = location.pathname.startsWith(item.link);
 
             switch (item?.id) {
               case "user":
