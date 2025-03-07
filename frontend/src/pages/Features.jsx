@@ -5,7 +5,7 @@ import { featureItems } from "@/components/data/featureItems.js";
 
 export const Features = () => {
   return (
-    <Flex width="full" maxW="x-max-width" mx="auto">
+    <Flex width="full" maxW="x-max-width" mx="auto" overflowX="hidden">
       <Sidebar label={"Features"} items={featureItems()} />
       <Box>
         <Outlet />
