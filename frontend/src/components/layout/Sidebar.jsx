@@ -22,7 +22,7 @@ export const Sidebar = ({
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const bgColor = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("text-primary", "whiteAlpha.900"); // ✅ Always call the hook
+  const textColor = useColorModeValue("text-primary", "whiteAlpha.900");
 
   const flexDirection = isSmallScreen ? "row" : "column";
   const height = isSmallScreen
