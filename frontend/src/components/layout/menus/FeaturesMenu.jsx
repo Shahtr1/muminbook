@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { featureItems } from "@/components/data/featureItems.js";
+import { featureItems } from "@/data/js/featureItems.js";
 
 export const FeaturesMenu = ({
   children,

@@ -10,7 +10,7 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { Box } from "@chakra-ui/react";
-import { prophetTree } from "@/components/data/prophetTree.js";
+import { prophetTree } from "@/data/js/prophetTree.js";
 import { ProphetNode } from "@/components/layout/features/nodes/ProphetNode.jsx";
 import { TextNode } from "@/components/layout/features/nodes/TextNode.jsx";
 import { CaliphNode } from "@/components/layout/features/nodes/CaliphNode.jsx";

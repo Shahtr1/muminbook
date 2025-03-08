@@ -1,7 +1,7 @@
 import { Sidebar } from "@/components/layout/Sidebar.jsx";
 import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
-import { featureItems } from "@/components/data/featureItems.js";
+import { featureItems } from "@/data/js/featureItems.js";
 
 export const Features = () => {
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });

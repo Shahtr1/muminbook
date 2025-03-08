@@ -1,14 +1,14 @@
 export const prophetTree = [
   {
     id: "1",
-    data: { label: "Adam" },
+    data: { biblicalName: "Adam" },
     position: { x: 400, y: 50 },
     draggable: true,
     type: "prophet",
   },
   {
     id: "2",
-    data: { label: "Nuh (Noah)" },
+    data: { biblicalName: "Nuh (Noah)" },
     position: { x: 400, y: 150 },
     draggable: true,
     type: "prophet",
@@ -16,7 +16,7 @@ export const prophetTree = [
   },
   {
     id: "3",
-    data: { label: "Ibrahim (Abraham)" },
+    data: { biblicalName: "Ibrahim (Abraham)" },
     position: { x: 400, y: 250 },
     draggable: true,
     type: "prophet",
@@ -24,7 +24,7 @@ export const prophetTree = [
   },
   {
     id: "4",
-    data: { label: "Ismail" },
+    data: { biblicalName: "Ismail" },
     position: { x: 250, y: 350 },
     draggable: true,
     type: "prophet",
@@ -32,7 +32,7 @@ export const prophetTree = [
   },
   {
     id: "5",
-    data: { label: "Ishaq" },
+    data: { biblicalName: "Ishaq" },
     position: { x: 550, y: 350 },
     draggable: true,
     type: "prophet",
@@ -40,7 +40,7 @@ export const prophetTree = [
   },
   {
     id: "6",
-    data: { label: "Yaqub (Jacob)" },
+    data: { biblicalName: "Yaqub (Jacob)" },
     position: { x: 550, y: 450 },
     draggable: true,
     type: "prophet",
@@ -48,7 +48,7 @@ export const prophetTree = [
   },
   {
     id: "7",
-    data: { label: "Yusuf (Joseph)" },
+    data: { biblicalName: "Yusuf (Joseph)" },
     position: { x: 550, y: 550 },
     draggable: true,
     type: "prophet",
@@ -56,7 +56,7 @@ export const prophetTree = [
   },
   {
     id: "8",
-    data: { label: "Musa (Moses)" },
+    data: { biblicalName: "Musa (Moses)" },
     position: { x: 700, y: 450 },
     draggable: true,
     type: "prophet",
@@ -64,7 +64,7 @@ export const prophetTree = [
   },
   {
     id: "9",
-    data: { label: "Isa (Jesus)" },
+    data: { biblicalName: "Isa (Jesus)" },
     position: { x: 850, y: 650 },
     draggable: true,
     type: "prophet",
@@ -72,7 +72,7 @@ export const prophetTree = [
   },
   {
     id: "10",
-    data: { label: "Muhammad (PBUH)" },
+    data: { biblicalName: "Muhammad (PBUH)" },
     position: { x: 400, y: 850 },
     draggable: true,
     type: "prophet",

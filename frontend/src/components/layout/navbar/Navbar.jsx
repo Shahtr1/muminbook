@@ -20,7 +20,7 @@ import { NavMenuItem } from "@/components/layout/navbar/NavMenuItem.jsx";
 import { NotificationMenu } from "@/components/layout/menus/NotificationMenu.jsx";
 import { UserMenu } from "@/components/layout/menus/UserMenu.jsx";
 import { FeaturesMenu } from "@/components/layout/menus/FeaturesMenu.jsx";
-import { navItems } from "@/components/data/navbarItems.js";
+import { navItems } from "@/data/js/navbarItems.js";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
