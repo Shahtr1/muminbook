@@ -8,7 +8,6 @@ export const Features = () => {
   return (
     <Flex
       width="full"
-      maxW="x-max-width"
       mx="auto"
       overflowX="hidden"
       flexDirection={isSmallScreen && "column"}
