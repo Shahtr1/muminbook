@@ -27,13 +27,45 @@ const nodeTypes = {
 const createEdges = (nodes) => {
   return nodes
     .filter((node) => node.parent)
-    .map((node) => ({
-      id: `e${node.parent}-${node.id}`,
-      source: node.parent,
-      target: node.id,
-      type: "smoothstep",
-      style: { strokeDasharray: "5 5", stroke: "gray" },
-    }));
+    .map((node) => {
+      const parent = nodes.find((n) => n.id === node.parent);
+      if (!parent) return null;
+
+      let sourceHandle;
+      let targetHandle;
+
+      if (parent.position.x < node.position.x) {
+        sourceHandle = "right";
+        targetHandle = "left";
+      } else if (parent.position.x > node.position.x) {
+        sourceHandle = "left";
+        targetHandle = "right";
+      } else if (parent.position.y < node.position.y) {
+        sourceHandle = "bottom";
+        targetHandle = "top";
+      } else {
+        sourceHandle = "top";
+        targetHandle = "bottom";
+      }
+
+      console.log(
+        `Connecting ${parent.data.islamicName} (${sourceHandle}) → ${node.data.islamicName} (${targetHandle})`,
+      );
+
+      return {
+        id: `e${node.parent}-${node.id}`,
+        source: node.parent,
+        sourceHandle,
+        target: node.id,
+        targetHandle,
+        type: "smoothstep",
+        style: {
+          strokeDasharray: node.data?.lineage === "indirect" ? "5 5" : "none",
+          stroke: "gray",
+        },
+      };
+    })
+    .filter(Boolean);
 };
 
 export const FamilyTree = () => {

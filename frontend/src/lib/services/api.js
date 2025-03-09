@@ -1,5 +1,5 @@
 import API from "../../config/apiClient.js";
-import { prophetTreeApi } from "@/data/prophetTreeApi.js";
+import { familyTreeApi } from "@/data/familyTreeApi.js";
 
 export const login = async (data) => API.post("/auth/login", data);
 export const logout = async () => API.get("/auth/logout");
@@ -17,7 +17,7 @@ export const getUser = async () => API.get("/user");
 export const getFamilyTree = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(prophetTreeApi);
+      resolve(familyTreeApi);
     }, 1000);
   });
 };

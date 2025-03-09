@@ -5,6 +5,7 @@ export const createFamilyTree = (tree = []) => {
     const foundTimeline = Object.keys(timeline).find((key) =>
       timeline[key].includes(node.uuid),
     );
+
     return {
       id: node.id,
       data: {
@@ -12,6 +13,7 @@ export const createFamilyTree = (tree = []) => {
         islamicName: node.islamicName,
         arabicName: node.arabicName,
         timeline: foundTimeline,
+        lineage: node.lineage,
         ulul_azm: ulul_azms.includes(node.uuid),
       },
       position: nodePositions[node.uuid] || { x: 0, y: 0 },

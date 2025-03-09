@@ -1,5 +1,7 @@
 export const nodePositions = {
   adam: { x: 400, y: 50 },
+  hawa: { x: 600, y: 50 },
+  qabil: { x: 400, y: 150 },
   idris: { x: 400, y: 100 },
   nuh: { x: 400, y: 150 },
   ibrahim: { x: 400, y: 250 },
