@@ -15,6 +15,8 @@ import { TextNode } from "@/components/layout/features/nodes/TextNode.jsx";
 import { CaliphNode } from "@/components/layout/features/nodes/CaliphNode.jsx";
 import useFamilyTree from "@/hooks/useFamilyTree.js";
 import { createFamilyTree } from "@/utils/createFamilyTree.js";
+import { Loader } from "@/components/layout/Loader.jsx";
+import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 
 const nodeTypes = {
   prophet: ProphetNode,
@@ -95,8 +97,9 @@ const FamilyTreeContent = () => {
     [],
   );
 
-  if (isPending) return <p>Loading Family Tree...</p>;
-  if (isError) return <p>Error fetching data!</p>;
+  if (isPending) return <Loader />;
+
+  if (isError) return <SomethingWentWrong />;
 
   return (
     <Box width="100%" height="100%">

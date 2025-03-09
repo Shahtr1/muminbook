@@ -21,6 +21,7 @@ const config = {
 const styles = {
   global: (props) => ({
     body: {
+      minHeight: "100vh",
       color: mode("black", "whiteAlpha.900")(props),
       bg: mode("#f4f2ee", "#11151c")(props),
       fontFamily: "'Nunito Sans', sans-serif",
