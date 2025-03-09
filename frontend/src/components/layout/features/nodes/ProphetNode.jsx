@@ -1,18 +1,28 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { Handle, Position } from "reactflow";
 
 export const ProphetNode = ({ data }) => {
+  const backgroundColor = useColorModeValue("node.light", "node.dark");
+  const isBig = data.ulul_azm;
   return (
     <Box
-      bg="teal.500"
+      borderRadius="sm"
+      bg={backgroundColor}
       color="white"
-      p={3}
-      borderRadius="md"
-      boxShadow="md"
-      textAlign="center"
-      minWidth="120px"
+      w={isBig ? "80px" : "70px"}
+      h={isBig ? "40px" : "35px"}
     >
-      <Text fontWeight="bold">{data.label}</Text>
+      <Flex>
+        <Box></Box>
+        <Flex flexDirection="column">
+          {data.biblicalName !== data.islamicName && (
+            <Text color="white">{data.biblicalName}</Text>
+          )}
+          <Text color="white">{data.islamicName}</Text>
+          <Text color="white">{data.arabicName}</Text>
+        </Flex>
+      </Flex>
+
       <Handle
         type="target"
         position={Position.Top}

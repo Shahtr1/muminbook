@@ -39,6 +39,10 @@ const colors = {
     light: secondaryText,
     dark: whiteAlpha700,
   },
+  node: {
+    light: "#008040",
+    dark: "#008040",
+  },
 };
 
 export default colors;

@@ -1,0 +1,16 @@
+export const nodePositions = {
+  adam: { x: 400, y: 50 },
+  idris: { x: 400, y: 100 },
+  nuh: { x: 400, y: 150 },
+  ibrahim: { x: 400, y: 250 },
+  ismail: { x: 250, y: 350 },
+  isaac: { x: 550, y: 350 },
+  yaqub: { x: 550, y: 450 },
+  yusuf: { x: 550, y: 550 },
+  musa: { x: 700, y: 450 },
+  harun: { x: 450, y: 600 },
+  dawud: { x: 700, y: 600 },
+  sulayman: { x: 850, y: 600 },
+  isa: { x: 850, y: 650 },
+  muhammad: { x: 400, y: 850 },
+};

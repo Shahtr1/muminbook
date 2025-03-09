@@ -14,7 +14,7 @@ export const usePreloadImages = (navItems) => {
               (state) =>
                 new Promise((resolve) => {
                   const img = new window.Image();
-                  img.src = `/images/icons/${item.icon}-${mode}${state}.svg`;
+                  img.src = `/images/logos/icons/${item.icon}-${mode}${state}.svg`;
 
                   img.onload = () => {
                     if (!images[item.icon]) images[item.icon] = {};

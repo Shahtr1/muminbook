@@ -20,7 +20,7 @@ import { NavMenuItem } from "@/components/layout/navbar/NavMenuItem.jsx";
 import { NotificationMenu } from "@/components/layout/menus/NotificationMenu.jsx";
 import { UserMenu } from "@/components/layout/menus/UserMenu.jsx";
 import { FeaturesMenu } from "@/components/layout/menus/FeaturesMenu.jsx";
-import { navItems } from "@/data/js/navbarItems.js";
+import { navItems } from "@/data/navbarItems.js";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -63,7 +63,7 @@ export const Navbar = () => {
         <Flex align="center" height="100%" gap={2} flex={1}>
           <Image
             w={45}
-            src="/images/logo-image.png"
+            src="/images/logos/logo-image.png"
             alt="Muminbook Logo"
             cursor="pointer"
             display={{ base: "block", md: "none" }}
@@ -72,7 +72,7 @@ export const Navbar = () => {
 
           <Image
             w={150}
-            src="/images/logo-with-image.png"
+            src="/images/logos/logo-with-image.png"
             alt="Muminbook Logo"
             cursor="pointer"
             display={{ base: "none", md: "block" }}

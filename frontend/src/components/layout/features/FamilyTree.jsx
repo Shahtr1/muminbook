@@ -10,10 +10,11 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { Box } from "@chakra-ui/react";
-import { prophetTree } from "@/data/js/prophetTree.js";
 import { ProphetNode } from "@/components/layout/features/nodes/ProphetNode.jsx";
 import { TextNode } from "@/components/layout/features/nodes/TextNode.jsx";
 import { CaliphNode } from "@/components/layout/features/nodes/CaliphNode.jsx";
+import useFamilyTree from "@/hooks/useFamilyTree.js";
+import { createFamilyTree } from "@/utils/createFamilyTree.js";
 
 const nodeTypes = {
   prophet: ProphetNode,
@@ -42,16 +43,22 @@ export const FamilyTree = () => {
 };
 
 const FamilyTreeContent = () => {
-  const [nodes, setNodes] = useState(prophetTree);
-  const [edges, setEdges] = useState(createEdges(prophetTree));
+  const { familyTree, isPending, isError } = useFamilyTree();
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
   const { fitView, setCenter } = useReactFlow();
 
   const memoizedNodeTypes = useMemo(() => nodeTypes, []);
 
   useEffect(() => {
-    setNodes(prophetTree);
-    setEdges(createEdges(prophetTree));
-  }, [prophetTree]);
+    if (familyTree && familyTree.length > 0) {
+      const formattedNodes = createFamilyTree(familyTree);
+      const newEdges = createEdges(formattedNodes);
+
+      setNodes(formattedNodes);
+      setEdges(newEdges);
+    }
+  }, [familyTree]);
 
   function zoomToLowLevel() {
     const lowestNode = nodes.reduce((prev, curr) =>
@@ -73,7 +80,6 @@ const FamilyTreeContent = () => {
   useEffect(() => {
     if (nodes.length > 0) {
       setTimeout(() => {
-        // zoomToLowLevel();
         zoomToFit();
       }, 300);
     }
@@ -88,6 +94,9 @@ const FamilyTreeContent = () => {
     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
     [],
   );
+
+  if (isPending) return <p>Loading Family Tree...</p>;
+  if (isError) return <p>Error fetching data!</p>;
 
   return (
     <Box width="100%" height="100%">

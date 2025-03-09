@@ -30,7 +30,7 @@ const VerifyEmail = () => {
           <Image
             cursor="pointer"
             w={{ base: 150, md: 200 }}
-            src="/images/logo-text.png"
+            src="/images/logos/logo-text.png"
             alt="Muminbook Logo"
             onClick={() => navigate("/")}
           />

@@ -60,7 +60,7 @@ const Login = () => {
         <Stack spacing={2} alignItems={{ base: "center", md: "unset" }}>
           <Image
             w={{ base: 150, md: 200 }}
-            src="/images/logo-with-image.png"
+            src="/images/logos/logo-with-image.png"
             alt="Muminbook Logo"
             onClick={() => navigate("/")}
             cursor="pointer"
