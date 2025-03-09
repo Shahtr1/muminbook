@@ -4,12 +4,11 @@ import ReactFlow, {
   applyNodeChanges,
   Background,
   Controls,
-  MiniMap,
   ReactFlowProvider,
   useReactFlow,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { Box } from "@chakra-ui/react";
+import { Box, useTheme } from "@chakra-ui/react";
 import { ProphetNode } from "@/components/layout/features/nodes/ProphetNode.jsx";
 import { TextNode } from "@/components/layout/features/nodes/TextNode.jsx";
 import { CaliphNode } from "@/components/layout/features/nodes/CaliphNode.jsx";
@@ -24,7 +23,7 @@ const nodeTypes = {
   caliph: CaliphNode,
 };
 
-const createEdges = (nodes) => {
+const createEdges = (nodes, color) => {
   return nodes
     .filter((node) => node.parent)
     .map((node) => {
@@ -34,25 +33,22 @@ const createEdges = (nodes) => {
       let sourceHandle;
       let targetHandle;
 
-      console.log(node.data.islamicName, parent.position, node.position);
-
       if (parent.position.x < node.position.x) {
         sourceHandle = "right";
         targetHandle = "left";
-      } else if (parent.position.x > node.position.x) {
+      }
+      if (parent.position.x > node.position.x) {
         sourceHandle = "left";
         targetHandle = "right";
-      } else if (parent.position.y < node.position.y) {
+      }
+      if (parent.position.y < node.position.y) {
         sourceHandle = "bottom";
         targetHandle = "top";
-      } else {
+      }
+      if (parent.position.y > node.position.y) {
         sourceHandle = "top";
         targetHandle = "bottom";
       }
-
-      console.log(
-        `Connecting ${parent.data.islamicName} (${sourceHandle}) → ${node.data.islamicName} (${targetHandle})`,
-      );
 
       return {
         id: `e${node.parent}-${node.id}`,
@@ -63,7 +59,7 @@ const createEdges = (nodes) => {
         type: "smoothstep",
         style: {
           strokeDasharray: node.data?.lineage === "indirect" ? "5 5" : "none",
-          stroke: "gray",
+          stroke: color,
         },
       };
     })
@@ -79,6 +75,7 @@ export const FamilyTree = () => {
 };
 
 const FamilyTreeContent = () => {
+  const theme = useTheme();
   const { familyTree, isPending, isError } = useFamilyTree();
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
@@ -89,7 +86,7 @@ const FamilyTreeContent = () => {
   useEffect(() => {
     if (familyTree && familyTree.length > 0) {
       const formattedNodes = createFamilyTree(familyTree);
-      const newEdges = createEdges(formattedNodes);
+      const newEdges = createEdges(formattedNodes, `${theme.colors.node}`);
 
       setNodes(formattedNodes);
       setEdges(newEdges);
@@ -117,7 +114,7 @@ const FamilyTreeContent = () => {
     if (nodes.length > 0) {
       setTimeout(() => {
         // zoomToLowLevel();
-        zoomToFit();
+        // zoomToFit();
       }, 300);
     }
   }, [nodes, fitView, setCenter]);
@@ -148,7 +145,6 @@ const FamilyTreeContent = () => {
         proOptions={{ hideAttribution: true }}
       >
         <Controls zoomSpeed={2} />
-        <MiniMap pannable zoomable />
         <Background />
       </ReactFlow>
     </Box>

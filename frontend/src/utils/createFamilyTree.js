@@ -11,7 +11,7 @@ export const createFamilyTree = (tree = []) =>
         arabicName,
         timeline:
           Object.keys(timeline).find((key) => timeline[key].includes(uuid)) ||
-          "unknown",
+          "father",
         lineage,
         ulul_azm: ulul_azms.includes(uuid),
       },
@@ -37,6 +37,7 @@ const prophets = [
   "shuayb",
   "ibrahim",
   "ismail",
+  "ishaq",
   "lut",
   "yaqub",
   "yusuf",
@@ -66,7 +67,7 @@ const timeline = {
     "harun",
     "ilyas",
     "isa",
-    "isaac",
+    "ishaq",
     "musa",
     "sulayman",
     "yahya",

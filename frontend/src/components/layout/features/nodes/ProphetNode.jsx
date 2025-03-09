@@ -10,7 +10,7 @@ export const ProphetNode = ({ data }) => {
     <TreeNode>
       <Flex
         borderRadius="sm"
-        bg="node.color"
+        bg="node"
         color="white"
         w={isBig ? "90px" : "75px"}
         h={isBig ? "50px" : "40px"}

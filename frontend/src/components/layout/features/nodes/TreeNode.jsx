@@ -2,7 +2,7 @@ import { Handle, Position } from "reactflow";
 import { Fragment } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 
-export const CommonTextNode = ({ data, width = "100%", color }) => {
+export const CommonTextNode = ({ data, width = "100%", color = "node" }) => {
   return (
     <Flex
       w={width}

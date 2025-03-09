@@ -16,12 +16,19 @@ export const Sidebar = ({
   pClose = 2,
   closeable = true,
 }) => {
-  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+  const isMediumScreen = useBreakpointValue({ base: true, md: false });
+
+  const [isOpen, setIsOpen] = useState(!isMediumScreen);
+
+  useEffect(() => {
+    setIsOpen(!isMediumScreen);
+  }, [isMediumScreen]);
+
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("text-primary", "whiteAlpha.900");
 
