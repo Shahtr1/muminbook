@@ -82,6 +82,7 @@ const FamilyTreeContent = () => {
   useEffect(() => {
     if (nodes.length > 0) {
       setTimeout(() => {
+        // zoomToLowLevel();
         zoomToFit();
       }, 300);
     }
