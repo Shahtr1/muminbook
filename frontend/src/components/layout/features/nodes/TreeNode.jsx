@@ -1,5 +1,28 @@
 import { Handle, Position } from "reactflow";
 import { Fragment } from "react";
+import { Flex, Text } from "@chakra-ui/react";
+
+export const CommonTextNode = ({ data, width = "100%", color }) => {
+  return (
+    <Flex
+      w={width}
+      flexDirection="column"
+      fontSize="5px"
+      justify="center"
+      align="center"
+    >
+      {data.biblicalName !== data.islamicName && (
+        <Text color={color}>{data.biblicalName}</Text>
+      )}
+      <Text color={color} fontSize="8px" fontWeight="medium">
+        {data.islamicName}
+      </Text>
+      <Text color={color} fontSize="9px">
+        {data.arabicName}
+      </Text>
+    </Flex>
+  );
+};
 
 export const TreeNode = ({ children }) => {
   return (

@@ -34,6 +34,8 @@ const createEdges = (nodes) => {
       let sourceHandle;
       let targetHandle;
 
+      console.log(node.data.islamicName, parent.position, node.position);
+
       if (parent.position.x < node.position.x) {
         sourceHandle = "right";
         targetHandle = "left";

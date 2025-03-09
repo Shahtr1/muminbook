@@ -1,31 +1,39 @@
-import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
-import { TreeNode } from "@/components/layout/features/nodes/TreeNode.jsx";
+import { Box, Flex } from "@chakra-ui/react";
+import {
+  CommonTextNode,
+  TreeNode,
+} from "@/components/layout/features/nodes/TreeNode.jsx";
 
 export const ProphetNode = ({ data }) => {
-  const backgroundColor = useColorModeValue("node.light", "node.dark");
   const isBig = data.ulul_azm;
-
   return (
     <TreeNode>
-      <Box
+      <Flex
         borderRadius="sm"
-        bg={backgroundColor}
+        bg="node.color"
         color="white"
-        w={isBig ? "80px" : "70px"}
-        h={isBig ? "40px" : "35px"}
+        w={isBig ? "90px" : "75px"}
+        h={isBig ? "50px" : "40px"}
         position="relative"
+        align="center"
       >
-        <Flex>
-          <Box></Box>
-          <Flex flexDirection="column">
-            {data.biblicalName !== data.islamicName && (
-              <Text color="white">{data.biblicalName}</Text>
-            )}
-            <Text color="white">{data.islamicName}</Text>
-            <Text color="white">{data.arabicName}</Text>
-          </Flex>
+        <Flex w="50%" bg="white" h="100%" position="relative">
+          <img src={`/images/frames/${data.timeline}.png`} />
+          <Box
+            w="65%"
+            h="70%"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            bgImage={`/images/prophets_and_caliphs/pngs/${data.uuid}.png`}
+            bgSize="contain"
+            bgRepeat="no-repeat"
+            bgPosition="center"
+            position="absolute"
+          />
         </Flex>
-      </Box>
+        <CommonTextNode data={data} width="50%" color="white" />
+      </Flex>
     </TreeNode>
   );
 };

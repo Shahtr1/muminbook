@@ -1,32 +1,30 @@
 import { nodePositions } from "@/utils/nodePositions.js";
 
-export const createFamilyTree = (tree = []) => {
-  return tree.map((node) => {
-    const foundTimeline = Object.keys(timeline).find((key) =>
-      timeline[key].includes(node.uuid),
-    );
-
-    return {
-      id: node.id,
+export const createFamilyTree = (tree = []) =>
+  tree.map(
+    ({ id, uuid, biblicalName, islamicName, arabicName, lineage, parent }) => ({
+      id,
       data: {
-        biblicalName: node.biblicalName,
-        islamicName: node.islamicName,
-        arabicName: node.arabicName,
-        timeline: foundTimeline,
-        lineage: node.lineage,
-        ulul_azm: ulul_azms.includes(node.uuid),
+        uuid,
+        biblicalName,
+        islamicName,
+        arabicName,
+        timeline:
+          Object.keys(timeline).find((key) => timeline[key].includes(uuid)) ||
+          "unknown",
+        lineage,
+        ulul_azm: ulul_azms.includes(uuid),
       },
-      position: nodePositions[node.uuid] || { x: 0, y: 0 },
+      position: nodePositions[uuid] || { x: 0, y: 0 },
       draggable: true,
-      type: prophets.includes(node.uuid)
+      type: prophets.includes(uuid)
         ? "prophet"
-        : caliphs.includes(node.uuid)
+        : caliphs.includes(uuid)
           ? "caliph"
           : "text",
-      parent: node.parent,
-    };
-  });
-};
+      parent,
+    }),
+  );
 
 const caliphs = ["abubakr", "umar", "uthman", "ali"];
 

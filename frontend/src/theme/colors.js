@@ -40,8 +40,7 @@ const colors = {
     dark: whiteAlpha700,
   },
   node: {
-    light: "#008040",
-    dark: "#008040",
+    color: "#008040",
   },
 };
 
