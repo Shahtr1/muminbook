@@ -3,12 +3,21 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
+  IconButton,
   Flex,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
+import { RepeatIcon } from "@chakra-ui/icons";
 import React from "react";
 
 export const SomethingWentWrong = ({ height = "100%" }) => {
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
+  const iconColor = useColorModeValue("text.primary", "whiteAlpha.900");
+
   return (
     <Flex width="100%" height={height} justify="center" align="center">
       <Alert
@@ -17,17 +26,44 @@ export const SomethingWentWrong = ({ height = "100%" }) => {
         flexDirection="column"
         alignItems="center"
         textAlign="center"
-        p={4}
+        p={6}
         borderRadius="md"
         boxShadow="md"
       >
         <AlertIcon boxSize="24px" />
         <AlertTitle>
-          <Text>Oops! Something went wrong.</Text>
+          <Text fontSize="lg" fontWeight="bold">
+            Oops! Something went wrong.
+          </Text>
         </AlertTitle>
-        <AlertDescription>
+        <AlertDescription mb={4}>
           <Text>Please try refreshing the page or check back later.</Text>
         </AlertDescription>
+
+        <IconButton
+          icon={<RepeatIcon />}
+          aria-label="Refresh Page"
+          size="sm"
+          variant="outline"
+          color={iconColor}
+          borderColor={iconColor}
+          onClick={handleRefresh}
+          _hover={{
+            bg: "transparent",
+            color: iconColor,
+            borderColor: iconColor,
+          }}
+          _focus={{
+            bg: "transparent",
+            color: iconColor,
+            borderColor: iconColor,
+          }}
+          _active={{
+            bg: "transparent",
+            color: iconColor,
+            borderColor: iconColor,
+          }}
+        />
       </Alert>
     </Flex>
   );
