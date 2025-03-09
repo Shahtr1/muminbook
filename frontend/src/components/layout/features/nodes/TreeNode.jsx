@@ -1,8 +1,12 @@
 import { Handle, Position } from "reactflow";
 import { Fragment } from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
 
-export const CommonTextNode = ({ data, width = "100%", color = "node" }) => {
+export const CommonTextNode = ({
+  data,
+  width = "100%",
+  color = useColorModeValue("node", "whiteAlpha.900"),
+}) => {
   return (
     <Flex
       w={width}
