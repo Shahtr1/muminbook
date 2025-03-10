@@ -16,53 +16,57 @@ import useFamilyTree from "@/hooks/useFamilyTree.js";
 import { createFamilyTree } from "@/utils/createFamilyTree.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { BannerNode } from "@/components/layout/features/nodes/BannerNode.jsx";
 
 const nodeTypes = {
   prophet: ProphetNode,
   text: TextNode,
   caliph: CaliphNode,
+  banner: BannerNode,
 };
 
 const createEdges = (nodes, color) => {
   return nodes
-    .filter((node) => node.parent)
-    .map((node) => {
-      const parent = nodes.find((n) => n.id === node.parent);
-      if (!parent) return null;
+    .filter((node) => node.parents && node.parents.length > 0)
+    .flatMap((node) =>
+      node.parents.map((parentId) => {
+        const parent = nodes.find((n) => n.id === parentId);
+        if (!parent) return null;
 
-      let sourceHandle;
-      let targetHandle;
+        let sourceHandle, targetHandle;
 
-      if (parent.position.x < node.position.x) {
-        sourceHandle = "right";
-        targetHandle = "left";
-      }
-      if (parent.position.x > node.position.x) {
-        sourceHandle = "left";
-        targetHandle = "right";
-      }
-      if (parent.position.y < node.position.y) {
-        sourceHandle = "bottom";
-        targetHandle = "top";
-      }
-      if (parent.position.y > node.position.y) {
-        sourceHandle = "top";
-        targetHandle = "bottom";
-      }
+        if (parent.position.x < node.position.x) {
+          sourceHandle = "right";
+          targetHandle = "left";
+        }
+        if (parent.position.x > node.position.x) {
+          sourceHandle = "left";
+          targetHandle = "right";
+        }
+        if (parent.position.y < node.position.y) {
+          sourceHandle = "bottom";
+          targetHandle = "top";
+        }
+        if (parent.position.y > node.position.y) {
+          sourceHandle = "top";
+          targetHandle = "bottom";
+        }
 
-      return {
-        id: `e${node.parent}-${node.id}`,
-        source: node.parent,
-        sourceHandle,
-        target: node.id,
-        targetHandle,
-        type: "smoothstep",
-        style: {
-          strokeDasharray: node.data?.lineage === "indirect" ? "5 5" : "none",
-          stroke: color,
-        },
-      };
-    })
+        return {
+          id: `e${parentId}-${node.id}`,
+          source: parentId,
+          sourceHandle,
+          target: node.id,
+          targetHandle,
+          type: "smoothstep",
+          style: {
+            strokeDasharray: node.data?.lineage === "indirect" ? "5 5" : "none",
+            stroke: color,
+            strokeWidth: "2px",
+          },
+        };
+      }),
+    )
     .filter(Boolean);
 };
 
@@ -143,6 +147,7 @@ const FamilyTreeContent = () => {
         nodeTypes={memoizedNodeTypes}
         fitView
         proOptions={{ hideAttribution: true }}
+        minZoom={0.1}
       >
         <Controls zoomSpeed={2} />
         <Background />

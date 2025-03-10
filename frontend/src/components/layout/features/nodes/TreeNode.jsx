@@ -16,9 +16,11 @@ export const CommonTextNode = ({
       align="center"
     >
       {data.biblicalName !== data.islamicName && (
-        <Text color={color}>{data.biblicalName}</Text>
+        <Text align="center" color={color}>
+          {data.biblicalName}
+        </Text>
       )}
-      <Text color={color} fontSize="8px" fontWeight="medium">
+      <Text color={color} fontSize="1.4em" fontWeight="medium">
         {data.islamicName}
       </Text>
       <Text color={color} fontSize="9px">

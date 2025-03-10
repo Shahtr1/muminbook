@@ -2,13 +2,23 @@ import { nodePositions } from "@/utils/nodePositions.js";
 
 export const createFamilyTree = (tree = []) =>
   tree.map(
-    ({ id, uuid, biblicalName, islamicName, arabicName, lineage, parent }) => ({
+    ({
+      id,
+      uuid,
+      biblicalName,
+      islamicName,
+      arabicName,
+      lineage,
+      parents,
+      label,
+    }) => ({
       id,
       data: {
         uuid,
         biblicalName,
         islamicName,
         arabicName,
+        label,
         timeline:
           Object.keys(timeline).find((key) => timeline[key].includes(uuid)) ||
           "father",
@@ -21,10 +31,14 @@ export const createFamilyTree = (tree = []) =>
         ? "prophet"
         : caliphs.includes(uuid)
           ? "caliph"
-          : "text",
-      parent,
+          : banners.includes(uuid)
+            ? "banner"
+            : "text",
+      parents: Array.isArray(parents) ? parents : parents ? [parents] : [],
     }),
   );
+
+const banners = ["qurayshtribe", "banuisrael"];
 
 const caliphs = ["abubakr", "umar", "uthman", "ali"];
 
@@ -43,7 +57,7 @@ const prophets = [
   "yusuf",
   "ayyub",
   "shuaib",
-  "moses",
+  "musa",
   "harun",
   "dawud",
   "sulayman",
