@@ -33,11 +33,14 @@ export const createFamilyTree = (tree = []) =>
           ? "caliph"
           : banners.includes(uuid)
             ? "banner"
-            : "text",
+            : flags.includes(uuid)
+              ? "flag"
+              : "text",
       parents: Array.isArray(parents) ? parents : parents ? [parents] : [],
     }),
   );
 
+const flags = ["abbasid", "umayyad"];
 const banners = ["qurayshtribe", "banuisrael"];
 
 const caliphs = ["abubakr", "umar", "uthman", "ali"];

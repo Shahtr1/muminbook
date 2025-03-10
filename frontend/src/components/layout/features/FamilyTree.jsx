@@ -17,12 +17,14 @@ import { createFamilyTree } from "@/utils/createFamilyTree.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { BannerNode } from "@/components/layout/features/nodes/BannerNode.jsx";
+import { FlagNode } from "@/components/layout/features/nodes/FlagNode.jsx";
 
 const nodeTypes = {
   prophet: ProphetNode,
   text: TextNode,
   caliph: CaliphNode,
   banner: BannerNode,
+  flag: FlagNode,
 };
 
 const createEdges = (nodes, color) => {
@@ -97,6 +99,7 @@ const FamilyTreeContent = () => {
   useEffect(() => {
     if (familyTree && familyTree.length > 0) {
       const formattedNodes = createFamilyTree(familyTree);
+
       const newEdges = createEdges(formattedNodes, `${theme.colors.node}`);
 
       setNodes(formattedNodes);
@@ -104,29 +107,18 @@ const FamilyTreeContent = () => {
     }
   }, [familyTree]);
 
-  function zoomToLowLevel() {
-    const lowestNode = nodes.reduce((prev, curr) =>
-      prev.position.y > curr.position.y ? prev : curr,
-    );
-
-    setCenter(lowestNode.position.x, lowestNode.position.y + 100, {
-      zoom: 1.2,
-      duration: 300,
-    });
-  }
-
-  function zoomToFit() {
-    setTimeout(() => {
-      fitView({ duration: 300 });
-    }, 400);
+  function zoomToLastProphet() {
+    const lastProphet = nodes.find((node) => node.data.uuid === "muhammad");
+    if (lastProphet)
+      setCenter(lastProphet.position.x + 100, lastProphet.position.y + 100, {
+        zoom: 1.2,
+        duration: 1000,
+      });
   }
 
   useEffect(() => {
     if (nodes.length > 0) {
-      setTimeout(() => {
-        // zoomToLowLevel();
-        // zoomToFit();
-      }, 300);
+      zoomToLastProphet();
     }
   }, [nodes, fitView, setCenter]);
 
