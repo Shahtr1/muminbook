@@ -62,7 +62,7 @@ const createEdges = (nodes, color) => {
           style: {
             strokeDasharray: node.data?.lineage === "indirect" ? "5 5" : "none",
             stroke: color,
-            strokeWidth: "2px",
+            strokeWidth: "1.5px",
           },
         };
       }),

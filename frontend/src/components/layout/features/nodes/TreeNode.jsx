@@ -20,7 +20,7 @@ export const CommonTextNode = ({
           {data.biblicalName}
         </Text>
       )}
-      <Text color={color} fontSize="1.4em" fontWeight="medium">
+      <Text color={color} fontSize="1.4em" fontWeight="bold">
         {data.islamicName}
       </Text>
       <Text color={color} fontSize="9px">

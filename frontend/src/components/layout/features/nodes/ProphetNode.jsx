@@ -6,14 +6,15 @@ import {
 
 export const ProphetNode = ({ data }) => {
   const isBig = data.ulul_azm;
+  const lastProphet = data.uuid === "muhammad";
   return (
     <TreeNode>
       <Flex
         borderRadius="sm"
         bg="node"
         color="white"
-        w={isBig ? "90px" : "75px"}
-        h={isBig ? "50px" : "40px"}
+        w={lastProphet ? "120px" : isBig ? "90px" : "75px"}
+        h={lastProphet ? "60px" : isBig ? "50px" : "40px"}
         position="relative"
         align="center"
       >
