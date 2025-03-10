@@ -29,7 +29,7 @@ const createEdges = (nodes, color) => {
   return nodes
     .filter((node) => node.parents && node.parents.length > 0)
     .flatMap((node) =>
-      node.parents.map((parentId) => {
+      node.parents.map((parentId, index) => {
         const parent = nodes.find((n) => n.id === parentId);
         if (!parent) return null;
 
@@ -52,6 +52,13 @@ const createEdges = (nodes, color) => {
           targetHandle = "bottom";
         }
 
+        const lineage = node.data?.lineage;
+        const lineages = Array.isArray(lineage)
+          ? lineage
+          : lineage
+            ? [lineage]
+            : [];
+
         return {
           id: `e${parentId}-${node.id}`,
           source: parentId,
@@ -60,7 +67,7 @@ const createEdges = (nodes, color) => {
           targetHandle,
           type: "smoothstep",
           style: {
-            strokeDasharray: node.data?.lineage === "indirect" ? "5 5" : "none",
+            strokeDasharray: lineages[index] === "indirect" ? "5 5" : "none",
             stroke: color,
             strokeWidth: "1.5px",
           },
