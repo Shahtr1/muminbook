@@ -15,7 +15,7 @@ export const Features = () => {
       h={`calc(100vh - ${theme.sizes["navbar-height"]})`}
     >
       <Sidebar label={"Features"} items={featureItems()} />
-      <Box width="full" p={5} overflowY="auto">
+      <Box width="full" p={!isSmallScreen && 5} overflowY="auto" height="full">
         <Outlet />
       </Box>
     </Flex>
