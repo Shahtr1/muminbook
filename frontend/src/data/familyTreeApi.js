@@ -743,8 +743,8 @@ export const familyTreeApi = [
   {
     id: "84",
     uuid: "hashim",
-    biblicalName: "hashim",
-    islamicName: "hashim",
+    biblicalName: "Hashim",
+    islamicName: "Hashim",
     arabicName: "هاشم",
     parents: "83",
     lineage: "direct",

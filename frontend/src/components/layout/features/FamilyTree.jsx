@@ -27,32 +27,35 @@ const nodeTypes = {
   flag: FlagNode,
 };
 
+const handlePositions = (parent, node) => {
+  let sourceHandle;
+  let targetHandle;
+  if (parent.position.x < node.position.x) {
+    sourceHandle = "right";
+    targetHandle = "left";
+  }
+  if (parent.position.x > node.position.x) {
+    sourceHandle = "left";
+    targetHandle = "right";
+  }
+  if (parent.position.y < node.position.y) {
+    sourceHandle = "bottom";
+    targetHandle = "top";
+  }
+  if (parent.position.y > node.position.y) {
+    sourceHandle = "top";
+    targetHandle = "bottom";
+  }
+  return { sourceHandle, targetHandle };
+};
+
 const createEdges = (nodes, color) => {
   return nodes
     .filter((node) => node.parents && node.parents.length > 0)
     .flatMap((node) =>
       node.parents.map((parentId, index) => {
         const parent = nodes.find((n) => n.id === parentId);
-        if (!parent) return null;
-
-        let sourceHandle, targetHandle;
-
-        if (parent.position.x < node.position.x) {
-          sourceHandle = "right";
-          targetHandle = "left";
-        }
-        if (parent.position.x > node.position.x) {
-          sourceHandle = "left";
-          targetHandle = "right";
-        }
-        if (parent.position.y < node.position.y) {
-          sourceHandle = "bottom";
-          targetHandle = "top";
-        }
-        if (parent.position.y > node.position.y) {
-          sourceHandle = "top";
-          targetHandle = "bottom";
-        }
+        const { sourceHandle, targetHandle } = handlePositions(parent, node);
 
         const lineage = node.data?.lineage;
         const lineages = Array.isArray(lineage)
@@ -93,28 +96,27 @@ const FamilyTreeContent = () => {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const { fitView, setCenter } = useReactFlow();
-
   const memoizedNodeTypes = useMemo(() => nodeTypes, []);
 
   useEffect(() => {
     if (familyTree && familyTree.length > 0) {
       const formattedNodes = createFamilyTree(familyTree);
-
       const newEdges = createEdges(formattedNodes, `${theme.colors.node}`);
-
       setNodes(formattedNodes);
       setEdges(newEdges);
     }
   }, [familyTree]);
 
-  function zoomToLastProphet() {
+  const goto = (member) =>
+    setCenter(member?.position.x + 100, member?.position.y + 100, {
+      zoom: 1.2,
+      duration: 1000,
+    });
+
+  const zoomToLastProphet = () => {
     const lastProphet = nodes.find((node) => node.data.uuid === "muhammad");
-    if (lastProphet)
-      setCenter(lastProphet.position.x + 100, lastProphet.position.y + 100, {
-        zoom: 1.2,
-        duration: 1000,
-      });
-  }
+    if (lastProphet) goto(lastProphet);
+  };
 
   useEffect(() => {
     if (nodes.length > 0) {

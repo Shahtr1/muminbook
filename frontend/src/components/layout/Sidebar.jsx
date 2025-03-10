@@ -118,7 +118,7 @@ export const Sidebar = ({
               borderColor={active ? "brand.500" : "transparent"}
               onClick={() => navigate(item.link)}
               direction={!isOpen && "column"}
-              border={!isOpen && "none"}
+              border={!isOpen && !isSmallScreen && "none"}
             >
               {!isSmallScreen && (
                 <item.icon
