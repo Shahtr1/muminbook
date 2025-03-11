@@ -7,13 +7,13 @@ export const FlagNode = ({ data }) => {
   return (
     <TreeNode>
       <Flex flexDirection="column" justifyContent="center" align="center">
-        <Text fontSize="10px" color={color} fontWeight="bold">
+        <Text fontSize="6px" color={color} fontWeight="bold">
           {data.label?.toUpperCase()}
         </Text>
-        <Text fontSize="10px" color={color} fontWeight="bold">
+        <Text fontSize="6px" color={color} fontWeight="bold">
           CALIPHS
         </Text>
-        <Box bgColor="#00804061" h={14} w={14} borderRadius="sm">
+        <Box bgColor="#00804061" h={8} w={8} borderRadius="sm">
           <img src={`/images/flags/${flag}-flag.png`} width="100%" />
         </Box>
       </Flex>
