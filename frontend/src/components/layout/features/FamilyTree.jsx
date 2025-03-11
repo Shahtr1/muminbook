@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import ReactFlow, {
   applyEdgeChanges,
   applyNodeChanges,
@@ -113,9 +119,18 @@ const FamilyTreeContent = () => {
       duration: 1000,
     });
 
+  const zoomedRef = useRef(false);
+
   const zoomToLastProphet = () => {
+    if (zoomedRef.current) return;
+
     const lastProphet = nodes.find((node) => node.data.uuid === "muhammad");
-    if (lastProphet) goto(lastProphet);
+    if (lastProphet) {
+      setTimeout(() => {
+        goto(lastProphet);
+        zoomedRef.current = true;
+      }, 500);
+    }
   };
 
   useEffect(() => {
