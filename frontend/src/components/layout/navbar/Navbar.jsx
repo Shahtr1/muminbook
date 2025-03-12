@@ -76,6 +76,7 @@ export const Navbar = () => {
             alt="Muminbook Logo"
             cursor="pointer"
             display={{ base: "none", md: "block" }}
+            onClick={() => navigate("/")}
           />
 
           <InputGroup

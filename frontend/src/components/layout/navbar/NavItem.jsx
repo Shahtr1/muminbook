@@ -29,6 +29,7 @@ export const NavItem = ({ item, activeBorderColor, children }) => {
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       cursor="pointer"
+      position="relative"
     >
       <IconComponent active={hovering || item.active} />
 
