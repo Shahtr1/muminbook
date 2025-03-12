@@ -24,6 +24,8 @@ import { Features } from "@/pages/Features.jsx";
 import { FamilyTree } from "@/components/layout/features/FamilyTree.jsx";
 import AdminRoute from "@/AdminRoute.jsx";
 import { Admin } from "@/pages/Admin.jsx";
+import { SuperBoard } from "@/components/layout/admin/SuperBoard.jsx";
+import { AdminFeatures } from "@/components/layout/admin/AdminFeatures.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -57,7 +59,11 @@ function App() {
           </Route>
           {/*admin routes*/}
           <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" element={<Admin />}>
+              <Route index element={<Navigate to="superboard" />} />
+              <Route path="/admin/superboard" element={<SuperBoard />}></Route>
+              <Route path="/admin/features" element={<AdminFeatures />}></Route>
+            </Route>
           </Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>

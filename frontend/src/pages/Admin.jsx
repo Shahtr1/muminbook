@@ -1,5 +1,7 @@
 import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
+import { Sidebar } from "@/components/layout/Sidebar.jsx";
+import { adminItems } from "@/data/adminItems.js";
 
 export const Admin = () => {
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
@@ -12,8 +14,7 @@ export const Admin = () => {
       flexDirection={isSmallScreen && "column"}
       h={`calc(100vh - ${theme.sizes["navbar-height"]})`}
     >
-      hi
-      {/*<Sidebar label={"Admin"} items={adminItems()} />*/}
+      <Sidebar label={"Admin"} items={adminItems()} />
       <Box width="full" p={5} overflowY="auto" height="full">
         <Outlet />
       </Box>

@@ -1,8 +1,18 @@
+import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
+import { DashboardSVG } from "@/components/svgs/DashboardSVG.jsx";
+
 export const adminItems = () => [
+  {
+    id: "superboard",
+    label: "Superboard",
+    icon: DashboardSVG,
+    link: "/admin/superboard",
+  },
   {
     id: "features",
     label: "Features",
-    link: "/features",
+    icon: FeaturesSVG,
+    link: "/admin/features",
     items: [{ id: "family-tree", label: "FamilyTree", link: "/family-tree" }],
   },
 ];
