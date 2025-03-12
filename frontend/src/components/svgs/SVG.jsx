@@ -9,12 +9,12 @@ export const SVG = ({
   defaultColor,
   viewBox,
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   const computedActiveColor =
     activeColor ?? useColorModeValue("active.light", "active.dark");
   const computedDefaultColor =
     defaultColor ?? useColorModeValue("default.light", "default.dark");
+
+  const [isHovered, setIsHovered] = useState(false);
 
   const computedViewBox =
     viewBox ??

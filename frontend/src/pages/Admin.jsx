@@ -1,6 +1,6 @@
 import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
-import { Sidebar } from "@/components/layout/Sidebar.jsx";
+import { Sidebar } from "@/components/layout/sidebar/Sidebar.jsx";
 import { adminItems } from "@/data/adminItems.js";
 
 export const Admin = () => {

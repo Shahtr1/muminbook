@@ -1,4 +1,4 @@
-import { Sidebar } from "@/components/layout/Sidebar.jsx";
+import { Sidebar } from "@/components/layout/sidebar/Sidebar.jsx";
 import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { featureItems } from "@/data/featureItems.js";

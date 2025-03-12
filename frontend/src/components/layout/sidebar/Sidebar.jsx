@@ -5,10 +5,11 @@ import {
   useColorModeValue,
   useTheme,
 } from "@chakra-ui/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
+import { SidebarItem } from "@/components/layout/sidebar/SidebarItem.jsx";
 
 export const Sidebar = ({
   items = [],
@@ -17,7 +18,6 @@ export const Sidebar = ({
   pClose = 2,
   closeable = true,
 }) => {
-  const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
 
@@ -36,7 +36,6 @@ export const Sidebar = ({
   }, []);
 
   const bgColor = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("text-primary", "whiteAlpha.900");
 
   const flexDirection = isSmallScreen ? "row" : "column";
   const height = isSmallScreen
@@ -118,40 +117,15 @@ export const Sidebar = ({
       >
         {items.map((item, index) => {
           const active = location.pathname === item.link;
-
           return (
-            <Flex
+            <SidebarItem
               key={index}
               ref={active ? activeItemRef : null}
-              align="center"
-              justify={!isOpen && "center"}
-              gap={2}
-              py={isSmallScreen ? "10px" : 2}
-              cursor="pointer"
+              item={item}
+              isOpen={isOpen}
               pl={padding}
-              px={isSmallScreen && 2}
-              borderLeft={!isSmallScreen && "4px solid"}
-              borderBottom={isSmallScreen && "2px solid"}
-              borderColor={active ? "brand.500" : "transparent"}
-              onClick={() => navigate(item.link)}
-              direction={!isOpen && "column"}
-              border={!isOpen && !isSmallScreen && "none"}
-            >
-              {!isSmallScreen && (
-                <item.icon
-                  activeColor={active ? "brand.500" : textColor}
-                  smallSize={isOpen}
-                />
-              )}
-              <Text
-                color={active && "brand.500"}
-                fontSize={isSmallScreen ? 12 : isOpen ? 18 : 11}
-                fontWeight={isSmallScreen ? "500" : "600"}
-                whiteSpace="nowrap"
-              >
-                {item.label}
-              </Text>
-            </Flex>
+              active={active}
+            ></SidebarItem>
           );
         })}
       </Flex>
