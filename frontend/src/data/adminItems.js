@@ -16,7 +16,7 @@ export const adminItems = () => [
     items: [
       {
         id: "family-tree",
-        label: "FamilyTree",
+        label: "Family Tree",
         link: "/admin/features/family-tree",
       },
     ],

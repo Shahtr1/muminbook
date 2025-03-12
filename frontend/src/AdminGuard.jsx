@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { AUTH } from "@/hooks/useAuth.js";
 
-const AdminRoute = () => {
+const AdminGuard = () => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
 
@@ -15,4 +15,4 @@ const AdminRoute = () => {
   return <Outlet />;
 };
 
-export default AdminRoute;
+export default AdminGuard;

@@ -22,7 +22,7 @@ import { Forbidden } from "@/pages/auth/Forbidden.jsx";
 import { Reading } from "@/pages/Reading.jsx";
 import { Features } from "@/pages/Features.jsx";
 import { FamilyTree } from "@/components/layout/features/FamilyTree.jsx";
-import AdminRoute from "@/AdminRoute.jsx";
+import AdminGuard from "@/AdminGuard.jsx";
 import { Admin } from "@/pages/Admin.jsx";
 import { SuperBoard } from "@/components/layout/admin/SuperBoard.jsx";
 
@@ -65,7 +65,7 @@ function App() {
           {/*ADMIN ROUTES*/}
           {/*/////////////////////////////////////////*/}
 
-          <Route element={<AdminRoute />}>
+          <Route element={<AdminGuard />}>
             <Route path="admin" element={<Admin />}>
               <Route index element={<Navigate to="superboard" />} />
               <Route path="superboard" element={<SuperBoard />}></Route>
