@@ -116,7 +116,7 @@ export const Sidebar = ({
         }
       >
         {items.map((item, index) => {
-          const active = location.pathname === item.link;
+          const active = location.pathname.includes(item.link);
           return (
             <SidebarItem
               key={index}

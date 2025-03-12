@@ -25,7 +25,6 @@ import { FamilyTree } from "@/components/layout/features/FamilyTree.jsx";
 import AdminRoute from "@/AdminRoute.jsx";
 import { Admin } from "@/pages/Admin.jsx";
 import { SuperBoard } from "@/components/layout/admin/SuperBoard.jsx";
-import { AdminFeatures } from "@/components/layout/admin/AdminFeatures.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -47,6 +46,10 @@ function App() {
       </Helmet>
       <Routes>
         <Route path="/" element={<AppContainer />}>
+          {/*/////////////////////////////////////////*/}
+          {/*USER ROUTES*/}
+          {/*/////////////////////////////////////////*/}
+
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/reading" element={<Reading />}></Route>
@@ -57,15 +60,27 @@ function App() {
               element={<FamilyTree />}
             ></Route>
           </Route>
-          {/*admin routes*/}
+
+          {/*/////////////////////////////////////////*/}
+          {/*ADMIN ROUTES*/}
+          {/*/////////////////////////////////////////*/}
+
           <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<Admin />}>
+            <Route path="admin" element={<Admin />}>
               <Route index element={<Navigate to="superboard" />} />
-              <Route path="/admin/superboard" element={<SuperBoard />}></Route>
-              <Route path="/admin/features" element={<AdminFeatures />}></Route>
+              <Route path="superboard" element={<SuperBoard />}></Route>
+              <Route path="features">
+                <Route index element={<Navigate to="family-tree" />} />
+                <Route path="family-tree" element={<SuperBoard />} />
+              </Route>
             </Route>
           </Route>
         </Route>
+
+        {/*/////////////////////////////////////////*/}
+        {/*AUTH ROUTES*/}
+        {/*/////////////////////////////////////////*/}
+
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/forbidden" element={<Forbidden />}></Route>
@@ -73,6 +88,10 @@ function App() {
         <Route path="/email/reverify" element={<ReverifyEmail />}></Route>
         <Route path="/password/forgot" element={<ForgotPassword />}></Route>
         <Route path="/password/reset" element={<ResetPassword />}></Route>
+
+        {/*/////////////////////////////////////////*/}
+        {/*COMPANY ROUTES*/}
+        {/*/////////////////////////////////////////*/}
 
         <Route path="/terms" element={<Terms />} />
         <Route path="/cookies" element={<Cookies />} />
