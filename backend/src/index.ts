@@ -5,6 +5,7 @@ import { NODE_ENV, PORT } from "./constants/env";
 
 import app from "./app";
 import initializeDefaultRBAC from "./config/initializeDefaultRBAC";
+import initializeFamilyTree from "./config/initializeFamilyTree";
 
 const initServer = async () => {
   app.listen(PORT, async () => {
@@ -13,6 +14,7 @@ const initServer = async () => {
       `Server is running on port ${PORT} in ${NODE_ENV} environment.`,
     );
     await initializeDefaultRBAC();
+    await initializeFamilyTree();
   });
 };
 

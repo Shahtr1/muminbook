@@ -3,12 +3,12 @@ import { nodePositions } from "@/utils/nodePositions.js";
 export const createFamilyTree = (tree = []) =>
   tree.map(
     ({
-      id,
+      _id: id,
       uuid,
       biblicalName,
       islamicName,
       arabicName,
-      lineage,
+      lineages,
       parents,
       label,
     }) => ({
@@ -22,7 +22,7 @@ export const createFamilyTree = (tree = []) =>
         timeline:
           Object.keys(timeline).find((key) => timeline[key].includes(uuid)) ||
           "father",
-        lineage,
+        lineages,
         ulul_azm: ulul_azms.includes(uuid),
       },
       position: nodePositions[uuid] || { x: 0, y: 0 },
@@ -36,7 +36,7 @@ export const createFamilyTree = (tree = []) =>
             : flags.includes(uuid)
               ? "flag"
               : "text",
-      parents: Array.isArray(parents) ? parents : parents ? [parents] : [],
+      parents,
     }),
   );
 

@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.route";
 import userRoutes from "./routes/user.route";
 import adminRoutes from "./routes/admin.route";
 import authenticate from "./middleware/authenticate";
+import familyTreeRoutes from "./routes/family-tree.route";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/admin", authenticate(true), adminRoutes);
 
 // user routes
 app.use("/user", authenticate(), userRoutes);
+app.use("/family-tree", authenticate(), familyTreeRoutes);
 
 app.use(errorHandler);
 

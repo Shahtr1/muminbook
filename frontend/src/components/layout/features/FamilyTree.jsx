@@ -63,12 +63,7 @@ const createEdges = (nodes, color) => {
         const parent = nodes.find((n) => n.id === parentId);
         const { sourceHandle, targetHandle } = handlePositions(parent, node);
 
-        const lineage = node.data?.lineage;
-        const lineages = Array.isArray(lineage)
-          ? lineage
-          : lineage
-            ? [lineage]
-            : [];
+        const lineages = node.data?.lineages;
 
         return {
           id: `e${parentId}-${node.id}`,

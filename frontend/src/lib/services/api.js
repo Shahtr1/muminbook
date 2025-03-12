@@ -1,5 +1,4 @@
 import API from "../../config/apiClient.js";
-import { familyTreeApi } from "@/data/familyTreeApi.js";
 
 export const login = async (data) => API.post("/auth/login", data);
 export const logout = async () => API.get("/auth/logout");
@@ -14,13 +13,7 @@ export const resetPassword = async ({ verificationCode, password }) =>
   API.post("/auth/password/reset", { verificationCode, password });
 
 export const getUser = async () => API.get("/user");
-export const getFamilyTree = async () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(familyTreeApi);
-    }, 1000);
-  });
-};
+export const getFamilyTree = async () => API.get("/family-tree");
 
 export const getSessions = async () => API.get("/admin/sessions");
 export const deleteSession = async (id) => API.delete(`/admin/sessions/${id}`);
