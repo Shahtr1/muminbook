@@ -8,6 +8,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { motion } from "framer-motion";
 
 export const Sidebar = ({
   items = [],
@@ -24,10 +25,15 @@ export const Sidebar = ({
   const isMediumScreen = useBreakpointValue({ base: true, md: false });
 
   const [isOpen, setIsOpen] = useState(!isMediumScreen);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     setIsOpen(!isMediumScreen);
   }, [isMediumScreen]);
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
 
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("text-primary", "whiteAlpha.900");
@@ -50,6 +56,10 @@ export const Sidebar = ({
     }
   }, [location.pathname]);
 
+  if (!isReady) {
+    return null;
+  }
+
   return (
     <Flex
       position="relative"
@@ -62,9 +72,16 @@ export const Sidebar = ({
       gap={3}
     >
       {label && isOpen && !isSmallScreen && (
-        <Text fontWeight="600" mb={4} fontSize={25} pl={pOpen}>
-          {label}
-        </Text>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isOpen ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+          style={{ display: isOpen ? "block" : "none" }}
+        >
+          <Text fontWeight="600" mb={4} fontSize={25} pl={pOpen}>
+            {label}
+          </Text>
+        </motion.div>
       )}
       {closeable && !isSmallScreen && (
         <Flex
