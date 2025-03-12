@@ -11,11 +11,16 @@ export const Features = () => {
       width="full"
       mx="auto"
       overflowX="hidden"
-      flexDirection={isSmallScreen && "column"}
+      flexDirection={isSmallScreen ? "column" : "row"}
       h={`calc(100vh - ${theme.sizes["navbar-height"]})`}
     >
       <Sidebar label={"Features"} items={featureItems()} />
-      <Box width="full" p={!isSmallScreen && 5} overflowY="auto" height="full">
+      <Box
+        width="full"
+        p={!isSmallScreen ? 5 : undefined}
+        overflowY="auto"
+        height="full"
+      >
         <Outlet />
       </Box>
     </Flex>

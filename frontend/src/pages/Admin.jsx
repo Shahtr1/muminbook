@@ -11,7 +11,7 @@ export const Admin = () => {
       width="full"
       mx="auto"
       overflowX="hidden"
-      flexDirection={isSmallScreen && "column"}
+      flexDirection={isSmallScreen ? "column" : "row"}
       h={`calc(100vh - ${theme.sizes["navbar-height"]})`}
     >
       <Sidebar label={"Admin"} items={adminItems()} />
