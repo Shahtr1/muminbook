@@ -38,7 +38,7 @@ export const UserMenu = ({
 
   const menuItems = [
     { id: "admin", label: "Admin", link: "/admin", roles: ["admin"] },
-    { id: "edit-profile", label: "Edit Profile", link: "/profile" },
+    { id: "edit-profile", label: "Edit Profile", link: "/edit-profile" },
     {
       id: "settings-and-privacy",
       label: "Settings & Privacy",

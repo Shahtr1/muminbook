@@ -3,8 +3,8 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
-  IconButton,
   Flex,
+  IconButton,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -27,8 +27,6 @@ export const SomethingWentWrong = ({ height = "100%" }) => {
         alignItems="center"
         textAlign="center"
         p={6}
-        borderRadius="md"
-        boxShadow="md"
       >
         <AlertIcon boxSize="24px" />
         <AlertTitle>

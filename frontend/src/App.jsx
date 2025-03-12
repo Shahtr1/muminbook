@@ -22,6 +22,8 @@ import { Forbidden } from "@/pages/auth/Forbidden.jsx";
 import { Reading } from "@/pages/Reading.jsx";
 import { Features } from "@/pages/Features.jsx";
 import { FamilyTree } from "@/components/layout/features/FamilyTree.jsx";
+import AdminRoute from "@/AdminRoute.jsx";
+import { Admin } from "@/pages/Admin.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -52,6 +54,10 @@ function App() {
               path="/features/family-tree"
               element={<FamilyTree />}
             ></Route>
+          </Route>
+          {/*admin routes*/}
+          <Route element={<AdminRoute />}>
+            <Route path="/admin" element={<Admin />} />
           </Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
