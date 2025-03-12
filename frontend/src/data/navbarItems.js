@@ -3,7 +3,6 @@ import { ReadingSVG } from "@/components/svgs/ReadingSVG.jsx";
 import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
 import { BellSVG } from "@/components/svgs/BellSVG.jsx";
 import { FemaleSVG } from "@/components/svgs/FemaleSVG.jsx";
-import { MaleSVG } from "@/components/svgs/MaleSVG.jsx";
 
 export const navItems = (user) => [
   {
@@ -33,7 +32,7 @@ export const navItems = (user) => [
   {
     id: "user",
     label: "Me",
-    icon: user?.gender === "female" ? FemaleSVG : MaleSVG,
+    icon: user?.gender === "female" ? FemaleSVG : FemaleSVG,
     link: "account",
   },
 ];
