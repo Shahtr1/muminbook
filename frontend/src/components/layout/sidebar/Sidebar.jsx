@@ -11,13 +11,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
 import { SidebarItem } from "@/components/layout/sidebar/SidebarItem.jsx";
 
-export const Sidebar = ({
-  items = [],
-  label,
-  pOpen = 5,
-  pClose = 2,
-  closeable = true,
-}) => {
+export const Sidebar = ({ items = [], label, closeable = true }) => {
   const location = useLocation();
   const theme = useTheme();
 
@@ -42,7 +36,6 @@ export const Sidebar = ({
     ? "auto"
     : `calc(100vh - ${theme.sizes["navbar-height"]})`;
   const width = isSmallScreen ? "100%" : isOpen ? "250px" : "auto";
-  const padding = isSmallScreen ? 0 : isOpen ? pOpen : pClose;
 
   const activeItemRef = useRef(null);
 
@@ -66,8 +59,6 @@ export const Sidebar = ({
       h={height}
       w={width}
       backgroundColor={bgColor}
-      p={padding}
-      pl={0}
       gap={3}
     >
       {label && isOpen && !isSmallScreen && (
@@ -77,7 +68,7 @@ export const Sidebar = ({
           transition={{ duration: 0.3 }}
           style={{ display: isOpen ? "block" : "none" }}
         >
-          <Text fontWeight="600" mb={4} fontSize={25} pl={pOpen}>
+          <Text fontWeight="600" mb={4} fontSize={25}>
             {label}
           </Text>
         </motion.div>
@@ -123,7 +114,6 @@ export const Sidebar = ({
               ref={active ? activeItemRef : null}
               item={item}
               isOpen={isOpen}
-              pl={padding}
               active={active}
             ></SidebarItem>
           );

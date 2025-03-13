@@ -1,5 +1,8 @@
 import {
   Flex,
+  Menu,
+  MenuButton,
+  MenuList,
   Text,
   useBreakpointValue,
   useColorModeValue,
@@ -9,12 +12,21 @@ import { forwardRef } from "react";
 
 export const SidebarItem = forwardRef(
   (
-    { item, isOpen, pl, active, fontSize, fontWeight, isSubItem = false },
+    {
+      item,
+      isOpen,
+      active,
+      fontSize,
+      fontWeight,
+      isSubItem = false,
+      isMenu = false,
+    },
     ref,
   ) => {
-    const navigate = useNavigate();
     const textColor = useColorModeValue("text-primary", "whiteAlpha.900");
     const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+    const navigate = useNavigate();
+
     const subItems = item.items || [];
 
     if (!fontSize) {
@@ -25,17 +37,29 @@ export const SidebarItem = forwardRef(
       fontWeight = isSmallScreen ? "500" : "600";
     }
 
-    return (
-      <Flex flexDir="column">
+    const parentContent = (isMenu, ref) => {
+      const menuButtonStyles = {
+        sx: {
+          "> span": {
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: "10px",
+            alignItems: "center",
+          },
+        },
+      };
+
+      return (
         <Flex
+          as={isMenu ? MenuButton : Flex}
           ref={ref}
           align="center"
           justify={isOpen ? "flex-start" : "center"}
           gap={2}
-          py={isSmallScreen ? "10px" : 2}
           cursor="pointer"
-          pl={pl}
-          px={isSmallScreen ? 2 : undefined}
           borderLeft={
             !isSubItem && !isSmallScreen
               ? active
@@ -54,11 +78,12 @@ export const SidebarItem = forwardRef(
           onClick={() => navigate(item.link)}
           direction={isOpen ? "row" : "column"}
           border={!isOpen && !isSmallScreen ? "none" : undefined}
+          {...(isMenu ? menuButtonStyles : {})}
         >
           {!isSmallScreen && item.icon && (
             <item.icon
               activeColor={active ? "brand.500" : textColor}
-              smallSize={isOpen ? "md" : "sm"}
+              viewBox={isOpen ? "sm" : "lg"}
             />
           )}
           <Text
@@ -70,24 +95,37 @@ export const SidebarItem = forwardRef(
             {item.label}
           </Text>
         </Flex>
-        <Flex flexDir="column">
-          {subItems &&
-            subItems.map((subItem, index) => {
-              const active = location.pathname === subItem.link;
-              return (
-                <SidebarItem
-                  key={index}
-                  item={subItem}
-                  isOpen={isOpen}
-                  pl="30px"
-                  active={active}
-                  fontSize="13px"
-                  isSubItem={true}
-                ></SidebarItem>
-              );
-            })}
+      );
+    };
+
+    const menuContent = (isMenu = false) => {
+      return (
+        <Flex
+          as={isMenu ? Menu : Flex}
+          flexDir="column"
+          placement={isSmallScreen ? "bottom" : "right"}
+        >
+          {parentContent(isMenu, ref)}
+          <Flex flexDir="column" as={isMenu ? MenuList : Flex}>
+            {subItems &&
+              subItems.map((subItem, index) => {
+                const active = location.pathname === subItem.link;
+                return (
+                  <SidebarItem
+                    key={index}
+                    item={subItem}
+                    isOpen={isOpen}
+                    active={active}
+                    fontSize="13px"
+                    isSubItem={true}
+                  ></SidebarItem>
+                );
+              })}
+          </Flex>
         </Flex>
-      </Flex>
-    );
+      );
+    };
+
+    return menuContent(subItems.length > 0 && (!isOpen || isSmallScreen));
   },
 );
