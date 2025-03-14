@@ -80,7 +80,6 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
       h={height}
       w={width}
       backgroundColor={bgColor}
-      gap={3}
     >
       {label && isOpen && !isSmallScreen && (
         <motion.div
@@ -89,7 +88,7 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
           transition={{ duration: 0.3 }}
           style={{ display: isOpen ? "block" : "none" }}
         >
-          <Text fontWeight="600" mb={4} fontSize={25} p="20px">
+          <Text fontWeight="600" fontSize={25} p="20px">
             {label}
           </Text>
         </motion.div>
@@ -109,6 +108,7 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
             },
           }
         }
+        marginTop={isSmallScreen ? 0 : 2}
       >
         {items.map((item, index) => {
           const active = location.pathname.includes(item.link);
