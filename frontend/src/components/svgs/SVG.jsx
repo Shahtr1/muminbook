@@ -1,4 +1,4 @@
-import { Box, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 
 export const SVG = ({
@@ -8,6 +8,8 @@ export const SVG = ({
   activeColor,
   defaultColor,
   viewBox,
+  absolute = false,
+  absoluteStyles,
 }) => {
   const defaultActiveColor = useColorModeValue("active.light", "active.dark");
   const defaultDefaultColor = useColorModeValue(
@@ -15,41 +17,29 @@ export const SVG = ({
     "default.dark",
   );
 
-  let lgViewBox = "0 0 48 48";
-  let smViewBox = "0 0 68 68";
-
-  const breakpointViewBox = useBreakpointValue({
-    base: lgViewBox,
-    md: smViewBox,
-  });
-
   const computedActiveColor = activeColor ?? defaultActiveColor;
   const computedDefaultColor = defaultColor ?? defaultDefaultColor;
 
   const [isHovered, setIsHovered] = useState(false);
 
-  let viewBoxDim;
-
-  if (viewBox === "sm") {
-    viewBoxDim = smViewBox;
-  } else if (viewBox === "lg") {
-    viewBoxDim = lgViewBox;
-  }
-
-  const computedViewBox = viewBoxDim ?? breakpointViewBox;
+  const abStyles = {
+    position: "absolute",
+    ...absoluteStyles,
+  };
 
   return (
     <Box
       as="svg"
       width={dimensions}
       height={dimensions}
-      viewBox={computedViewBox}
+      viewBox={viewBox}
       fill={isHovered || active ? computedActiveColor : computedDefaultColor}
       xmlns="http://www.w3.org/2000/svg"
       cursor="pointer"
       overflow="visible"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      {...(absolute ? abStyles : {})}
     >
       {children}
     </Box>

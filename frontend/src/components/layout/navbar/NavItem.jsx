@@ -1,11 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  useBreakpointValue,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useState } from "react";
 
 export const NavItem = ({ item, activeBorderColor, children }) => {
   const navigate = useNavigate();
   const activeColor = useColorModeValue("active.light", "active.dark");
   const defaultColor = useColorModeValue("default.light", "default.dark");
+  const isMdScreen = useBreakpointValue({ base: true, md: false });
 
   const [hovering, setHovering] = useState(false);
   const IconComponent = item.icon;
@@ -17,7 +23,6 @@ export const NavItem = ({ item, activeBorderColor, children }) => {
       flexDir="column"
       onClick={() => navigate(item.link)}
       justify={{ base: "center", md: "end" }}
-      pb={{ base: 2, md: "unset" }}
       pr={{ base: 1, md: "unset" }}
       align="center"
       h="100%"
@@ -31,7 +36,10 @@ export const NavItem = ({ item, activeBorderColor, children }) => {
       cursor="pointer"
       position="relative"
     >
-      <IconComponent active={hovering || item.active} />
+      <IconComponent
+        active={hovering || item.active}
+        dimensions={isMdScreen ? "25px" : "20px"}
+      />
 
       {children ? (
         children

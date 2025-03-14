@@ -52,6 +52,27 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
     return null;
   }
 
+  const toggle = () => {
+    return (
+      <Flex
+        position="absolute"
+        right={-4}
+        top="50%"
+        transform="translateY(-50%)"
+        backgroundColor={bgColor}
+        borderLeft="none"
+        borderBottomRightRadius="sm"
+        borderTopRightRadius="sm"
+        align="center"
+        cursor="pointer"
+        onClick={() => setIsOpen(!isOpen)}
+        height={14}
+      >
+        {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </Flex>
+    );
+  };
+
   return (
     <Flex
       position="relative"
@@ -68,29 +89,12 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
           transition={{ duration: 0.3 }}
           style={{ display: isOpen ? "block" : "none" }}
         >
-          <Text fontWeight="600" mb={4} fontSize={25}>
+          <Text fontWeight="600" mb={4} fontSize={25} p="20px">
             {label}
           </Text>
         </motion.div>
       )}
-      {closeable && !isSmallScreen && (
-        <Flex
-          position="absolute"
-          right={-4}
-          top="50%"
-          transform="translateY(-50%)"
-          backgroundColor={bgColor}
-          borderLeft="none"
-          borderBottomRightRadius="sm"
-          borderTopRightRadius="sm"
-          align="center"
-          cursor="pointer"
-          onClick={() => setIsOpen(!isOpen)}
-          height={14}
-        >
-          {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-        </Flex>
-      )}
+      {closeable && !isSmallScreen && toggle()}
 
       <Flex
         flexDir={flexDirection}

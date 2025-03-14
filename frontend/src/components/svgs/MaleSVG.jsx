@@ -1,24 +1,78 @@
 import { SVG } from "@/components/svgs/SVG.jsx";
-import { Box, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  useBreakpointValue,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import {
+  absoluteBoxStyles,
+  absoluteSvgStyles,
+} from "@/components/svgs/MaleFemaleCommonStyles.js";
 
-export const MaleSVG = ({ color }) => {
-  const boxStyles = useBreakpointValue({
-    base: {
-      height: "35px",
-      width: "35px",
-      position: "absolute",
-      top: "50%",
-      transform: "translateY(-50%)",
-    },
-    md: {},
-  });
+export const MaleSVG = ({ color, dimensions = "25px" }) => {
+  const isMdScreen = useBreakpointValue({ base: true, md: false });
+  const bgColor = useColorModeValue("white", "gray.800");
   return (
-    <Box backgroundColor="brand.500" borderRadius="500px" {...boxStyles}>
-      <SVG dimensions="25px" activeColor={color ? color : "white"}>
-        <g transform="scale(3.1) translate(2.5, 2)">
-          <path d="M8.07.53a3.298 3.298 0 0 0-3.308 3.305v.12c.696.16 1.896.277 3.359.277h.691c1.463 0 2.663-.116 3.359-.277v-.12A3.3 3.3 0 0 0 8.862.53zM4.762 5.136c.163-.071.341-.11.53-.11v-.439a8.598 8.598 0 0 1-.53-.092Zm7.409-.64c-.16.033-.338.064-.529.091v.44c.188 0 .367.038.529.109zm-6.35.156V6.88a2.376 2.376 0 0 0 2.38 2.38h.53a2.376 2.376 0 0 0 2.381-2.38V4.653c-.67.07-1.457.109-2.3.109h-.691c-.843 0-1.63-.039-2.3-.109zm-.53.903a.794.794 0 0 0 0 1.587l.013-.001a3.26 3.26 0 0 1-.012-.263zm6.35 1.323c0 .089-.003.176-.011.263l.012.001a.794.794 0 0 0 0-1.587zM6.615 9.92c0 .949.763 1.72 1.72 1.72h.265c.958 0 1.72-.771 1.72-1.72v-.6c-.457.297-1.001.468-1.587.468h-.53a2.9 2.9 0 0 1-1.587-.469zM5.291 9.79a3.959 3.959 0 0 0-3.968 3.968v2.118c0 .288.23.53.528.53h1.853v-.53c0-.351.53-.355.53 0v.53h3.594l-.607-.608a.265.265 0 0 1-.077-.186v-3.78a2.243 2.243 0 0 1-1.06-1.91V9.79zm5.557 0v.132a2.244 2.244 0 0 1-2.249 2.25h-.265c-.23 0-.452-.035-.661-.099V15.5l.903.904H12.7v-.529c0-.353.53-.353.53 0v.53h1.852c.298 0 .528-.242.528-.53v-2.118a3.959 3.959 0 0 0-3.967-3.968zm-2.381 2.91a.265.265 0 1 1 0 .53.265.265 0 0 1 0-.53zm0 1.059a.265.265 0 1 1 0 .529.265.265 0 0 1 0-.53zm0 1.059a.265.265 0 1 1 0 .529.265.265 0 0 1 0-.53z"></path>
+    <Flex position="relative" height="100%" width="100%" overflow="hidden">
+      <Box
+        backgroundColor="brand.500"
+        borderRadius="500px"
+        position="absolute"
+        {...absoluteBoxStyles(isMdScreen)}
+      />
+      <SVG
+        dimensions={dimensions}
+        activeColor={color ? color : "white"}
+        viewBox="0 0 508.609 508.609"
+        absolute={true}
+        absoluteStyles={absoluteSvgStyles(isMdScreen)}
+      >
+        <g>
+          <circle cx="163.942" cy="159.364" r="36.959" />
+          <circle cx="344.328" cy="159.364" r="36.959" />
         </g>
+        <circle
+          cx="254.135"
+          cy="115.285"
+          r="115.285"
+          fill="#fff"
+          stroke="#27A69F"
+          strokeWidth="20"
+        />
+        <path
+          d="M338.564,284.821H169.706c-77.309,0-140.037,62.728-140.037,140.037v83.751H478.94v-83.751
+	C478.601,347.55,415.873,284.821,338.564,284.821z"
+        />
+        <circle
+          cx="254.135"
+          cy="271.936"
+          r="62.728"
+          fill="#fff"
+          stroke="#27A69F"
+          strokeWidth="20"
+        />
+        <path
+          d="M330.766,74.257c-10.172,17.971-40.689,31.195-76.63,31.195s-66.458-13.224-76.63-31.195
+	c-11.189,15.597-17.632,34.585-17.632,54.93v69.171c0,52.217,42.384,94.262,94.262,94.262s94.262-42.384,94.262-94.262v-68.832
+	C348.397,108.842,341.955,89.854,330.766,74.257z"
+        />
+        <path
+          d="M369.081,106.469C364.334,46.792,314.829,0,254.135,0S143.936,46.792,139.189,106.469H369.081z"
+          fill="#fff"
+          stroke="#27A69F"
+          strokeWidth="20"
+        />
       </SVG>
-    </Box>
+      {isMdScreen && (
+        <Box
+          height="13px"
+          width="100%"
+          bgColor={bgColor}
+          position="absolute"
+          bottom="0"
+        ></Box>
+      )}
+    </Flex>
   );
 };

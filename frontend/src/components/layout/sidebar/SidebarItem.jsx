@@ -37,6 +37,24 @@ export const SidebarItem = forwardRef(
       fontWeight = isSmallScreen ? "500" : "600";
     }
 
+    const getPadding = () => {
+      let padding;
+      if (isOpen) {
+        padding = "10px 15px";
+        if (isSubItem) {
+          padding = "10px 30px";
+        }
+      } else if (isSubItem) {
+      } else {
+        padding = "5px";
+      }
+
+      if (!isSubItem && isSmallScreen) {
+        padding = "10px";
+      }
+      return padding;
+    };
+
     const parentContent = (isMenu, ref) => {
       const menuButtonStyles = {
         sx: {
@@ -52,6 +70,8 @@ export const SidebarItem = forwardRef(
         },
       };
 
+      const padding = getPadding();
+
       return (
         <Flex
           as={isMenu ? MenuButton : Flex}
@@ -60,6 +80,7 @@ export const SidebarItem = forwardRef(
           justify={isOpen ? "flex-start" : "center"}
           gap={2}
           cursor="pointer"
+          padding={padding}
           borderLeft={
             !isSubItem && !isSmallScreen
               ? active
@@ -75,15 +96,15 @@ export const SidebarItem = forwardRef(
               : undefined
           }
           borderColor={active ? "brand.500" : "transparent"}
-          onClick={() => navigate(item.link)}
+          onClick={() => subItems.length == 0 && navigate(item.link)}
           direction={isOpen ? "row" : "column"}
-          border={!isOpen && !isSmallScreen ? "none" : undefined}
+          border={(!isOpen && !isSmallScreen) || isSubItem ? "none" : undefined}
           {...(isMenu ? menuButtonStyles : {})}
         >
           {!isSmallScreen && item.icon && (
             <item.icon
               activeColor={active ? "brand.500" : textColor}
-              viewBox={isOpen ? "sm" : "lg"}
+              dimensions={isOpen ? "20px" : "25px"}
             />
           )}
           <Text
@@ -99,6 +120,11 @@ export const SidebarItem = forwardRef(
     };
 
     const menuContent = (isMenu = false) => {
+      const menuListStyles = {
+        minW: "120px",
+        gap: "10px",
+        padding: "20px",
+      };
       return (
         <Flex
           as={isMenu ? Menu : Flex}
@@ -106,7 +132,11 @@ export const SidebarItem = forwardRef(
           placement={isSmallScreen ? "bottom" : "right"}
         >
           {parentContent(isMenu, ref)}
-          <Flex flexDir="column" as={isMenu ? MenuList : Flex}>
+          <Flex
+            flexDir="column"
+            as={isMenu ? MenuList : Flex}
+            {...(isMenu ? menuListStyles : {})}
+          >
             {subItems &&
               subItems.map((subItem, index) => {
                 const active = location.pathname === subItem.link;

@@ -25,6 +25,7 @@ import { FamilyTree } from "@/components/layout/features/FamilyTree.jsx";
 import AdminGuard from "@/AdminGuard.jsx";
 import { Admin } from "@/pages/Admin.jsx";
 import { SuperBoard } from "@/components/layout/admin/SuperBoard.jsx";
+import { AdminFamilyTree } from "@/components/layout/admin/AdminFamilyTree.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ function App() {
               <Route path="superboard" element={<SuperBoard />}></Route>
               <Route path="features">
                 <Route index element={<Navigate to="family-tree" />} />
-                <Route path="family-tree" element={<SuperBoard />} />
+                <Route path="family-tree" element={<AdminFamilyTree />} />
               </Route>
             </Route>
           </Route>
