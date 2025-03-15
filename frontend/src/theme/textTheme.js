@@ -18,6 +18,9 @@ const textTheme = {
       color: mode("text.secondary", "whiteAlpha.600")(props),
       fontSize: "sm",
     }),
+    rd: (props) => ({
+      color: mode("blue", "yellow")(props),
+    }),
   },
   defaultProps: {
     variant: "body",

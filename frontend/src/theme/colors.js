@@ -40,6 +40,16 @@ const colors = {
     dark: whiteAlpha700,
   },
   node: "#008040",
+  rd: {
+    body: {
+      dark: "#3c3c3c",
+      light: "#f8f8f8",
+    },
+    content: {
+      dark: "#acacac",
+      light: "#323232",
+    },
+  },
 };
 
 export default colors;

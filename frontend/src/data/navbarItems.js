@@ -22,7 +22,7 @@ export const navItems = (user) => [
     id: "features",
     label: "Features",
     icon: FeaturesSVG,
-    link: "/features/family-tree",
+    link: "/features",
   },
   {
     id: "notifications",
