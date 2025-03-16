@@ -26,6 +26,7 @@ import AdminGuard from "@/AdminGuard.jsx";
 import { Admin } from "@/pages/Admin.jsx";
 import { SuperBoard } from "@/components/layout/admin/SuperBoard.jsx";
 import { AdminFamilyTree } from "@/components/layout/admin/AdminFamilyTree.jsx";
+import { ReadingView } from "@/pages/ReadingView.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -52,14 +53,15 @@ function App() {
           {/*/////////////////////////////////////////*/}
 
           <Route index element={<Navigate to="dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/reading" element={<Reading />}></Route>
-          <Route path="/features" element={<Features />}>
+          <Route path="dashboard" element={<Dashboard />}></Route>
+
+          <Route path="reading" element={<Reading />}>
+            <Route path=":id" element={<ReadingView />} />
+          </Route>
+
+          <Route path="features" element={<Features />}>
             <Route index element={<Navigate to="family-tree" />} />
-            <Route
-              path="/features/family-tree"
-              element={<FamilyTree />}
-            ></Route>
+            <Route path="family-tree" element={<FamilyTree />}></Route>
           </Route>
 
           {/*/////////////////////////////////////////*/}
@@ -82,21 +84,21 @@ function App() {
         {/*AUTH ROUTES*/}
         {/*/////////////////////////////////////////*/}
 
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/forbidden" element={<Forbidden />}></Route>
-        <Route path="/email/verify/:code" element={<VerifyEmail />}></Route>
-        <Route path="/email/reverify" element={<ReverifyEmail />}></Route>
-        <Route path="/password/forgot" element={<ForgotPassword />}></Route>
-        <Route path="/password/reset" element={<ResetPassword />}></Route>
+        <Route path="login" element={<Login />}></Route>
+        <Route path="register" element={<Register />}></Route>
+        <Route path="forbidden" element={<Forbidden />}></Route>
+        <Route path="email/verify/:code" element={<VerifyEmail />}></Route>
+        <Route path="email/reverify" element={<ReverifyEmail />}></Route>
+        <Route path="password/forgot" element={<ForgotPassword />}></Route>
+        <Route path="password/reset" element={<ResetPassword />}></Route>
 
         {/*/////////////////////////////////////////*/}
         {/*COMPANY ROUTES*/}
         {/*/////////////////////////////////////////*/}
 
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/cookies" element={<Cookies />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="terms" element={<Terms />} />
+        <Route path="cookies" element={<Cookies />} />
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </>
   );

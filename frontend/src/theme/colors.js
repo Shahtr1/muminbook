@@ -39,7 +39,6 @@ const colors = {
     light: secondaryText,
     dark: whiteAlpha700,
   },
-  node: "#008040",
   rd: {
     body: {
       dark: "#3c3c3c",
@@ -50,6 +49,7 @@ const colors = {
       light: "#323232",
     },
   },
+  node: "#008040",
 };
 
 export default colors;
