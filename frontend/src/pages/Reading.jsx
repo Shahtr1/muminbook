@@ -1,7 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { VStack } from "@chakra-ui/react";
-import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
-import { readingItems } from "@/data/readingItems.js";
+import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
 
 export const Reading = () => {
   const location = useLocation();
@@ -9,14 +7,7 @@ export const Reading = () => {
 
   return (
     <>
-      {!isReadingDetail && (
-        <VStack spacing={4} align="stretch">
-          {readingItems().map((item) => (
-            <ReadingCard key={item.id} {...item} />
-          ))}
-        </VStack>
-      )}
-
+      {!isReadingDetail && <ReadingList />}
       <Outlet />
     </>
   );

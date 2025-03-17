@@ -7,12 +7,14 @@ export const ReadingCard = ({ label, cardColor, description, icon, uuid }) => {
 
   return (
     <Box
+      height="200px"
       p={4}
       bg={cardColor}
       borderRadius="lg"
-      shadow="md"
+      shadow="sm"
       color="white"
-      _hover={{ shadow: "lg" }}
+      _hover={{ shadow: "md" }}
+      cursor="pointer"
     >
       <HStack spacing={3}>
         <Icon as={IconComponent} boxSize={6} />
