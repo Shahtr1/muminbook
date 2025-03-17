@@ -22,8 +22,8 @@ export const FolderSVG = ({
           y2="33.533"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor="#fac017" />
-          <stop offset=".909" stopColor="#e1ab2d" />
+          <stop offset="0" stopColor="#27A69F" /> {/* Brand 500 */}
+          <stop offset=".909" stopColor="#1e857f" /> {/* Brand 600 */}
         </linearGradient>
         <path
           fill="url(#Om5yvFr6YrdlC0q2Vet0Ha)"
@@ -37,8 +37,13 @@ export const FolderSVG = ({
           y2="27.39"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor={empty ? "transparent" : "#fbfef3"} />
-          <stop offset=".909" stopColor={empty ? "transparent" : "#e2e4e3"} />
+          <stop offset="0" stopColor={empty ? "transparent" : "#e3fdfc"} />{" "}
+          {/* Brand 50 */}
+          <stop
+            offset=".909"
+            stopColor={empty ? "transparent" : "#c1f7f4"}
+          />{" "}
+          {/* Brand 100 */}
         </linearGradient>
         <path
           fill="url(#Om5yvFr6YrdlC0q2Vet0Hb)"
@@ -52,8 +57,13 @@ export const FolderSVG = ({
           y2="19"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor={empty ? "transparent" : "#fbfef3"} />
-          <stop offset=".909" stopColor={empty ? "transparent" : "#e2e4e3"} />
+          <stop offset="0" stopColor={empty ? "transparent" : "#e3fdfc"} />{" "}
+          {/* Brand 50 */}
+          <stop
+            offset=".909"
+            stopColor={empty ? "transparent" : "#c1f7f4"}
+          />{" "}
+          {/* Brand 100 */}
         </linearGradient>
         <path
           fill="url(#Om5yvFr6YrdlC0q2Vet0Hc)"
@@ -67,8 +77,8 @@ export const FolderSVG = ({
           y2="39.792"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor="#e3a917" />
-          <stop offset=".464" stopColor="#d79c1e" />
+          <stop offset="0" stopColor="#166561" /> {/* Brand 700 */}
+          <stop offset=".464" stopColor="#0e4443" /> {/* Brand 800 */}
         </linearGradient>
         <path
           fill="url(#Om5yvFr6YrdlC0q2Vet0Hd)"
@@ -82,11 +92,9 @@ export const FolderSVG = ({
           y2="30.778"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset=".34" stopColor="#ffefb2" />
-          <stop offset=".485" stopColor="#ffedad" />
-          <stop offset=".652" stopColor="#ffe99f" />
-          <stop offset=".828" stopColor="#fee289" />
-          <stop offset="1" stopColor="#fed86b" />
+          <stop offset=".34" stopColor="#6ae2d9" /> {/* Brand 300 */}
+          <stop offset=".485" stopColor="#44d7cc" /> {/* Brand 400 */}
+          <stop offset=".652" stopColor="#27A69F" /> {/* Brand 500 */}
         </linearGradient>
         <path
           fill="url(#Om5yvFr6YrdlC0q2Vet0He)"
@@ -99,11 +107,9 @@ export const FolderSVG = ({
           r="53.875"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset=".199" stopColor="#fec832" />
-          <stop offset=".601" stopColor="#fcd667" />
-          <stop offset=".68" stopColor="#fdda75" />
-          <stop offset=".886" stopColor="#fee496" />
-          <stop offset="1" stopColor="#ffe8a2" />
+          <stop offset=".199" stopColor="#072423" /> {/* Brand 900 */}
+          <stop offset=".601" stopColor="#0e4443" /> {/* Brand 800 */}
+          <stop offset=".886" stopColor="#166561" /> {/* Brand 700 */}
         </radialGradient>
         <path
           fill="url(#Om5yvFr6YrdlC0q2Vet0Hf)"
