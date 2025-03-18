@@ -19,14 +19,18 @@ import { Cookies } from "@/pages/company/Cookies.jsx";
 import { PrivacyPolicy } from "@/pages/company/PrivacyPolicy.jsx";
 import ReverifyEmail from "@/pages/auth/ReverifyEmail.jsx";
 import { Forbidden } from "@/pages/auth/Forbidden.jsx";
-import { Reading } from "@/pages/Reading.jsx";
+import { Reading } from "@/pages/reading/Reading.jsx";
 import { Features } from "@/pages/Features.jsx";
 import { FamilyTree } from "@/components/layout/features/FamilyTree.jsx";
 import AdminGuard from "@/AdminGuard.jsx";
 import { Admin } from "@/pages/Admin.jsx";
 import { SuperBoard } from "@/components/layout/admin/SuperBoard.jsx";
 import { AdminFamilyTree } from "@/components/layout/admin/AdminFamilyTree.jsx";
-import { ReadingView } from "@/pages/ReadingView.jsx";
+import { ReadingView } from "@/pages/reading/ReadingView.jsx";
+import { FolderView } from "@/pages/reading/FolderView.jsx";
+import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
+import { FileView } from "@/pages/reading/FileView.jsx";
+import { RemoveTrailingSlash } from "@/utils/RemoveTrailingSlash.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -46,16 +50,31 @@ function App() {
       <Helmet>
         <title>{getPageTitle()}</title>
       </Helmet>
+
+      <RemoveTrailingSlash />
+
       <Routes>
         <Route path="/" element={<AppContainer />}>
           {/*/////////////////////////////////////////*/}
-          {/*USER ROUTES*/}
+          {/* USER ROUTES */}
           {/*/////////////////////////////////////////*/}
 
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />}></Route>
 
           <Route path="reading" element={<Reading />}>
+            {/*/////////////////////////////////////////*/}
+            {/* READING ROUTES */}
+            {/*/////////////////////////////////////////*/}
+            <Route path="my-files" element={<ReadingList />}>
+              <Route index element={<FolderView />} />
+              <Route path=":folderId" element={<FolderView />} />
+              <Route path=":folderId/:subFolderId" element={<FolderView />} />
+              <Route
+                path=":folderId/:subFolderId/:fileId"
+                element={<FileView />}
+              />
+            </Route>
             <Route path=":id" element={<ReadingView />} />
           </Route>
 
@@ -64,12 +83,11 @@ function App() {
             <Route path="family-tree" element={<FamilyTree />}></Route>
           </Route>
 
-          {/*/////////////////////////////////////////*/}
-          {/*ADMIN ROUTES*/}
-          {/*/////////////////////////////////////////*/}
-
           <Route element={<AdminGuard />}>
             <Route path="admin" element={<Admin />}>
+              {/*/////////////////////////////////////////*/}
+              {/* ADMIN ROUTES */}
+              {/*/////////////////////////////////////////*/}
               <Route index element={<Navigate to="superboard" />} />
               <Route path="superboard" element={<SuperBoard />}></Route>
               <Route path="features">
@@ -81,7 +99,7 @@ function App() {
         </Route>
 
         {/*/////////////////////////////////////////*/}
-        {/*AUTH ROUTES*/}
+        {/* AUTH ROUTES */}
         {/*/////////////////////////////////////////*/}
 
         <Route path="login" element={<Login />}></Route>
@@ -93,7 +111,7 @@ function App() {
         <Route path="password/reset" element={<ResetPassword />}></Route>
 
         {/*/////////////////////////////////////////*/}
-        {/*COMPANY ROUTES*/}
+        {/* COMPANY ROUTES */}
         {/*/////////////////////////////////////////*/}
 
         <Route path="terms" element={<Terms />} />

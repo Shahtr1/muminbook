@@ -2,6 +2,7 @@ import { Flex, Grid, Text, useColorModeValue } from "@chakra-ui/react";
 import { Folder } from "@/components/layout/reading/Folder.jsx";
 import { readingItems } from "@/data/readingItems.js";
 import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 export const ReadingList = () => {
   const bgColor = useColorModeValue("white", "gray.800");
@@ -11,6 +12,11 @@ export const ReadingList = () => {
     md: "repeat(3, 1fr)",
     lg: "repeat(4, 1fr)",
   };
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isFolderOpen = location.pathname.includes("/reading/my-files");
 
   return (
     <Flex flexDirection="column" p={8} gap={8}>
@@ -43,14 +49,18 @@ export const ReadingList = () => {
         <Flex>Bi</Flex>
       </Flex>
 
-      <Flex flexDirection="column" gap={2}>
-        <Grid templateColumns={templateColumns} gap={5}>
-          <Folder />
-          {readingItems().map((item) => (
-            <ReadingCard key={item.id} {...item} />
-          ))}
-        </Grid>
-      </Flex>
+      {isFolderOpen ? (
+        <Outlet />
+      ) : (
+        <Flex flexDirection="column" gap={2}>
+          <Grid templateColumns={templateColumns} gap={5}>
+            <Folder onClick={() => navigate("my-files")} />
+            {readingItems().map((item) => (
+              <ReadingCard key={item.id} {...item} />
+            ))}
+          </Grid>
+        </Flex>
+      )}
     </Flex>
   );
 };
