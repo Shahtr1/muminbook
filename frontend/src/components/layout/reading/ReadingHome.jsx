@@ -48,7 +48,7 @@ export const ReadingHome = () => {
   const isFolderOpen = location.pathname.includes("/reading/my-files");
 
   return (
-    <Flex flexDirection="column" p={8} gap={8}>
+    <Flex flexDirection="column" p={8} gap={3}>
       <Flex flexDirection="column" gap={2}>
         <Text fontSize="xl">Explore Islamic Knowledge & Wisdom</Text>
         <Flex flexDirection="column">
