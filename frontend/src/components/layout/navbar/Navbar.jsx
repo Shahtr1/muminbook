@@ -1,12 +1,4 @@
-import {
-  Flex,
-  Image,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  useColorMode,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Flex, Image, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { NavItem } from "@/components/layout/navbar/NavItem.jsx";
 import { useQueryClient } from "@tanstack/react-query";
@@ -21,6 +13,7 @@ import { NotificationMenu } from "@/components/layout/menus/NotificationMenu.jsx
 import { UserMenu } from "@/components/layout/menus/UserMenu.jsx";
 import { FeaturesMenu } from "@/components/layout/menus/FeaturesMenu.jsx";
 import { navItems } from "@/data/navbarItems.js";
+import { XSearch } from "@/components/layout/XSearch.jsx";
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -28,7 +21,6 @@ export const Navbar = () => {
   const { colorMode } = useColorMode();
   const location = useLocation();
 
-  const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
   const activeColor = useColorModeValue("active.light", "active.dark");
@@ -78,26 +70,7 @@ export const Navbar = () => {
             display={{ base: "none", md: "block" }}
             onClick={() => navigate("/")}
           />
-
-          <InputGroup
-            display={{ base: isFocused ? "flex" : "none", md: "flex" }}
-            flex={{ base: 1, md: isFocused ? 1 : "0.5" }}
-            transition="all 0.3s ease-in-out"
-          >
-            <InputLeftElement height="100%">
-              <Search2Icon color={defaultColor} />
-            </InputLeftElement>
-            <Input
-              ref={searchInputRef}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search"
-              size="sm"
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              transition="all 0.3s ease-in-out"
-            />
-          </InputGroup>
+          <XSearch focused={isFocused} onFocusChange={setIsFocused} />
         </Flex>
 
         <Flex

@@ -10,6 +10,7 @@ import { readingItems } from "@/data/readingItems.js";
 import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { XBreadCrumb } from "@/components/layout/reading/XBreadCrumb.jsx";
 
 export const ReadingList = () => {
   const theme = useTheme();
@@ -72,11 +73,13 @@ export const ReadingList = () => {
         position="sticky"
         top="navbar-height"
         zIndex="10"
-        p={4}
+        p={1}
         boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : "none"}
       >
-        <Flex>Hi</Flex>
-        <Flex>Bi</Flex>
+        <Flex>
+          <XBreadCrumb />
+        </Flex>
+        <Flex></Flex>
       </Flex>
 
       {isFolderOpen ? (
