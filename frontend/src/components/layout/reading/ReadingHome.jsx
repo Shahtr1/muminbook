@@ -1,11 +1,40 @@
-import { Flex, Grid, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Flex,
+  Grid,
+  Text,
+  useColorModeValue,
+  useTheme,
+} from "@chakra-ui/react";
 import { Folder } from "@/components/layout/reading/Folder.jsx";
 import { readingItems } from "@/data/readingItems.js";
 import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
-export const ReadingList = () => {
-  const bgColor = useColorModeValue("white", "gray.800");
+export const ReadingHome = () => {
+  const theme = useTheme();
+  const bgColor = useColorModeValue("bg.light", "bg.dark");
+  const boxShadowColor = useColorModeValue(
+    "rgba(0, 0, 0, 0.1)",
+    "rgba(255, 255, 255, 0.1)",
+  );
+  const [isSticky, setIsSticky] = useState(false);
+  const headerRef = useRef(null);
+
+  const navbarHeight = parseInt(theme.space["navbar-height"]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (headerRef.current) {
+        const offset = headerRef.current.getBoundingClientRect().top;
+        setIsSticky(offset <= +navbarHeight);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const templateColumns = {
     base: "repeat(1, 1fr)",
     sm: "repeat(2, 1fr)",
@@ -37,13 +66,14 @@ export const ReadingList = () => {
       </Flex>
 
       <Flex
+        ref={headerRef}
         justify="space-between"
         bg={bgColor}
         position="sticky"
         top="navbar-height"
         zIndex="10"
         p={4}
-        boxShadow="sm"
+        boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : "none"}
       >
         <Flex>Hi</Flex>
         <Flex>Bi</Flex>

@@ -49,6 +49,10 @@ const colors = {
       light: "#323232",
     },
   },
+  bg: {
+    dark: "#11151c",
+    light: "#f4f2ee",
+  },
   node: "#008040",
 };
 

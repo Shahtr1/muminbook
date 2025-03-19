@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
+import { ReadingHome } from "@/components/layout/reading/ReadingHome.jsx";
 
 export const Reading = () => {
   const location = useLocation();
@@ -7,7 +7,7 @@ export const Reading = () => {
 
   return (
     <>
-      {!isReadingDetail && <ReadingList />}
+      {!isReadingDetail && <ReadingHome />}
       <Outlet />
     </>
   );

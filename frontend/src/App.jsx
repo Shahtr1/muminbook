@@ -28,7 +28,7 @@ import { SuperBoard } from "@/components/layout/admin/SuperBoard.jsx";
 import { AdminFamilyTree } from "@/components/layout/admin/AdminFamilyTree.jsx";
 import { ReadingView } from "@/pages/reading/ReadingView.jsx";
 import { FolderView } from "@/pages/reading/FolderView.jsx";
-import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
+import { ReadingHome } from "@/components/layout/reading/ReadingHome.jsx";
 import { FileView } from "@/pages/reading/FileView.jsx";
 import { RemoveTrailingSlash } from "@/utils/RemoveTrailingSlash.jsx";
 
@@ -66,7 +66,7 @@ function App() {
             {/*/////////////////////////////////////////*/}
             {/* READING ROUTES */}
             {/*/////////////////////////////////////////*/}
-            <Route path="my-files" element={<ReadingList />}>
+            <Route path="my-files" element={<ReadingHome />}>
               <Route index element={<FolderView />} />
               <Route path=":folderId" element={<FolderView />} />
               <Route path=":folderId/:subFolderId" element={<FolderView />} />
