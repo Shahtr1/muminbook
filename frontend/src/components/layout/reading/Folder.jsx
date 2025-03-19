@@ -1,7 +1,7 @@
 import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import { Flex, Text } from "@chakra-ui/react";
 
-export const Folder = ({ onClick }) => {
+export const Folder = ({ onClick, empty = true }) => {
   return (
     <Flex
       height="full"
@@ -11,7 +11,7 @@ export const Folder = ({ onClick }) => {
       flexDirection="column"
       onClick={onClick}
     >
-      <FolderSVG dimensions="150px" />
+      <FolderSVG dimensions="150px" empty={empty} />
       <Text>My Files</Text>
     </Flex>
   );
