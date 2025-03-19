@@ -11,7 +11,7 @@ import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
-export const ReadingHome = () => {
+export const ReadingList = () => {
   const theme = useTheme();
   const bgColor = useColorModeValue("bg.light", "bg.dark");
   const boxShadowColor = useColorModeValue(
