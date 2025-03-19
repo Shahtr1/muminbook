@@ -12,7 +12,7 @@ export const Folder = ({ onClick, empty = true }) => {
       onClick={onClick}
     >
       <FolderSVG dimensions="150px" empty={empty} />
-      <Text>My Files</Text>
+      <Text fontSize={{ base: "12px", sm: "14px" }}>My Files</Text>
     </Flex>
   );
 };
