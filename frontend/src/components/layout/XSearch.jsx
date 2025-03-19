@@ -16,6 +16,7 @@ export const XSearch = ({
   color,
   size = "sm",
   width,
+  parentWidth = "100%",
 }) => {
   const xColor = color || useColorModeValue("default.light", "default.dark");
   const searchInputRef = useRef(null);
@@ -46,8 +47,9 @@ export const XSearch = ({
   return (
     <InputGroup
       display={display}
-      flex={{ base: 1, md: expand && isFocused ? 1 : "0.5" }}
+      flex={{ md: expand && isFocused ? 1 : "0.5" }}
       transition="all 0.3s ease-in-out"
+      w={parentWidth}
     >
       <InputLeftElement height="100%" w={size === "xs" ? 7 : undefined}>
         <Search2Icon color={xColor} fontSize={size} />

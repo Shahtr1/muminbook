@@ -1,4 +1,9 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Text,
+} from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -9,23 +14,23 @@ export const XBreadCrumb = () => {
         spacing="8px"
         separator={<ChevronRightIcon color="gray.500" />}
         fontWeight="medium"
-        fontSize="sm"
+        fontSize={{ base: "12px", sm: "14px" }}
       >
         <BreadcrumbItem>
           <BreadcrumbLink as={Link} to="#">
-            Home
+            <Text>Home</Text>
           </BreadcrumbLink>
         </BreadcrumbItem>
 
         <BreadcrumbItem>
           <BreadcrumbLink as={Link} to="#">
-            About
+            <Text>About</Text>
           </BreadcrumbLink>
         </BreadcrumbItem>
 
         <BreadcrumbItem isCurrentPage>
           <BreadcrumbLink as={Link} to="#">
-            Contact
+            <Text>Contact</Text>
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>

@@ -1,6 +1,7 @@
 import {
   Flex,
   Grid,
+  Icon,
   Text,
   useColorModeValue,
   useTheme,
@@ -12,7 +13,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { XBreadCrumb } from "@/components/layout/reading/XBreadCrumb.jsx";
 import { XSearch } from "@/components/layout/XSearch.jsx";
-import { StarIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "@chakra-ui/icons";
 
 export const ReadingList = () => {
   const theme = useTheme();
@@ -25,6 +26,8 @@ export const ReadingList = () => {
   const headerRef = useRef(null);
 
   const navbarHeight = parseInt(theme.space["navbar-height"]);
+
+  const [showExtras, setShowExtras] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,14 +58,14 @@ export const ReadingList = () => {
       <Flex flexDirection="column" gap={2}>
         <Text fontSize="xl">Explore Islamic Knowledge & Wisdom</Text>
         <Flex flexDirection="column">
-          <Text fontSize="sm">
+          <Text fontSize={{ base: "12px", sm: "14px" }}>
             Deepen your understanding of Islam through a vast collection of
             authentic books on Quran, Hadith, Tafsir, and Seerah. Whether you're
             exploring the teachings of Prophet Muhammad ﷺ, studying the meanings
             of the Quran, or learning about Islamic rulings, you'll find trusted
             sources to guide your journey.
           </Text>
-          <Text fontSize="sm">
+          <Text fontSize={{ base: "12px", sm: "14px" }}>
             Select a book to start reading and enrich your knowledge today!
           </Text>
         </Flex>
@@ -70,18 +73,33 @@ export const ReadingList = () => {
 
       <Flex
         ref={headerRef}
+        flexDir={{ base: "column", sm: "row" }}
         justify="space-between"
         bg={bgColor}
         position="sticky"
         top="navbar-height"
         zIndex="10"
-        p={1}
+        py={2}
         boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : "none"}
+        gap={2}
       >
-        <Flex>
+        <Flex justify="space-between">
           <XBreadCrumb />
+          <Icon
+            as={showExtras ? ChevronUpIcon : ChevronDownIcon}
+            display={{ base: "flex", sm: "none" }}
+            fontSize="18px"
+            cursor="pointer"
+            onClick={() => setShowExtras(!showExtras)}
+            color="brand.500"
+          />
         </Flex>
-        <Flex justify="end" align="center" gap={3}>
+        <Flex
+          justify={{ base: "space-between", sm: "end" }}
+          align="center"
+          gap={3}
+          display={{ base: showExtras ? "flex" : "none", sm: "flex" }}
+        >
           <Flex
             align="center"
             gap={1}
@@ -90,13 +108,14 @@ export const ReadingList = () => {
             borderRadius="25px"
             height="19px"
             px={2}
+            cursor="pointer"
           >
             <StarIcon color="brand.500" fontSize="9px" />
             <Text color="brand.500" fontSize="11px">
               Favourites
             </Text>
           </Flex>
-          <XSearch bgColor={bgColor} size="xs" width={120} />
+          <XSearch bgColor={bgColor} size="xs" width={120} parentWidth="auto" />
         </Flex>
       </Flex>
 
