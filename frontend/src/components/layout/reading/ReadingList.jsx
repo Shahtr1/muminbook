@@ -1,8 +1,8 @@
 import {
   Flex,
-  Grid,
   Icon,
   Text,
+  useBreakpointValue,
   useColorModeValue,
   useTheme,
 } from "@chakra-ui/react";
@@ -41,12 +41,14 @@ export const ReadingList = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const templateColumns = {
-    base: "repeat(1, 1fr)",
-    sm: "repeat(2, 1fr)",
-    md: "repeat(3, 1fr)",
-    lg: "repeat(4, 1fr)",
-  };
+  const gapSize = "25px";
+
+  const itemWidth = useBreakpointValue({
+    base: `100%`,
+    sm: `calc(50% - ${gapSize})`,
+    md: `calc(33.33% - ${gapSize})`,
+    lg: `calc(25% - ${gapSize})`,
+  });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -122,13 +124,11 @@ export const ReadingList = () => {
       {isFolderOpen ? (
         <Outlet />
       ) : (
-        <Flex flexDirection="column" gap={2}>
-          <Grid templateColumns={templateColumns} gap={5}>
-            <Folder onClick={() => navigate("my-files")} />
-            {readingItems().map((item) => (
-              <ReadingCard key={item.id} {...item} />
-            ))}
-          </Grid>
+        <Flex gap={gapSize} flexWrap="wrap">
+          <Folder onClick={() => navigate("my-files")} width={itemWidth} />
+          {readingItems().map((item) => (
+            <ReadingCard key={item.id} {...item} width={itemWidth} />
+          ))}
         </Flex>
       )}
     </Flex>

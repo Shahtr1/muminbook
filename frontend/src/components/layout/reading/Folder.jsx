@@ -1,11 +1,11 @@
 import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import { Flex, Text } from "@chakra-ui/react";
 
-export const Folder = ({ onClick, empty = true }) => {
+export const Folder = ({ onClick, width, empty = true }) => {
   return (
     <Flex
       height="full"
-      width="full"
+      width={width}
       justify="center"
       align="center"
       flexDirection="column"

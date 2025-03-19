@@ -10,7 +10,6 @@ export const readingItems = () => [
       "while maintaining readability.\n" +
       "Widely used for Quran study.\n" +
       "Highly recommended for beginners.",
-    icon: "GoBook",
   },
   {
     id: "sealed-nectar",
@@ -23,7 +22,6 @@ export const readingItems = () => [
       "and mission. Written by Safi-ur-Rahman\n" +
       "Mubarakpuri. A must-read for Seerah\n" +
       "enthusiasts.",
-    icon: "GoStar",
   },
   {
     id: "ibn-kathir-translation",
@@ -36,7 +34,6 @@ export const readingItems = () => [
       "and historical context. Offers deep\n" +
       "insight into meanings and themes.\n" +
       "Used by scholars worldwide.",
-    icon: "GoLibrary",
   },
   {
     id: "sahih-al-bukhari",
@@ -49,7 +46,6 @@ export const readingItems = () => [
       "aspects of Islam with rigorous\n" +
       "authenticity checks. Essential for\n" +
       "Islamic studies.",
-    icon: "GoArchive",
   },
   {
     id: "sahih-muslim",
@@ -62,7 +58,6 @@ export const readingItems = () => [
       "verified narrations covering Fiqh,\n" +
       "Aqeedah, and daily life guidance.\n" +
       "Second most authentic after Bukhari.",
-    icon: "GoFile",
   },
   {
     id: "sunan-abu-dawood",
@@ -75,7 +70,6 @@ export const readingItems = () => [
       "many authentic narrations on worship,\n" +
       "business, and personal conduct.\n" +
       "Widely referenced in Fiqh studies.",
-    icon: "GoChecklist",
   },
   {
     id: "jami-at-tirmidhi",
@@ -88,7 +82,6 @@ export const readingItems = () => [
       "authenticity. Covers Fiqh topics and\n" +
       "virtues of actions. Important for\n" +
       "Hadith scholars and students.",
-    icon: "GoBookOpen",
   },
   {
     id: "riyad-as-salihin",
@@ -101,7 +94,6 @@ export const readingItems = () => [
       "Compiled by Imam An-Nawawi.\n" +
       "Encourages good character and piety.\n" +
       "Used in Islamic spiritual growth.",
-    icon: "GoHeart",
   },
   {
     id: "tafsir-al-jalalayn",
@@ -114,7 +106,6 @@ export const readingItems = () => [
       "Explains meanings of verses simply.\n" +
       "Used for quick reference and study.\n" +
       "Great for beginners in Tafsir.",
-    icon: "GoSearch",
   },
   {
     id: "bulugh-al-maram",
@@ -127,7 +118,6 @@ export const readingItems = () => [
       "Used in deriving Islamic rulings.\n" +
       "Helpful for understanding Hadith-based\n" +
       "jurisprudence.",
-    icon: "GoTasklist",
   },
   {
     id: "tafsir-ibn-abbas",
@@ -140,7 +130,6 @@ export const readingItems = () => [
       "Companion. Provides early insights\n" +
       "into meanings of verses. Useful for\n" +
       "classical Tafsir studies.",
-    icon: "GoNote",
   },
   {
     id: "arbaeen-nawawi",
@@ -152,7 +141,6 @@ export const readingItems = () => [
       "Islamic principles. Compiled by\n" +
       "Imam An-Nawawi. Easy to memorize and\n" +
       "understand. Useful for all Muslims.",
-    icon: "GoListOrdered",
   },
   {
     id: "zad-al-maad",
@@ -165,7 +153,6 @@ export const readingItems = () => [
       "Discusses his guidance in worship,\n" +
       "medicine, and lifestyle.\n" +
       "A deep look at Sunnah application.",
-    icon: "GoComment",
   },
   {
     id: "usul-al-tafsir",
@@ -178,6 +165,5 @@ export const readingItems = () => [
       "Used by scholars for advanced study.\n" +
       "Important for understanding Quranic\n" +
       "exegesis correctly.",
-    icon: "GoLightBulb",
   },
 ];
