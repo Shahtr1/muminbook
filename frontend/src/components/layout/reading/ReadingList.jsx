@@ -11,6 +11,8 @@ import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { XBreadCrumb } from "@/components/layout/reading/XBreadCrumb.jsx";
+import { XSearch } from "@/components/layout/XSearch.jsx";
+import { StarIcon } from "@chakra-ui/icons";
 
 export const ReadingList = () => {
   const theme = useTheme();
@@ -79,7 +81,23 @@ export const ReadingList = () => {
         <Flex>
           <XBreadCrumb />
         </Flex>
-        <Flex></Flex>
+        <Flex justify="end" align="center" gap={3}>
+          <Flex
+            align="center"
+            gap={1}
+            border="1px solid"
+            borderColor="brand.500"
+            borderRadius="25px"
+            height="19px"
+            px={2}
+          >
+            <StarIcon color="brand.500" fontSize="9px" />
+            <Text color="brand.500" fontSize="11px">
+              Favourites
+            </Text>
+          </Flex>
+          <XSearch bgColor={bgColor} size="xs" width={120} />
+        </Flex>
       </Flex>
 
       {isFolderOpen ? (

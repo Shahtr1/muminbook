@@ -70,7 +70,12 @@ export const Navbar = () => {
             display={{ base: "none", md: "block" }}
             onClick={() => navigate("/")}
           />
-          <XSearch focused={isFocused} onFocusChange={setIsFocused} />
+          <XSearch
+            focused={isFocused}
+            onFocusChange={setIsFocused}
+            expand={true}
+            display={{ base: isFocused ? "flex" : "none", md: "flex" }}
+          />
         </Flex>
 
         <Flex
