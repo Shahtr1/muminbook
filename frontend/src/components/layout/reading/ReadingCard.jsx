@@ -1,39 +1,50 @@
-import { Link } from "react-router-dom";
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import { ArabicEnglishSVG } from "@/components/svgs/ArabicEnglishSVG.jsx";
+import { CardSVG } from "@/components/svgs/CardSVG.jsx";
 
 export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
+  const navigate = useNavigate();
+  const bgColor = useColorModeValue("white", "gray.800");
+
+  const absoluteStyles = {
+    top: "0",
+    left: "50%",
+    transform: "translateX(-50%)",
+  };
   return (
-    <Box
+    <Flex
       h="200px"
       w={width}
       p={4}
-      bg={cardColor}
       borderRadius="lg"
-      shadow="sm"
-      color="white"
-      _hover={{ shadow: "md" }}
+      shadow="md"
       cursor="pointer"
+      onClick={() => navigate(`/reading/${uuid}`)}
+      position="relative"
+      overflow="hidden"
+      flexDir="column"
+      bgColor={bgColor}
     >
-      <HStack spacing={3}>
-        <ArabicEnglishSVG dimensions="40px" />
-        <VStack align="start" spacing={1}>
-          <Link
-            to={`/reading/${uuid}`}
-            style={{
-              fontSize: "lg",
-              fontWeight: "bold",
-              textDecoration: "none",
-              color: "white",
-            }}
-          >
-            {label}
-          </Link>
-          <Text fontSize="sm" noOfLines={5}>
-            {description}
-          </Text>
-        </VStack>
-      </HStack>
-    </Box>
+      <Flex></Flex>
+
+      <Box
+        border="2px solid"
+        borderColor={cardColor}
+        borderRadius="md"
+        h="fit-content"
+        position="absolute"
+        bgColor={bgColor}
+        zIndex="999"
+      >
+        <ArabicEnglishSVG dimensions="50px" activeColor={cardColor} />
+      </Box>
+      <CardSVG
+        activeColor={cardColor}
+        dimensions="250px"
+        absolute={true}
+        absoluteStyles={absoluteStyles}
+      />
+    </Flex>
   );
 };

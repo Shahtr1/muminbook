@@ -1,6 +1,12 @@
 import { SVG } from "@/components/svgs/SVG.jsx";
 
-export const CardSVG = ({ active, activeColor, dimensions = "25px" }) => {
+export const CardSVG = ({
+  active,
+  activeColor,
+  dimensions = "25px",
+  absolute = false,
+  absoluteStyles,
+}) => {
   return (
     <>
       <SVG
@@ -8,6 +14,8 @@ export const CardSVG = ({ active, activeColor, dimensions = "25px" }) => {
         active={active}
         activeColor={activeColor}
         viewBox="0 0 343 276"
+        absolute={absolute}
+        absoluteStyles={absoluteStyles}
       >
         <g clipPath="url(#clip0_134_161)">
           <path
