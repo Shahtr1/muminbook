@@ -80,7 +80,7 @@ export const ReadingList = () => {
         bg={bgColor}
         position="sticky"
         top="navbar-height"
-        zIndex="10"
+        zIndex="999999"
         py={2}
         boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : "none"}
         gap={2}
