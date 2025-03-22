@@ -49,7 +49,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
       >
         <Text
           whiteSpace="nowrap"
-          textAlign={isSmallScreen ? "start" : "end"}
+          textAlign={isSmallScreen ? "start" : "center"}
           fontSize="15px"
           fontWeight="bold"
           color={cardColor}
