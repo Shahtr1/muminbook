@@ -56,8 +56,8 @@ export const ReadingList = () => {
   const isFolderOpen = location.pathname.includes("/reading/my-files");
 
   return (
-    <Flex flexDirection="column" p={8} gap={3}>
-      <Flex flexDirection="column" gap={2}>
+    <Flex flexDirection="column" py={8} gap={3}>
+      <Flex flexDirection="column" gap={2} px={8}>
         <Text fontSize="xl">Explore Islamic Knowledge & Wisdom</Text>
         <Flex flexDirection="column">
           <Text fontSize={{ base: "12px", sm: "14px" }}>
@@ -84,6 +84,7 @@ export const ReadingList = () => {
         py={2}
         boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : "none"}
         gap={2}
+        px={8}
       >
         <Flex justify="space-between">
           <XBreadCrumb />
@@ -124,7 +125,7 @@ export const ReadingList = () => {
       {isFolderOpen ? (
         <Outlet />
       ) : (
-        <Flex gap={gapSize} flexWrap="wrap">
+        <Flex gap={gapSize} flexWrap="wrap" px={8}>
           <Folder onClick={() => navigate("my-files")} width={itemWidth} />
           {readingItems().map((item) => (
             <ReadingCard key={item.id} {...item} width={itemWidth} />

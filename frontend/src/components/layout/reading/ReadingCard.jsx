@@ -21,7 +21,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
   };
   return (
     <Flex
-      h="200px"
+      h={isSmallScreen ? "90px" : "200px"}
       w={width}
       borderRadius="lg"
       shadow="md"
@@ -29,24 +29,27 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
       onClick={() => navigate(`/reading/${uuid}`)}
       position="relative"
       overflow="hidden"
-      flexDir="column"
+      flexDir={isSmallScreen ? "row-reverse" : "column"}
       bgColor={bgColor}
-      justify="end"
+      justify={isSmallScreen ? "normal" : "end"}
+      align={isSmallScreen ? "center" : "normal"}
+      px={isSmallScreen ? "10px" : 0}
     >
       <Flex
         w="100%"
-        h="50%"
+        h={isSmallScreen ? "100%" : "50%"}
         bgColor={bgColor}
-        borderTop="3px solid"
+        borderTop={isSmallScreen ? "none" : "3px solid"}
         borderColor={cardColor}
-        opacity={0.9}
+        opacity={isSmallScreen ? 0.8 : 0.9}
         zIndex={999}
         flexDir="column"
         px={2}
+        py={isSmallScreen ? "5px" : 0}
       >
         <Text
           whiteSpace="nowrap"
-          textAlign="end"
+          textAlign={isSmallScreen ? "start" : "end"}
           fontSize="15px"
           fontWeight="bold"
           color={cardColor}
@@ -58,27 +61,37 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
         </Text>
       </Flex>
 
-      <Box
-        border="2px solid"
-        borderColor={cardColor}
-        borderRadius="md"
-        h="fit-content"
-        position="absolute"
+      <Flex
         bgColor={bgColor}
-        zIndex="999"
-        top="55px"
-        left="10px"
+        height="full"
+        align="center"
+        w="auto"
+        zIndex="99999"
+        display={isSmallScreen ? "flex" : "contents"}
       >
-        <ArabicEnglishSVG dimensions="50px" activeColor={cardColor} />
-      </Box>
-      {!isSmallScreen && (
-        <CardSVG
-          activeColor={cardColor}
-          dimensions="250px"
-          absolute={true}
-          absoluteStyles={absoluteStyles}
-        />
-      )}
+        <Box
+          border="2px solid"
+          borderColor={cardColor}
+          borderRadius="md"
+          h="fit-content"
+          position={isSmallScreen ? "relative" : "absolute"}
+          bgColor={bgColor}
+          zIndex="999"
+          top={isSmallScreen ? "unset" : "52px"}
+          left={isSmallScreen ? "unset" : "10px"}
+        >
+          <ArabicEnglishSVG
+            dimensions={isSmallScreen ? "55px" : "50px"}
+            activeColor={cardColor}
+          />
+        </Box>
+      </Flex>
+      <CardSVG
+        activeColor={cardColor}
+        dimensions="250px"
+        absolute={true}
+        absoluteStyles={absoluteStyles}
+      />
     </Flex>
   );
 };
