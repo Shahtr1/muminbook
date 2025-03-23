@@ -85,7 +85,11 @@ export const ReadingList = () => {
     <Flex flexDirection="column" py={8} gap={3}>
       <Flex flexDirection="column" gap={2} px={8}>
         <Text fontSize="xl">Explore Islamic Knowledge & Wisdom</Text>
-        <Flex flexDirection="column">
+        <Flex
+          flexDirection="column"
+          maxH={{ base: "60px", sm: "unset" }}
+          overflowY={{ base: "auto", sm: "unset" }}
+        >
           <Text fontSize={{ base: "12px", sm: "14px" }}>
             Deepen your understanding of Islam through a vast collection of
             authentic books on Quran, Hadith, Tafsir, and Seerah. Whether you're
