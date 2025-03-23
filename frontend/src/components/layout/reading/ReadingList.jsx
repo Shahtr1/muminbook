@@ -156,7 +156,11 @@ export const ReadingList = () => {
         <Outlet />
       ) : (
         <Flex gap={gapSize} flexWrap="wrap" px={8}>
-          <Folder onClick={() => navigate("my-files")} width={itemWidth} />
+          <Folder
+            onClick={() => navigate("my-files")}
+            width={itemWidth}
+            empty={Object.keys(myFiles["my-files"]).length === 0}
+          />
           {readingItems().map((item) => (
             <ReadingCard key={item.id} {...item} width={itemWidth} />
           ))}

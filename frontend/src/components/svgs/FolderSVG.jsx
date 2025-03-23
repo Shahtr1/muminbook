@@ -6,6 +6,9 @@ export const FolderSVG = ({
   dimensions = "25px",
   empty = true,
 }) => {
+  const folderFillId = `folder-fill-${empty ? "empty" : "full"}`;
+  const folderSideFillId = `folder-side-fill-${empty ? "empty" : "full"}`;
+
   return (
     <>
       <SVG
@@ -30,45 +33,38 @@ export const FolderSVG = ({
           d="M44.5,41h-41C2.119,41,1,39.881,1,38.5v-31C1,6.119,2.119,5,3.5,5h11.597	c1.519,0,2.955,0.69,3.904,1.877L21.5,10h23c1.381,0,2.5,1.119,2.5,2.5v26C47,39.881,45.881,41,44.5,41z"
         />
         <linearGradient
-          id="Om5yvFr6YrdlC0q2Vet0Hb"
+          id={folderFillId}
           x1="5.851"
           x2="18.601"
           y1="9.254"
           y2="27.39"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor={empty ? "transparent" : "#e3fdfc"} />{" "}
-          {/* Brand 50 */}
-          <stop
-            offset=".909"
-            stopColor={empty ? "transparent" : "#c1f7f4"}
-          />{" "}
-          {/* Brand 100 */}
+          <stop offset="0" stopColor={empty ? "transparent" : "#e3fdfc"} />
+          <stop offset=".909" stopColor={empty ? "transparent" : "#c1f7f4"} />
         </linearGradient>
+
         <path
-          fill="url(#Om5yvFr6YrdlC0q2Vet0Hb)"
+          fill={`url(#${folderFillId})`}
           d="M2,25h20V11H4c-1.105,0-2,0.895-2,2V25z"
         />
         <linearGradient
-          id="Om5yvFr6YrdlC0q2Vet0Hc"
+          id={folderSideFillId}
           x1="2"
           x2="22"
           y1="19"
           y2="19"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor={empty ? "transparent" : "#e3fdfc"} />{" "}
-          {/* Brand 50 */}
-          <stop
-            offset=".909"
-            stopColor={empty ? "transparent" : "#c1f7f4"}
-          />{" "}
-          {/* Brand 100 */}
+          <stop offset="0" stopColor={empty ? "transparent" : "#e3fdfc"} />
+          <stop offset=".909" stopColor={empty ? "transparent" : "#c1f7f4"} />
         </linearGradient>
+
         <path
-          fill="url(#Om5yvFr6YrdlC0q2Vet0Hc)"
+          fill={`url(#${folderSideFillId})`}
           d="M2,26h20V12H4c-1.105,0-2,0.895-2,2V26z"
         />
+
         <linearGradient
           id="Om5yvFr6YrdlC0q2Vet0Hd"
           x1="16.865"

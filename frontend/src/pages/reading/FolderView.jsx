@@ -55,7 +55,6 @@ export const FolderView = () => {
           }
           if (typeof value === "object") {
             const isEmpty = Object.keys(value).length === 0;
-
             return (
               <Folder
                 key={name}
