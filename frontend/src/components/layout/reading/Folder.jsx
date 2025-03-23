@@ -7,11 +7,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-export const Folder = ({ onClick, width, empty = true }) => {
+export const Folder = ({ onClick, width, empty = true, label = "Folder" }) => {
   const bgColor = useColorModeValue("white", "gray.800");
-
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
-
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -37,7 +35,7 @@ export const Folder = ({ onClick, width, empty = true }) => {
     >
       <FolderSVG dimensions={isSmallScreen ? "55px" : "150px"} empty={empty} />
       <Text fontSize="15px" color="brand.500" fontWeight="bold">
-        My Files
+        {label}
       </Text>
     </Flex>
   );
