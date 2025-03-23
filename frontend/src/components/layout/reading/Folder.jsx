@@ -47,7 +47,7 @@ export const Folder = ({
       cursor="pointer"
     >
       <FolderSVG dimensions={dimensions} empty={empty} />
-      <Text fontSize="15px" color="brand.500" fontWeight="bold">
+      <Text fontSize="15px" color="brand.500" fontWeight="medium">
         {label}
       </Text>
     </Flex>
