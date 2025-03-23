@@ -1,5 +1,6 @@
 export const myFiles = {
   "my-files": {
+    empty: {},
     // Simple folders
     notes: {
       "class-1": {
@@ -16,6 +17,7 @@ export const myFiles = {
       archive: {
         "old_resume.docx": "file",
       },
+      empty: {},
     },
 
     // Deep nested folders

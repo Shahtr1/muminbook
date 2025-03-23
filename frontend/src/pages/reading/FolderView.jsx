@@ -54,6 +54,8 @@ export const FolderView = () => {
             );
           }
           if (typeof value === "object") {
+            const isEmpty = Object.keys(value).length === 0;
+
             return (
               <Folder
                 key={name}
@@ -64,10 +66,11 @@ export const FolderView = () => {
                   )
                 }
                 width="200px"
-                empty={false}
+                empty={isEmpty}
               />
             );
           }
+
           return null;
         })}
       </Flex>

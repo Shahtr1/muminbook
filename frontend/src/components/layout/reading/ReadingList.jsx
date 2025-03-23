@@ -58,7 +58,6 @@ export const ReadingList = () => {
 
   const extractFolderSegments = () => {
     const pathnames = location.pathname.split("/").filter(Boolean);
-
     const myFilesIndex = pathnames.indexOf("my-files");
     if (myFilesIndex === -1) return [];
 
@@ -67,10 +66,11 @@ export const ReadingList = () => {
     let current = myFiles;
 
     for (const segment of relativePath) {
-      if (typeof current === "object" && segment in current) {
-        if (current[segment] === "file") break;
+      const decoded = decodeURIComponent(segment);
+      if (typeof current === "object" && decoded in current) {
+        if (current[decoded] === "file") break;
         segments.push(segment);
-        current = current[segment];
+        current = current[decoded];
       } else {
         break;
       }
