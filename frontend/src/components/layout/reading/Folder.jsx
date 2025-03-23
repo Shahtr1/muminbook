@@ -7,7 +7,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-export const Folder = ({ onClick, width, empty = true, label = "Folder" }) => {
+export const Folder = ({
+  onClick,
+  width,
+  empty = true,
+  label = "My Files",
+}) => {
   const bgColor = useColorModeValue("white", "gray.800");
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const [hasMounted, setHasMounted] = useState(false);
