@@ -26,11 +26,7 @@ export const Folder = ({ onClick, width, empty = true }) => {
       cursor="pointer"
     >
       <FolderSVG dimensions={isSmallScreen ? "55px" : "150px"} empty={empty} />
-      <Text
-        fontSize={{ base: "15px", sm: "14px" }}
-        color="brand.500"
-        fontWeight="bold"
-      >
+      <Text fontSize="15px" color="brand.500" fontWeight="bold">
         My Files
       </Text>
     </Flex>
