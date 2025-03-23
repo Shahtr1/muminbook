@@ -1,11 +1,11 @@
 import { Flex, Text } from "@chakra-ui/react";
 
-export const ReadingIntro = ({ isFolderOpen }) => {
+export const ReadingIntro = ({ isFolderView }) => {
   return (
     <>
       <Flex flexDirection="column" gap={2} px={8}>
         <Text fontSize={{ base: "l", sm: "xl" }}>
-          {isFolderOpen
+          {isFolderView
             ? "File Explorer"
             : "Explore Islamic Knowledge & Wisdom"}
         </Text>
@@ -14,7 +14,7 @@ export const ReadingIntro = ({ isFolderOpen }) => {
           maxH={{ base: "60px", sm: "unset" }}
           overflowY={{ base: "auto", sm: "unset" }}
         >
-          {!isFolderOpen && (
+          {!isFolderView && (
             <Text fontSize={{ base: "12px", sm: "14px" }}>
               Deepen your understanding of Islam through a vast collection of
               authentic books on Quran, Hadith, Tafsir, and Seerah. Whether
@@ -24,7 +24,7 @@ export const ReadingIntro = ({ isFolderOpen }) => {
             </Text>
           )}
           <Text fontSize={{ base: "12px", sm: "14px" }}>
-            {isFolderOpen
+            {isFolderView
               ? "Select a file or browse subfolders"
               : "Select a book to start reading and enrich your knowledge today!"}
           </Text>

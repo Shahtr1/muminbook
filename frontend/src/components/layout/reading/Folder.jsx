@@ -12,9 +12,15 @@ export const Folder = ({
   width,
   empty = true,
   label = "My Files",
+  isFolderView = false,
 }) => {
   const bgColor = useColorModeValue("white", "gray.800");
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+  const dimensions = useBreakpointValue({
+    base: "55px",
+    sm: isFolderView ? "80px" : "150px",
+  });
+
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -22,6 +28,8 @@ export const Folder = ({
   }, []);
 
   if (!hasMounted) return null;
+
+  const isFolderOpen = location.pathname.includes("/reading/my-files");
 
   return (
     <Flex
@@ -38,7 +46,7 @@ export const Folder = ({
       gap={isSmallScreen ? 5 : "unset"}
       cursor="pointer"
     >
-      <FolderSVG dimensions={isSmallScreen ? "55px" : "150px"} empty={empty} />
+      <FolderSVG dimensions={dimensions} empty={empty} />
       <Text fontSize="15px" color="brand.500" fontWeight="bold">
         {label}
       </Text>

@@ -7,6 +7,7 @@ export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const isFolderView = location.pathname.includes("/reading/my-files");
   const pathNames = location.pathname.split("/").filter(Boolean);
   const myFilesIndex = pathNames.indexOf("my-files");
   const folderPath =
@@ -25,14 +26,6 @@ export const FolderView = () => {
       currentFolder = null;
     }
   });
-
-  if (!currentFolder) {
-    return (
-      <Flex p={8}>
-        <Text>No folder data found.</Text>
-      </Flex>
-    );
-  }
 
   const items = Object.entries(currentFolder);
 
@@ -66,6 +59,7 @@ export const FolderView = () => {
                 }
                 width="200px"
                 empty={isEmpty}
+                isFolderView={isFolderView}
               />
             );
           }

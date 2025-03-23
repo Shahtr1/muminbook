@@ -19,13 +19,13 @@ export const ReadingList = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isFolderOpen = location.pathname.includes("/reading/my-files");
+  const isFolderView = location.pathname.includes("/reading/my-files");
 
   return (
     <Flex flexDirection="column" py={{ base: 3, sm: 8 }}>
-      <ReadingIntro isFolderOpen={isFolderOpen} />
+      <ReadingIntro isFolderView={isFolderView} />
       <ReadingHeader />
-      {isFolderOpen ? (
+      {isFolderView ? (
         <Outlet />
       ) : (
         <Flex gap={gapSize} flexWrap="wrap" px={8} py={2}>
