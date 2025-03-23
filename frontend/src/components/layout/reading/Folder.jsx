@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import {
   Flex,
@@ -7,8 +8,17 @@ import {
 } from "@chakra-ui/react";
 
 export const Folder = ({ onClick, width, empty = true }) => {
-  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const bgColor = useColorModeValue("white", "gray.800");
+
+  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null;
 
   return (
     <Flex

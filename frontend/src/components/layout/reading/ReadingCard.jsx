@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -12,13 +13,22 @@ import { CardSVG } from "@/components/svgs/CardSVG.jsx";
 export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
   const navigate = useNavigate();
   const bgColor = useColorModeValue("white", "gray.800");
+
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted || isSmallScreen === null) return null;
 
   const absoluteStyles = {
     top: "-15px",
     left: "50%",
     transform: "translateX(-50%)",
   };
+
   return (
     <Flex
       h={isSmallScreen ? "90px" : "200px"}
@@ -86,6 +96,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
           />
         </Box>
       </Flex>
+
       <CardSVG
         activeColor={cardColor}
         dimensions="250px"

@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { XBreadCrumb } from "@/components/layout/reading/XBreadCrumb.jsx";
 import { XSearch } from "@/components/layout/XSearch.jsx";
 import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "@chakra-ui/icons";
+import { myFiles } from "@/data/myFiles.js";
 
 export const ReadingList = () => {
   const theme = useTheme();
@@ -55,6 +56,31 @@ export const ReadingList = () => {
 
   const isFolderOpen = location.pathname.includes("/reading/my-files");
 
+  const extractFolderSegments = () => {
+    const pathnames = location.pathname.split("/").filter(Boolean);
+
+    const myFilesIndex = pathnames.indexOf("my-files");
+    if (myFilesIndex === -1) return [];
+
+    const relativePath = pathnames.slice(myFilesIndex);
+    let segments = [];
+    let current = myFiles;
+
+    for (const segment of relativePath) {
+      if (typeof current === "object" && segment in current) {
+        if (current[segment] === "file") break;
+        segments.push(segment);
+        current = current[segment];
+      } else {
+        break;
+      }
+    }
+
+    return segments;
+  };
+
+  const folderSegments = extractFolderSegments();
+
   return (
     <Flex flexDirection="column" py={8} gap={3}>
       <Flex flexDirection="column" gap={2} px={8}>
@@ -87,7 +113,7 @@ export const ReadingList = () => {
         px={8}
       >
         <Flex justify="space-between">
-          <XBreadCrumb />
+          <XBreadCrumb segments={folderSegments} />
           <Icon
             as={showExtras ? ChevronUpIcon : ChevronDownIcon}
             display={{ base: "flex", sm: "none" }}

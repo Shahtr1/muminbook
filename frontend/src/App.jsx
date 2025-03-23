@@ -29,7 +29,6 @@ import { AdminFamilyTree } from "@/components/layout/admin/AdminFamilyTree.jsx";
 import { ReadingView } from "@/pages/reading/ReadingView.jsx";
 import { FolderView } from "@/pages/reading/FolderView.jsx";
 import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
-import { FileView } from "@/pages/reading/FileView.jsx";
 import { RemoveTrailingSlash } from "@/utils/RemoveTrailingSlash.jsx";
 
 function App() {
@@ -70,10 +69,6 @@ function App() {
               <Route index element={<FolderView />} />
               <Route path=":folderId" element={<FolderView />} />
               <Route path=":folderId/:subFolderId" element={<FolderView />} />
-              <Route
-                path=":folderId/:subFolderId/:fileId"
-                element={<FileView />}
-              />
             </Route>
             <Route path=":id" element={<ReadingView />} />
           </Route>
