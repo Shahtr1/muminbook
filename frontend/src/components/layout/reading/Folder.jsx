@@ -1,19 +1,33 @@
 import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
-import { Flex, Text } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  useBreakpointValue,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 export const Folder = ({ onClick, width, empty = true }) => {
+  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+  const bgColor = useColorModeValue("white", "gray.800");
+
   return (
     <Flex
-      height="full"
+      h={isSmallScreen ? "90px" : "full"}
       width={width}
-      justify="center"
+      justify={isSmallScreen ? "start" : "center"}
       align="center"
-      flexDirection="column"
+      flexDirection={isSmallScreen ? "row" : "column"}
       onClick={onClick}
+      px={isSmallScreen ? "10px" : 0}
+      borderRadius={isSmallScreen ? "lg" : "0"}
+      shadow={isSmallScreen ? "md" : "none"}
+      bgColor={isSmallScreen ? bgColor : "unset"}
+      gap={isSmallScreen ? 5 : "unset"}
+      cursor="pointer"
     >
-      <FolderSVG dimensions="150px" empty={empty} />
+      <FolderSVG dimensions={isSmallScreen ? "55px" : "150px"} empty={empty} />
       <Text
-        fontSize={{ base: "12px", sm: "14px" }}
+        fontSize={{ base: "15px", sm: "14px" }}
         color="brand.500"
         fontWeight="bold"
       >
