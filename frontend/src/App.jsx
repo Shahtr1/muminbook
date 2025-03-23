@@ -64,10 +64,7 @@ function App() {
             {/*/////////////////////////////////////////*/}
             {/* READING ROUTES */}
             {/*/////////////////////////////////////////*/}
-            <Route path="my-files" element={<FolderView />}>
-              <Route path=":folderId" element={<FolderView />} />
-              <Route path=":folderId/:subFolderId" element={<FolderView />} />
-            </Route>
+            <Route path="my-files/*" element={<FolderView />} />
             <Route path=":id" element={<ReadingView />} />
           </Route>
 
