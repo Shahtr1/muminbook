@@ -19,7 +19,6 @@ import { Cookies } from "@/pages/company/Cookies.jsx";
 import { PrivacyPolicy } from "@/pages/company/PrivacyPolicy.jsx";
 import ReverifyEmail from "@/pages/auth/ReverifyEmail.jsx";
 import { Forbidden } from "@/pages/auth/Forbidden.jsx";
-import { Reading } from "@/pages/reading/Reading.jsx";
 import { Features } from "@/pages/Features.jsx";
 import { FamilyTree } from "@/components/layout/features/FamilyTree.jsx";
 import AdminGuard from "@/AdminGuard.jsx";
@@ -61,12 +60,11 @@ function App() {
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />}></Route>
 
-          <Route path="reading" element={<Reading />}>
+          <Route path="reading" element={<ReadingList />}>
             {/*/////////////////////////////////////////*/}
             {/* READING ROUTES */}
             {/*/////////////////////////////////////////*/}
-            <Route path="my-files" element={<ReadingList />}>
-              <Route index element={<FolderView />} />
+            <Route path="my-files" element={<FolderView />}>
               <Route path=":folderId" element={<FolderView />} />
               <Route path=":folderId/:subFolderId" element={<FolderView />} />
             </Route>

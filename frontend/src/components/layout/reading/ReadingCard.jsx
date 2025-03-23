@@ -81,6 +81,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
       >
         <Box
           border="2px solid"
+          borderBottom="3px solid"
           borderColor={cardColor}
           borderRadius="md"
           h="fit-content"

@@ -6,7 +6,7 @@ export const ReadingIntro = ({ isFolderOpen }) => {
       <Flex flexDirection="column" gap={2} px={8}>
         <Text fontSize={{ base: "l", sm: "xl" }}>
           {isFolderOpen
-            ? "Browse My Files"
+            ? "File Explorer"
             : "Explore Islamic Knowledge & Wisdom"}
         </Text>
         <Flex
