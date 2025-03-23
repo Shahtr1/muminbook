@@ -7,10 +7,10 @@ export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const pathnames = location.pathname.split("/").filter(Boolean);
-  const myFilesIndex = pathnames.indexOf("my-files");
+  const pathNames = location.pathname.split("/").filter(Boolean);
+  const myFilesIndex = pathNames.indexOf("my-files");
   const folderPath =
-    myFilesIndex !== -1 ? pathnames.slice(myFilesIndex + 1) : [];
+    myFilesIndex !== -1 ? pathNames.slice(myFilesIndex + 1) : [];
 
   let currentFolder = myFiles["my-files"];
   folderPath.forEach((segment) => {
@@ -37,7 +37,7 @@ export const FolderView = () => {
   const items = Object.entries(currentFolder);
 
   return (
-    <Flex flexDirection="column" p={8} gap={4}>
+    <Flex flexDirection="column" px={2} gap={4}>
       <Flex flexWrap="wrap" gap="20px">
         {items.map(([name, value]) => {
           if (value === "file") {

@@ -57,11 +57,11 @@ export const ReadingList = () => {
   const isFolderOpen = location.pathname.includes("/reading/my-files");
 
   const extractFolderSegments = () => {
-    const pathnames = location.pathname.split("/").filter(Boolean);
-    const myFilesIndex = pathnames.indexOf("my-files");
+    const pathNames = location.pathname.split("/").filter(Boolean);
+    const myFilesIndex = pathNames.indexOf("my-files");
     if (myFilesIndex === -1) return [];
 
-    const relativePath = pathnames.slice(myFilesIndex);
+    const relativePath = pathNames.slice(myFilesIndex);
     let segments = [];
     let current = myFiles;
 
@@ -82,23 +82,31 @@ export const ReadingList = () => {
   const folderSegments = extractFolderSegments();
 
   return (
-    <Flex flexDirection="column" py={8} gap={3}>
+    <Flex flexDirection="column" py={{ base: 3, sm: 8 }}>
       <Flex flexDirection="column" gap={2} px={8}>
-        <Text fontSize="xl">Explore Islamic Knowledge & Wisdom</Text>
+        <Text fontSize={{ base: "l", sm: "xl" }}>
+          {isFolderOpen
+            ? "Browse My Files"
+            : "Explore Islamic Knowledge & Wisdom"}
+        </Text>
         <Flex
           flexDirection="column"
           maxH={{ base: "60px", sm: "unset" }}
           overflowY={{ base: "auto", sm: "unset" }}
         >
+          {!isFolderOpen && (
+            <Text fontSize={{ base: "12px", sm: "14px" }}>
+              Deepen your understanding of Islam through a vast collection of
+              authentic books on Quran, Hadith, Tafsir, and Seerah. Whether
+              you're exploring the teachings of Prophet Muhammad ﷺ, studying the
+              meanings of the Quran, or learning about Islamic rulings, you'll
+              find trusted sources to guide your journey.
+            </Text>
+          )}
           <Text fontSize={{ base: "12px", sm: "14px" }}>
-            Deepen your understanding of Islam through a vast collection of
-            authentic books on Quran, Hadith, Tafsir, and Seerah. Whether you're
-            exploring the teachings of Prophet Muhammad ﷺ, studying the meanings
-            of the Quran, or learning about Islamic rulings, you'll find trusted
-            sources to guide your journey.
-          </Text>
-          <Text fontSize={{ base: "12px", sm: "14px" }}>
-            Select a book to start reading and enrich your knowledge today!
+            {isFolderOpen
+              ? "Select a file or browse subfolders"
+              : "Select a book to start reading and enrich your knowledge today!"}
           </Text>
         </Flex>
       </Flex>
@@ -155,7 +163,7 @@ export const ReadingList = () => {
       {isFolderOpen ? (
         <Outlet />
       ) : (
-        <Flex gap={gapSize} flexWrap="wrap" px={8}>
+        <Flex gap={gapSize} flexWrap="wrap" px={8} py={2}>
           <Folder
             onClick={() => navigate("my-files")}
             width={itemWidth}

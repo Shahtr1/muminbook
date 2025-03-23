@@ -4,12 +4,14 @@ import {
   BreadcrumbLink,
   Flex,
   Text,
+  useTheme,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { GoListUnordered } from "react-icons/go";
 
 export const XBreadCrumb = ({ segments }) => {
+  const theme = useTheme();
   const fullSegments = ["reading", ...segments];
 
   const labelMap = {
@@ -22,7 +24,7 @@ export const XBreadCrumb = ({ segments }) => {
   return (
     <Breadcrumb
       spacing="5px"
-      separator={<ChevronRightIcon color="gray.500" />}
+      separator={<ChevronRightIcon color="brand.500" />}
       fontWeight="medium"
       fontSize={{ base: "12px", sm: "13px" }}
     >
@@ -36,10 +38,20 @@ export const XBreadCrumb = ({ segments }) => {
 
         return (
           <BreadcrumbItem key={fullPath} isCurrentPage={isLast}>
-            <BreadcrumbLink as={Link} to={fullPath}>
+            <BreadcrumbLink
+              as={Link}
+              to={fullPath}
+              color="brand.500"
+              fontWeight="semibold"
+            >
               <Flex align="center" gap={1}>
-                {Icon && <Icon />}
-                <Text textTransform="capitalize">{label}</Text>
+                {Icon && (
+                  <Icon
+                    color={theme.colors.brand["500"]}
+                    style={{ strokeWidth: 1.5 }}
+                  />
+                )}
+                <Text color="brand.500">{label}</Text>
               </Flex>
             </BreadcrumbLink>
           </BreadcrumbItem>
