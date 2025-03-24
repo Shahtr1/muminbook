@@ -4,20 +4,18 @@ import {
   BreadcrumbLink,
   Flex,
   Icon,
-  IconButton,
   Text,
-  Tooltip,
   useTheme,
 } from "@chakra-ui/react";
 import {
-  ChevronRightIcon,
   ArrowBackIcon,
   ArrowForwardIcon,
   ArrowUpIcon,
+  ChevronRightIcon,
 } from "@chakra-ui/icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GoListUnordered } from "react-icons/go";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const labelMap = {
   reading: { label: "Reading", icon: GoListUnordered },
@@ -27,6 +25,7 @@ export const XBreadCrumb = ({ segments }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
+  const isFolderView = location.pathname.includes("/reading/my-files");
 
   const fullSegments = ["reading", ...segments];
   const [canGoBack, setCanGoBack] = useState(false);
@@ -72,32 +71,34 @@ export const XBreadCrumb = ({ segments }) => {
   return (
     <Flex align="center" gap={3}>
       {/* Navigation Buttons */}
-      <Flex gap={1} align="center">
-        <Icon
-          as={ArrowBackIcon}
-          boxSize={4}
-          color="brand.500"
-          cursor={canGoBack ? "pointer" : "not-allowed"}
-          opacity={canGoBack ? 1 : 0.4}
-          onClick={canGoBack ? handleBack : undefined}
-        />
-        <Icon
-          as={ArrowForwardIcon}
-          boxSize={4}
-          color="brand.500"
-          cursor={canGoForward ? "pointer" : "not-allowed"}
-          opacity={canGoForward ? 1 : 0.4}
-          onClick={canGoForward ? handleForward : undefined}
-        />
-        <Icon
-          as={ArrowUpIcon}
-          boxSize={4}
-          color="brand.500"
-          cursor={canGoUp ? "pointer" : "not-allowed"}
-          opacity={canGoUp ? 1 : 0.4}
-          onClick={canGoUp ? goUp : undefined}
-        />
-      </Flex>
+      {isFolderView && (
+        <Flex gap={1} align="center">
+          <Icon
+            as={ArrowBackIcon}
+            boxSize={4}
+            color="brand.500"
+            cursor={canGoBack ? "pointer" : "not-allowed"}
+            opacity={canGoBack ? 1 : 0.4}
+            onClick={canGoBack ? handleBack : undefined}
+          />
+          <Icon
+            as={ArrowForwardIcon}
+            boxSize={4}
+            color="brand.500"
+            cursor={canGoForward ? "pointer" : "not-allowed"}
+            opacity={canGoForward ? 1 : 0.4}
+            onClick={canGoForward ? handleForward : undefined}
+          />
+          <Icon
+            as={ArrowUpIcon}
+            boxSize={4}
+            color="brand.500"
+            cursor={canGoUp ? "pointer" : "not-allowed"}
+            opacity={canGoUp ? 1 : 0.4}
+            onClick={canGoUp ? goUp : undefined}
+          />
+        </Flex>
+      )}
 
       {/* Breadcrumb */}
       <Breadcrumb
