@@ -64,6 +64,14 @@ export const myFiles = {
       },
       "README.md": "file", // file at folder level
     },
+    "📚-library": {
+      "📖-hadiths": {
+        "sahih-bukhari.txt": "file",
+      },
+      "📘-seerah": {
+        "life-of-prophet.pdf": "file",
+      },
+    },
 
     // Special characters / emojis
     "📁-fun-folder": {
