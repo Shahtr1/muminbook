@@ -3,6 +3,7 @@ import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import {
   Flex,
   Text,
+  Tooltip,
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -47,9 +48,19 @@ export const Folder = ({
       cursor="pointer"
     >
       <FolderSVG dimensions={dimensions} empty={empty} />
-      <Text fontSize="15px" color="brand.500" fontWeight="medium">
-        {label}
-      </Text>
+      <Tooltip label={label} hasArrow placement="bottom">
+        <Text
+          fontSize="13px"
+          color="brand.500"
+          fontWeight="medium"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          whiteSpace="nowrap"
+          maxWidth="100%"
+        >
+          {label}
+        </Text>
+      </Tooltip>
     </Flex>
   );
 };

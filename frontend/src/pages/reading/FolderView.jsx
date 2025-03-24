@@ -65,6 +65,7 @@ export const FolderView = () => {
               }
               empty={isEmpty}
               isFolderView={isFolderView}
+              width="100px"
             />
           );
         }
