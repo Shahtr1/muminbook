@@ -18,7 +18,7 @@ export const Folder = ({
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const dimensions = useBreakpointValue({
     base: "55px",
-    sm: isFolderView ? "80px" : "150px",
+    sm: isFolderView ? "60px" : "150px",
   });
 
   const [hasMounted, setHasMounted] = useState(false);
@@ -33,13 +33,13 @@ export const Folder = ({
 
   return (
     <Flex
-      h={isSmallScreen ? "90px" : "full"}
       width={width}
       justify={isSmallScreen ? "start" : "center"}
       align="center"
       flexDirection={isSmallScreen ? "row" : "column"}
       onClick={onClick}
       px={isSmallScreen ? "10px" : 0}
+      py={isSmallScreen ? "5px" : 0}
       borderRadius={isSmallScreen ? "lg" : "0"}
       shadow={isSmallScreen ? "md" : "none"}
       bgColor={isSmallScreen ? bgColor : "unset"}

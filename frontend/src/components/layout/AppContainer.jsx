@@ -1,5 +1,5 @@
 import useAuth from "../../hooks/useAuth.js";
-import { Box } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { Navigate, Outlet } from "react-router-dom";
 import { Navbar } from "@/components/layout/navbar/Navbar.jsx";
 import { Loader } from "@/components/layout/Loader.jsx";
@@ -22,10 +22,16 @@ export const AppContainer = () => {
   return isLoading ? (
     <Loader height="100vh" />
   ) : user ? (
-    <Box minH="100vh" pt={readingMode ? undefined : "navbar-height"}>
+    <Flex
+      direction="column"
+      minH="100vh"
+      pt={readingMode ? undefined : "navbar-height"}
+    >
       {readingMode ? <NavbarReadingMode /> : <Navbar />}
-      <Outlet />
-    </Box>
+      <Flex flex="1">
+        <Outlet />
+      </Flex>
+    </Flex>
   ) : (
     <Navigate
       to="/login"

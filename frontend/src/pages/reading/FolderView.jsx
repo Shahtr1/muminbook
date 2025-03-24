@@ -30,43 +30,47 @@ export const FolderView = () => {
   const items = Object.entries(currentFolder);
 
   return (
-    <Flex flexDirection="column" px={2} gap={4}>
-      <Flex flexWrap="wrap" gap="20px">
-        {items.map(([name, value]) => {
-          if (value === "file") {
-            return (
-              <Text
-                key={name}
-                p={4}
-                border="1px solid"
-                borderColor="gray.300"
-                borderRadius="md"
-              >
-                {name}
-              </Text>
-            );
-          }
-          if (typeof value === "object") {
-            const isEmpty = Object.keys(value).length === 0;
-            return (
-              <Folder
-                key={name}
-                label={name}
-                onClick={() =>
-                  navigate(
-                    `/reading/my-files/${[...folderPath, encodeURIComponent(name)].join("/")}`,
-                  )
-                }
-                width="200px"
-                empty={isEmpty}
-                isFolderView={isFolderView}
-              />
-            );
-          }
+    <Flex
+      flexWrap="wrap"
+      overflowY="auto"
+      gap={12}
+      height="fit-content"
+      p="10px 25px"
+    >
+      {items.map(([name, value]) => {
+        if (value === "file") {
+          return (
+            <Text
+              key={name}
+              p={4}
+              border="1px solid"
+              borderColor="gray.300"
+              borderRadius="md"
+              h="fit-content"
+            >
+              {name}
+            </Text>
+          );
+        }
+        if (typeof value === "object") {
+          const isEmpty = Object.keys(value).length === 0;
+          return (
+            <Folder
+              key={name}
+              label={name}
+              onClick={() =>
+                navigate(
+                  `/reading/my-files/${[...folderPath, encodeURIComponent(name)].join("/")}`,
+                )
+              }
+              empty={isEmpty}
+              isFolderView={isFolderView}
+            />
+          );
+        }
 
-          return null;
-        })}
-      </Flex>
+        return null;
+      })}
     </Flex>
   );
 };

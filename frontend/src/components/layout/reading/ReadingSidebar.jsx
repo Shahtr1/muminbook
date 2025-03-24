@@ -1,5 +1,9 @@
 import { Flex } from "@chakra-ui/react";
 
-export const ReadingSidebar = ({ show = true }) => {
-  return <>{show && <Flex>Sidebar</Flex>}</>;
+export const ReadingSidebar = () => {
+  return (
+    <Flex px={8} bgColor="black">
+      Sidebar
+    </Flex>
+  );
 };

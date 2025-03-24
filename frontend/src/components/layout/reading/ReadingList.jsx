@@ -6,6 +6,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { myFiles } from "@/data/myFiles.js";
 import { ReadingIntro } from "@/components/layout/reading/ReadingIntro.jsx";
 import { ReadingHeader } from "@/components/layout/reading/ReadingHeader.jsx";
+import { ReadingSidebar } from "@/components/layout/reading/ReadingSidebar.jsx";
 
 export const ReadingList = () => {
   const gapSize = "25px";
@@ -22,11 +23,14 @@ export const ReadingList = () => {
   const isFolderView = location.pathname.includes("/reading/my-files");
 
   return (
-    <Flex flexDirection="column" py={{ base: 3, sm: 8 }}>
+    <Flex flexDirection="column" pt={{ base: 3, sm: 8 }} w="full">
       <ReadingIntro isFolderView={isFolderView} />
       <ReadingHeader />
       {isFolderView ? (
-        <Outlet />
+        <Flex h="100%">
+          <ReadingSidebar />
+          <Outlet />
+        </Flex>
       ) : (
         <Flex gap={gapSize} flexWrap="wrap" px={8} py={2}>
           <Folder
