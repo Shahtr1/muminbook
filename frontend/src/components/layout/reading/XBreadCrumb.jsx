@@ -137,7 +137,7 @@ export const XBreadCrumb = ({ segments }) => {
                     textOverflow="ellipsis"
                     whiteSpace="nowrap"
                   >
-                    {label}
+                    {label === "my-files" ? "My Files" : label}
                   </Text>
                 </Flex>
               </BreadcrumbLink>

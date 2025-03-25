@@ -1,7 +1,8 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Folder } from "@/components/layout/reading/Folder.jsx";
 import { myFiles } from "@/data/myFiles.js";
+import { File } from "@/components/layout/reading/File.jsx";
 
 export const FolderView = () => {
   const location = useLocation();
@@ -40,16 +41,7 @@ export const FolderView = () => {
       {items.map(([name, value]) => {
         if (value === "file") {
           return (
-            <Text
-              key={name}
-              p={4}
-              border="1px solid"
-              borderColor="gray.300"
-              borderRadius="md"
-              h="fit-content"
-            >
-              {name}
-            </Text>
+            <File key={name} label={name} onClick={() => {}} width="100px" />
           );
         }
         if (typeof value === "object") {

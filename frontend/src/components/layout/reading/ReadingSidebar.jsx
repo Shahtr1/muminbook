@@ -17,6 +17,7 @@ export const ReadingSidebar = () => {
       overflowY="auto"
       position="sticky"
       top={`calc(${navbarHeight + breadcrumbHeight}px)`}
+      w="40vw"
     >
       {Array.from({ length: 50 }, (_, i) => (
         <Text key={i} whiteSpace="nowrap">
