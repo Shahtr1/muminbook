@@ -13,12 +13,13 @@ export const Folder = ({
   width,
   empty = true,
   label = "My Files",
-  isFolderView = false,
 }) => {
+  const isFolderView = location.pathname.includes("/reading/my-files");
+
   const bgColor = useColorModeValue("white", "gray.800");
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const dimensions = useBreakpointValue({
-    base: "55px",
+    base: "40px",
     sm: isFolderView ? "60px" : "150px",
   });
 
@@ -30,29 +31,31 @@ export const Folder = ({
 
   if (!hasMounted) return null;
 
-  const isFolderOpen = location.pathname.includes("/reading/my-files");
-
   return (
     <Flex
       width={width}
-      justify={isSmallScreen ? "start" : "center"}
+      justify={isSmallScreen && !isFolderView ? "start" : "center"}
       align="center"
-      flexDirection={isSmallScreen ? "row" : "column"}
+      flexDirection={isSmallScreen && !isFolderView ? "row" : "column"}
       onClick={onClick}
-      px={isSmallScreen ? "10px" : 0}
-      py={isSmallScreen ? "5px" : 0}
-      borderRadius={isSmallScreen ? "lg" : "0"}
-      shadow={isSmallScreen ? "md" : "none"}
-      bgColor={isSmallScreen ? bgColor : "unset"}
-      gap={isSmallScreen ? 5 : "unset"}
+      px={isSmallScreen && !isFolderView ? "10px" : 0}
+      py={isSmallScreen && !isFolderView ? "5px" : 0}
+      borderRadius={isSmallScreen && !isFolderView ? "lg" : "0"}
+      shadow={isSmallScreen && !isFolderView ? "md" : "none"}
+      bgColor={isSmallScreen && !isFolderView ? bgColor : "unset"}
+      gap={isSmallScreen && !isFolderView ? 5 : "unset"}
       cursor="pointer"
     >
       <FolderSVG dimensions={dimensions} empty={empty} />
       <Tooltip label={label} hasArrow placement="bottom">
         <Text
-          fontSize="13px"
+          fontSize={
+            isFolderView
+              ? { base: "10px", sm: "13px" }
+              : { base: "13px", sm: "15px" }
+          }
           color="brand.500"
-          fontWeight="medium"
+          fontWeight={isFolderView ? "medium" : "bold"}
           overflow="hidden"
           textOverflow="ellipsis"
           whiteSpace="nowrap"

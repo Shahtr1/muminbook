@@ -5,7 +5,7 @@ import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 export const File = ({ onClick, width, label }) => {
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const dimensions = useBreakpointValue({
-    base: "55px",
+    base: "40px",
     sm: "60px",
   });
 
@@ -29,7 +29,7 @@ export const File = ({ onClick, width, label }) => {
       <FileSVG dimensions={dimensions} activeColor="brand.500" />
       <Tooltip label={label} hasArrow placement="bottom">
         <Text
-          fontSize="13px"
+          fontSize={{ base: "10px", sm: "13px" }}
           color="brand.500"
           fontWeight="medium"
           overflow="hidden"

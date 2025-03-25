@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Folder } from "@/components/layout/reading/Folder.jsx";
 import { myFiles } from "@/data/myFiles.js";
@@ -7,6 +7,8 @@ import { File } from "@/components/layout/reading/File.jsx";
 export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const itemsWidth = useBreakpointValue({ base: "70px", sm: "100px" });
 
   const isFolderView = location.pathname.includes("/reading/my-files");
   const pathNames = location.pathname.split("/").filter(Boolean);
@@ -34,14 +36,19 @@ export const FolderView = () => {
     <Flex
       flexWrap="wrap"
       overflowY="auto"
-      gap={12}
+      gap={{ base: 5, sm: 12 }}
       height="fit-content"
       p="10px 25px"
     >
       {items.map(([name, value]) => {
         if (value === "file") {
           return (
-            <File key={name} label={name} onClick={() => {}} width="100px" />
+            <File
+              key={name}
+              label={name}
+              onClick={() => {}}
+              width={itemsWidth}
+            />
           );
         }
         if (typeof value === "object") {
@@ -56,8 +63,7 @@ export const FolderView = () => {
                 )
               }
               empty={isEmpty}
-              isFolderView={isFolderView}
-              width="100px"
+              width={itemsWidth}
             />
           );
         }
