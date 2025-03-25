@@ -5,7 +5,7 @@ import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { myFiles } from "@/data/myFiles.js";
 import { ReadingIntro } from "@/components/layout/reading/ReadingIntro.jsx";
-import { ReadingHeader } from "@/components/layout/reading/ReadingHeader.jsx";
+import { ReadingHeader } from "@/components/layout/reading/header/ReadingHeader.jsx";
 import { ReadingSidebar } from "@/components/layout/reading/ReadingSidebar.jsx";
 
 export const ReadingList = () => {

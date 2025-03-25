@@ -10,6 +10,7 @@ import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "@chakra-ui/icons";
 import { XSearch } from "@/components/layout/XSearch.jsx";
 import { useEffect, useRef, useState } from "react";
 import { myFiles } from "@/data/myFiles.js";
+import { AddMenu } from "@/components/layout/reading/header/AddMenu.jsx";
 
 export const ReadingHeader = () => {
   const bgColor = useColorModeValue("bg.light", "bg.dark");
@@ -36,6 +37,8 @@ export const ReadingHeader = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const isFolderView = location.pathname.includes("/reading/my-files");
 
   const extractFolderSegments = () => {
     const pathNames = location.pathname.split("/").filter(Boolean);
@@ -76,9 +79,15 @@ export const ReadingHeader = () => {
       gap={2}
       px={8}
     >
-      <Flex justify="space-between">
+      <Flex justify="space-between" w="100%" align="center">
         <XBreadCrumb segments={folderSegments} />
+        {isFolderView && (
+          <Flex w="100%" justify="end">
+            <AddMenu />
+          </Flex>
+        )}
         <Icon
+          ml={2}
           as={showExtras ? ChevronUpIcon : ChevronDownIcon}
           display={{ base: "flex", sm: "none" }}
           fontSize="18px"
@@ -87,6 +96,7 @@ export const ReadingHeader = () => {
           color="brand.500"
         />
       </Flex>
+
       <Flex
         justify={{ base: "space-between", sm: "end" }}
         align="center"
@@ -108,6 +118,7 @@ export const ReadingHeader = () => {
             Favourites
           </Text>
         </Flex>
+
         <XSearch bgColor={bgColor} size="xs" width={120} parentWidth="auto" />
       </Flex>
     </Flex>
