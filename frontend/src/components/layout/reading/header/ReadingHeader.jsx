@@ -65,6 +65,11 @@ export const ReadingHeader = () => {
 
   const folderSegments = extractFolderSegments();
 
+  const addNew = ({ type, name }) => {
+    console.log("type", type);
+    console.log("name", name);
+  };
+
   return (
     <Flex
       ref={headerRef}
@@ -83,7 +88,7 @@ export const ReadingHeader = () => {
         <XBreadCrumb segments={folderSegments} />
         {isFolderView && (
           <Flex w="100%" justify="end">
-            <AddMenu />
+            <AddMenu onCreate={addNew} />
           </Flex>
         )}
         <Icon
