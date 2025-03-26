@@ -4,8 +4,8 @@ import { readingItems } from "@/data/readingItems.js";
 import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { myFiles } from "@/data/myFiles.js";
-import { ReadingIntro } from "@/components/layout/reading/ReadingIntro.jsx";
-import { ReadingHeader } from "@/components/layout/reading/header/ReadingHeader.jsx";
+import { ReadingHeader } from "@/components/layout/reading/ReadingHeader.jsx";
+import { ReadingToolbar } from "@/components/layout/reading/toolbar/ReadingToolbar.jsx";
 import { ReadingSidebar } from "@/components/layout/reading/ReadingSidebar.jsx";
 
 export const ReadingList = () => {
@@ -24,8 +24,8 @@ export const ReadingList = () => {
 
   return (
     <Flex flexDirection="column" pt={{ base: 3, sm: 8 }} w="full">
-      <ReadingIntro isFolderView={isFolderView} />
-      <ReadingHeader />
+      <ReadingHeader isFolderView={isFolderView} />
+      <ReadingToolbar />
       {isFolderView ? (
         <Flex h="100%">
           <ReadingSidebar />

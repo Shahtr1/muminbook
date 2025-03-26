@@ -10,9 +10,9 @@ import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "@chakra-ui/icons";
 import { XSearch } from "@/components/layout/XSearch.jsx";
 import { useEffect, useRef, useState } from "react";
 import { myFiles } from "@/data/myFiles.js";
-import { AddMenu } from "@/components/layout/reading/header/AddMenu.jsx";
+import { AddMenu } from "@/components/layout/reading/toolbar/AddMenu.jsx";
 
-export const ReadingHeader = () => {
+export const ReadingToolbar = () => {
   const bgColor = useColorModeValue("bg.light", "bg.dark");
   const boxShadowColor = useColorModeValue(
     "rgba(0, 0, 0, 0.1)",

@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 
-export const ReadingIntro = ({ isFolderView }) => {
+export const ReadingHeader = ({ isFolderView }) => {
   return (
     <>
       <Flex flexDirection="column" gap={2} px={8}>
