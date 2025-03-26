@@ -14,7 +14,7 @@ import {
 import { AddIcon } from "@chakra-ui/icons";
 import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import { FileSVG } from "@/components/svgs/FileSVG.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const AddMenu = ({ onCreate }) => {
   const [showFileInput, setShowFileInput] = useState(false);
@@ -40,8 +40,14 @@ export const AddMenu = ({ onCreate }) => {
     }
 
     handleReset();
-    onClose(); // ✅ CLOSE THE ENTIRE MENU
+    onClose();
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      handleReset();
+    }
+  }, [isOpen]);
 
   return (
     <Menu isLazy placement="bottom" isOpen={isOpen} onClose={onClose}>
@@ -60,15 +66,30 @@ export const AddMenu = ({ onCreate }) => {
           borderRadius="sm"
           px={2}
           cursor="pointer"
+          justify="center"
+          h="20px"
+          w={{ base: "auto", sm: "50px" }}
         >
-          <AddIcon color="#fff" fontSize={{ base: "8px", sm: "10px" }} />
-          <Text color="#fff" fontSize={{ base: "12px", sm: "13px" }}>
-            New
+          <AddIcon color="#fff" fontSize={{ base: "8px", sm: "9px" }} />
+          <Text
+            color="#fff"
+            fontSize={{ base: "11px", sm: "12px" }}
+            display={{ base: "none", sm: "initial" }}
+          >
+            Add
           </Text>
         </Flex>
       </MenuButton>
 
-      <MenuList py={1}>
+      <MenuList
+        py={1}
+        w={
+          showFileInput || showFolderInput
+            ? "80%"
+            : { base: "130px", sm: "150px" }
+        }
+        minW="unset"
+      >
         {showFileInput || showFolderInput ? (
           <Box px={2} py={1} display="flex" gap={1} alignItems="center">
             <InputGroup size={{ base: "xs", sm: "sm" }} flex="1">
@@ -81,7 +102,7 @@ export const AddMenu = ({ onCreate }) => {
                   if (e.key === "Enter") handleCreate();
                   if (e.key === "Escape") {
                     handleReset();
-                    onClose(); // ✅ Close menu on ESC too
+                    onClose();
                   }
                 }}
               />
@@ -100,7 +121,6 @@ export const AddMenu = ({ onCreate }) => {
           <>
             <Box
               as="button"
-              w="100%"
               px={3}
               py={2}
               display="flex"
@@ -116,7 +136,6 @@ export const AddMenu = ({ onCreate }) => {
             </Box>
             <Box
               as="button"
-              w="100%"
               px={3}
               py={2}
               display="flex"
