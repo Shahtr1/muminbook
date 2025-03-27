@@ -1,12 +1,12 @@
 import mongoose, { Document, Schema } from "mongoose";
-import Lineage from "../constants/lineage";
+import LineageType from "../constants/lineageType";
 
 export interface FamilyTreeDocument extends Document {
   uuid: string;
   biblicalName?: string;
   islamicName?: string;
   arabicName?: string;
-  lineages: Lineage | Lineage[];
+  lineages: LineageType | LineageType[];
   parents?: mongoose.Types.ObjectId[];
   label?: string;
 }

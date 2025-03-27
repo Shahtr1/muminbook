@@ -1,4 +1,4 @@
-import Lineage from "../constants/lineage";
+import LineageType from "../constants/lineageType";
 
 export interface FamilyTreeEntry {
   id: string;
@@ -6,7 +6,7 @@ export interface FamilyTreeEntry {
   biblicalName?: string;
   islamicName?: string;
   arabicName?: string;
-  lineages?: Lineage | Lineage[];
+  lineages?: LineageType | LineageType[];
   parents?: string | string[];
   label?: string;
 }
@@ -26,7 +26,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Hawa",
     arabicName: "حواء",
     parents: "1",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "3",
@@ -35,7 +35,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Qabil",
     arabicName: "قابيل",
     parents: "1",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "4",
@@ -44,7 +44,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Habil",
     arabicName: "هابيل",
     parents: "1",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "5",
@@ -53,7 +53,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Shayth",
     arabicName: "شيث",
     parents: "1",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "6",
@@ -62,7 +62,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Anoush",
     arabicName: "أنوش",
     parents: "5",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "7",
@@ -71,7 +71,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Qinan",
     arabicName: "قينان",
     parents: "6",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "8",
@@ -80,7 +80,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Mahlaleel",
     arabicName: "مهلائيل",
     parents: "7",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "9",
@@ -89,7 +89,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Al-Yarid",
     arabicName: "اليارد",
     parents: "8",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "10",
@@ -98,7 +98,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Idris",
     arabicName: "إدريس",
     parents: "9",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "11",
@@ -107,7 +107,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Matushalakh",
     arabicName: "متوشلخ",
     parents: "10",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "12",
@@ -116,7 +116,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Lamik",
     arabicName: "لامك",
     parents: "11",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "13",
@@ -125,7 +125,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Nuh",
     arabicName: "نوح",
     parents: "12",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "14",
@@ -134,7 +134,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Sam",
     arabicName: "سام",
     parents: "13",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "15",
@@ -143,7 +143,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ham",
     arabicName: "حام",
     parents: "13",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "16",
@@ -152,7 +152,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Yafith",
     arabicName: "يافث",
     parents: "13",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "17",
@@ -161,7 +161,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Yam",
     arabicName: "يام",
     parents: "13",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "18",
@@ -170,7 +170,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Antakhshad",
     arabicName: "أنطخشد",
     parents: "14",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "19",
@@ -179,7 +179,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Eram",
     arabicName: "إرم",
     parents: "14",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "20",
@@ -188,7 +188,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Shalikh",
     arabicName: "شالخ",
     parents: "18",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "21",
@@ -197,7 +197,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Hud",
     arabicName: "هود",
     parents: "20",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "22",
@@ -206,7 +206,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Saleh",
     arabicName: "صالح",
     parents: "19",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "23",
@@ -215,7 +215,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Falikh",
     arabicName: "فالغ",
     parents: "21",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "24",
@@ -224,7 +224,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Rauh",
     arabicName: "راح",
     parents: "23",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "25",
@@ -233,7 +233,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Sarukh",
     arabicName: "ساروخ",
     parents: "24",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "26",
@@ -242,7 +242,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Nahur",
     arabicName: "ناحور",
     parents: "25",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "27",
@@ -251,7 +251,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Azar",
     arabicName: "آزر",
     parents: "26",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "28",
@@ -260,7 +260,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ibrahim",
     arabicName: "إبراهيم",
     parents: "27",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "29",
@@ -269,7 +269,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Haran",
     arabicName: "هاران",
     parents: "27",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "30",
@@ -278,7 +278,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Lut",
     arabicName: "لوط",
     parents: "29",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "31",
@@ -287,7 +287,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Hajar",
     arabicName: "هاجر",
     parents: "28",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "32",
@@ -296,7 +296,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Sarah",
     arabicName: "سارة",
     parents: "28",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "33",
@@ -305,7 +305,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ismail",
     arabicName: "إسماعيل",
     parents: "31",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "34",
@@ -314,7 +314,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ishaq",
     arabicName: "إسحاق",
     parents: "32",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "35",
@@ -323,7 +323,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Madyan",
     arabicName: "مدين",
     parents: "32",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "36",
@@ -332,7 +332,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Yaqub",
     arabicName: "يعقوب",
     parents: "34",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "37",
@@ -341,14 +341,14 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Al-Is",
     arabicName: "ٱلعيص",
     parents: "34",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "38",
     uuid: "banuisrael",
     label: "Banu Israel",
     parents: "36",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "39",
@@ -357,7 +357,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Yusuf",
     arabicName: "يوسف",
     parents: "38",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "40",
@@ -366,7 +366,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Benyamin",
     arabicName: "بِنْيَامِين",
     parents: "38",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "41",
@@ -375,7 +375,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Yahuda",
     arabicName: "يَهُوذَا",
     parents: "38",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "42",
@@ -384,7 +384,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Lawi",
     arabicName: "لاوي",
     parents: "38",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "43",
@@ -393,7 +393,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ayyub",
     arabicName: "أيوب",
     parents: "37",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "44",
@@ -402,7 +402,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Shuayb",
     arabicName: "شعيب",
     parents: "37",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "45",
@@ -411,7 +411,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Qahath",
     arabicName: "قهات",
     parents: "42",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "46",
@@ -420,7 +420,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Imran",
     arabicName: "عِمْرَان",
     parents: "45",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "47",
@@ -429,7 +429,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Harun",
     arabicName: "هارون",
     parents: "46",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "48",
@@ -438,7 +438,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Maryam",
     arabicName: "مريم",
     parents: "46",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "49",
@@ -447,7 +447,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Musa",
     arabicName: "موسى",
     parents: "46",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "50",
@@ -456,7 +456,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Safurah",
     arabicName: "سفورة",
     parents: ["44", "49"],
-    lineages: [Lineage.Indirect, Lineage.Indirect],
+    lineages: [LineageType.Indirect, LineageType.Indirect],
   },
   {
     id: "51",
@@ -465,7 +465,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Asiya",
     arabicName: "آسِيَة",
     parents: "49",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "52",
@@ -474,7 +474,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ilyas",
     arabicName: "إلياس",
     parents: "47",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "53",
@@ -483,7 +483,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Al-Yasa",
     arabicName: "اليسع",
     parents: "47",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "54",
@@ -492,7 +492,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Zakariya",
     arabicName: "زكريا",
     parents: "47",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "55",
@@ -501,7 +501,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Dawud",
     arabicName: "داوود",
     parents: "41",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "56",
@@ -510,7 +510,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Sulayman",
     arabicName: "سليمان",
     parents: "55",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "57",
@@ -519,7 +519,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Yunus",
     arabicName: "يونس",
     parents: "40",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "58",
@@ -528,7 +528,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Imran",
     arabicName: "عِمْرَان",
     parents: "56",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "59",
@@ -537,7 +537,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Hannah",
     arabicName: "حَنَّة",
     parents: "58",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "60",
@@ -546,7 +546,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Faqud",
     arabicName: "فاقود",
     parents: "59",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "61",
@@ -555,7 +555,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Al-Isbat",
     arabicName: "ألْيَسْبَط",
     parents: ["60", "54"],
-    lineages: [Lineage.Direct, Lineage.Direct],
+    lineages: [LineageType.Direct, LineageType.Direct],
   },
   {
     id: "62",
@@ -564,7 +564,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Maryam",
     arabicName: "مريم",
     parents: "58",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "63",
@@ -573,7 +573,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Isa",
     arabicName: "عيسى",
     parents: "62",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "64",
@@ -582,7 +582,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Yahya",
     arabicName: "يحيى",
     parents: "54",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "65",
@@ -591,7 +591,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Adnan",
     arabicName: "عدنان",
     parents: "33",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "66",
@@ -600,7 +600,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Maad",
     arabicName: "معد",
     parents: "65",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "67",
@@ -609,7 +609,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Nizar",
     arabicName: "نزار",
     parents: "66",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "68",
@@ -618,7 +618,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Mudhar",
     arabicName: "مضر",
     parents: "67",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "69",
@@ -627,7 +627,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ilyas",
     arabicName: "إلياس",
     parents: "68",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "70",
@@ -636,7 +636,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Mudrikah",
     arabicName: "مدركة",
     parents: "69",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "71",
@@ -645,7 +645,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Khuzaimah",
     arabicName: "خزيمة",
     parents: "70",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "72",
@@ -654,7 +654,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Kinana",
     arabicName: "كنانة",
     parents: "71",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "73",
@@ -663,7 +663,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Al-Nadr",
     arabicName: "النضر",
     parents: "72",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "74",
@@ -672,7 +672,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Malik",
     arabicName: "مالك",
     parents: "73",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "75",
@@ -681,14 +681,14 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Fihr",
     arabicName: "فهر",
     parents: "74",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "76",
     uuid: "qurayshtribe",
     label: "Quraysh",
     parents: "75",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "77",
@@ -697,7 +697,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ghalib",
     arabicName: "غالب",
     parents: "76",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "78",
@@ -706,7 +706,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Luay",
     arabicName: "لؤي",
     parents: "77",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "79",
@@ -715,7 +715,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Kab",
     arabicName: "كعب",
     parents: "78",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "80",
@@ -724,7 +724,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Murrah",
     arabicName: "مرة",
     parents: "79",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "81",
@@ -733,7 +733,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Kilab",
     arabicName: "كلاب",
     parents: "80",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "82",
@@ -742,7 +742,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Qusai",
     arabicName: "قصي",
     parents: "81",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "83",
@@ -751,7 +751,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Abd Manaf",
     arabicName: "عبد مناف",
     parents: "82",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "84",
@@ -760,7 +760,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Hashim",
     arabicName: "هاشم",
     parents: "83",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "85",
@@ -769,7 +769,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Abd Shams",
     arabicName: "عبد شمس",
     parents: "83",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "86",
@@ -778,7 +778,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Abd al-Mutalib",
     arabicName: "عبد المطلب",
     parents: "84",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "87",
@@ -787,7 +787,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Abu Talib",
     arabicName: "أبو طالب",
     parents: "86",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "88",
@@ -796,7 +796,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Abdullah",
     arabicName: "عبد الله",
     parents: "86",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "89",
@@ -805,7 +805,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Al-Abbas",
     arabicName: "العباس",
     parents: "86",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "90",
@@ -814,7 +814,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Aminah",
     arabicName: "آمنة",
     parents: "88",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "91",
@@ -823,7 +823,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Muhammad(ﷺ)",
     arabicName: "محمد",
     parents: "88",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "92",
@@ -832,7 +832,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Aisha",
     arabicName: "عائشة",
     parents: "91",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "93",
@@ -841,7 +841,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Hafsa",
     arabicName: "حفصة",
     parents: "91",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "94",
@@ -850,7 +850,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Khadijah",
     arabicName: "خديجة",
     parents: "91",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "95",
@@ -859,7 +859,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Abu Bakr",
     arabicName: "أبو بكر",
     parents: "92",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "96",
@@ -868,7 +868,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Umar",
     arabicName: "عمر",
     parents: "93",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "97",
@@ -877,7 +877,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ali",
     arabicName: "علي",
     parents: "87",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "98",
@@ -886,7 +886,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Fatimah",
     arabicName: "فاطمة",
     parents: ["91", "97"],
-    lineages: [Lineage.Direct, Lineage.Indirect],
+    lineages: [LineageType.Direct, LineageType.Indirect],
   },
   {
     id: "99",
@@ -895,7 +895,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Zainab",
     arabicName: "زينب",
     parents: "91",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "100",
@@ -904,7 +904,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Ruqayyah",
     arabicName: "رقيّة",
     parents: ["91", "107"],
-    lineages: [Lineage.Direct, Lineage.Indirect],
+    lineages: [LineageType.Direct, LineageType.Indirect],
   },
   {
     id: "101",
@@ -913,7 +913,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Umm Kulthum",
     arabicName: "أم كلثوم",
     parents: ["91", "107"],
-    lineages: [Lineage.Direct, Lineage.Indirect],
+    lineages: [LineageType.Direct, LineageType.Indirect],
   },
   {
     id: "102",
@@ -922,7 +922,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Hasan",
     arabicName: "حسن",
     parents: "97",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "103",
@@ -931,7 +931,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Husayn",
     arabicName: "حسين",
     parents: "97",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "104",
@@ -940,21 +940,21 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Umayya",
     arabicName: "أمية",
     parents: "85",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "105",
     uuid: "umayyad",
     label: "Umayyad",
     parents: "104",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "106",
     uuid: "abbasid",
     label: "Abbasid",
     parents: "89",
-    lineages: Lineage.Direct,
+    lineages: LineageType.Direct,
   },
   {
     id: "107",
@@ -963,7 +963,7 @@ export const familyTreeApi: FamilyTreeEntry[] = [
     islamicName: "Uthman",
     arabicName: "عثمان",
     parents: "105",
-    lineages: Lineage.Indirect,
+    lineages: LineageType.Indirect,
   },
   {
     id: "108",

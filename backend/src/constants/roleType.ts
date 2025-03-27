@@ -1,4 +1,4 @@
-const enum RoleType {
+enum RoleType {
   Admin = "admin",
   User = "user",
 }

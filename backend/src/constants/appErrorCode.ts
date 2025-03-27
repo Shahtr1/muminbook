@@ -1,4 +1,4 @@
-const enum AppErrorCode {
+enum AppErrorCode {
   InvalidAccessToken = "InvalidAccessToken",
   ForbiddenAccessToken = "ForbiddenAccessToken",
 }

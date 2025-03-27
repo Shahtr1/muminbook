@@ -1,6 +1,4 @@
 import UserModel from "../models/user.model";
-import VerificationCodeModel from "../models/verificationCode.model";
-import VerificationCodeType from "../constants/verificationCodeType";
 import {
   fiveMinutesAgo,
   ONE_DAY_MS,
@@ -33,7 +31,8 @@ import { hashValue } from "../utils/bcrypt";
 import RoleModel, { RoleDocument } from "../models/role.model";
 import RoleType from "../constants/roleType";
 import UserRoleModel from "../models/user-role.model";
-import Gender from "../constants/gender";
+import VerificationCodeModel from "../models/verification-code.model";
+import VerificationCodeType from "../constants/verificationCodeType";
 
 export type CreateAccountParams = {
   firstname: string;

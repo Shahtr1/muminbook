@@ -10,7 +10,11 @@ export interface RoleDocument extends mongoose.Document {
 
 const roleSchema = new mongoose.Schema<RoleDocument>(
   {
-    type: { type: String, required: true },
+    type: {
+      type: String,
+      enum: Object.values(RoleType),
+      required: true,
+    },
     description: { type: String },
   },
   { timestamps: true },

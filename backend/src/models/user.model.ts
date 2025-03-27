@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 import { compareValue, hashValue } from "../utils/bcrypt";
-import Gender from "../constants/gender";
+import GenderType from "../constants/genderType";
 
 export interface UserDocument extends mongoose.Document {
   firstname: string;
   lastname: string;
   dateOfBirth: Date;
-  gender: Gender;
+  gender: GenderType;
   email: string;
   password: string;
   verified: boolean;
@@ -21,7 +21,11 @@ const userSchema = new mongoose.Schema<UserDocument>(
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
     dateOfBirth: { type: Date, required: true },
-    gender: { type: String, required: true },
+    gender: {
+      type: String,
+      enum: Object.values(GenderType),
+      required: true,
+    },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     verified: { type: Boolean, required: true, default: false },

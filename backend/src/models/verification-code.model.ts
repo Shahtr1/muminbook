@@ -15,7 +15,11 @@ const verificationCodeSchema = new mongoose.Schema<VerificationCodeDocument>({
     required: true,
     index: true,
   },
-  type: { type: String, required: true },
+  type: {
+    type: String,
+    enum: Object.values(VerificationCodeType),
+    required: true,
+  },
   createdAt: { type: Date, required: true, default: Date.now() },
   expiresAt: { type: Date, required: true },
 });

@@ -1,6 +1,6 @@
-const enum Lineage {
+enum LineageType {
   Indirect = "indirect",
   Direct = "direct",
 }
 
-export default Lineage;
+export default LineageType;
