@@ -1,5 +1,5 @@
 import ResourceType from "../constants/resourceType";
-import { CONFLICT, NOT_FOUND } from "../constants/http";
+import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../constants/http";
 import appAssert from "../utils/appAssert";
 import ResourceModel from "../models/resource.model";
 import { PrimaryId } from "../constants/primaryId";
@@ -68,6 +68,9 @@ export const deleteResource = async (
   });
 
   appAssert(resource, NOT_FOUND, "Resource not found");
+
+  const isRootFolder = resource.path === "my-files" || resource.parent === null;
+  appAssert(!isRootFolder, BAD_REQUEST, "Cannot delete root folder");
 
   if (resource.type === "folder") {
     await deleteResourceTree(resource._id as PrimaryId, userId);
