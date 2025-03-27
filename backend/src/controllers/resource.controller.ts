@@ -5,9 +5,10 @@ import { CREATED, NOT_FOUND, OK } from "../constants/http";
 import { assertUserAndSession } from "../utils/assertUserRoleSession";
 import ResourceType from "../constants/resourceType";
 import ResourceModel from "../models/resource.model";
-import { createResource } from "../services/resource.service";
+import { createResource, deleteResource } from "../services/resource.service";
 import { resourceSchema } from "./resourceSchema";
 import mongoose from "mongoose";
+import { PrimaryId } from "../constants/primaryId";
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
@@ -47,7 +48,7 @@ export const createResourceHandler = catchErrors(async (req, res) => {
   const user = await UserModel.findById(req.userId);
   appAssert(user, NOT_FOUND, "User not found");
 
-  const userId = user._id as mongoose.Types.ObjectId;
+  const userId = user._id as PrimaryId;
 
   const parsed = resourceSchema.parse(req.body);
 
@@ -59,4 +60,19 @@ export const createResourceHandler = catchErrors(async (req, res) => {
   const response = await createResource(resourceInput, userId);
 
   return res.status(CREATED).json(response);
+});
+
+export const deleteResourceHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+
+  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+
+  const user = await UserModel.findById(req.userId);
+  appAssert(user, NOT_FOUND, "User not found");
+
+  const userId = user._id as PrimaryId;
+
+  await deleteResource(resourceId, userId);
+
+  return res.status(OK).json({ message: "Deleted successfully" });
 });

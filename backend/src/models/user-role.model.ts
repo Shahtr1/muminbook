@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import { PrimaryId } from "../constants/primaryId";
 
 export interface UserRoleDocument extends mongoose.Document {
-  userId: mongoose.Types.ObjectId;
-  roleId: mongoose.Types.ObjectId;
+  userId: PrimaryId;
+  roleId: PrimaryId;
   createdAt: Date;
   updatedAt: Date;
 }

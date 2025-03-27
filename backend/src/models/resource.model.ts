@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 import ResourceType from "../constants/resourceType";
+import { PrimaryId } from "../constants/primaryId";
 
 export interface ResourceDocument extends mongoose.Document {
-  userId: mongoose.Types.ObjectId;
+  userId: PrimaryId;
   name: string;
   type: ResourceType;
   path: string;
-  parent?: mongoose.Types.ObjectId | null;
+  parent?: PrimaryId | null;
   fileUrl?: string;
   contentType?: string;
   pinned: boolean;

@@ -3,8 +3,8 @@ import appAssert from "../utils/appAssert";
 import { FORBIDDEN, UNAUTHORIZED } from "../constants/http";
 import AppErrorCode from "../constants/appErrorCode";
 import { AccessTokenPayload, verifyToken } from "../utils/jwt";
-import mongoose from "mongoose";
 import RoleType from "../constants/roleType";
+import { PrimaryId } from "../constants/primaryId";
 
 const authenticate = (isAdmin: boolean = false): RequestHandler => {
   return (req, res, next) => {
@@ -36,8 +36,8 @@ const authenticate = (isAdmin: boolean = false): RequestHandler => {
     );
 
     req.role = payload.role;
-    req.userId = payload.userId as mongoose.Types.ObjectId;
-    req.sessionId = payload.sessionId as mongoose.Types.ObjectId;
+    req.userId = payload.userId as PrimaryId;
+    req.sessionId = payload.sessionId as PrimaryId;
     next();
   };
 };

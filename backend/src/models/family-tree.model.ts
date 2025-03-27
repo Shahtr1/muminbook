@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 import LineageType from "../constants/lineageType";
+import { PrimaryId } from "../constants/primaryId";
 
 export interface FamilyTreeDocument extends Document {
   uuid: string;
@@ -7,7 +8,7 @@ export interface FamilyTreeDocument extends Document {
   islamicName?: string;
   arabicName?: string;
   lineages: LineageType | LineageType[];
-  parents?: mongoose.Types.ObjectId[];
+  parents?: PrimaryId[];
   label?: string;
 }
 

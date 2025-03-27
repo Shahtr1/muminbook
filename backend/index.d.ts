@@ -1,13 +1,13 @@
 // noinspection JSUnusedGlobalSymbols
 
-import mongoose from "mongoose";
+import { PrimaryId } from "./src/constants/primaryId";
 
 declare global {
   namespace Express {
     interface Request {
-      userId: mongoose.Types.ObjectId | undefined;
+      userId: PrimaryId | undefined;
       role: string | undefined;
-      sessionId: mongoose.Types.ObjectId | undefined;
+      sessionId: PrimaryId | undefined;
     }
   }
 }

@@ -2,7 +2,7 @@ import ResourceType from "../constants/resourceType";
 import { CONFLICT, NOT_FOUND } from "../constants/http";
 import appAssert from "../utils/appAssert";
 import ResourceModel from "../models/resource.model";
-import mongoose from "mongoose";
+import { PrimaryId } from "../constants/primaryId";
 
 export type CreateResourceParams = {
   name: string;
@@ -14,7 +14,7 @@ export type CreateResourceParams = {
 
 export const createResource = async (
   data: CreateResourceParams,
-  userId: mongoose.Types.ObjectId,
+  userId: PrimaryId,
 ) => {
   const { name, type, path, fileUrl, contentType } = data;
   const parentPath = path;
@@ -56,4 +56,33 @@ export const createResource = async (
     type: resource.type,
     path: resource.path,
   };
+};
+
+export const deleteResource = async (
+  resourceId: PrimaryId,
+  userId: PrimaryId,
+) => {
+  const resource = await ResourceModel.findOne({
+    _id: resourceId,
+    userId,
+  });
+
+  appAssert(resource, NOT_FOUND, "Resource not found");
+
+  if (resource.type === "folder") {
+    await deleteResourceTree(resource._id as PrimaryId, userId);
+  }
+
+  await ResourceModel.deleteOne({ _id: resource._id });
+};
+
+const deleteResourceTree = async (parentId: PrimaryId, userId: PrimaryId) => {
+  const children = await ResourceModel.find({ parent: parentId, userId });
+
+  for (const child of children) {
+    if (child.type === "folder") {
+      await deleteResourceTree(child._id as PrimaryId, userId);
+    }
+    await ResourceModel.deleteOne({ _id: child._id });
+  }
 };
