@@ -3,6 +3,7 @@ import {
   createResourceHandler,
   deleteResourceHandler,
   getResourceHandler,
+  moveToTrashResourceHandler,
 } from "../controllers/resource.controller";
 
 const resourceRoutes = Router();
@@ -11,5 +12,6 @@ const resourceRoutes = Router();
 resourceRoutes.get("/", getResourceHandler);
 resourceRoutes.post("/", createResourceHandler);
 resourceRoutes.delete("/:id", deleteResourceHandler);
+resourceRoutes.patch("/:id/trash", moveToTrashResourceHandler);
 
 export default resourceRoutes;

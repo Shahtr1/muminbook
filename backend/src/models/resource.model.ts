@@ -12,6 +12,8 @@ export interface ResourceDocument extends mongoose.Document {
   contentType?: string;
   pinned: boolean;
   accessedAt?: Date;
+  deleted: boolean;
+  deletedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -40,6 +42,8 @@ const resourceSchema = new mongoose.Schema<ResourceDocument>(
     contentType: { type: String },
     pinned: { type: Boolean, default: false },
     accessedAt: { type: Date },
+    deleted: { type: Boolean, default: false },
+    deletedAt: { type: Date },
   },
   { timestamps: true },
 );

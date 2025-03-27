@@ -1,54 +1,33 @@
 import catchErrors from "../utils/catchErrors";
-import UserModel from "../models/user.model";
-import appAssert from "../utils/appAssert";
-import { CREATED, NOT_FOUND, OK } from "../constants/http";
+import { CREATED, OK } from "../constants/http";
 import { assertUserAndSession } from "../utils/assertUserRoleSession";
 import ResourceType from "../constants/resourceType";
-import ResourceModel from "../models/resource.model";
-import { createResource, deleteResource } from "../services/resource.service";
+import {
+  createResource,
+  deleteResource,
+  getResourceChildren,
+  moveToTrashResource,
+} from "../services/resource.service";
 import { resourceSchema } from "./resourceSchema";
 import mongoose from "mongoose";
-import { PrimaryId } from "../constants/primaryId";
+import { getUserId } from "../utils/getUserId";
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
 
-  const user = await UserModel.findById(req.userId);
-  appAssert(user, NOT_FOUND, "User not found");
+  const userId = await getUserId(req);
 
-  const userId = user._id;
+  const folderPath = req.query.path as string;
 
-  const folderPath = (req.query.path as string) || "my-files";
+  const children = await getResourceChildren(folderPath, userId);
 
-  const folder = await ResourceModel.findOne({
-    path: folderPath,
-    type: ResourceType.Folder,
-    userId: userId,
-  });
-
-  appAssert(folder, NOT_FOUND, "Folder not found");
-
-  const children = await ResourceModel.find({
-    parent: folder._id,
-    userId: userId,
-  });
-
-  const response = children.map((child) => ({
-    _id: child._id,
-    name: child.name,
-    type: child.type,
-  }));
-
-  return res.status(OK).json(response);
+  return res.status(OK).json(children);
 });
 
 export const createResourceHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
 
-  const user = await UserModel.findById(req.userId);
-  appAssert(user, NOT_FOUND, "User not found");
-
-  const userId = user._id as PrimaryId;
+  const userId = await getUserId(req);
 
   const parsed = resourceSchema.parse(req.body);
 
@@ -67,12 +46,21 @@ export const deleteResourceHandler = catchErrors(async (req, res) => {
 
   const resourceId = new mongoose.Types.ObjectId(req.params.id);
 
-  const user = await UserModel.findById(req.userId);
-  appAssert(user, NOT_FOUND, "User not found");
-
-  const userId = user._id as PrimaryId;
+  const userId = await getUserId(req);
 
   await deleteResource(resourceId, userId);
 
   return res.status(OK).json({ message: "Deleted successfully" });
+});
+
+export const moveToTrashResourceHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+
+  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+
+  const userId = await getUserId(req);
+
+  await moveToTrashResource(resourceId, userId);
+
+  return res.status(OK).json({ message: "Moved to trash successfully" });
 });

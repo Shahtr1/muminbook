@@ -4,6 +4,34 @@ import appAssert from "../utils/appAssert";
 import ResourceModel from "../models/resource.model";
 import { PrimaryId } from "../constants/primaryId";
 
+export const getResourceChildren = async (
+  folderPath: string,
+  userId: PrimaryId,
+) => {
+  const path = folderPath || "my-files";
+
+  const folder = await ResourceModel.findOne({
+    path,
+    type: ResourceType.Folder,
+    userId,
+    deleted: false,
+  });
+
+  appAssert(folder, NOT_FOUND, "Folder not found");
+
+  const children = await ResourceModel.find({
+    parent: folder._id,
+    userId,
+    deleted: false,
+  });
+
+  return children.map((child) => ({
+    _id: child._id,
+    name: child.name,
+    type: child.type,
+  }));
+};
+
 export type CreateResourceParams = {
   name: string;
   type: ResourceType;
@@ -87,5 +115,47 @@ const deleteResourceTree = async (parentId: PrimaryId, userId: PrimaryId) => {
       await deleteResourceTree(child._id as PrimaryId, userId);
     }
     await ResourceModel.deleteOne({ _id: child._id });
+  }
+};
+
+export const moveToTrashResource = async (
+  resourceId: PrimaryId,
+  userId: PrimaryId,
+) => {
+  const resource = await ResourceModel.findOne({
+    _id: resourceId,
+    userId,
+  });
+
+  appAssert(resource, NOT_FOUND, "Resource not found");
+
+  const isRootFolder = resource.path === "my-files" || resource.parent === null;
+  appAssert(!isRootFolder, BAD_REQUEST, "Cannot delete root folder");
+
+  if (resource.type === "folder") {
+    await markResourceTreeDeleted(resource._id as PrimaryId, userId);
+  }
+
+  await ResourceModel.findByIdAndUpdate(resource._id, {
+    deleted: true,
+    deletedAt: new Date(),
+  });
+};
+
+const markResourceTreeDeleted = async (
+  parentId: PrimaryId,
+  userId: PrimaryId,
+) => {
+  const children = await ResourceModel.find({ parent: parentId, userId });
+
+  for (const child of children) {
+    if (child.type === "folder") {
+      await markResourceTreeDeleted(child._id as PrimaryId, userId);
+    }
+
+    await ResourceModel.findByIdAndUpdate(child._id, {
+      deleted: true,
+      deletedAt: new Date(),
+    });
   }
 };
