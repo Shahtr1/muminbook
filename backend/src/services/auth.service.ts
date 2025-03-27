@@ -33,6 +33,8 @@ import RoleType from "../constants/roleType";
 import UserRoleModel from "../models/user-role.model";
 import VerificationCodeModel from "../models/verification-code.model";
 import VerificationCodeType from "../constants/verificationCodeType";
+import ResourceModel from "../models/resource.model";
+import ResourceType from "../constants/resourceType";
 
 export type CreateAccountParams = {
   firstname: string;
@@ -71,6 +73,14 @@ export const createAccount = async (data: CreateAccountParams) => {
   await UserRoleModel.create({
     userId,
     roleId: userRole._id,
+  });
+
+  await ResourceModel.create({
+    name: "my-files",
+    type: ResourceType.Folder,
+    path: "my-files",
+    parent: null,
+    userId,
   });
 
   const verificationCode = await VerificationCodeModel.create({

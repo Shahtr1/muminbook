@@ -10,6 +10,8 @@ import {
   ADMIN_PASSWORD,
 } from "../constants/env";
 import UserRoleModel from "../models/user-role.model";
+import ResourceModel from "../models/resource.model";
+import ResourceType from "../constants/resourceType";
 
 const initializeDefaultRBAC = async () => {
   try {
@@ -67,6 +69,22 @@ const initializeDefaultRBAC = async () => {
       await UserRoleModel.create({
         userId: adminId,
         roleId: userRoleId,
+      });
+    }
+
+    const existingResourceForAdmin = await ResourceModel.findOne({
+      userId: adminId,
+      name: "my-files",
+      type: ResourceType.Folder,
+    });
+
+    if (!existingResourceForAdmin) {
+      await ResourceModel.create({
+        name: "my-files",
+        type: ResourceType.Folder,
+        path: "my-files",
+        parent: null,
+        userId: adminId,
       });
     }
   } catch (error) {
