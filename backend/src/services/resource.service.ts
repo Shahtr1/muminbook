@@ -159,3 +159,69 @@ const markResourceTreeDeleted = async (
     });
   }
 };
+
+export const restoreResource = async (
+  resourceId: PrimaryId,
+  userId: PrimaryId,
+) => {
+  const resource = await ResourceModel.findOne({
+    _id: resourceId,
+    userId,
+  });
+
+  appAssert(resource, NOT_FOUND, "Resource not found");
+  appAssert(resource.deleted, BAD_REQUEST, "Resource is not in trash");
+
+  if (resource.type === "folder") {
+    await restoreResourceTree(resource._id as PrimaryId, userId);
+  }
+
+  await ResourceModel.findByIdAndUpdate(resource._id, {
+    deleted: false,
+    deletedAt: null,
+  });
+};
+
+const restoreResourceTree = async (parentId: PrimaryId, userId: PrimaryId) => {
+  const children = await ResourceModel.find({ parent: parentId, userId });
+
+  for (const child of children) {
+    if (child.type === "folder") {
+      await restoreResourceTree(child._id as PrimaryId, userId);
+    }
+
+    await ResourceModel.findByIdAndUpdate(child._id, {
+      deleted: false,
+      deletedAt: null,
+    });
+  }
+};
+
+export const getTrashedResources = async (userId: PrimaryId) => {
+  const resources = await ResourceModel.find({
+    userId,
+    deleted: true,
+  }).sort({ deletedAt: -1 });
+
+  return resources.map((r: any) => ({
+    _id: r._id,
+    name: r.name,
+    type: r.type,
+    path: r.path,
+    deletedAt: r.deletedAt,
+  }));
+};
+
+export const permanentlyDeleteTrashedResources = async (userId: PrimaryId) => {
+  const trashed = await ResourceModel.find({
+    userId,
+    deleted: true,
+  });
+
+  for (const resource of trashed) {
+    if (resource.type === "folder") {
+      await deleteResourceTree(resource._id as PrimaryId, userId);
+    }
+    await ResourceModel.deleteOne({ _id: resource._id });
+  }
+};

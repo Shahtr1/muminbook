@@ -6,7 +6,10 @@ import {
   createResource,
   deleteResource,
   getResourceChildren,
+  getTrashedResources,
   moveToTrashResource,
+  permanentlyDeleteTrashedResources,
+  restoreResource,
 } from "../services/resource.service";
 import { resourceSchema } from "./resourceSchema";
 import mongoose from "mongoose";
@@ -63,4 +66,32 @@ export const moveToTrashResourceHandler = catchErrors(async (req, res) => {
   await moveToTrashResource(resourceId, userId);
 
   return res.status(OK).json({ message: "Moved to trash successfully" });
+});
+
+export const restoreResourceHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+  const userId = await getUserId(req);
+
+  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+  await restoreResource(resourceId, userId);
+
+  return res.status(OK).json({ message: "Restored successfully" });
+});
+
+export const getTrashedResourcesHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+  const userId = await getUserId(req);
+
+  const trashed = await getTrashedResources(userId);
+
+  return res.status(OK).json(trashed);
+});
+
+export const emptyTrashHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+  const userId = await getUserId(req);
+
+  await permanentlyDeleteTrashedResources(userId);
+
+  return res.status(OK).json({ message: "Trash emptied successfully" });
 });

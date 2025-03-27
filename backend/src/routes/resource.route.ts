@@ -2,8 +2,11 @@ import { Router } from "express";
 import {
   createResourceHandler,
   deleteResourceHandler,
+  emptyTrashHandler,
   getResourceHandler,
+  getTrashedResourcesHandler,
   moveToTrashResourceHandler,
+  restoreResourceHandler,
 } from "../controllers/resource.controller";
 
 const resourceRoutes = Router();
@@ -11,7 +14,12 @@ const resourceRoutes = Router();
 // prefix resources
 resourceRoutes.get("/", getResourceHandler);
 resourceRoutes.post("/", createResourceHandler);
+
+resourceRoutes.get("/trash", getTrashedResourcesHandler);
+resourceRoutes.delete("/trash", emptyTrashHandler);
+
 resourceRoutes.delete("/:id", deleteResourceHandler);
 resourceRoutes.patch("/:id/trash", moveToTrashResourceHandler);
+resourceRoutes.patch("/:id/restore", restoreResourceHandler);
 
 export default resourceRoutes;
