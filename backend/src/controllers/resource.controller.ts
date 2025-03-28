@@ -7,12 +7,13 @@ import {
   deleteResource,
   getResourceChildren,
   getTrashedResources,
+  moveResource,
   moveToTrashResource,
   permanentlyDeleteTrashedResources,
   renameResource,
   restoreResource,
 } from "../services/resource.service";
-import { renameSchema, resourceSchema } from "./resourceSchema";
+import { dstPathSchema, renameSchema, resourceSchema } from "./resourceSchema";
 import mongoose from "mongoose";
 import { getUserId } from "../utils/getUserId";
 
@@ -106,4 +107,14 @@ export const renameResourceHandler = catchErrors(async (req, res) => {
   const response = await renameResource(resourceId, name, userId);
 
   return res.status(OK).json(response);
+});
+
+export const moveResourceHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+  const userId = await getUserId(req);
+  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+  const { destinationPath } = dstPathSchema.parse(req.body);
+
+  const result = await moveResource(resourceId, destinationPath, userId);
+  return res.status(OK).json(result);
 });

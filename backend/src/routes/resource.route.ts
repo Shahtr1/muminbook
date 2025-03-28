@@ -5,6 +5,7 @@ import {
   emptyTrashHandler,
   getResourceHandler,
   getTrashedResourcesHandler,
+  moveResourceHandler,
   moveToTrashResourceHandler,
   renameResourceHandler,
   restoreResourceHandler,
@@ -23,5 +24,6 @@ resourceRoutes.delete("/:id", deleteResourceHandler);
 resourceRoutes.patch("/:id/trash", moveToTrashResourceHandler);
 resourceRoutes.patch("/:id/restore", restoreResourceHandler);
 resourceRoutes.patch("/:id/rename", renameResourceHandler);
+resourceRoutes.patch("/:id/move", moveResourceHandler);
 
 export default resourceRoutes;

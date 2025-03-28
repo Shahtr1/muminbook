@@ -24,3 +24,7 @@ export const resourceSchema = z.object({
 export const renameSchema = z.object({
   name: nameSchema,
 });
+
+export const dstPathSchema = z.object({
+  destinationPath: z.string().min(1, "Destination path is required"),
+});
