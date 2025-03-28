@@ -1,9 +1,14 @@
 import ResourceType from "../constants/resourceType";
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../constants/http";
 import appAssert from "../utils/appAssert";
-import ResourceModel from "../models/resource.model";
+import ResourceModel, { ResourceDocument } from "../models/resource.model";
 import { PrimaryId } from "../constants/primaryId";
 import { thirtyDaysAgo } from "../utils/date";
+
+const assertNotRootFolder = (resource: ResourceDocument) => {
+  const isRoot = resource.path === "my-files" || resource.parent === null;
+  appAssert(!isRoot, BAD_REQUEST, "Cannot modify root folder");
+};
 
 export const getResourceChildren = async (
   folderPath: string,
@@ -101,8 +106,7 @@ export const deleteResource = async (
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, "Resource not found");
 
-  const isRootFolder = resource.path === "my-files" || resource.parent === null;
-  appAssert(!isRootFolder, BAD_REQUEST, "Cannot delete root folder");
+  assertNotRootFolder(resource);
 
   if (resource.type === ResourceType.Folder) {
     const descendants = await getAllDescendants(resource.path, userId);
@@ -125,8 +129,7 @@ export const moveToTrashResource = async (
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, "Resource not found");
 
-  const isRootFolder = resource.path === "my-files" || resource.parent === null;
-  appAssert(!isRootFolder, BAD_REQUEST, "Cannot delete root folder");
+  assertNotRootFolder(resource);
 
   const updates: any[] = [];
 
@@ -224,3 +227,61 @@ export const permanentlyDeleteTrashedResourcesForJob =
 
     return trashed.length;
   };
+
+export const renameResource = async (
+  resourceId: PrimaryId,
+  newName: string,
+  userId: PrimaryId,
+) => {
+  const resource = await ResourceModel.findOne({
+    _id: resourceId,
+    userId,
+  });
+
+  appAssert(resource, NOT_FOUND, "Resource not found");
+
+  assertNotRootFolder(resource);
+
+  const oldPath = resource.path;
+  const parentPath = resource.path.split("/").slice(0, -1).join("/");
+  const newPath = `${parentPath}/${newName}`.replace(/\/+/g, "/");
+
+  // Check for naming conflict
+  const existing = await ResourceModel.findOne({
+    path: newPath,
+    userId,
+  });
+  appAssert(!existing, CONFLICT, "A resource with this name already exists");
+
+  const bulkOps: any[] = [];
+
+  // If it's a folder, also rename all descendants
+  if (resource.type === ResourceType.Folder) {
+    const descendants = await ResourceModel.find({
+      path: new RegExp(`^${oldPath}/`),
+      userId,
+    });
+
+    for (const doc of descendants) {
+      const updatedPath = doc.path.replace(oldPath, newPath);
+      bulkOps.push({
+        updateOne: {
+          filter: { _id: doc._id },
+          update: { $set: { path: updatedPath } },
+        },
+      });
+    }
+  }
+
+  // Update the folder/file itself
+  bulkOps.push({
+    updateOne: {
+      filter: { _id: resource._id },
+      update: { $set: { name: newName, path: newPath } },
+    },
+  });
+
+  await ResourceModel.bulkWrite(bulkOps);
+
+  return { message: "Renamed successfully" };
+};

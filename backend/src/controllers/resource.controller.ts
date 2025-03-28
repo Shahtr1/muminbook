@@ -9,9 +9,10 @@ import {
   getTrashedResources,
   moveToTrashResource,
   permanentlyDeleteTrashedResources,
+  renameResource,
   restoreResource,
 } from "../services/resource.service";
-import { resourceSchema } from "./resourceSchema";
+import { renameSchema, resourceSchema } from "./resourceSchema";
 import mongoose from "mongoose";
 import { getUserId } from "../utils/getUserId";
 
@@ -94,4 +95,15 @@ export const emptyTrashHandler = catchErrors(async (req, res) => {
   await permanentlyDeleteTrashedResources(userId);
 
   return res.status(OK).json({ message: "Trash emptied successfully" });
+});
+
+export const renameResourceHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+  const userId = await getUserId(req);
+  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+
+  const { name } = renameSchema.parse(req.body);
+  const response = await renameResource(resourceId, name, userId);
+
+  return res.status(OK).json(response);
 });
