@@ -32,11 +32,12 @@ const resourceSchema = new mongoose.Schema<ResourceDocument>(
       enum: Object.values(ResourceType),
       required: true,
     },
-    path: { type: String, required: true },
+    path: { type: String, required: true, index: true },
     parent: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Resource",
       default: null,
+      index: true,
     },
     fileUrl: { type: String },
     contentType: { type: String },

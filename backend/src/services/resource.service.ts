@@ -87,35 +87,34 @@ export const createResource = async (
   };
 };
 
+const getAllDescendants = async (parentPath: string, userId: PrimaryId) => {
+  return ResourceModel.find({
+    path: new RegExp(`^${parentPath}/`),
+    userId,
+  });
+};
+
 export const deleteResource = async (
   resourceId: PrimaryId,
   userId: PrimaryId,
 ) => {
-  const resource = await ResourceModel.findOne({
-    _id: resourceId,
-    userId,
-  });
-
+  const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, "Resource not found");
 
   const isRootFolder = resource.path === "my-files" || resource.parent === null;
   appAssert(!isRootFolder, BAD_REQUEST, "Cannot delete root folder");
 
   if (resource.type === ResourceType.Folder) {
-    await deleteResourceTree(resource._id as PrimaryId, userId);
-  }
+    const descendants = await getAllDescendants(resource.path, userId);
 
-  await ResourceModel.deleteOne({ _id: resource._id });
-};
-
-const deleteResourceTree = async (parentId: PrimaryId, userId: PrimaryId) => {
-  const children = await ResourceModel.find({ parent: parentId, userId });
-
-  for (const child of children) {
-    if (child.type === ResourceType.Folder) {
-      await deleteResourceTree(child._id as PrimaryId, userId);
-    }
-    await ResourceModel.deleteOne({ _id: child._id });
+    await ResourceModel.bulkWrite([
+      ...descendants.map((child) => ({
+        deleteOne: { filter: { _id: child._id } },
+      })),
+      { deleteOne: { filter: { _id: resource._id } } },
+    ]);
+  } else {
+    await ResourceModel.deleteOne({ _id: resource._id });
   }
 };
 
@@ -123,79 +122,66 @@ export const moveToTrashResource = async (
   resourceId: PrimaryId,
   userId: PrimaryId,
 ) => {
-  const resource = await ResourceModel.findOne({
-    _id: resourceId,
-    userId,
-  });
-
+  const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, "Resource not found");
 
   const isRootFolder = resource.path === "my-files" || resource.parent === null;
   appAssert(!isRootFolder, BAD_REQUEST, "Cannot delete root folder");
 
+  const updates: any[] = [];
+
   if (resource.type === ResourceType.Folder) {
-    await markResourceTreeDeleted(resource._id as PrimaryId, userId);
+    const descendants = await getAllDescendants(resource.path, userId);
+    updates.push(
+      ...descendants.map((child) => ({
+        updateOne: {
+          filter: { _id: child._id },
+          update: { $set: { deleted: true, deletedAt: new Date() } },
+        },
+      })),
+    );
   }
 
-  await ResourceModel.findByIdAndUpdate(resource._id, {
-    deleted: true,
-    deletedAt: new Date(),
+  updates.push({
+    updateOne: {
+      filter: { _id: resource._id },
+      update: { $set: { deleted: true, deletedAt: new Date() } },
+    },
   });
-};
 
-const markResourceTreeDeleted = async (
-  parentId: PrimaryId,
-  userId: PrimaryId,
-) => {
-  const children = await ResourceModel.find({ parent: parentId, userId });
-
-  for (const child of children) {
-    if (child.type === ResourceType.Folder) {
-      await markResourceTreeDeleted(child._id as PrimaryId, userId);
-    }
-
-    await ResourceModel.findByIdAndUpdate(child._id, {
-      deleted: true,
-      deletedAt: new Date(),
-    });
-  }
+  await ResourceModel.bulkWrite(updates);
 };
 
 export const restoreResource = async (
   resourceId: PrimaryId,
   userId: PrimaryId,
 ) => {
-  const resource = await ResourceModel.findOne({
-    _id: resourceId,
-    userId,
-  });
-
+  const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, "Resource not found");
   appAssert(resource.deleted, BAD_REQUEST, "Resource is not in trash");
 
+  const updates: any[] = [];
+
   if (resource.type === ResourceType.Folder) {
-    await restoreResourceTree(resource._id as PrimaryId, userId);
+    const descendants = await getAllDescendants(resource.path, userId);
+    updates.push(
+      ...descendants.map((child) => ({
+        updateOne: {
+          filter: { _id: child._id },
+          update: { $set: { deleted: false, deletedAt: null } },
+        },
+      })),
+    );
   }
 
-  await ResourceModel.findByIdAndUpdate(resource._id, {
-    deleted: false,
-    deletedAt: null,
+  updates.push({
+    updateOne: {
+      filter: { _id: resource._id },
+      update: { $set: { deleted: false, deletedAt: null } },
+    },
   });
-};
 
-const restoreResourceTree = async (parentId: PrimaryId, userId: PrimaryId) => {
-  const children = await ResourceModel.find({ parent: parentId, userId });
-
-  for (const child of children) {
-    if (child.type === ResourceType.Folder) {
-      await restoreResourceTree(child._id as PrimaryId, userId);
-    }
-
-    await ResourceModel.findByIdAndUpdate(child._id, {
-      deleted: false,
-      deletedAt: null,
-    });
-  }
+  await ResourceModel.bulkWrite(updates);
 };
 
 export const getTrashedResources = async (userId: PrimaryId) => {
@@ -214,33 +200,27 @@ export const getTrashedResources = async (userId: PrimaryId) => {
 };
 
 export const permanentlyDeleteTrashedResources = async (userId: PrimaryId) => {
-  const trashed = await ResourceModel.find({
-    userId,
-    deleted: true,
-  });
+  const trashed = await ResourceModel.find({ userId, deleted: true });
 
-  for (const resource of trashed) {
-    if (resource.type === ResourceType.Folder) {
-      await deleteResourceTree(resource._id as PrimaryId, userId);
-    }
-    await ResourceModel.deleteOne({ _id: resource._id });
-  }
+  const deletes = trashed.map((r) => ({
+    deleteOne: { filter: { _id: r._id } },
+  }));
+
+  await ResourceModel.bulkWrite(deletes);
 };
 
-export const permanentlyDeleteTrashedResourcesforJob =
+export const permanentlyDeleteTrashedResourcesForJob =
   async (): Promise<number> => {
     const trashed = await ResourceModel.find({
       deleted: true,
       deletedAt: { $lte: thirtyDaysAgo() },
     });
 
-    for (const resource of trashed) {
-      if (resource.type === ResourceType.Folder) {
-        await deleteResourceTree(resource._id as PrimaryId, resource.userId);
-      }
+    const deletes = trashed.map((r) => ({
+      deleteOne: { filter: { _id: r._id } },
+    }));
 
-      await ResourceModel.deleteOne({ _id: resource._id });
-    }
+    await ResourceModel.bulkWrite(deletes);
 
     return trashed.length;
   };
