@@ -10,6 +10,7 @@ import adminRoutes from "./routes/admin.route";
 import authenticate from "./middleware/authenticate";
 import familyTreeRoutes from "./routes/family-tree.route";
 import resourceRoutes from "./routes/resource.route";
+import "./jobs/trashCleanupJob";
 
 const app = express();
 

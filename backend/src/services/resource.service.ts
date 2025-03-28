@@ -3,6 +3,7 @@ import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../constants/http";
 import appAssert from "../utils/appAssert";
 import ResourceModel from "../models/resource.model";
 import { PrimaryId } from "../constants/primaryId";
+import { thirtyDaysAgo } from "../utils/date";
 
 export const getResourceChildren = async (
   folderPath: string,
@@ -100,7 +101,7 @@ export const deleteResource = async (
   const isRootFolder = resource.path === "my-files" || resource.parent === null;
   appAssert(!isRootFolder, BAD_REQUEST, "Cannot delete root folder");
 
-  if (resource.type === "folder") {
+  if (resource.type === ResourceType.Folder) {
     await deleteResourceTree(resource._id as PrimaryId, userId);
   }
 
@@ -111,7 +112,7 @@ const deleteResourceTree = async (parentId: PrimaryId, userId: PrimaryId) => {
   const children = await ResourceModel.find({ parent: parentId, userId });
 
   for (const child of children) {
-    if (child.type === "folder") {
+    if (child.type === ResourceType.Folder) {
       await deleteResourceTree(child._id as PrimaryId, userId);
     }
     await ResourceModel.deleteOne({ _id: child._id });
@@ -132,7 +133,7 @@ export const moveToTrashResource = async (
   const isRootFolder = resource.path === "my-files" || resource.parent === null;
   appAssert(!isRootFolder, BAD_REQUEST, "Cannot delete root folder");
 
-  if (resource.type === "folder") {
+  if (resource.type === ResourceType.Folder) {
     await markResourceTreeDeleted(resource._id as PrimaryId, userId);
   }
 
@@ -149,7 +150,7 @@ const markResourceTreeDeleted = async (
   const children = await ResourceModel.find({ parent: parentId, userId });
 
   for (const child of children) {
-    if (child.type === "folder") {
+    if (child.type === ResourceType.Folder) {
       await markResourceTreeDeleted(child._id as PrimaryId, userId);
     }
 
@@ -172,7 +173,7 @@ export const restoreResource = async (
   appAssert(resource, NOT_FOUND, "Resource not found");
   appAssert(resource.deleted, BAD_REQUEST, "Resource is not in trash");
 
-  if (resource.type === "folder") {
+  if (resource.type === ResourceType.Folder) {
     await restoreResourceTree(resource._id as PrimaryId, userId);
   }
 
@@ -186,7 +187,7 @@ const restoreResourceTree = async (parentId: PrimaryId, userId: PrimaryId) => {
   const children = await ResourceModel.find({ parent: parentId, userId });
 
   for (const child of children) {
-    if (child.type === "folder") {
+    if (child.type === ResourceType.Folder) {
       await restoreResourceTree(child._id as PrimaryId, userId);
     }
 
@@ -219,9 +220,27 @@ export const permanentlyDeleteTrashedResources = async (userId: PrimaryId) => {
   });
 
   for (const resource of trashed) {
-    if (resource.type === "folder") {
+    if (resource.type === ResourceType.Folder) {
       await deleteResourceTree(resource._id as PrimaryId, userId);
     }
     await ResourceModel.deleteOne({ _id: resource._id });
   }
 };
+
+export const permanentlyDeleteTrashedResourcesforJob =
+  async (): Promise<number> => {
+    const trashed = await ResourceModel.find({
+      deleted: true,
+      deletedAt: { $lte: thirtyDaysAgo() },
+    });
+
+    for (const resource of trashed) {
+      if (resource.type === ResourceType.Folder) {
+        await deleteResourceTree(resource._id as PrimaryId, resource.userId);
+      }
+
+      await ResourceModel.deleteOne({ _id: resource._id });
+    }
+
+    return trashed.length;
+  };
