@@ -1,5 +1,9 @@
 import API from "../../config/apiClient.js";
 
+const simulateNetworkDelay = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000000));
+};
+
 export const login = async (data) => API.post("/auth/login", data);
 export const logout = async () => API.get("/auth/logout");
 export const register = async (data) => API.post("/auth/register", data);
@@ -19,7 +23,7 @@ export const getSessions = async () => API.get("/admin/sessions");
 export const deleteSession = async (id) => API.delete(`/admin/sessions/${id}`);
 
 export const getResources = async (path = "my-files") =>
-  API.get(`/resources?path=${encodeURIComponent(path)}`);
+  API.get(`/resources?path=${path}`);
 
 export const isMyFilesEmpty = async () =>
   API.get("/resources/is-my-files-empty");

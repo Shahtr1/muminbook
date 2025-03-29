@@ -1,4 +1,4 @@
-import { Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { Folder } from "@/components/layout/reading/Folder.jsx";
 import { readingItems } from "@/data/readingItems.js";
 import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
@@ -35,7 +35,9 @@ export const ReadingList = () => {
       <ReadingToolbar />
       {isFolderView ? (
         <Flex h="100%">
-          <ReadingSidebar />
+          <Box>
+            <ReadingSidebar />
+          </Box>
           <Outlet />
         </Flex>
       ) : (

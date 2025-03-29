@@ -7,6 +7,7 @@ export const useResources = (path = "my-files") => {
   const { data = [], ...rest } = useQuery({
     queryKey: [RESOURCES, path],
     queryFn: () => getResources(path),
+    enabled: Boolean(path),
   });
 
   return { resources: data, ...rest };
