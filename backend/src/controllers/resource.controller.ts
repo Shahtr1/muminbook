@@ -17,6 +17,7 @@ import {
 import { dstPathSchema, renameSchema, resourceSchema } from "./resourceSchema";
 import mongoose from "mongoose";
 import { getUserId } from "../utils/getUserId";
+import { isMyFilesEmpty } from "../services/resource/isMyFilesEmpty-resource.service";
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
@@ -130,4 +131,14 @@ export const copyResourceHandler = catchErrors(async (req, res) => {
   const result = await copyResource(resourceId, destinationPath, userId);
 
   return res.status(OK).json(result);
+});
+
+export const isMyFilesEmptyHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+
+  const userId = await getUserId(req);
+
+  const { empty } = await isMyFilesEmpty(userId);
+
+  return res.status(OK).json(empty);
 });

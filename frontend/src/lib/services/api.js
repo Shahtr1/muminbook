@@ -18,6 +18,8 @@ export const getFamilyTree = async () => API.get("/family-tree");
 export const getSessions = async () => API.get("/admin/sessions");
 export const deleteSession = async (id) => API.delete(`/admin/sessions/${id}`);
 
-export const getResources = async (path = "my-files") => {
-  return API.get(`/resources?path=${encodeURIComponent(path)}`);
-};
+export const getResources = async (path = "my-files") =>
+  API.get(`/resources?path=${encodeURIComponent(path)}`);
+
+export const isMyFilesEmpty = async () =>
+  API.get("/resources/is-my-files-empty");

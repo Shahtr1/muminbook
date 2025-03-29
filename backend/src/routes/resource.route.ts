@@ -6,6 +6,7 @@ import {
   emptyTrashHandler,
   getResourceHandler,
   getTrashedResourcesHandler,
+  isMyFilesEmptyHandler,
   moveResourceHandler,
   moveToTrashResourceHandler,
   renameResourceHandler,
@@ -27,5 +28,6 @@ resourceRoutes.patch("/:id/restore", restoreResourceHandler);
 resourceRoutes.patch("/:id/rename", renameResourceHandler);
 resourceRoutes.patch("/:id/move", moveResourceHandler);
 resourceRoutes.post("/:id/copy", copyResourceHandler);
+resourceRoutes.get("/is-my-files-empty", isMyFilesEmptyHandler);
 
 export default resourceRoutes;

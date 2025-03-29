@@ -25,6 +25,7 @@ export const AppContainer = () => {
     <Flex
       direction="column"
       minH="100vh"
+      h="100vh"
       pt={readingMode ? undefined : "navbar-height"}
     >
       {readingMode ? <NavbarReadingMode /> : <Navbar />}
