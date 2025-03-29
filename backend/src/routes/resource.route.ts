@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  copyResourceHandler,
   createResourceHandler,
   deleteResourceHandler,
   emptyTrashHandler,
@@ -25,5 +26,6 @@ resourceRoutes.patch("/:id/trash", moveToTrashResourceHandler);
 resourceRoutes.patch("/:id/restore", restoreResourceHandler);
 resourceRoutes.patch("/:id/rename", renameResourceHandler);
 resourceRoutes.patch("/:id/move", moveResourceHandler);
+resourceRoutes.post("/:id/copy", copyResourceHandler);
 
 export default resourceRoutes;

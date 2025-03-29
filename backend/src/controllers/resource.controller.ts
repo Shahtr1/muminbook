@@ -3,6 +3,7 @@ import { CREATED, OK } from "../constants/http";
 import { assertUserAndSession } from "../utils/assertUserRoleSession";
 import ResourceType from "../constants/resourceType";
 import {
+  copyResource,
   createResource,
   deleteResource,
   getResourceChildren,
@@ -12,7 +13,7 @@ import {
   permanentlyDeleteTrashedResources,
   renameResource,
   restoreResource,
-} from "../services/resource.service";
+} from "../services/resource";
 import { dstPathSchema, renameSchema, resourceSchema } from "./resourceSchema";
 import mongoose from "mongoose";
 import { getUserId } from "../utils/getUserId";
@@ -75,9 +76,9 @@ export const restoreResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
 
   const resourceId = new mongoose.Types.ObjectId(req.params.id);
-  await restoreResource(resourceId, userId);
+  const { message } = await restoreResource(resourceId, userId);
 
-  return res.status(OK).json({ message: "Restored successfully" });
+  return res.status(OK).json({ message });
 });
 
 export const getTrashedResourcesHandler = catchErrors(async (req, res) => {
@@ -116,5 +117,17 @@ export const moveResourceHandler = catchErrors(async (req, res) => {
   const { destinationPath } = dstPathSchema.parse(req.body);
 
   const result = await moveResource(resourceId, destinationPath, userId);
+  return res.status(OK).json(result);
+});
+
+export const copyResourceHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+
+  const userId = await getUserId(req);
+  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+  const { destinationPath } = dstPathSchema.parse(req.body);
+
+  const result = await copyResource(resourceId, destinationPath, userId);
+
   return res.status(OK).json(result);
 });

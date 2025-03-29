@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import { permanentlyDeleteTrashedResourcesForJob } from "../services/resource.service";
+import { permanentlyDeleteTrashedResourcesForJob } from "../services/resource";
 
 cron.schedule("0 3 * * *", async () => {
   // At 3:00 AM everyday
