@@ -12,6 +12,7 @@ import formLabelTheme from "@/theme/formLabelTheme.js";
 import alertTheme from "@/theme/alertTheme.js";
 import spacings from "@/theme/spacings.js";
 import menuItemTheme from "@/theme/menuItemTheme.js";
+import skeletonTheme from "@/theme/skeletonTheme.js";
 
 const config = {
   initialColorMode: "light",
@@ -39,6 +40,7 @@ const components = {
   Text: textTheme,
   FormLabel: formLabelTheme,
   Menu: menuItemTheme,
+  Skeleton: skeletonTheme,
 };
 
 const theme = extendTheme({
