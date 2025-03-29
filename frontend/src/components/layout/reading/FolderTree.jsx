@@ -63,21 +63,42 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
 
       <Collapse in={isExpanded}>
         {!isPending &&
-          resources
-            ?.filter((res) => res.type === "folder")
-            .map((child) => (
-              <TreeNode
-                key={child.name}
-                path={`${path}/${encodeURIComponent(child.name)}`.replace(
-                  /\/+/g,
-                  "/",
-                )}
-                name={child.name}
-                level={level + 1}
-                activePath={activePath}
-                onSelect={onSelect}
-              />
-            ))}
+          resources?.map((res) => {
+            const resPath = `${path}/${encodeURIComponent(res.name)}`.replace(
+              /\/+/g,
+              "/",
+            );
+
+            if (res.type === "folder") {
+              return (
+                <TreeNode
+                  key={res.name}
+                  path={resPath}
+                  name={res.name}
+                  level={level + 1}
+                  activePath={activePath}
+                  onSelect={onSelect}
+                />
+              );
+            }
+
+            // Render files
+            return (
+              <Box key={res.name} pl={(level + 1) * 2}>
+                <Flex
+                  align="center"
+                  py={1}
+                  cursor="pointer"
+                  _hover={{ bg: "whiteAlpha.200" }}
+                  onClick={() => {
+                    // TODO: handle file click (intentionally left empty)
+                  }}
+                >
+                  <Text noOfLines={1}>{res.name}</Text>
+                </Flex>
+              </Box>
+            );
+          })}
       </Collapse>
     </Box>
   );
