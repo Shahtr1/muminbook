@@ -8,7 +8,7 @@ export const getResourceChildren = async (
   folderPath: string,
   userId: PrimaryId,
 ) => {
-  const path = folderPath || "my-files";
+  const path = decodeURIComponent(folderPath || "my-files");
 
   const folder = await ResourceModel.findOne({
     path,

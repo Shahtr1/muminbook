@@ -1,36 +1,26 @@
 import { Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Folder } from "@/components/layout/reading/Folder.jsx";
-import { myFiles } from "@/data/myFiles.js";
 import { File } from "@/components/layout/reading/File.jsx";
+import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { Loader } from "@/components/layout/Loader.jsx";
+import { useResources } from "@/hooks/useResources.js";
 
 export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const itemsWidth = useBreakpointValue({ base: "70px", sm: "100px" });
+  const itemWidth = useBreakpointValue({ base: "70px", sm: "100px" });
 
-  const isFolderView = location.pathname.includes("/reading/my-files");
-  const pathNames = location.pathname.split("/").filter(Boolean);
-  const myFilesIndex = pathNames.indexOf("my-files");
-  const folderPath =
-    myFilesIndex !== -1 ? pathNames.slice(myFilesIndex + 1) : [];
+  const pathSegments = location.pathname.split("/").filter(Boolean);
+  const folderPathIndex = pathSegments.indexOf("my-files");
+  const folderPath = pathSegments.slice(folderPathIndex).join("/");
 
-  let currentFolder = myFiles["my-files"];
-  folderPath.forEach((segment) => {
-    const decoded = decodeURIComponent(segment);
-    if (
-      currentFolder &&
-      typeof currentFolder === "object" &&
-      decoded in currentFolder
-    ) {
-      currentFolder = currentFolder[decoded];
-    } else {
-      currentFolder = null;
-    }
-  });
+  const { resources, isPending, isError } = useResources(folderPath);
 
-  const items = Object.entries(currentFolder);
+  if (isPending) return <Loader />;
+
+  if (isError) return <SomethingWentWrong />;
 
   return (
     <Flex
@@ -40,35 +30,36 @@ export const FolderView = () => {
       height="fit-content"
       p="10px 25px"
     >
-      {items.map(([name, value]) => {
-        if (value === "file") {
-          return (
-            <File
-              key={name}
-              label={name}
-              onClick={() => {}}
-              width={itemsWidth}
-            />
-          );
-        }
-        if (typeof value === "object") {
-          const isEmpty = Object.keys(value).length === 0;
+      {resources.map((res) => {
+        if (res.type === "folder") {
           return (
             <Folder
-              key={name}
-              label={name}
+              key={res._id}
+              label={res.name}
               onClick={() =>
                 navigate(
-                  `/reading/my-files/${[...folderPath, encodeURIComponent(name)].join("/")}`,
+                  `/reading/my-files/${[
+                    ...pathSegments.slice(folderPathIndex + 1),
+                    encodeURIComponent(res.name),
+                  ].join("/")}`,
                 )
               }
-              empty={isEmpty}
-              width={itemsWidth}
+              empty={false} // backend can help here if needed
+              width={itemWidth}
             />
           );
         }
 
-        return null;
+        return (
+          <File
+            key={res._id}
+            label={res.name}
+            onClick={() => {
+              // handle file open here
+            }}
+            width={itemWidth}
+          />
+        );
       })}
     </Flex>
   );

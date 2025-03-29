@@ -9,7 +9,6 @@ import { XBreadCrumb } from "@/components/layout/reading/XBreadCrumb.jsx";
 import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "@chakra-ui/icons";
 import { XSearch } from "@/components/layout/XSearch.jsx";
 import { useEffect, useRef, useState } from "react";
-import { myFiles } from "@/data/myFiles.js";
 import { AddMenu } from "@/components/layout/reading/toolbar/AddMenu.jsx";
 
 export const ReadingToolbar = () => {
@@ -45,22 +44,7 @@ export const ReadingToolbar = () => {
     const myFilesIndex = pathNames.indexOf("my-files");
     if (myFilesIndex === -1) return [];
 
-    const relativePath = pathNames.slice(myFilesIndex);
-    let segments = [];
-    let current = myFiles;
-
-    for (const segment of relativePath) {
-      const decoded = decodeURIComponent(segment);
-      if (typeof current === "object" && decoded in current) {
-        if (current[decoded] === "file") break;
-        segments.push(segment);
-        current = current[decoded];
-      } else {
-        break;
-      }
-    }
-
-    return segments;
+    return pathNames.slice(myFilesIndex);
   };
 
   const folderSegments = extractFolderSegments();
