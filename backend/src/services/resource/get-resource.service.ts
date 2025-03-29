@@ -25,9 +25,26 @@ export const getResourceChildren = async (
     deleted: false,
   });
 
+  const folderIds = children
+    .filter((child) => child.type === ResourceType.Folder)
+    .map((f) => f._id);
+
+  const childCounts = await ResourceModel.aggregate([
+    { $match: { parent: { $in: folderIds }, userId, deleted: false } },
+    { $group: { _id: "$parent", count: { $sum: 1 } } },
+  ]);
+
+  const childCountMap = new Map(
+    childCounts.map((item) => [item._id.toString(), item.count]),
+  );
+
   return children.map((child) => ({
     _id: child._id,
     name: child.name,
     type: child.type,
+    empty:
+      child.type === ResourceType.Folder
+        ? !childCountMap.get((child._id as PrimaryId).toString())
+        : undefined,
   }));
 };

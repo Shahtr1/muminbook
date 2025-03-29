@@ -44,7 +44,7 @@ export const FolderView = () => {
                   ].join("/")}`,
                 )
               }
-              empty={false} // backend can help here if needed
+              empty={res.empty}
               width={itemWidth}
             />
           );
@@ -55,7 +55,7 @@ export const FolderView = () => {
             key={res._id}
             label={res.name}
             onClick={() => {
-              // handle file open here
+              // TODO:handle file open here
             }}
             width={itemWidth}
           />
