@@ -1,9 +1,23 @@
-import { Box, Collapse, Flex, Icon, Skeleton, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Collapse,
+  Flex,
+  Icon,
+  Skeleton,
+  Text,
+  Tooltip,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { useResources } from "@/hooks/useResources.js";
+import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
+import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 
 const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
+  const bgColor = useColorModeValue("white", "gray.800");
+  const hoverColor = useColorModeValue("#eae8e4", "#161B24");
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [shouldFetch, setShouldFetch] = useState(path === "my-files");
 
@@ -34,11 +48,12 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
     <Box pl={level * 2}>
       <Flex
         align="center"
-        py={1}
+        p={1}
         cursor="pointer"
-        bg={isActive ? "whiteAlpha.300" : "transparent"}
-        _hover={{ bg: "whiteAlpha.200" }}
+        bg={isActive ? bgColor : "transparent"}
+        _hover={{ bg: isActive ? bgColor : hoverColor }}
         onClick={() => onSelect?.(path)}
+        borderRadius="sm"
       >
         <Icon
           as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
@@ -53,11 +68,22 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
           <Skeleton
             height="16px"
             width="100%"
-            startColor="gray.600"
-            endColor="gray.400"
+            startColor="gray.300"
+            endColor="gray.100"
           />
         ) : (
-          <Text noOfLines={1}>{decodeURIComponent(name)}</Text>
+          <Flex align="center" gap="5px">
+            <FolderSVG dimensions="15px" />
+            <Tooltip
+              label={decodeURIComponent(name)}
+              hasArrow
+              placement="auto-end"
+            >
+              <Text fontSize="13px" isTruncated>
+                {decodeURIComponent(name)}
+              </Text>
+            </Tooltip>
+          </Flex>
         )}
       </Flex>
 
@@ -87,14 +113,22 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
               <Box key={res.name} pl={(level + 1) * 2}>
                 <Flex
                   align="center"
-                  py={1}
+                  p={1}
                   cursor="pointer"
-                  _hover={{ bg: "whiteAlpha.200" }}
+                  _hover={{ bg: isActive ? bgColor : hoverColor }}
+                  gap="5px"
                   onClick={() => {
                     // TODO: handle file click (intentionally left empty)
                   }}
+                  borderRadius="sm"
                 >
-                  <Text noOfLines={1}>{res.name}</Text>
+                  <FileSVG dimensions="15px" activeColor="brand.500" />
+
+                  <Tooltip label={res.name} hasArrow placement="auto-end">
+                    <Text fontSize="13px" isTruncated>
+                      {res.name}
+                    </Text>
+                  </Tooltip>
                 </Flex>
               </Box>
             );
