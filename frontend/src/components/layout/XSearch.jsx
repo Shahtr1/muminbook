@@ -47,7 +47,7 @@ export const XSearch = ({
   return (
     <InputGroup
       display={display}
-      flex={{ md: expand && isFocused ? 1 : "0.5" }}
+      flex={{ md: expand && isFocused ? 1 : expand ? "0.5" : "unset" }}
       transition="all 0.3s ease-in-out"
       w={parentWidth}
     >

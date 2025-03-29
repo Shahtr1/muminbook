@@ -1,4 +1,5 @@
 import {
+  Box,
   Flex,
   Icon,
   Text,
@@ -66,31 +67,38 @@ export const ReadingToolbar = () => {
       py={2}
       boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : "none"}
       gap={2}
-      px={8}
+      px={{ base: 2, sm: 8 }}
     >
-      <Flex justify="space-between" w="100%" align="center">
-        <XBreadCrumb segments={folderSegments} />
-        {isFolderView && (
-          <Flex w="100%" justify="end">
-            <AddMenu onCreate={addNew} />
-          </Flex>
-        )}
-        <Icon
-          ml={2}
-          as={showExtras ? ChevronUpIcon : ChevronDownIcon}
-          display={{ base: "flex", sm: "none" }}
-          fontSize="18px"
-          cursor="pointer"
-          onClick={() => setShowExtras(!showExtras)}
-          color="brand.500"
-        />
+      {/*nav div*/}
+      <Flex justify="space-between" flex="1" align="center" overflowX="auto">
+        <Box flex="1" overflowX="auto">
+          <XBreadCrumb segments={folderSegments} />
+        </Box>
+        <Flex w="auto">
+          {isFolderView && (
+            <Flex justify="end">
+              <AddMenu onCreate={addNew} />
+            </Flex>
+          )}
+          <Icon
+            ml={2}
+            as={showExtras ? ChevronUpIcon : ChevronDownIcon}
+            display={{ base: "flex", sm: "none" }}
+            fontSize="18px"
+            cursor="pointer"
+            onClick={() => setShowExtras(!showExtras)}
+            color="brand.500"
+          />
+        </Flex>
       </Flex>
 
+      {/*tools div*/}
       <Flex
         justify={{ base: "space-between", sm: "end" }}
         align="center"
         gap={3}
         display={{ base: showExtras ? "flex" : "none", sm: "flex" }}
+        w="auto"
       >
         <Flex
           align="center"
@@ -108,7 +116,13 @@ export const ReadingToolbar = () => {
           </Text>
         </Flex>
 
-        <XSearch bgColor={bgColor} size="xs" width={120} parentWidth="auto" />
+        <XSearch
+          bgColor={bgColor}
+          size="xs"
+          width={120}
+          parentWidth="auto"
+          expand={false}
+        />
       </Flex>
     </Flex>
   );

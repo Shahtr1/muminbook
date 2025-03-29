@@ -3,7 +3,7 @@ import { Flex, Text } from "@chakra-ui/react";
 export const ReadingHeader = ({ isFolderView }) => {
   return (
     <>
-      <Flex flexDirection="column" gap={2} px={8}>
+      <Flex flexDirection="column" gap={2} px={{ base: 2, sm: 8 }}>
         <Text fontSize={{ base: "l", sm: "xl" }}>
           {isFolderView
             ? "File Explorer"

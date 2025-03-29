@@ -102,10 +102,20 @@ export const XBreadCrumb = ({ segments }) => {
 
       {/* Breadcrumb */}
       <Breadcrumb
+        as={Flex}
         spacing="5px"
         separator={<ChevronRightIcon color="brand.500" />}
         fontWeight="medium"
         fontSize={{ base: "12px", sm: "13px" }}
+        overflowX="auto"
+        pr={2}
+        css={{
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
       >
         {fullSegments.map((segment, index) => {
           const fullPath = buildPath(index);
