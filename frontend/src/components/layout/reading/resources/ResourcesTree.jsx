@@ -72,14 +72,21 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
             endColor="gray.100"
           />
         ) : (
-          <Flex align="center" gap="5px">
+          <Flex align="center" gap="5px" overflow="hidden">
             <FolderSVG dimensions="15px" />
             <Tooltip
               label={decodeURIComponent(name)}
               hasArrow
               placement="auto-end"
             >
-              <Text fontSize="13px" isTruncated>
+              <Text
+                fontSize="13px"
+                minW="20px"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
+                maxW="100%"
+              >
                 {decodeURIComponent(name)}
               </Text>
             </Tooltip>
@@ -125,7 +132,13 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
                   <FileSVG dimensions="15px" activeColor="brand.500" />
 
                   <Tooltip label={res.name} hasArrow placement="auto-end">
-                    <Text fontSize="13px" isTruncated>
+                    <Text
+                      fontSize="13px"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      whiteSpace="nowrap"
+                      maxW="100%"
+                    >
                       {res.name}
                     </Text>
                   </Tooltip>
