@@ -17,7 +17,6 @@ export const ReadingSidebar = () => {
   return (
     <Flex
       h={`calc(100vh - ${navbarHeight + breadcrumbHeight}px)`}
-      overflowX="auto"
       position="sticky"
       top={`calc(${navbarHeight + breadcrumbHeight}px)`}
       minH="100%"
@@ -26,11 +25,16 @@ export const ReadingSidebar = () => {
       px={2}
       borderRightWidth="0.1px"
       borderColor={borderColor}
+      flexDir="column"
     >
-      <ResourcesTree
-        activePath={currentPath}
-        onSelect={(path) => navigate(`/reading/${path}`)}
-      />
+      {/*Quick Access and Pinned*/}
+      {/*Resource Tree*/}
+      <Flex overflowX="auto">
+        <ResourcesTree
+          activePath={currentPath}
+          onSelect={(path) => navigate(`/reading/${path}`)}
+        />
+      </Flex>
     </Flex>
   );
 };
