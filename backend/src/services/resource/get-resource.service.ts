@@ -38,7 +38,7 @@ export const getResourceChildren = async (
     childCounts.map((item) => [item._id.toString(), item.count]),
   );
 
-  return children.map((child) => ({
+  const formattedChildren = children.map((child) => ({
     _id: child._id,
     name: child.name,
     type: child.type,
@@ -47,4 +47,19 @@ export const getResourceChildren = async (
         ? !childCountMap.get((child._id as PrimaryId).toString())
         : undefined,
   }));
+
+  // Move "lost+found" to the top if we're in "my-files"
+  if (path === "my-files") {
+    const index = formattedChildren.findIndex(
+      (child) =>
+        child.name === "lost+found" && child.type === ResourceType.Folder,
+    );
+
+    if (index !== -1) {
+      const [lostFound] = formattedChildren.splice(index, 1);
+      formattedChildren.unshift(lostFound);
+    }
+  }
+
+  return formattedChildren;
 };
