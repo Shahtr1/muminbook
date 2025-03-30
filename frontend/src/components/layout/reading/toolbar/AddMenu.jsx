@@ -9,6 +9,7 @@ import {
   MenuButton,
   MenuList,
   Text,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
@@ -17,6 +18,8 @@ import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 import { useEffect, useState } from "react";
 
 export const AddMenu = ({ onCreate }) => {
+  const hoverBg = useColorModeValue("gray.100", "gray.700");
+
   const [showFileInput, setShowFileInput] = useState(false);
   const [showFolderInput, setShowFolderInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -130,6 +133,8 @@ export const AddMenu = ({ onCreate }) => {
                 e.preventDefault();
                 setShowFileInput(true);
               }}
+              _hover={{ bg: hoverBg }}
+              w="100%"
             >
               <FileSVG dimensions="15px" activeColor="brand.500" />
               <Text fontSize={{ base: "12px", sm: "13px" }}>File</Text>
@@ -145,6 +150,8 @@ export const AddMenu = ({ onCreate }) => {
                 e.preventDefault();
                 setShowFolderInput(true);
               }}
+              _hover={{ bg: hoverBg }}
+              w="100%"
             >
               <FolderSVG dimensions="15px" />
               <Text fontSize={{ base: "12px", sm: "13px" }}>Folder</Text>
