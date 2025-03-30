@@ -32,6 +32,9 @@ export const FolderView = () => {
       overflow="visible"
     >
       {resources.map((res) => {
+        if (res.type === "folder" && res.name === "lost+found" && res.empty) {
+          return null;
+        }
         if (res.type === "folder") {
           return (
             <Folder
@@ -47,6 +50,7 @@ export const FolderView = () => {
               }
               empty={res.empty}
               width={itemWidth}
+              showItemToolbar={res.name !== "lost+found"}
             />
           );
         }

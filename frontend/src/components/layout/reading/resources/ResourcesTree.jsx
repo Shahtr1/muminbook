@@ -6,7 +6,6 @@ import {
   Skeleton,
   Text,
   Tooltip,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
@@ -15,9 +14,6 @@ import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 
 const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
-  const bgColor = useColorModeValue("white", "gray.800");
-  const hoverColor = useColorModeValue("#eae8e4", "#161B24");
-
   const [isExpanded, setIsExpanded] = useState(false);
   const [shouldFetch, setShouldFetch] = useState(path === "my-files");
 
@@ -50,10 +46,9 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
         align="center"
         p={1}
         cursor="pointer"
-        bg={isActive ? bgColor : "transparent"}
-        _hover={{ bg: isActive ? bgColor : hoverColor }}
         onClick={() => onSelect?.(path)}
         borderRadius="sm"
+        role="group"
       >
         <Icon
           as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
@@ -79,7 +74,12 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
               hasArrow
               placement="auto-end"
             >
-              <Text whiteSpace="nowrap" fontSize="13px">
+              <Text
+                whiteSpace="nowrap"
+                fontSize="13px"
+                _groupHover={{ color: isActive ? "brand.500" : "brand.600" }}
+                color={isActive ? "brand.500" : "unset"}
+              >
                 {decodeURIComponent(name)}
               </Text>
             </Tooltip>
@@ -96,6 +96,10 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
             );
 
             if (res.type === "folder") {
+              if (res.empty && res.name === "lost+found") {
+                return null;
+              }
+
               return (
                 <TreeNode
                   key={res.name}
@@ -115,17 +119,21 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
                   align="center"
                   p={1}
                   cursor="pointer"
-                  _hover={{ bg: hoverColor }}
                   gap="5px"
                   onClick={() => {
                     // TODO: handle file click (intentionally left empty)
                   }}
                   borderRadius="sm"
+                  role="group"
                 >
                   <FileSVG dimensions="15px" activeColor="brand.500" />
 
                   <Tooltip label={res.name} hasArrow placement="auto-end">
-                    <Text fontSize="13px" whiteSpace="nowrap">
+                    <Text
+                      fontSize="13px"
+                      whiteSpace="nowrap"
+                      _groupHover={{ color: "brand.600" }}
+                    >
                       {res.name}
                     </Text>
                   </Tooltip>

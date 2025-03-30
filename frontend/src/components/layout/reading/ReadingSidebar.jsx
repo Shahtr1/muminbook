@@ -29,7 +29,7 @@ export const ReadingSidebar = () => {
     >
       {/*Quick Access and Pinned*/}
       {/*Resource Tree*/}
-      <Flex overflowX="auto">
+      <Flex overflowX="auto" py={2}>
         <ResourcesTree
           activePath={currentPath}
           onSelect={(path) => navigate(`/reading/${path}`)}
