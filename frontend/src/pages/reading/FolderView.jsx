@@ -1,7 +1,7 @@
 import { Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Folder } from "@/components/layout/reading/Folder/Folder.jsx";
-import { File } from "@/components/layout/reading/File.jsx";
+import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
+import { File } from "@/components/layout/reading/resources/File.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { useResources } from "@/hooks/useResources.js";

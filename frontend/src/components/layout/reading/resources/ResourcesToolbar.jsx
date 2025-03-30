@@ -1,6 +1,6 @@
 import { MenuItem } from "@chakra-ui/react";
 
-export const FolderToolbar = () => {
+export const ResourcesToolbar = () => {
   return (
     <>
       <MenuItem>hi</MenuItem>

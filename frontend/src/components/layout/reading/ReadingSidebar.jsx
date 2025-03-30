@@ -1,6 +1,6 @@
 import { Flex, useColorModeValue, useTheme } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FolderTree } from "@/components/layout/reading/Folder/FolderTree.jsx";
+import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
 
 export const ReadingSidebar = () => {
   const theme = useTheme();
@@ -28,7 +28,7 @@ export const ReadingSidebar = () => {
       borderRightWidth="0.1px"
       borderColor={borderColor}
     >
-      <FolderTree
+      <ResourcesTree
         activePath={currentPath}
         onSelect={(path) => navigate(`/reading/${path}`)}
       />

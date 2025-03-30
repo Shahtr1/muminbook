@@ -115,7 +115,7 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
                   align="center"
                   p={1}
                   cursor="pointer"
-                  _hover={{ bg: isActive ? bgColor : hoverColor }}
+                  _hover={{ bg: hoverColor }}
                   gap="5px"
                   onClick={() => {
                     // TODO: handle file click (intentionally left empty)
@@ -138,7 +138,11 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
   );
 };
 
-export const FolderTree = ({ rootPath = "my-files", activePath, onSelect }) => {
+export const ResourcesTree = ({
+  rootPath = "my-files",
+  activePath,
+  onSelect,
+}) => {
   return (
     <TreeNode
       path={rootPath}

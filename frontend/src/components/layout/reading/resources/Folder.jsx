@@ -8,7 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
-import { FolderToolbar } from "@/components/layout/reading/Folder/FolderToolbar.jsx";
+import { ResourcesToolbar } from "@/components/layout/reading/resources/ResourcesToolbar.jsx";
 
 export const Folder = ({
   onClick,
@@ -51,7 +51,7 @@ export const Folder = ({
         <ItemToolbar
           isFavourite={isFavourite}
           zIndex="99999"
-          children={<FolderToolbar />}
+          children={<ResourcesToolbar />}
         />
       )}
       <Flex
@@ -61,6 +61,7 @@ export const Folder = ({
         flexDirection={isSmallScreen && !isFolderView ? "row" : "column"}
         onClick={onClick}
         gap={isSmallScreen && !isFolderView ? 5 : "unset"}
+        overflow="hidden"
       >
         <FolderSVG dimensions={dimensions} empty={empty} />
         <Tooltip label={label} hasArrow placement="bottom">

@@ -16,7 +16,7 @@ export const ItemToolbar = ({ zIndex, isFavourite = false, children }) => {
   return (
     <Flex
       position="absolute"
-      top={isFolderView ? "2px" : "8px"}
+      top={isFolderView ? "0" : "8px"}
       right="5px"
       gap={isFolderView ? 1 : 2}
       zIndex={zIndex ?? "99"}
