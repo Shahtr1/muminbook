@@ -29,6 +29,7 @@ import { ReadingView } from "@/pages/reading/ReadingView.jsx";
 import { FolderView } from "@/pages/reading/FolderView.jsx";
 import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
 import { RemoveTrailingSlash } from "@/utils/RemoveTrailingSlash.jsx";
+import { ReadingLayout } from "@/pages/reading/ReadingLayout.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -60,10 +61,11 @@ function App() {
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />}></Route>
 
-          <Route path="reading" element={<ReadingList />}>
+          <Route path="reading" element={<ReadingLayout />}>
             {/*/////////////////////////////////////////*/}
             {/* READING ROUTES */}
             {/*/////////////////////////////////////////*/}
+            <Route index element={<ReadingList />} />
             <Route path="my-files/*" element={<FolderView />} />
             <Route path=":id" element={<ReadingView />} />
           </Route>

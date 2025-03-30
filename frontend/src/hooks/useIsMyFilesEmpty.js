@@ -5,7 +5,9 @@ export const useIsMyFilesEmpty = () => {
   const { data, ...rest } = useQuery({
     queryKey: ["isMyFilesEmpty"],
     queryFn: isMyFilesEmpty,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
-  return { emptyMyFiles: data?.empty ?? false, ...rest };
+  return { emptyMyFiles: data ?? false, ...rest };
 };
