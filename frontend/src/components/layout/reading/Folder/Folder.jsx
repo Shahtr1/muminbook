@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import {
   Flex,
-  MenuItem,
   Text,
   Tooltip,
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
+import { FolderToolbar } from "@/components/layout/reading/Folder/FolderToolbar.jsx";
 
 export const Folder = ({
   onClick,
@@ -35,10 +35,6 @@ export const Folder = ({
 
   if (!hasMounted) return null;
 
-  const toolbarChildren = () => {
-    return <MenuItem>hi</MenuItem>;
-  };
-
   return (
     <Flex
       width={width}
@@ -52,7 +48,11 @@ export const Folder = ({
       position="relative"
     >
       {showItemToolbar && (
-        <ItemToolbar isFavourite={isFavourite} children={toolbarChildren()} />
+        <ItemToolbar
+          isFavourite={isFavourite}
+          zIndex="99999"
+          children={<FolderToolbar />}
+        />
       )}
       <Flex
         width="100%"

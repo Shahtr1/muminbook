@@ -1,6 +1,6 @@
 import { Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Folder } from "@/components/layout/reading/Folder.jsx";
+import { Folder } from "@/components/layout/reading/Folder/Folder.jsx";
 import { File } from "@/components/layout/reading/File.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { Loader } from "@/components/layout/Loader.jsx";
@@ -29,6 +29,7 @@ export const FolderView = () => {
       gap={{ base: 5, sm: 12 }}
       height="fit-content"
       p="10px 25px"
+      overflow="visible"
     >
       {resources.map((res) => {
         if (res.type === "folder") {

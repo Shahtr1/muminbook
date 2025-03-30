@@ -1,6 +1,6 @@
 import { Flex, useColorModeValue, useTheme } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FolderTree } from "@/components/layout/reading/FolderTree.jsx";
+import { FolderTree } from "@/components/layout/reading/Folder/FolderTree.jsx";
 
 export const ReadingSidebar = () => {
   const theme = useTheme();
@@ -21,7 +21,8 @@ export const ReadingSidebar = () => {
       overflowY="auto"
       position="sticky"
       top={`calc(${navbarHeight + breadcrumbHeight}px)`}
-      w="220px"
+      minW="220px"
+      maxW="220px"
       fontSize="sm"
       px={2}
       borderRightWidth="0.1px"
