@@ -85,6 +85,7 @@ const initializeDefaultRBAC = async () => {
         path: "my-files",
         parent: null,
         userId: adminId,
+        pinned: true,
       });
     }
   } catch (error) {

@@ -4,6 +4,7 @@ import {
   createResourceHandler,
   deleteResourceHandler,
   emptyTrashHandler,
+  getOverviewHandler,
   getResourceHandler,
   getTrashedResourcesHandler,
   isMyFilesEmptyHandler,
@@ -11,6 +12,8 @@ import {
   moveToTrashResourceHandler,
   renameResourceHandler,
   restoreResourceHandler,
+  togglePinResourceHandler,
+  updateAccessedAtHandler,
 } from "../controllers/resource.controller";
 
 const resourceRoutes = Router();
@@ -29,5 +32,8 @@ resourceRoutes.patch("/:id/rename", renameResourceHandler);
 resourceRoutes.patch("/:id/move", moveResourceHandler);
 resourceRoutes.post("/:id/copy", copyResourceHandler);
 resourceRoutes.get("/is-my-files-empty", isMyFilesEmptyHandler);
+resourceRoutes.get("/overview", getOverviewHandler);
+resourceRoutes.patch("/:id/toggle-pin", togglePinResourceHandler);
+resourceRoutes.patch("/:id/access", updateAccessedAtHandler);
 
 export default resourceRoutes;

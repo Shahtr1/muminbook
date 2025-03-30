@@ -79,6 +79,7 @@ export const createAccount = async (data: CreateAccountParams) => {
     name: "my-files",
     type: ResourceType.Folder,
     path: "my-files",
+    pinned: true,
     parent: null,
     userId,
   });

@@ -18,6 +18,11 @@ import { dstPathSchema, renameSchema, resourceSchema } from "./resourceSchema";
 import mongoose from "mongoose";
 import { getUserId } from "../utils/getUserId";
 import { isMyFilesEmpty } from "../services/resource/isMyFilesEmpty-resource.service";
+import {
+  getOverview,
+  togglePinResource,
+  updateAccessedAt,
+} from "../services/resource/overview.service";
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
@@ -141,4 +146,32 @@ export const isMyFilesEmptyHandler = catchErrors(async (req, res) => {
   const { empty } = await isMyFilesEmpty(userId);
 
   return res.status(OK).json(empty);
+});
+
+export const getOverviewHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+
+  const userId = await getUserId(req);
+
+  const overview = await getOverview(userId);
+
+  return res.status(OK).json(overview);
+});
+export const togglePinResourceHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+  const userId = await getUserId(req);
+  const { id } = req.params;
+
+  const result = await togglePinResource(userId, id);
+  return res.status(OK).json(result);
+});
+
+export const updateAccessedAtHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+  const userId = await getUserId(req);
+  const { id } = req.params;
+
+  const result = await updateAccessedAt(userId, id);
+
+  return res.status(OK).json(result);
 });
