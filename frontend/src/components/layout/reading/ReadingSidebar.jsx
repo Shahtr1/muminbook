@@ -16,14 +16,13 @@ export const ReadingSidebar = () => {
 
   return (
     <Flex
-      flexDir="column"
       h={`calc(100vh - ${navbarHeight + breadcrumbHeight}px)`}
-      overflowY="auto"
+      overflowX="auto"
       position="sticky"
       top={`calc(${navbarHeight + breadcrumbHeight}px)`}
-      minW="220px"
-      maxW="220px"
-      fontSize="sm"
+      minH="100%"
+      minW="200px"
+      maxW="200px"
       px={2}
       borderRightWidth="0.1px"
       borderColor={borderColor}
