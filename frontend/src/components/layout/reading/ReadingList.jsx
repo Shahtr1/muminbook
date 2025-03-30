@@ -44,7 +44,9 @@ export const ReadingList = () => {
             onClick={() => navigate("my-files")}
             width={itemWidth}
             empty={emptyMyFiles}
+            showItemToolbar={false}
           />
+
           {readingItems().map((item) => (
             <ReadingCard key={item.id} {...item} width={itemWidth} />
           ))}

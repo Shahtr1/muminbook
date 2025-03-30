@@ -2,17 +2,21 @@ import { useEffect, useState } from "react";
 import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import {
   Flex,
+  MenuItem,
   Text,
   Tooltip,
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
 
 export const Folder = ({
   onClick,
   width,
   empty = true,
   label = "My Files",
+  isFavourite = false,
+  showItemToolbar = true,
 }) => {
   const isFolderView = location.pathname.includes("/reading/my-files");
 
@@ -31,39 +35,52 @@ export const Folder = ({
 
   if (!hasMounted) return null;
 
+  const toolbarChildren = () => {
+    return <MenuItem>hi</MenuItem>;
+  };
+
   return (
     <Flex
       width={width}
-      justify={isSmallScreen && !isFolderView ? "start" : "center"}
       align="center"
-      flexDirection={isSmallScreen && !isFolderView ? "row" : "column"}
-      onClick={onClick}
       px={isSmallScreen && !isFolderView ? "10px" : 0}
       py={isSmallScreen && !isFolderView ? "5px" : 0}
       borderRadius={isSmallScreen && !isFolderView ? "lg" : "0"}
       shadow={isSmallScreen && !isFolderView ? "md" : "none"}
       bgColor={isSmallScreen && !isFolderView ? bgColor : "unset"}
-      gap={isSmallScreen && !isFolderView ? 5 : "unset"}
       cursor="pointer"
+      position="relative"
     >
-      <FolderSVG dimensions={dimensions} empty={empty} />
-      <Tooltip label={label} hasArrow placement="bottom">
-        <Text
-          fontSize={
-            isFolderView
-              ? { base: "10px", sm: "13px" }
-              : { base: "13px", sm: "15px" }
-          }
-          color="brand.500"
-          fontWeight={isFolderView ? "medium" : "bold"}
-          overflow="hidden"
-          textOverflow="ellipsis"
-          whiteSpace="nowrap"
-          maxWidth="100%"
-        >
-          {label}
-        </Text>
-      </Tooltip>
+      {showItemToolbar && (
+        <ItemToolbar isFavourite={isFavourite} children={toolbarChildren()} />
+      )}
+      <Flex
+        width="100%"
+        justify={isSmallScreen && !isFolderView ? "start" : "center"}
+        align="center"
+        flexDirection={isSmallScreen && !isFolderView ? "row" : "column"}
+        onClick={onClick}
+        gap={isSmallScreen && !isFolderView ? 5 : "unset"}
+      >
+        <FolderSVG dimensions={dimensions} empty={empty} />
+        <Tooltip label={label} hasArrow placement="bottom">
+          <Text
+            fontSize={
+              isFolderView
+                ? { base: "10px", sm: "13px" }
+                : { base: "13px", sm: "15px" }
+            }
+            color="brand.500"
+            fontWeight={isFolderView ? "medium" : "bold"}
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+            maxWidth="100%"
+          >
+            {label}
+          </Text>
+        </Tooltip>
+      </Flex>
     </Flex>
   );
 };
