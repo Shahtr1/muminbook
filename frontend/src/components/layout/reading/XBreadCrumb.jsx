@@ -19,15 +19,20 @@ import { useEffect, useRef, useState } from "react";
 
 const labelMap = {
   reading: { label: "Reading", icon: GoListUnordered },
+  "my-files": { label: "My Files" },
+  trash: { label: "Trash" },
 };
 
-export const XBreadCrumb = ({ segments }) => {
+export const XBreadCrumb = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
-  const isFolderView = location.pathname.includes("/reading/my-files");
 
-  const fullSegments = ["reading", ...segments];
+  const isFolderView =
+    location.pathname.includes("/reading/my-files") ||
+    location.pathname.includes("/reading/trash");
+
+  const segments = location.pathname.split("/").filter(Boolean);
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
   const forwardRef = useRef([]);
@@ -53,20 +58,20 @@ export const XBreadCrumb = ({ segments }) => {
   };
 
   const goUp = () => {
-    if (segments.length > 0) {
+    if (segments.length > 1) {
       const newSegments = segments.slice(0, -1);
-      navigate(`/reading/${newSegments.join("/")}`);
+      navigate(`/${newSegments.join("/")}`);
     } else {
       navigate("/reading");
     }
   };
 
   const buildPath = (index) => {
-    const pathSegments = fullSegments.slice(0, index + 1);
+    const pathSegments = segments.slice(0, index + 1);
     return `/${pathSegments.join("/")}`;
   };
 
-  const canGoUp = segments.length > 0;
+  const canGoUp = segments.length > 1;
 
   return (
     <Flex align="center" gap={3}>
@@ -110,16 +115,14 @@ export const XBreadCrumb = ({ segments }) => {
         overflowX="auto"
         pr={2}
         css={{
-          "&::-webkit-scrollbar": {
-            display: "none",
-          },
+          "&::-webkit-scrollbar": { display: "none" },
           scrollbarWidth: "none",
           msOverflowStyle: "none",
         }}
       >
-        {fullSegments.map((segment, index) => {
+        {segments.map((segment, index) => {
           const fullPath = buildPath(index);
-          const isLast = index === fullSegments.length - 1;
+          const isLast = index === segments.length - 1;
 
           const custom = labelMap[segment];
           const label = custom?.label || decodeURIComponent(segment);
@@ -147,7 +150,7 @@ export const XBreadCrumb = ({ segments }) => {
                     textOverflow="ellipsis"
                     whiteSpace="nowrap"
                   >
-                    {label === "my-files" ? "My Files" : label}
+                    {label}
                   </Text>
                 </Flex>
               </BreadcrumbLink>

@@ -12,20 +12,20 @@ import { useLocation } from "react-router-dom";
 export const ItemToolbar = ({ zIndex, isFavourite = false, children }) => {
   const location = useLocation();
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
-  const isFolderOrTrashView =
+  const isFolderView =
     location.pathname.includes("/reading/my-files") ||
     location.pathname.includes("/reading/trash");
   return (
     <Flex
       position="absolute"
-      top={isFolderOrTrashView ? "0" : "8px"}
+      top={isFolderView ? "0" : "8px"}
       right="5px"
-      gap={isFolderOrTrashView ? 1 : 2}
+      gap={isFolderView ? 1 : 2}
       zIndex={zIndex ?? "99"}
     >
-      {!isFolderOrTrashView && (
+      {!isFolderView && (
         <StarIcon
-          fontSize={isSmallScreen || isFolderOrTrashView ? "11px" : "15px"}
+          fontSize={isSmallScreen || isFolderView ? "11px" : "15px"}
           onClick={() => {
             console.log("hi");
           }}
@@ -46,7 +46,7 @@ export const ItemToolbar = ({ zIndex, isFavourite = false, children }) => {
           }}
         >
           <HiDotsVertical
-            fontSize={isSmallScreen || isFolderOrTrashView ? "11px" : "15px"}
+            fontSize={isSmallScreen || isFolderView ? "11px" : "15px"}
           />
         </MenuButton>
 

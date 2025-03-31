@@ -38,7 +38,7 @@ export const ReadingToolbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isFolderView = location.pathname.includes("/reading/my-files");
+  const isMyFilesView = location.pathname.includes("/reading/my-files");
 
   const extractFolderSegments = () => {
     const pathNames = location.pathname.split("/").filter(Boolean);
@@ -75,7 +75,7 @@ export const ReadingToolbar = () => {
           <XBreadCrumb segments={folderSegments} />
         </Box>
         <Flex w="auto">
-          {isFolderView && (
+          {isMyFilesView && (
             <Flex justify="end">
               <AddMenu onCreate={addNew} />
             </Flex>
