@@ -2,7 +2,7 @@ import ResourceModel from "../../../models/resource.model";
 import ResourceType from "../../../constants/resourceType";
 import { PrimaryId } from "../../../constants/primaryId";
 import appAssert from "../../../utils/appAssert";
-import { BAD_REQUEST, NOT_FOUND } from "../../../constants/http";
+import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../../../constants/http";
 import { getOrCreateLostAndFound } from "../../../utils/resource-helpers/getOrCreateLostAndFound";
 import { getAllDescendants } from "../common-resource.service";
 
@@ -63,6 +63,18 @@ const restoreAsLostAndFound = async (resource: any, userId: PrimaryId) => {
 };
 
 const restoreNormally = async (resource: any, userId: PrimaryId) => {
+  const conflict = await ResourceModel.findOne({
+    path: resource.path,
+    userId,
+    deleted: false,
+  });
+
+  appAssert(
+    !conflict,
+    CONFLICT,
+    "A resource with this name already exists in the destination path",
+  );
+
   const updates: any[] = [];
 
   if (resource.type === ResourceType.Folder) {
