@@ -67,6 +67,7 @@ function App() {
             {/*/////////////////////////////////////////*/}
             <Route index element={<ReadingList />} />
             <Route path="my-files/*" element={<FolderView />} />
+            <Route path="trash/*" element={<FolderView />} />
             <Route path=":id" element={<ReadingView />} />
           </Route>
 

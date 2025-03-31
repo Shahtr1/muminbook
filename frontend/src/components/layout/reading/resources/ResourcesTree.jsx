@@ -78,7 +78,7 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
                 whiteSpace="nowrap"
                 fontSize="13px"
                 _groupHover={{ color: isActive ? "brand.500" : "brand.600" }}
-                color={isActive ? "brand.500" : "unset"}
+                color={isActive ? "brand.500" : "text.primary"}
               >
                 {decodeURIComponent(name)}
               </Text>

@@ -5,21 +5,27 @@ import { File } from "@/components/layout/reading/resources/File.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { useResources } from "@/hooks/useResources.js";
+import { useTrash } from "@/hooks/trash/useTrash.js";
 
 export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
   const itemWidth = useBreakpointValue({ base: "70px", sm: "100px" });
 
   const pathSegments = location.pathname.split("/").filter(Boolean);
-  const folderPathIndex = pathSegments.indexOf("my-files");
+
+  const isTrashView = location.pathname.includes("/reading/trash");
+  const baseSegment = isTrashView ? "trash" : "my-files";
+  const folderPathIndex = pathSegments.indexOf(baseSegment);
   const folderPath = pathSegments.slice(folderPathIndex).join("/");
 
-  const { resources, isPending, isError } = useResources(folderPath);
+  console.log(folderPath);
+
+  const { resources, isPending, isError } = isTrashView
+    ? useTrash(folderPath)
+    : useResources(folderPath);
 
   if (isPending) return <Loader />;
-
   if (isError) return <SomethingWentWrong />;
 
   return (
@@ -35,19 +41,26 @@ export const FolderView = () => {
         if (res.type === "folder" && res.name === "lost+found" && res.empty) {
           return null;
         }
+
         if (res.type === "folder") {
           return (
             <Folder
               key={res._id}
               label={res.name}
-              onClick={() =>
-                navigate(
-                  `/reading/my-files/${[
+              onClick={() => {
+                console.log(
+                  `/reading/${baseSegment}/${[
                     ...pathSegments.slice(folderPathIndex + 1),
                     encodeURIComponent(res.name),
                   ].join("/")}`,
-                )
-              }
+                );
+                navigate(
+                  `/reading/${baseSegment}/${[
+                    ...pathSegments.slice(folderPathIndex + 1),
+                    encodeURIComponent(res.name),
+                  ].join("/")}`,
+                );
+              }}
               empty={res.empty}
               width={itemWidth}
               showItemToolbar={res.name !== "lost+found"}
@@ -60,7 +73,7 @@ export const FolderView = () => {
             key={res._id}
             label={res.name}
             onClick={() => {
-              // TODO:handle file open here
+              // TODO: handle file open here
             }}
             width={itemWidth}
           />

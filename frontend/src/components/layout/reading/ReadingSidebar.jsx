@@ -1,6 +1,7 @@
-import { Flex, useColorModeValue, useTheme } from "@chakra-ui/react";
+import { Flex, Text, useColorModeValue, useTheme } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
+import { TrashSVG } from "@/components/svgs/TrashSVG.jsx";
 
 export const ReadingSidebar = () => {
   const theme = useTheme();
@@ -14,6 +15,8 @@ export const ReadingSidebar = () => {
   const currentPath =
     location.pathname.replace(/^\/reading\//, "") || "my-files";
 
+  const isTrashView = location.pathname.includes("/reading/trash");
+
   return (
     <Flex
       h={`calc(100vh - ${navbarHeight + breadcrumbHeight}px)`}
@@ -22,11 +25,29 @@ export const ReadingSidebar = () => {
       minH="100%"
       minW="200px"
       maxW="200px"
-      px={2}
+      p={2}
       borderRightWidth="0.1px"
       borderColor={borderColor}
       flexDir="column"
     >
+      <Flex
+        w="100%"
+        justify="center"
+        align="center"
+        gap={5}
+        cursor="pointer"
+        role="group"
+        onClick={() => navigate("trash")}
+      >
+        <Text
+          fontSize="14px"
+          _groupHover={{ color: isTrashView ? "brand.500" : "brand.600" }}
+          color={isTrashView ? "brand.500" : "text.primary"}
+        >
+          Trash
+        </Text>
+        <TrashSVG dimensions="50px" />
+      </Flex>
       {/*Quick Access and Pinned*/}
       {/*Resource Tree*/}
       <Flex overflowX="auto" py={2}>

@@ -18,13 +18,15 @@ export const Folder = ({
   isFavourite = false,
   showItemToolbar = true,
 }) => {
-  const isFolderView = location.pathname.includes("/reading/my-files");
+  const isFolderOrTrashView =
+    location.pathname.includes("/reading/my-files") ||
+    location.pathname.includes("/reading/trash");
 
   const bgColor = useColorModeValue("white", "gray.800");
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const dimensions = useBreakpointValue({
     base: "40px",
-    sm: isFolderView ? "60px" : "150px",
+    sm: isFolderOrTrashView ? "60px" : "150px",
   });
 
   const [hasMounted, setHasMounted] = useState(false);
@@ -39,11 +41,11 @@ export const Folder = ({
     <Flex
       width={width}
       align="center"
-      px={isSmallScreen && !isFolderView ? "10px" : 0}
-      py={isSmallScreen && !isFolderView ? "5px" : 0}
-      borderRadius={isSmallScreen && !isFolderView ? "lg" : "0"}
-      shadow={isSmallScreen && !isFolderView ? "md" : "none"}
-      bgColor={isSmallScreen && !isFolderView ? bgColor : "unset"}
+      px={isSmallScreen && !isFolderOrTrashView ? "10px" : 0}
+      py={isSmallScreen && !isFolderOrTrashView ? "5px" : 0}
+      borderRadius={isSmallScreen && !isFolderOrTrashView ? "lg" : "0"}
+      shadow={isSmallScreen && !isFolderOrTrashView ? "md" : "none"}
+      bgColor={isSmallScreen && !isFolderOrTrashView ? bgColor : "unset"}
       cursor="pointer"
       position="relative"
     >
@@ -56,23 +58,23 @@ export const Folder = ({
       )}
       <Flex
         width="100%"
-        justify={isSmallScreen && !isFolderView ? "start" : "center"}
+        justify={isSmallScreen && !isFolderOrTrashView ? "start" : "center"}
         align="center"
-        flexDirection={isSmallScreen && !isFolderView ? "row" : "column"}
+        flexDirection={isSmallScreen && !isFolderOrTrashView ? "row" : "column"}
         onClick={onClick}
-        gap={isSmallScreen && !isFolderView ? 5 : "unset"}
+        gap={isSmallScreen && !isFolderOrTrashView ? 5 : "unset"}
         overflow="hidden"
       >
         <FolderSVG dimensions={dimensions} empty={empty} />
         <Tooltip label={label} hasArrow placement="bottom">
           <Text
             fontSize={
-              isFolderView
+              isFolderOrTrashView
                 ? { base: "10px", sm: "13px" }
                 : { base: "13px", sm: "15px" }
             }
             color="brand.500"
-            fontWeight={isFolderView ? "medium" : "bold"}
+            fontWeight={isFolderOrTrashView ? "medium" : "bold"}
             overflow="hidden"
             textOverflow="ellipsis"
             whiteSpace="nowrap"
