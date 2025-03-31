@@ -2,7 +2,7 @@ import ResourceType from "../../constants/resourceType";
 import { PrimaryId } from "../../constants/primaryId";
 import ResourceModel from "../../models/resource.model";
 import appAssert from "../../utils/appAssert";
-import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../../constants/http";
+import { CONFLICT, NOT_FOUND } from "../../constants/http";
 
 export type CreateResourceParams = {
   name: string;
@@ -24,21 +24,16 @@ export const createResource = async (
     path: parentPath,
     type: ResourceType.Folder,
     userId,
+    deleted: false,
   });
 
   appAssert(parentFolder, NOT_FOUND, "Parent folder not found");
-
-  // Prevent creating inside trashed folder
-  appAssert(
-    !parentFolder.deleted,
-    BAD_REQUEST,
-    "Cannot create inside a trashed folder",
-  );
 
   const alreadyExists = await ResourceModel.findOne({
     name,
     path: fullPath,
     userId,
+    deleted: false,
   });
 
   appAssert(
