@@ -48,18 +48,24 @@ export const getResourceChildren = async (
         : undefined,
   }));
 
-  // Move "lost+found" to the top if we're in "my-files"
-  if (path === "my-files") {
-    const index = formattedChildren.findIndex(
-      (child) =>
-        child.name === "lost+found" && child.type === ResourceType.Folder,
-    );
+  // ✅ Custom ordering: lost+found → folders → files
+  let lostFoundFolder = [];
+  let otherFolders = [];
+  let files = [];
 
-    if (index !== -1) {
-      const [lostFound] = formattedChildren.splice(index, 1);
-      formattedChildren.unshift(lostFound);
+  for (const child of formattedChildren) {
+    if (
+      path === "my-files" &&
+      child.name === "lost+found" &&
+      child.type === ResourceType.Folder
+    ) {
+      lostFoundFolder.push(child);
+    } else if (child.type === ResourceType.Folder) {
+      otherFolders.push(child);
+    } else {
+      files.push(child);
     }
   }
 
-  return formattedChildren;
+  return [...lostFoundFolder, ...otherFolders, ...files];
 };

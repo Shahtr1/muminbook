@@ -32,15 +32,28 @@ export const getTrashedResources = async (userId: PrimaryId) => {
     childCounts.map((item) => [item._id.toString(), item.count]),
   );
 
-  return resources.map((r: any) => ({
-    _id: r._id,
-    name: r.name,
-    type: r.type,
-    path: r.path,
-    deletedAt: r.deletedAt,
-    empty:
-      r.type === ResourceType.Folder
-        ? !childCountMap.get(r._id.toString())
-        : undefined,
-  }));
+  const folders = [];
+  const files = [];
+
+  for (const r of resources) {
+    const item = {
+      _id: r._id,
+      name: r.name,
+      type: r.type,
+      path: r.path,
+      deletedAt: r.deletedAt,
+      empty:
+        r.type === ResourceType.Folder
+          ? !childCountMap.get((r._id as PrimaryId).toString())
+          : undefined,
+    };
+
+    if (r.type === ResourceType.Folder) {
+      folders.push(item);
+    } else {
+      files.push(item);
+    }
+  }
+
+  return [...folders, ...files];
 };
