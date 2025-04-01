@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Flex, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
 import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
-import { ResourcesToolbar } from "@/components/layout/reading/resources/ResourcesToolbar.jsx";
+import { ResourceActionItems } from "@/components/layout/reading/resources/ResourceActionItems.jsx";
 
-export const File = ({ onClick, width, label, isFavourite }) => {
+export const File = ({ id, onClick, width, label }) => {
   const dimensions = useBreakpointValue({
     base: "40px",
     sm: "60px",
@@ -26,11 +26,7 @@ export const File = ({ onClick, width, label, isFavourite }) => {
       justify="center"
       align="center"
     >
-      <ItemToolbar
-        isFavourite={isFavourite}
-        zIndex="99999"
-        children={<ResourcesToolbar />}
-      />
+      <ItemToolbar children={<ResourceActionItems id={id} />} />
       <Flex
         justify="center"
         align="center"

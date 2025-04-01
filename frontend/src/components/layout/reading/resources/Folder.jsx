@@ -8,14 +8,14 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
-import { ResourcesToolbar } from "@/components/layout/reading/resources/ResourcesToolbar.jsx";
+import { ResourceActionItems } from "@/components/layout/reading/resources/ResourceActionItems.jsx";
 
 export const Folder = ({
+  id,
   onClick,
   width,
   empty = true,
   label = "My Files",
-  isFavourite = false,
   showItemToolbar = true,
 }) => {
   const isFolderView =
@@ -51,11 +51,7 @@ export const Folder = ({
       position="relative"
     >
       {showItemToolbar && (
-        <ItemToolbar
-          isFavourite={isFavourite}
-          zIndex="99999"
-          children={<ResourcesToolbar />}
-        />
+        <ItemToolbar children={<ResourceActionItems id={id} />} />
       )}
       <Flex
         width="100%"

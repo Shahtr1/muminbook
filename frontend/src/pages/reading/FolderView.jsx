@@ -44,6 +44,7 @@ export const FolderView = () => {
           return (
             <Folder
               key={res._id}
+              id={res._id}
               label={res.name}
               onClick={() => {
                 navigate(
@@ -63,6 +64,7 @@ export const FolderView = () => {
         return (
           <File
             key={res._id}
+            id={res._id}
             label={res.name}
             onClick={() => {
               // TODO: handle file open here

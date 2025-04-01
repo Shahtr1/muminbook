@@ -2,7 +2,6 @@ import {
   Flex,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
   Text,
   useColorModeValue,
@@ -10,6 +9,7 @@ import {
 import { TrashSVG } from "@/components/svgs/TrashSVG.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { HiDotsVertical } from "react-icons/hi";
+import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 
 export const ResourcesTrash = ({ emptyTrash = true }) => {
   const location = useLocation();
@@ -54,9 +54,7 @@ export const ResourcesTrash = ({ emptyTrash = true }) => {
           </MenuButton>
 
           <MenuList minW="fit-content" maxW="fit-content">
-            <MenuItem>hi</MenuItem>
-            <MenuItem>hi</MenuItem>
-            <MenuItem>hi</MenuItem>
+            <ActionItems variant="trash" />
           </MenuList>
         </Menu>
       )}

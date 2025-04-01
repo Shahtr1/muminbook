@@ -10,6 +10,7 @@ import {
 import { ArabicEnglishSVG } from "@/components/svgs/ArabicEnglishSVG.jsx";
 import { CardSVG } from "@/components/svgs/CardSVG.jsx";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
+import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 
 export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
   const navigate = useNavigate();
@@ -42,7 +43,10 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
       px={isSmallScreen ? "10px" : 0}
       overflow="hidden"
     >
-      <ItemToolbar zIndex="99999" />
+      <ItemToolbar
+        zIndex="99999"
+        children={<ActionItems variant="readingCard" />}
+      />
       <Flex
         h="100%"
         flexDir={isSmallScreen ? "row-reverse" : "column"}

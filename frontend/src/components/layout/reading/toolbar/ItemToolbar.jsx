@@ -1,6 +1,7 @@
 import { StarIcon } from "@chakra-ui/icons";
 import { HiDotsVertical } from "react-icons/hi";
 import {
+  Box,
   Flex,
   Menu,
   MenuButton,
@@ -15,13 +16,15 @@ export const ItemToolbar = ({ zIndex, isFavourite = false, children }) => {
   const isFolderView =
     location.pathname.includes("/reading/my-files") ||
     location.pathname.includes("/reading/trash");
+
   return (
     <Flex
       position="absolute"
       top={isFolderView ? "0" : "8px"}
       right="5px"
       gap={isFolderView ? 1 : 2}
-      zIndex={zIndex ?? "99"}
+      zIndex={zIndex ?? "auto"}
+      align="center"
     >
       {!isFolderView && (
         <StarIcon
@@ -45,9 +48,11 @@ export const ItemToolbar = ({ zIndex, isFavourite = false, children }) => {
             },
           }}
         >
-          <HiDotsVertical
-            fontSize={isSmallScreen || isFolderView ? "11px" : "15px"}
-          />
+          <Box p={isSmallScreen ? "0px 2px" : 1}>
+            <HiDotsVertical
+              fontSize={isSmallScreen || isFolderView ? "11px" : "15px"}
+            />
+          </Box>
         </MenuButton>
 
         {children && (

@@ -34,6 +34,7 @@ export const ReadingSidebar = () => {
       borderRightWidth="0.1px"
       borderColor={borderColor}
       flexDir="column"
+      zIndex={1}
     >
       {isPending && <Loader />}
       {isError && <SomethingWentWrong />}
