@@ -25,9 +25,6 @@ export const ReadingSidebar = () => {
 
   const wrapperWidth = "200px";
 
-  if (isPending) return <Loader width={wrapperWidth} />;
-  if (isError) return <SomethingWentWrong width={wrapperWidth} />;
-
   return (
     <Flex
       h={`calc(100vh - ${navbarHeight + breadcrumbHeight}px)`}
@@ -41,32 +38,38 @@ export const ReadingSidebar = () => {
       borderColor={borderColor}
       flexDir="column"
     >
-      <Flex
-        w="100%"
-        justify="center"
-        align="center"
-        gap={5}
-        cursor="pointer"
-        role="group"
-        onClick={() => navigate("trash")}
-      >
-        <Text
-          fontSize="14px"
-          _groupHover={{ color: isTrashView ? "brand.500" : "brand.600" }}
-          color={isTrashView ? "brand.500" : defaultTextColor}
-        >
-          Trash
-        </Text>
-        <TrashSVG dimensions="50px" empty={emptyTrash} />
-      </Flex>
-      {/*Quick Access and Pinned*/}
-      {/*Resource Tree*/}
-      <Flex overflowX="auto" py={2}>
-        <ResourcesTree
-          activePath={currentPath}
-          onSelect={(path) => navigate(`/reading/${path}`)}
-        />
-      </Flex>
+      {isPending && <Loader />}
+      {isError && <SomethingWentWrong />}
+      {!isPending && !isError && (
+        <>
+          <Flex
+            w="100%"
+            justify="center"
+            align="center"
+            gap={5}
+            cursor="pointer"
+            role="group"
+            onClick={() => navigate("trash")}
+          >
+            <Text
+              fontSize="14px"
+              _groupHover={{ color: isTrashView ? "brand.500" : "brand.600" }}
+              color={isTrashView ? "brand.500" : defaultTextColor}
+            >
+              Trash
+            </Text>
+            <TrashSVG dimensions="50px" empty={emptyTrash} />
+          </Flex>
+          {/*Quick Access and Pinned*/}
+          {/*Resource Tree*/}
+          <Flex overflowX="auto" py={2}>
+            <ResourcesTree
+              activePath={currentPath}
+              onSelect={(path) => navigate(`/reading/${path}`)}
+            />
+          </Flex>
+        </>
+      )}
     </Flex>
   );
 };
