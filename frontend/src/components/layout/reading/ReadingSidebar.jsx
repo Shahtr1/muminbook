@@ -11,6 +11,7 @@ export const ReadingSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
+  const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
 
   const navbarHeight = parseInt(theme.space["navbar-height"]);
   const breadcrumbHeight = 40;
@@ -52,7 +53,7 @@ export const ReadingSidebar = () => {
         <Text
           fontSize="14px"
           _groupHover={{ color: isTrashView ? "brand.500" : "brand.600" }}
-          color={isTrashView ? "brand.500" : "text.primary"}
+          color={isTrashView ? "brand.500" : defaultTextColor}
         >
           Trash
         </Text>

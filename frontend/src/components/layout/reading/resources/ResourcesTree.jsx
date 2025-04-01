@@ -6,6 +6,7 @@ import {
   Skeleton,
   Text,
   Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 
 const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
+  const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
   const [isExpanded, setIsExpanded] = useState(false);
   const [shouldFetch, setShouldFetch] = useState(path === "my-files");
 
@@ -78,7 +80,7 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
                 whiteSpace="nowrap"
                 fontSize="13px"
                 _groupHover={{ color: isActive ? "brand.500" : "brand.600" }}
-                color={isActive ? "brand.500" : "text.primary"}
+                color={isActive ? "brand.500" : defaultTextColor}
               >
                 {decodeURIComponent(name)}
               </Text>
