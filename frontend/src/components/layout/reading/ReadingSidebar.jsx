@@ -1,7 +1,7 @@
 import { Flex, useColorModeValue, useTheme } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
-import { useIsTrashEmpty } from "@/hooks/useIsTrashEmpty.js";
+import { useIsTrashEmpty } from "@/hooks/resource/useIsTrashEmpty.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { ResourcesTrash } from "@/components/layout/reading/resources/ResourcesTrash.jsx";

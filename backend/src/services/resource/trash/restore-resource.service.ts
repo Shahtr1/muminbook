@@ -72,7 +72,7 @@ const restoreNormally = async (resource: any, userId: PrimaryId) => {
   appAssert(
     !conflict,
     CONFLICT,
-    "A resource with this name already exists in the destination path",
+    `A ${conflict?.type === "file" ? "file" : "folder"} with this name already exists in the destination path`,
   );
 
   const updates: any[] = [];

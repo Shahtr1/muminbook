@@ -19,7 +19,13 @@ export const File = ({ onClick, width, label, isFavourite }) => {
   if (!hasMounted) return null;
 
   return (
-    <Flex width={width} cursor="pointer" position="relative">
+    <Flex
+      width={width}
+      cursor="pointer"
+      position="relative"
+      justify="center"
+      align="center"
+    >
       <ItemToolbar
         isFavourite={isFavourite}
         zIndex="99999"

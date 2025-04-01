@@ -4,7 +4,7 @@ import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
 import { File } from "@/components/layout/reading/resources/File.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { Loader } from "@/components/layout/Loader.jsx";
-import { useResources } from "@/hooks/useResources.js";
+import { useResources } from "@/hooks/resource/useResources.js";
 import { useTrash } from "@/hooks/trash/useTrash.js";
 
 export const FolderView = () => {

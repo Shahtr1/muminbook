@@ -41,6 +41,7 @@ export const Folder = ({
     <Flex
       width={width}
       align="center"
+      justify="center"
       px={isSmallScreen && !isFolderView ? "10px" : 0}
       py={isSmallScreen && !isFolderView ? "5px" : 0}
       borderRadius={isSmallScreen && !isFolderView ? "lg" : "0"}

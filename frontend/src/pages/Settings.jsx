@@ -1,4 +1,4 @@
-import useSessions from "../hooks/useSessions.js";
+import useSessions from "../hooks/session/useSessions.js";
 import { Container, Heading, Spinner, Text, VStack } from "@chakra-ui/react";
 import SessionCard from "@/components/layout/SessionCard.jsx";
 

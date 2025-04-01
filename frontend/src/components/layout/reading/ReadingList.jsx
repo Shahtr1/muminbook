@@ -3,7 +3,7 @@ import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
 import { readingItems } from "@/data/readingItems.js";
 import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
 import { useNavigate } from "react-router-dom";
-import { useIsMyFilesEmpty } from "@/hooks/useIsMyFilesEmpty.js";
+import { useIsMyFilesEmpty } from "@/hooks/resource/useIsMyFilesEmpty.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 

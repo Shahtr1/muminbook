@@ -32,7 +32,11 @@ export const renameResource = async (
     userId,
   });
 
-  appAssert(!conflict, CONFLICT, "A resource with this name already exists");
+  appAssert(
+    !conflict,
+    CONFLICT,
+    `A ${conflict?.type === "file" ? "file" : "folder"} with this name already exists in the destination path`,
+  );
 
   const ops: any[] = [];
 

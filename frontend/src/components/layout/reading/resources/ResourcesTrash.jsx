@@ -17,7 +17,7 @@ export const ResourcesTrash = ({ emptyTrash = true }) => {
   const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
   const isTrashView = location.pathname.includes("/reading/trash");
   return (
-    <Flex w="100%" justify="center" align="center" gap={3}>
+    <Flex w="100%" justify="center" align="center" gap={3} pb={2}>
       <Flex
         justify="center"
         align="center"

@@ -11,9 +11,7 @@ import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "@chakra-ui/icons";
 import { XSearch } from "@/components/layout/XSearch.jsx";
 import { useEffect, useRef, useState } from "react";
 import { AddMenu } from "@/components/layout/reading/toolbar/AddMenu.jsx";
-import { useMutation } from "@tanstack/react-query";
-import queryClient from "@/config/queryClient.js";
-import { createResourceAPI } from "@/lib/services/api.js";
+import { useCreateResource } from "@/hooks/resource/useCreateResource.js";
 
 export const ReadingToolbar = () => {
   const bgColor = useColorModeValue("bg.light", "bg.dark");
@@ -42,29 +40,9 @@ export const ReadingToolbar = () => {
   }, []);
 
   const isMyFilesView = location.pathname.includes("/reading/my-files");
+  const isTrashView = location.pathname.includes("/reading/trash");
 
-  const extractFolderSegments = () => {
-    const pathNames = location.pathname.split("/").filter(Boolean);
-    const myFilesIndex = pathNames.indexOf("my-files");
-    if (myFilesIndex === -1) return [];
-
-    return pathNames.slice(myFilesIndex);
-  };
-
-  const folderSegments = extractFolderSegments();
-
-  const { mutate: createResource } = useMutation({
-    mutationFn: createResourceAPI,
-    onSuccess: (data, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: ["resources", variables.path],
-      });
-    },
-    onError: (error) => {
-      console.log("error", error);
-      // toast.error(error?.message || "Failed to create resource");
-    },
-  });
+  const { mutate: createResource } = useCreateResource();
 
   const addNew = ({ type, name }) => {
     let path = location.pathname;
@@ -95,7 +73,7 @@ export const ReadingToolbar = () => {
       {/*nav div*/}
       <Flex justify="space-between" flex="1" align="center" overflowX="auto">
         <Box flex="1" overflowX="auto">
-          <XBreadCrumb segments={folderSegments} />
+          <XBreadCrumb />
         </Box>
         <Flex w="auto">
           {isMyFilesView && (
@@ -117,27 +95,29 @@ export const ReadingToolbar = () => {
 
       {/*tools div*/}
       <Flex
-        justify={{ base: "space-between", sm: "end" }}
+        justify="end"
         align="center"
         gap={3}
         display={{ base: showExtras ? "flex" : "none", sm: "flex" }}
         w="auto"
       >
-        <Flex
-          align="center"
-          gap={1}
-          border="1px solid"
-          borderColor="brand.500"
-          borderRadius="25px"
-          height="19px"
-          px={2}
-          cursor="pointer"
-        >
-          <StarIcon color="brand.500" fontSize="9px" />
-          <Text color="brand.500" fontSize="11px">
-            Favourites
-          </Text>
-        </Flex>
+        {!isMyFilesView && !isTrashView && (
+          <Flex
+            align="center"
+            gap={1}
+            border="1px solid"
+            borderColor="brand.500"
+            borderRadius="25px"
+            height="19px"
+            px={2}
+            cursor="pointer"
+          >
+            <StarIcon color="brand.500" fontSize="9px" />
+            <Text color="brand.500" fontSize="11px">
+              Favourites
+            </Text>
+          </Flex>
+        )}
 
         <XSearch
           bgColor={bgColor}

@@ -39,7 +39,7 @@ export const createResource = async (
   appAssert(
     !alreadyExists,
     CONFLICT,
-    "A file or folder with this name already exists",
+    `A ${alreadyExists?.type === "file" ? "file" : "folder"} with this name already exists`,
   );
 
   const resource = await ResourceModel.create({
