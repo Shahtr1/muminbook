@@ -23,6 +23,7 @@ import {
   togglePinResource,
   updateAccessedAt,
 } from "../services/resource/overview.service";
+import { isTrashEmpty } from "../services/resource/trash/isTrashEmpty-resource.service";
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
@@ -174,4 +175,14 @@ export const updateAccessedAtHandler = catchErrors(async (req, res) => {
   const result = await updateAccessedAt(userId, id);
 
   return res.status(OK).json(result);
+});
+
+export const isTrashEmptyHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+
+  const userId = await getUserId(req);
+
+  const { empty } = await isTrashEmpty(userId);
+
+  return res.status(OK).json(empty);
 });

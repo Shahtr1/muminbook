@@ -11,7 +11,7 @@ import {
 import { RepeatIcon } from "@chakra-ui/icons";
 import React from "react";
 
-export const SomethingWentWrong = ({ height = "100%" }) => {
+export const SomethingWentWrong = ({ height = "100%", width = "100%" }) => {
   const handleRefresh = () => {
     window.location.reload();
   };
@@ -19,7 +19,7 @@ export const SomethingWentWrong = ({ height = "100%" }) => {
   const iconColor = useColorModeValue("text.primary", "whiteAlpha.900");
 
   return (
-    <Flex width="100%" height={height} justify="center" align="center">
+    <Flex width={width} height={height} justify="center" align="center">
       <Alert
         status="error"
         w="fit-content"

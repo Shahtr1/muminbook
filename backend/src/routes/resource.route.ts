@@ -8,6 +8,7 @@ import {
   getResourceHandler,
   getTrashedResourcesHandler,
   isMyFilesEmptyHandler,
+  isTrashEmptyHandler,
   moveResourceHandler,
   moveToTrashResourceHandler,
   renameResourceHandler,
@@ -35,5 +36,6 @@ resourceRoutes.get("/is-my-files-empty", isMyFilesEmptyHandler);
 resourceRoutes.get("/overview", getOverviewHandler);
 resourceRoutes.patch("/:id/toggle-pin", togglePinResourceHandler);
 resourceRoutes.patch("/:id/access", updateAccessedAtHandler);
+resourceRoutes.get("/is-trash-empty", isTrashEmptyHandler);
 
 export default resourceRoutes;

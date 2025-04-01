@@ -28,4 +28,6 @@ export const getResources = async (path = "my-files") =>
 export const isMyFilesEmpty = async () =>
   API.get("/resources/is-my-files-empty");
 
+export const isTrashEmpty = async () => API.get("/resources/is-trash-empty");
+
 export const getTrash = async () => API.get("/resources/trash");

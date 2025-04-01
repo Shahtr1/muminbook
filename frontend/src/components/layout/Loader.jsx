@@ -1,9 +1,9 @@
 import { Flex, Image, Spinner } from "@chakra-ui/react";
 
-export const Loader = ({ height = "100%" }) => {
+export const Loader = ({ height = "100%", width = "100%" }) => {
   return (
     <Flex
-      w="100%"
+      w={width}
       h={height}
       justify="center"
       align="center"

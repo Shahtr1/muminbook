@@ -2,6 +2,9 @@ import { Flex, Text, useColorModeValue, useTheme } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
 import { TrashSVG } from "@/components/svgs/TrashSVG.jsx";
+import { useIsTrashEmpty } from "@/hooks/useIsTrashEmpty.js";
+import { Loader } from "@/components/layout/Loader.jsx";
+import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 
 export const ReadingSidebar = () => {
   const theme = useTheme();
@@ -17,14 +20,21 @@ export const ReadingSidebar = () => {
 
   const isTrashView = location.pathname.includes("/reading/trash");
 
+  const { emptyTrash, isPending, isError } = useIsTrashEmpty();
+
+  const wrapperWidth = "200px";
+
+  if (isPending) return <Loader width={wrapperWidth} />;
+  if (isError) return <SomethingWentWrong width={wrapperWidth} />;
+
   return (
     <Flex
       h={`calc(100vh - ${navbarHeight + breadcrumbHeight}px)`}
       position="sticky"
       top={`calc(${navbarHeight + breadcrumbHeight}px)`}
       minH="100%"
-      minW="200px"
-      maxW="200px"
+      minW={wrapperWidth}
+      maxW={wrapperWidth}
       p={2}
       borderRightWidth="0.1px"
       borderColor={borderColor}
@@ -46,7 +56,7 @@ export const ReadingSidebar = () => {
         >
           Trash
         </Text>
-        <TrashSVG dimensions="50px" />
+        <TrashSVG dimensions="50px" empty={emptyTrash} />
       </Flex>
       {/*Quick Access and Pinned*/}
       {/*Resource Tree*/}
