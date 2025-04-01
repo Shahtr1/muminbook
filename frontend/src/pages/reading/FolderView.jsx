@@ -19,8 +19,6 @@ export const FolderView = () => {
   const folderPathIndex = pathSegments.indexOf(baseSegment);
   const folderPath = pathSegments.slice(folderPathIndex).join("/");
 
-  console.log(folderPath);
-
   const { resources, isPending, isError } = isTrashView
     ? useTrash(folderPath)
     : useResources(folderPath);
@@ -48,12 +46,6 @@ export const FolderView = () => {
               key={res._id}
               label={res.name}
               onClick={() => {
-                console.log(
-                  `/reading/${baseSegment}/${[
-                    ...pathSegments.slice(folderPathIndex + 1),
-                    encodeURIComponent(res.name),
-                  ].join("/")}`,
-                );
                 navigate(
                   `/reading/${baseSegment}/${[
                     ...pathSegments.slice(folderPathIndex + 1),

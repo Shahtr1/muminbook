@@ -11,6 +11,9 @@ import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "@chakra-ui/icons";
 import { XSearch } from "@/components/layout/XSearch.jsx";
 import { useEffect, useRef, useState } from "react";
 import { AddMenu } from "@/components/layout/reading/toolbar/AddMenu.jsx";
+import { useMutation } from "@tanstack/react-query";
+import queryClient from "@/config/queryClient.js";
+import { createResourceAPI } from "@/lib/services/api.js";
 
 export const ReadingToolbar = () => {
   const bgColor = useColorModeValue("bg.light", "bg.dark");
@@ -50,9 +53,29 @@ export const ReadingToolbar = () => {
 
   const folderSegments = extractFolderSegments();
 
+  const { mutate: createResource } = useMutation({
+    mutationFn: createResourceAPI,
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["resources", variables.path],
+      });
+    },
+    onError: (error) => {
+      console.log("error", error);
+      // toast.error(error?.message || "Failed to create resource");
+    },
+  });
+
   const addNew = ({ type, name }) => {
-    console.log("type", type);
-    console.log("name", name);
+    let path = location.pathname;
+
+    if (path.startsWith("/reading")) {
+      path = path.replace("/reading/", "");
+    }
+
+    if (type === "file") name += ".txt";
+
+    createResource({ name, type, path });
   };
 
   return (

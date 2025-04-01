@@ -31,3 +31,5 @@ export const isMyFilesEmpty = async () =>
 export const isTrashEmpty = async () => API.get("/resources/is-trash-empty");
 
 export const getTrash = async () => API.get("/resources/trash");
+
+export const createResourceAPI = async (data) => API.post("/resources", data);
