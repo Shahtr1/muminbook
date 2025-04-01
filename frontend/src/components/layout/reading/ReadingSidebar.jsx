@@ -1,25 +1,22 @@
-import { Flex, Text, useColorModeValue, useTheme } from "@chakra-ui/react";
+import { Flex, useColorModeValue, useTheme } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
-import { TrashSVG } from "@/components/svgs/TrashSVG.jsx";
 import { useIsTrashEmpty } from "@/hooks/useIsTrashEmpty.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { ResourcesTrash } from "@/components/layout/reading/resources/ResourcesTrash.jsx";
 
 export const ReadingSidebar = () => {
   const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
-  const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
 
   const navbarHeight = parseInt(theme.space["navbar-height"]);
   const breadcrumbHeight = 40;
 
   const currentPath =
     location.pathname.replace(/^\/reading\//, "") || "my-files";
-
-  const isTrashView = location.pathname.includes("/reading/trash");
 
   const { emptyTrash, isPending, isError } = useIsTrashEmpty();
 
@@ -42,24 +39,7 @@ export const ReadingSidebar = () => {
       {isError && <SomethingWentWrong />}
       {!isPending && !isError && (
         <>
-          <Flex
-            w="100%"
-            justify="center"
-            align="center"
-            gap={5}
-            cursor="pointer"
-            role="group"
-            onClick={() => navigate("trash")}
-          >
-            <Text
-              fontSize="14px"
-              _groupHover={{ color: isTrashView ? "brand.500" : "brand.600" }}
-              color={isTrashView ? "brand.500" : defaultTextColor}
-            >
-              Trash
-            </Text>
-            <TrashSVG dimensions="50px" empty={emptyTrash} />
-          </Flex>
+          <ResourcesTrash emptyTrash={emptyTrash} />
           {/*Quick Access and Pinned*/}
           {/*Resource Tree*/}
           <Flex overflowX="auto" py={2}>
