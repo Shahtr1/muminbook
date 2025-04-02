@@ -18,6 +18,7 @@ export const copyResource = async (
   destinationPath: string,
   userId: PrimaryId,
 ) => {
+  destinationPath = decodeURIComponent(destinationPath);
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, "Resource not found");
   assertNotRootFolder(resource, "Cannot copy root folder");
@@ -63,15 +64,17 @@ export const copyResource = async (
 
   if (resource.type === ResourceType.Folder) {
     const descendants = await getAllDescendants(resource.path, userId, false);
-    const descendantOps = buildClonedDescendants(
-      descendants,
-      resource.path,
-      baseNewPath,
-      userId,
-      destinationFolder._id as PrimaryId,
-      rootNewId as PrimaryId,
-    );
-    ops.push(...descendantOps);
+    if (descendants.length > 0) {
+      const descendantOps = buildClonedDescendants(
+        descendants,
+        resource.path,
+        baseNewPath,
+        userId,
+        destinationFolder._id as PrimaryId,
+        rootNewId as PrimaryId,
+      );
+      ops.push(...descendantOps);
+    }
   }
 
   await ResourceModel.bulkWrite(ops);

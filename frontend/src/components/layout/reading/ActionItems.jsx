@@ -28,6 +28,9 @@ export const ActionItems = ({
   const bg = useColorModeValue("gray.100", "gray.700");
   const location = useLocation();
   const isTrashView = location.pathname.includes("/reading/trash");
+  const isLostAndFound = location.pathname.includes(
+    "/reading/my-files/lost%2Bfound",
+  );
   const currentIsTrash = isTrashView && variant === "resources";
 
   // Responsive sizing
@@ -120,12 +123,13 @@ export const ActionItems = ({
             undefined,
             onRename,
           )}
-          {renderItem(
-            <HiDuplicate size={iconSize} />,
-            "Copy",
-            undefined,
-            onCopy,
-          )}
+          {!isLostAndFound &&
+            renderItem(
+              <HiDuplicate size={iconSize} />,
+              "Copy",
+              undefined,
+              onCopy,
+            )}
           {renderItem(
             <HiFolder size={iconSize} />,
             "Move to Folder",

@@ -13,6 +13,7 @@ export const moveResource = async (
   destinationPath: string,
   userId: PrimaryId,
 ) => {
+  destinationPath = decodeURIComponent(destinationPath);
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, "Resource not found");
   assertNotRootFolder(resource);
@@ -31,7 +32,7 @@ export const moveResource = async (
     resource.path !== destinationPath &&
       !destinationPath.startsWith(`${resource.path}/`),
     BAD_REQUEST,
-    "Cannot move folder into itself or its child",
+    "Cannot copy a folder into itself or its subfolders.",
   );
 
   const newPath = `${destinationPath}/${resource.name}`.replace(/\/+/g, "/");

@@ -36,3 +36,5 @@ export const renameResource = async (data) =>
   API.patch(`/resources/${data.id}/rename`, data);
 export const copyResource = async (data) =>
   API.post(`/resources/${data.id}/copy`, data);
+export const moveResource = async (data) =>
+  API.patch(`/resources/${data.id}/move`, data);
