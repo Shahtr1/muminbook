@@ -1,20 +1,23 @@
 import { useMutation } from "@tanstack/react-query";
-import { createResourceAPI } from "@/lib/services/api.js";
+import { createResource } from "@/lib/services/api.js";
 import queryClient from "@/config/queryClient.js";
 import { useXToast } from "@/hooks/useXToast.js";
 
 export const useCreateResource = () => {
-  const { success, error } = useXToast();
+  const toast = useXToast();
 
   return useMutation({
-    mutationFn: createResourceAPI,
+    mutationFn: async (variables) => {
+      toast.startLoading("Creating resource...");
+      return await createResource(variables);
+    },
     onSuccess: ({ type }, variables) => {
-      const message = `${type === "file" ? "File" : "Folder"} created.`;
-      success(message);
+      toast.success(`${type === "file" ? "File" : "Folder"} created.`);
       queryClient.invalidateQueries({
         queryKey: ["resources", variables.path],
       });
     },
-    onError: error,
+    onError: toast.error,
+    onSettled: toast.stopLoading,
   });
 };

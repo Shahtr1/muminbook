@@ -51,7 +51,9 @@ export const Folder = ({
       position="relative"
     >
       {showItemToolbar && (
-        <ItemToolbar children={<ResourceActionItems id={id} type="folder" />} />
+        <ItemToolbar
+          children={<ResourceActionItems id={id} type="folder" name={label} />}
+        />
       )}
       <Flex
         width="100%"

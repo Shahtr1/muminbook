@@ -1,4 +1,10 @@
-import { Flex, MenuItem, Text, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Flex,
+  MenuItem,
+  Text,
+  useBreakpointValue,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import {
   HiArrowCircleUp,
   HiDuplicate,
@@ -19,6 +25,7 @@ export const ActionItems = ({
   onRestoreAll,
   onEmptyTrash,
 }) => {
+  const bg = useColorModeValue("gray.100", "gray.700");
   const location = useLocation();
   const isTrashView = location.pathname.includes("/reading/trash");
   const currentIsTrash = isTrashView && variant === "resources";
@@ -34,7 +41,7 @@ export const ActionItems = ({
       onClick={onClick}
       isDisabled={isDisabled}
       py={paddingY}
-      _hover={{ bg: "gray.100", color }}
+      _hover={{ bg, color }}
       color={color}
     >
       <Flex align="center" gap={gapSize}>

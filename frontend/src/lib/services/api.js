@@ -1,9 +1,10 @@
 import API from "../../config/apiClient.js";
 
 const simulateNetworkDelay = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 1000000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 };
 
+// auth api
 export const login = async (data) => API.post("/auth/login", data);
 export const logout = async () => API.get("/auth/logout");
 export const register = async (data) => API.post("/auth/register", data);
@@ -19,17 +20,17 @@ export const resetPassword = async ({ verificationCode, password }) =>
 export const getUser = async () => API.get("/user");
 export const getFamilyTree = async () => API.get("/family-tree");
 
+// sessions api
 export const getSessions = async () => API.get("/admin/sessions");
 export const deleteSession = async (id) => API.delete(`/admin/sessions/${id}`);
 
+// resources api
 export const getResources = async (path = "my-files") =>
   API.get(`/resources?path=${path}`);
-
 export const isMyFilesEmpty = async () =>
   API.get("/resources/is-my-files-empty");
-
 export const isTrashEmpty = async () => API.get("/resources/is-trash-empty");
-
 export const getTrash = async () => API.get("/resources/trash");
-
-export const createResourceAPI = async (data) => API.post("/resources", data);
+export const createResource = async (data) => API.post("/resources", data);
+export const renameResource = async (data) =>
+  API.patch(`/resources/${data.id}/rename`, data);

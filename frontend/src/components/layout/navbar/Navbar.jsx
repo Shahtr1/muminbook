@@ -44,7 +44,7 @@ export const Navbar = () => {
       boxShadow="sm"
       bg={colorMode === "light" ? "white" : "gray.800"}
       justify="center"
-      zIndex={1099}
+      zIndex={1100}
     >
       <Flex
         justify="space-between"

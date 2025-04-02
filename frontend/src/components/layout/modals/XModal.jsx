@@ -17,11 +17,6 @@ export const XModal = ({
   footer = null,
   showCloseButton = true,
 }) => {
-  const motionPreset = useBreakpointValue({
-    base: "slideInBottom",
-    md: "scale",
-  });
-
   const isMobile = useBreakpointValue({ base: true, sm: false });
 
   return (
@@ -29,7 +24,7 @@ export const XModal = ({
       isOpen={isOpen}
       onClose={onClose}
       isCentered={true}
-      motionPreset={motionPreset}
+      motionPreset="scale"
       scrollBehavior="inside"
       trapFocus
       blockScrollOnMount
@@ -45,12 +40,15 @@ export const XModal = ({
         height="auto"
       >
         {title && (
-          <ModalHeader fontSize={{ base: "15px", sm: "17px" }}>
+          <ModalHeader
+            fontSize={{ base: "15px", sm: "17px" }}
+            color="brand.500"
+          >
             {title}
           </ModalHeader>
         )}
 
-        {showCloseButton && <ModalCloseButton />}
+        {showCloseButton && <ModalCloseButton color="brand.500" />}
 
         <ModalBody display="flex">{children}</ModalBody>
 

@@ -64,7 +64,7 @@ export const ReadingToolbar = () => {
       bg={bgColor}
       position="sticky"
       top="navbar-height"
-      zIndex="1100"
+      zIndex="1099"
       py={2}
       boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : "none"}
       gap={2}
