@@ -1,7 +1,7 @@
 import { PrimaryId } from "../../constants/primaryId";
 import ResourceModel from "../../models/resource.model";
 import appAssert from "../../utils/appAssert";
-import { NOT_FOUND } from "../../constants/http";
+import { BAD_REQUEST, NOT_FOUND } from "../../constants/http";
 import ResourceType from "../../constants/resourceType";
 import {
   buildClonedDescendants,
@@ -29,6 +29,19 @@ export const copyResource = async (
     deleted: false,
   });
   appAssert(destinationFolder, NOT_FOUND, "Destination folder not found");
+
+  // Define and normalize both paths before comparison
+  const sourcePath = resource.path.replace(/\/+$/, ""); // remove trailing slash
+  const destPath = destinationPath.replace(/\/+$/, "");
+
+  appAssert(
+    !(
+      resource.type === ResourceType.Folder &&
+      (destPath === sourcePath || destPath.startsWith(sourcePath + "/"))
+    ),
+    BAD_REQUEST,
+    "Cannot copy a folder into itself or its subfolders.",
+  );
 
   const copyName = await generateCopyName(
     resource.name,

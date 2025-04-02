@@ -34,7 +34,7 @@ const RenameResourceModal = ({ isOpen, onClose, id, type, name }) => {
   };
 
   const handleSave = () => {
-    if (!newName.trim()) {
+    if (!newName?.trim()) {
       setErrors({ name: "Name is required." });
       return;
     }

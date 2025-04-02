@@ -4,7 +4,7 @@ import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
 import { ResourceActionItems } from "@/components/layout/reading/resources/ResourceActionItems.jsx";
 
-export const File = ({ id, onClick, width, label }) => {
+export const File = ({ id, onClick, width, label, path }) => {
   const dimensions = useBreakpointValue({
     base: "40px",
     sm: "60px",
@@ -27,7 +27,9 @@ export const File = ({ id, onClick, width, label }) => {
       align="center"
     >
       <ItemToolbar
-        children={<ResourceActionItems id={id} type="file" name={label} />}
+        children={
+          <ResourceActionItems id={id} type="file" name={label} path={path} />
+        }
       />
       <Flex
         justify="center"

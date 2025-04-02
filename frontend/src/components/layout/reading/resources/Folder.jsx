@@ -17,6 +17,7 @@ export const Folder = ({
   empty = true,
   label = "My Files",
   showItemToolbar = true,
+  path,
 }) => {
   const isFolderView =
     location.pathname.includes("/reading/my-files") ||
@@ -52,7 +53,14 @@ export const Folder = ({
     >
       {showItemToolbar && (
         <ItemToolbar
-          children={<ResourceActionItems id={id} type="folder" name={label} />}
+          children={
+            <ResourceActionItems
+              id={id}
+              type="folder"
+              name={label}
+              path={path}
+            />
+          }
         />
       )}
       <Flex

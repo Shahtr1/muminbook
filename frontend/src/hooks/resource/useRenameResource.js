@@ -15,6 +15,7 @@ export const useRenameResource = () => {
       return await renameResource(variables);
     },
     onSuccess: (updatedResource, variables) => {
+      toast.success("Resource renamed.");
       queryClient.setQueryData(["resources", path], (oldData) => {
         if (!oldData) return oldData;
 
@@ -22,8 +23,6 @@ export const useRenameResource = () => {
           item._id === variables.id ? { ...item, name: variables.name } : item,
         );
       });
-
-      toast.success("Resource renamed.");
     },
     onError: toast.error,
     onSettled: toast.stopLoading,

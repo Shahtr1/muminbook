@@ -57,6 +57,7 @@ export const FolderView = () => {
               empty={res.empty}
               width={itemWidth}
               showItemToolbar={res.name !== "lost+found"}
+              path={folderPath}
             />
           );
         }
@@ -66,6 +67,7 @@ export const FolderView = () => {
             key={res._id}
             id={res._id}
             label={res.name}
+            path={folderPath}
             onClick={() => {
               // TODO: handle file open here
             }}

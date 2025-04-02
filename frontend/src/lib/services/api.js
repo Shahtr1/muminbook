@@ -34,3 +34,5 @@ export const getTrash = async () => API.get("/resources/trash");
 export const createResource = async (data) => API.post("/resources", data);
 export const renameResource = async (data) =>
   API.patch(`/resources/${data.id}/rename`, data);
+export const copyResource = async (data) =>
+  API.post(`/resources/${data.id}/copy`, data);

@@ -4,7 +4,7 @@ import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 import RenameResourceModal from "@/components/layout/modals/RenameResourceModal.jsx";
 import TransferResourceModal from "@/components/layout/modals/TransferResourceModal.jsx";
 
-export const ResourceActionItems = ({ id, type, name }) => {
+export const ResourceActionItems = ({ id, type, name, path }) => {
   const {
     isOpen: isRenameOpen,
     onOpen: onOpenRename,
@@ -50,6 +50,8 @@ export const ResourceActionItems = ({ id, type, name }) => {
         isOpen={isTransferOpen}
         onClose={onCloseTransfer}
         isCopy={isCopyAction}
+        id={id}
+        path={path}
       />
     </>
   );
