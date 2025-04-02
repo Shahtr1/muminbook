@@ -58,7 +58,7 @@ const RenameResourceModal = ({ isOpen, onClose, id, type, name }) => {
         onClick={handleSave}
         size={{ base: "sm", sm: "md" }}
       >
-        Save
+        Rename
       </Button>
     </>
   );
