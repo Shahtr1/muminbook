@@ -26,7 +26,7 @@ export const File = ({ id, onClick, width, label }) => {
       justify="center"
       align="center"
     >
-      <ItemToolbar children={<ResourceActionItems id={id} />} />
+      <ItemToolbar children={<ResourceActionItems id={id} type="file" />} />
       <Flex
         justify="center"
         align="center"

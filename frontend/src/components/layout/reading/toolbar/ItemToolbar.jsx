@@ -36,7 +36,7 @@ export const ItemToolbar = ({ zIndex, isFavourite = false, children }) => {
         />
       )}
 
-      <Menu isLazy placement="bottom-start">
+      <Menu placement="bottom-start">
         <MenuButton
           as={Flex}
           align="center"

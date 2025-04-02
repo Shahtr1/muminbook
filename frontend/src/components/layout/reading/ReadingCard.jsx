@@ -44,7 +44,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
       overflow="hidden"
     >
       <ItemToolbar
-        zIndex="99999"
+        zIndex="1010"
         children={<ActionItems variant="readingCard" />}
       />
       <Flex
@@ -61,7 +61,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
           borderTop={isSmallScreen ? "none" : "3px solid"}
           borderColor={cardColor}
           opacity={isSmallScreen ? 0.8 : 0.9}
-          zIndex="999"
+          zIndex="1000"
           flexDir="column"
           px={2}
           py={isSmallScreen ? "5px" : 0}
@@ -85,7 +85,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
           height="full"
           align="center"
           w="auto"
-          zIndex="9999"
+          zIndex="1000"
           display={isSmallScreen ? "flex" : "contents"}
         >
           <Box
@@ -96,7 +96,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
             h="fit-content"
             position={isSmallScreen ? "relative" : "absolute"}
             bgColor={bgColor}
-            zIndex="999"
+            zIndex="1010"
             top={isSmallScreen ? "unset" : "52px"}
             left={isSmallScreen ? "unset" : "10px"}
           >
