@@ -1,5 +1,5 @@
 import { Flex, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
 import { File } from "@/components/layout/reading/resources/File.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
@@ -11,6 +11,8 @@ export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const itemWidth = useBreakpointValue({ base: "70px", sm: "100px" });
+  const [searchParams] = useSearchParams();
+  const originalPath = searchParams.get("op");
 
   const pathSegments = location.pathname.split("/").filter(Boolean);
 
@@ -20,7 +22,7 @@ export const FolderView = () => {
   const folderPath = pathSegments.slice(folderPathIndex).join("/");
 
   const { resources, isPending, isError } = isTrashView
-    ? useTrashResource(folderPath)
+    ? useTrashResource(folderPath, originalPath)
     : useResources(folderPath);
 
   if (isPending) return <Loader />;
@@ -45,7 +47,12 @@ export const FolderView = () => {
 
         if (res.type === "folder") {
           return (
-            <Flex flexDir="column" key={res._id}>
+            <Flex
+              flexDir="column"
+              key={res._id}
+              justify="center"
+              align="center"
+            >
               <Folder
                 id={res._id}
                 label={res.name}
@@ -54,7 +61,7 @@ export const FolderView = () => {
                     `/reading/${baseSegment}/${[
                       ...pathSegments.slice(folderPathIndex + 1),
                       encodeURIComponent(res.name),
-                    ].join("/")}`,
+                    ].join("/")}?op=${res.path}`,
                   );
                 }}
                 empty={res.empty}
@@ -65,8 +72,7 @@ export const FolderView = () => {
               {isTrashView && (
                 <Tooltip label={resPath} hasArrow placement="bottom">
                   <Text
-                    fontSize="sm"
-                    color="gray.500"
+                    fontSize={{ base: "9px", sm: "12px" }}
                     maxW={itemWidth}
                     overflowX="auto"
                     whiteSpace="nowrap"
@@ -81,7 +87,7 @@ export const FolderView = () => {
         }
 
         return (
-          <Flex flexDir="column" key={res._id}>
+          <Flex flexDir="column" key={res._id} justify="center" align="center">
             <File
               id={res._id}
               label={res.name}
@@ -94,8 +100,7 @@ export const FolderView = () => {
             {isTrashView && (
               <Tooltip label={resPath} hasArrow placement="bottom">
                 <Text
-                  fontSize="sm"
-                  color="gray.500"
+                  fontSize={{ base: "9px", sm: "12px" }}
                   maxW={itemWidth}
                   overflowX="auto"
                   whiteSpace="nowrap"

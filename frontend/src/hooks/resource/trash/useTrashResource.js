@@ -3,22 +3,27 @@ import { getTrash } from "@/lib/services/api.js";
 
 const Trash = "trash";
 
-export const useTrashResource = (folderPath = "trash") => {
+export const useTrashResource = (virtualPath = "trash", originalPath = "") => {
   const { data: allTrash = [], ...rest } = useQuery({
     queryKey: [Trash],
     queryFn: getTrash,
   });
 
   if (allTrash.length === 0)
-    return { resources: [], virtualRoot: "trash", ...rest };
+    return {
+      resources: [],
+      virtualRoot: "trash",
+      originalPathMatch: null,
+      ...rest,
+    };
 
-  // Step 1: Find the shortest folder path(s) (the anchors)
+  // Step 1: Find folder anchors
   const folderAnchors = allTrash
     .filter((item) => item.type === "folder")
     .sort((a, b) => a.path.split("/").length - b.path.split("/").length)
-    .map((item) => item.path); // e.g., "my-files/documents/doc1"
+    .map((item) => item.path);
 
-  // Step 2: Create a path mapping from original → virtual trash
+  // Step 2: Create path mapping
   const pathMap = {};
   for (const originalPath of folderAnchors) {
     const segments = originalPath.split("/");
@@ -26,34 +31,36 @@ export const useTrashResource = (folderPath = "trash") => {
     pathMap[originalPath] = `trash/${lastFolder}`;
   }
 
-  // ✅ Step 3: Map each trash item to its virtual path (with fallback for orphan files)
+  // Step 3: Map to virtual paths
   const mappedResources = allTrash.map((res) => {
     let virtualPath;
 
-    // Try mapping using known folder anchors
     for (const [originalPrefix, trashPrefix] of Object.entries(pathMap)) {
       if (res.path.startsWith(originalPrefix)) {
         virtualPath = res.path.replace(originalPrefix, trashPrefix);
-        break; // only first match
+        break;
       }
     }
 
-    // 🔁 Fallback for orphaned items (no match above)
     if (!virtualPath) {
-      const fileName = res.path.split("/").pop(); // just get the filename
+      const fileName = res.path.split("/").pop();
       virtualPath = `trash/${fileName}`;
     }
 
     return { ...res, virtualPath };
   });
 
-  // Step 4: Filter based on folderPath
-  const resources = mappedResources.filter((res) => {
+  // Step 4: Filter by virtual path
+  let resources = mappedResources.filter((res) => {
     const resParentPath = res.virtualPath.split("/").slice(0, -1).join("/");
-    return resParentPath === folderPath;
+    return resParentPath === virtualPath;
   });
 
-  // Step 5: Derive virtualRoot from first mapped anchor
+  if (originalPath) {
+    resources = resources.filter((r) => r.path.includes(originalPath));
+  }
+
+  // Step 6: Virtual root
   const virtualRoot = Object.values(pathMap)[0] || "trash";
 
   return { resources, virtualRoot, ...rest };
