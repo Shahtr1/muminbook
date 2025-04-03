@@ -1,13 +1,16 @@
-import { useDisclosure } from "@chakra-ui/react";
+import { Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 import RenameResourceModal from "@/components/layout/modals/RenameResourceModal.jsx";
 import TransferResourceModal from "@/components/layout/modals/TransferResourceModal.jsx";
+import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx";
+import { useTrashResource } from "@/hooks/resource/useTrashResource.js";
 
 export const ResourceActionItems = ({ id, type, name, path }) => {
+  const { mutate: trashResource } = useTrashResource();
   const {
     isOpen: isRenameOpen,
-    onOpen: onOpenRename,
+    onOpen: openRenameModal,
     onClose: onCloseRename,
   } = useDisclosure();
 
@@ -15,6 +18,12 @@ export const ResourceActionItems = ({ id, type, name, path }) => {
     isOpen: isTransferOpen,
     onOpen: openTransferModal,
     onClose: onCloseTransfer,
+  } = useDisclosure();
+
+  const {
+    isOpen: isTrashOpen,
+    onOpen: openTrashModal,
+    onClose: onCloseTrash,
   } = useDisclosure();
 
   const [isCopyAction, setIsCopyAction] = useState(true);
@@ -29,11 +38,16 @@ export const ResourceActionItems = ({ id, type, name, path }) => {
     openTransferModal();
   };
 
+  const handleMoveToTrash = () => {
+    trashResource(id);
+  };
+
   return (
     <>
       <ActionItems
         variant="resources"
-        onRename={onOpenRename}
+        onRename={openRenameModal}
+        onMoveToTrash={openTrashModal}
         onCopy={handleCopy}
         onMoveToFolder={handleMove}
       />
@@ -53,6 +67,17 @@ export const ResourceActionItems = ({ id, type, name, path }) => {
         id={id}
         path={path}
       />
+      <ConfirmationModal
+        isOpen={isTrashOpen}
+        onClose={onCloseTrash}
+        title="Move to Trash"
+        yesLabel="Yes"
+        noLabel="No"
+        onSave={handleMoveToTrash}
+        yesVariant="danger"
+      >
+        <Text>Are you sure you want to move it to trash?</Text>
+      </ConfirmationModal>
     </>
   );
 };

@@ -36,6 +36,16 @@ const buttonTheme = {
         bg: mode("secondary.600", "secondary.700")(props),
       },
     }),
+    danger: (props) => ({
+      bg: mode("red.500", "red.400")(props),
+      color: "white",
+      _hover: {
+        bg: mode("red.600", "red.300")(props),
+      },
+      _active: {
+        bg: mode("red.700", "red.200")(props),
+      },
+    }),
   },
   defaultProps: {
     colorScheme: "brand",

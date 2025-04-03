@@ -1,5 +1,9 @@
 const common_spacings = {
   "navbar-height": "52px",
+  "reading-layout-padding-top-sm": "12px",
+  "reading-layout-padding-top-lg": "32px",
+  "reading-header-sm": "50px",
+  "reading-header-lg": "60px",
 };
 
 const spacings = {

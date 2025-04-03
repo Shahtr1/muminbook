@@ -7,6 +7,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useBreakpointValue,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 export const XModal = ({
@@ -17,6 +18,7 @@ export const XModal = ({
   footer = null,
   showCloseButton = true,
 }) => {
+  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
   const isMobile = useBreakpointValue({ base: true, sm: false });
 
   return (
@@ -43,6 +45,8 @@ export const XModal = ({
           <ModalHeader
             fontSize={{ base: "15px", sm: "17px" }}
             color="brand.500"
+            borderBottom="1px solid"
+            borderColor={borderColor}
           >
             {title}
           </ModalHeader>

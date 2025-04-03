@@ -11,7 +11,14 @@ export const ReadingLayout = () => {
     location.pathname.includes("/reading/trash");
 
   return (
-    <Flex flexDirection="column" pt={{ base: 3, sm: 8 }} w="full">
+    <Flex
+      flexDirection="column"
+      pt={{
+        base: "reading-layout-padding-top-sm",
+        sm: "reading-layout-padding-top-lg",
+      }}
+      w="full"
+    >
       <ReadingHeader isFolderView={isFolderView} />
       <ReadingToolbar />
       <Flex h="100%">

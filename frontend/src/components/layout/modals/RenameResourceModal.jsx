@@ -11,6 +11,7 @@ import { XModal } from "@/components/layout/modals/XModal.jsx";
 import { useRenameResource } from "@/hooks/resource/useRenameResource.js";
 
 const RenameResourceModal = ({ isOpen, onClose, id, type, name }) => {
+  name = type === "file" ? name.replace(/\.txt$/, "") : name;
   const [newName, setNewName] = useState(name);
   const [errors, setErrors] = useState({});
 
@@ -66,7 +67,7 @@ const RenameResourceModal = ({ isOpen, onClose, id, type, name }) => {
   return (
     <XModal isOpen={isOpen} onClose={onClose} title={title} footer={footer}>
       <FormControl id="name" isInvalid={!!errors?.name}>
-        <InputGroup size={{ base: "xs", sm: "sm" }} flex="1">
+        <InputGroup size={{ base: "sm", sm: "md" }} flex="1">
           <Input
             autoFocus
             value={newName}

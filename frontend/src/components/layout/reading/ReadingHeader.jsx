@@ -3,17 +3,19 @@ import { Flex, Text } from "@chakra-ui/react";
 export const ReadingHeader = ({ isFolderView }) => {
   return (
     <>
-      <Flex flexDirection="column" gap={2} px={{ base: 2, sm: 8 }}>
+      <Flex
+        flexDirection="column"
+        gap={2}
+        px={{ base: 2, sm: 8 }}
+        maxH="92px"
+        minH={{ base: "reading-header-sm", sm: "reading-header-lg" }}
+      >
         <Text fontSize={{ base: "l", sm: "xl" }}>
           {isFolderView
             ? "File Explorer"
             : "Explore Islamic Knowledge & Wisdom"}
         </Text>
-        <Flex
-          flexDirection="column"
-          maxH={{ base: "60px", sm: "unset" }}
-          overflowY={{ base: "auto", sm: "unset" }}
-        >
+        <Flex flexDirection="column" maxH="reading-header-lg" overflowY="auto">
           {!isFolderView && (
             <Text fontSize={{ base: "12px", sm: "14px" }}>
               Deepen your understanding of Islam through a vast collection of
