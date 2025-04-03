@@ -70,7 +70,7 @@ export const AddMenu = ({ onCreate }) => {
           px={2}
           cursor="pointer"
           justify="center"
-          h="20px"
+          h="23px"
           w={{ base: "auto", sm: "50px" }}
         >
           <AddIcon color="#fff" fontSize={{ base: "8px", sm: "9px" }} />

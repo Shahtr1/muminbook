@@ -48,7 +48,7 @@ export const getResourceChildren = async (
         : undefined,
   }));
 
-  // ✅ Custom ordering: lost+found → folders → files
+  // Custom ordering: lost+found → folders → files
   let lostFoundFolder = [];
   let otherFolders = [];
   let files = [];
