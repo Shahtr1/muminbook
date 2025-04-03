@@ -40,7 +40,6 @@ export const FolderView = () => {
       {resources.map((res) => {
         const resPath = res.path?.replace(/^\/?my-files\//, "");
 
-        console.log(resPath);
         if (res.type === "folder" && res.name === "lost+found" && res.empty) {
           return null;
         }
