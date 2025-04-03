@@ -60,7 +60,7 @@ export const FolderView = () => {
                     `/reading/${baseSegment}/${[
                       ...pathSegments.slice(folderPathIndex + 1),
                       encodeURIComponent(res.name),
-                    ].join("/")}?op=${res.path}`,
+                    ].join("/")}${isTrashView ? "?op=" + res.path : ""}`,
                   );
                 }}
                 empty={res.empty}
