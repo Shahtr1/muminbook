@@ -12,26 +12,45 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { HiDotsVertical } from "react-icons/hi";
 import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx";
-import { useEmptyTrashResource } from "@/hooks/resource/useEmptyTrashResource.js";
-import { useIsTrashEmpty } from "@/hooks/resource/useIsTrashEmpty.js";
+import { useEmptyTrashResource } from "@/hooks/resource/trash/useEmptyTrashResource.js";
+import { useIsTrashEmpty } from "@/hooks/resource/trash/useIsTrashEmpty.js";
+import { useRestoreAllResource } from "@/hooks/resource/trash/useRestoreAllResource.js";
+import { useState } from "react";
 
 export const ResourcesTrash = () => {
   const { emptyTrash } = useIsTrashEmpty();
   const location = useLocation();
   const navigate = useNavigate();
   const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
+
   const { mutate: emptyTrashResource } = useEmptyTrashResource();
+  const { mutate: restoreAllResource } = useRestoreAllResource();
+
   const isTrashView = location.pathname.includes("/reading/trash");
 
-  const {
-    isOpen: isEmptyTrashOpen,
-    onOpen: openEmptyTrashModal,
-    onClose: onCloseEmptyTrash,
-  } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [actionType, setActionType] = useState(null);
 
-  const handleEmptyTrash = () => {
-    emptyTrashResource();
+  const openModal = (type) => {
+    setActionType(type);
+    onOpen();
   };
+
+  const handleAction = () => {
+    if (actionType === "empty") {
+      emptyTrashResource();
+    } else if (actionType === "restore") {
+      restoreAllResource();
+    }
+    onClose();
+  };
+
+  const modalTitle =
+    actionType === "empty" ? "Empty Trash" : "Restore All Items";
+  const modalText =
+    actionType === "empty"
+      ? "Are you sure you want to empty trash?"
+      : "Are you sure you want to restore all items?";
 
   return (
     <>
@@ -53,6 +72,7 @@ export const ResourcesTrash = () => {
           </Text>
           <TrashSVG dimensions="50px" empty={emptyTrash} />
         </Flex>
+
         {!emptyTrash && (
           <Menu isLazy placement="right-start">
             <MenuButton
@@ -72,21 +92,26 @@ export const ResourcesTrash = () => {
             </MenuButton>
 
             <MenuList minW="fit-content" maxW="fit-content">
-              <ActionItems variant="trash" onEmptyTrash={openEmptyTrashModal} />
+              <ActionItems
+                variant="trash"
+                onEmptyTrash={() => openModal("empty")}
+                onRestoreAll={() => openModal("restore")}
+              />
             </MenuList>
           </Menu>
         )}
       </Flex>
+
       <ConfirmationModal
-        isOpen={isEmptyTrashOpen}
-        onClose={onCloseEmptyTrash}
-        title="Empty Trash"
+        isOpen={isOpen}
+        onClose={onClose}
+        title={modalTitle}
         yesLabel="Yes"
         noLabel="No"
-        onSave={handleEmptyTrash}
-        yesVariant="danger"
+        onSave={handleAction}
+        yesVariant={actionType === "empty" ? "danger" : "solid"}
       >
-        <Text>Are you sure you want to empty trash?</Text>
+        <Text>{modalText}</Text>
       </ConfirmationModal>
     </>
   );

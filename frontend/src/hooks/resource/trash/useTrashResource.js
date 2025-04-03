@@ -3,7 +3,7 @@ import { getTrash } from "@/lib/services/api.js";
 
 const Trash = "trash";
 
-export const useTrash = (folderPath = "trash") => {
+export const useTrashResource = (folderPath = "trash") => {
   const { data: allTrash = [], ...rest } = useQuery({
     queryKey: [Trash],
     queryFn: getTrash,

@@ -1,11 +1,11 @@
-import { Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Flex, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
 import { File } from "@/components/layout/reading/resources/File.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { useResources } from "@/hooks/resource/useResources.js";
-import { useTrash } from "@/hooks/trash/useTrash.js";
+import { useTrashResource } from "@/hooks/resource/trash/useTrashResource.js";
 
 export const FolderView = () => {
   const location = useLocation();
@@ -20,7 +20,7 @@ export const FolderView = () => {
   const folderPath = pathSegments.slice(folderPathIndex).join("/");
 
   const { resources, isPending, isError } = isTrashView
-    ? useTrash(folderPath)
+    ? useTrashResource(folderPath)
     : useResources(folderPath);
 
   if (isPending) return <Loader />;
@@ -36,43 +36,76 @@ export const FolderView = () => {
       overflow="visible"
     >
       {resources.map((res) => {
+        const resPath = res.path?.replace(/^\/?my-files\//, "");
+
+        console.log(resPath);
         if (res.type === "folder" && res.name === "lost+found" && res.empty) {
           return null;
         }
 
         if (res.type === "folder") {
           return (
-            <Folder
-              key={res._id}
-              id={res._id}
-              label={res.name}
-              onClick={() => {
-                navigate(
-                  `/reading/${baseSegment}/${[
-                    ...pathSegments.slice(folderPathIndex + 1),
-                    encodeURIComponent(res.name),
-                  ].join("/")}`,
-                );
-              }}
-              empty={res.empty}
-              width={itemWidth}
-              showItemToolbar={res.name !== "lost+found"}
-              path={folderPath}
-            />
+            <Flex flexDir="column" key={res._id}>
+              <Folder
+                id={res._id}
+                label={res.name}
+                onClick={() => {
+                  navigate(
+                    `/reading/${baseSegment}/${[
+                      ...pathSegments.slice(folderPathIndex + 1),
+                      encodeURIComponent(res.name),
+                    ].join("/")}`,
+                  );
+                }}
+                empty={res.empty}
+                width={itemWidth}
+                showItemToolbar={res.name !== "lost+found"}
+                path={folderPath}
+              />
+              {isTrashView && (
+                <Tooltip label={resPath} hasArrow placement="bottom">
+                  <Text
+                    fontSize="sm"
+                    color="gray.500"
+                    maxW={itemWidth}
+                    overflowX="auto"
+                    whiteSpace="nowrap"
+                    pb={2}
+                  >
+                    {resPath}
+                  </Text>
+                </Tooltip>
+              )}
+            </Flex>
           );
         }
 
         return (
-          <File
-            key={res._id}
-            id={res._id}
-            label={res.name}
-            path={folderPath}
-            onClick={() => {
-              // TODO: handle file open here
-            }}
-            width={itemWidth}
-          />
+          <Flex flexDir="column" key={res._id}>
+            <File
+              id={res._id}
+              label={res.name}
+              path={folderPath}
+              onClick={() => {
+                // TODO: handle file open here
+              }}
+              width={itemWidth}
+            />
+            {isTrashView && (
+              <Tooltip label={resPath} hasArrow placement="bottom">
+                <Text
+                  fontSize="sm"
+                  color="gray.500"
+                  maxW={itemWidth}
+                  overflowX="auto"
+                  whiteSpace="nowrap"
+                  pb={2}
+                >
+                  {resPath}
+                </Text>
+              </Tooltip>
+            )}
+          </Flex>
         );
       })}
     </Flex>

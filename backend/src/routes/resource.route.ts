@@ -12,6 +12,7 @@ import {
   moveResourceHandler,
   moveToTrashResourceHandler,
   renameResourceHandler,
+  restoreAllResourceHandler,
   restoreResourceHandler,
   togglePinResourceHandler,
   updateAccessedAtHandler,
@@ -29,6 +30,7 @@ resourceRoutes.delete("/trash", emptyTrashHandler);
 resourceRoutes.delete("/:id", deleteResourceHandler);
 resourceRoutes.patch("/:id/trash", moveToTrashResourceHandler);
 resourceRoutes.patch("/:id/restore", restoreResourceHandler);
+resourceRoutes.patch("/restore", restoreAllResourceHandler);
 resourceRoutes.patch("/:id/rename", renameResourceHandler);
 resourceRoutes.patch("/:id/move", moveResourceHandler);
 resourceRoutes.post("/:id/copy", copyResourceHandler);

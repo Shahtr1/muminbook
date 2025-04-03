@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { moveToTrash } from "@/lib/services/api.js";
 import { useXToast } from "@/hooks/useXToast.js";
 
-export const useTrashResource = () => {
+export const useMoveToTrashResource = () => {
   const toast = useXToast();
   const queryClient = useQueryClient();
   const path = location.pathname.replace("/reading/", "");

@@ -4,10 +4,10 @@ import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 import RenameResourceModal from "@/components/layout/modals/RenameResourceModal.jsx";
 import TransferResourceModal from "@/components/layout/modals/TransferResourceModal.jsx";
 import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx";
-import { useTrashResource } from "@/hooks/resource/useTrashResource.js";
+import { useMoveToTrashResource } from "@/hooks/resource/trash/useMoveToTrashResource.js";
 
 export const ResourceActionItems = ({ id, type, name, path }) => {
-  const { mutate: trashResource } = useTrashResource();
+  const { mutate: trashResource } = useMoveToTrashResource();
   const {
     isOpen: isRenameOpen,
     onOpen: openRenameModal,

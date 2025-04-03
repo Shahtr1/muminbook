@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useTrash } from "./useTrash";
+import { useTrashResource } from "./useTrashResource.js";
 import * as api from "@/lib/services/api.js";
 
 // 🧪 Comprehensive mock data
@@ -82,7 +82,7 @@ describe("useTrash (edge cases)", () => {
     // 🔁 doc1/file1.txt → trash/doc1/file1.txt
     // 🔁 doc1/sub → trash/doc1/sub
 
-    const { result } = renderHook(() => useTrash("trash/doc1"), {
+    const { result } = renderHook(() => useTrashResource("trash/doc1"), {
       wrapper: createWrapper(),
     });
 
@@ -99,7 +99,7 @@ describe("useTrash (edge cases)", () => {
   it("maps and filters nested under trash/doc1/sub", async () => {
     // 🔁 doc1/sub/nested.txt → trash/doc1/sub/nested.txt
 
-    const { result } = renderHook(() => useTrash("trash/doc1/sub"), {
+    const { result } = renderHook(() => useTrashResource("trash/doc1/sub"), {
       wrapper: createWrapper(),
     });
 
@@ -113,7 +113,7 @@ describe("useTrash (edge cases)", () => {
     // 🔁 subdoc2 → trash/subdoc2
     // 🔁 subdoc2/deep.txt → trash/subdoc2/deep.txt
 
-    const { result } = renderHook(() => useTrash("trash/subdoc2"), {
+    const { result } = renderHook(() => useTrashResource("trash/subdoc2"), {
       wrapper: createWrapper(),
     });
 
@@ -127,7 +127,7 @@ describe("useTrash (edge cases)", () => {
     // 🔁 tutorials → trash/tutorials
     // 🔁 tutorials/lesson1.md → trash/tutorials/lesson1.md
 
-    const { result } = renderHook(() => useTrash("trash/tutorials"), {
+    const { result } = renderHook(() => useTrashResource("trash/tutorials"), {
       wrapper: createWrapper(),
     });
 
@@ -141,7 +141,7 @@ describe("useTrash (edge cases)", () => {
     // 🔁 lonely/just-a-file.txt → trash/just-a-file.txt
     // 🔁 random.txt → trash/random.txt
 
-    const { result } = renderHook(() => useTrash("trash"), {
+    const { result } = renderHook(() => useTrashResource("trash"), {
       wrapper: createWrapper(),
     });
 
@@ -163,7 +163,7 @@ describe("useTrash (edge cases)", () => {
   });
 
   it("returns correct default virtualRoot", async () => {
-    const { result } = renderHook(() => useTrash("trash"), {
+    const { result } = renderHook(() => useTrashResource("trash"), {
       wrapper: createWrapper(),
     });
 
