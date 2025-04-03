@@ -17,9 +17,13 @@ export const useXToast = () => {
   };
 
   const error = (err) => {
+    let message = "Something went wrong!";
+    if (err && err.errors && err.errors.length > 0) {
+      message = err.errors[0].message;
+    }
     stopLoading();
     toast({
-      title: err?.message ?? "Something went wrong!",
+      title: message,
       status: "error",
       position: "bottom",
       duration: 3000,

@@ -17,7 +17,7 @@ export const createResource = async (
   userId: PrimaryId,
 ) => {
   const { name, type, path, fileUrl, contentType } = data;
-  const parentPath = path;
+  const parentPath = decodeURIComponent(path);
   const fullPath = `${path}/${name}`.replace(/\/+/g, "/");
 
   const parentFolder = await ResourceModel.findOne({
