@@ -4,6 +4,7 @@ import { getTrash } from "@/lib/services/api.js";
 const Trash = "trash";
 
 export const useTrashResource = (virtualPath = "trash", originalPath = "") => {
+  virtualPath = decodeURIComponent(virtualPath);
   const { data: allTrash = [], ...rest } = useQuery({
     queryKey: [Trash],
     queryFn: getTrash,

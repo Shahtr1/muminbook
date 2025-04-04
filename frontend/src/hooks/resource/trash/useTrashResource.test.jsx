@@ -170,4 +170,57 @@ describe("useTrash (edge cases)", () => {
     await waitFor(() => result.current.virtualRoot !== undefined);
     expect(result.current.virtualRoot).toBe("trash/doc1");
   });
+
+  it("handles duplicate folder names correctly (disambiguated virtual paths)", async () => {
+    // Same folder name: testFo3 inside different parents
+    const duplicateFolders = [
+      {
+        _id: "a",
+        name: "testFo3",
+        type: "folder",
+        path: "my-files/Documents/TestFo/testFo3",
+      },
+      {
+        _id: "b",
+        name: "testFo3",
+        type: "folder",
+        path: "my-files/Documents/TestFo (Copy)/testFo3",
+      },
+    ];
+
+    api.getTrash.mockResolvedValueOnce([...mockTrashData, ...duplicateFolders]);
+
+    const { result } = renderHook(() => useTrashResource("trash/TestFo"), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => result.current.resources.length > 0);
+
+    const virtualPaths = result.current.resources.map((r) => r.virtualPath);
+
+    expect(virtualPaths).toContain("trash/TestFo/testFo3");
+  });
+
+  it("handles fallback virtualPath for unmapped files", async () => {
+    const extraOrphan = {
+      _id: "zz",
+      name: "standalone",
+      type: "file",
+      path: "my-files/unknown/folder/standalone.txt",
+    };
+
+    api.getTrash.mockResolvedValueOnce([...mockTrashData, extraOrphan]);
+
+    const { result } = renderHook(() => useTrashResource("trash"), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => result.current.resources.length > 0);
+
+    const file = result.current.resources.find((r) =>
+      r.virtualPath.endsWith("standalone.txt"),
+    );
+
+    expect(file?.virtualPath).toBe("trash/standalone.txt");
+  });
 });

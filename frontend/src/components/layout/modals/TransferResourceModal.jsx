@@ -45,8 +45,13 @@ const TransferResourceModal = ({
       return;
     }
 
-    if (isCopy) copyResource({ id, destinationPath });
-    else moveResource({ id, destinationPath });
+    const cleanedPath = destinationPath.endsWith("/")
+      ? destinationPath.slice(0, -1)
+      : destinationPath;
+
+    if (isCopy)
+      copyResource({ id, destinationPath: decodeURIComponent(cleanedPath) });
+    else moveResource({ id, destinationPath: decodeURIComponent(cleanedPath) });
 
     onClose();
   };
