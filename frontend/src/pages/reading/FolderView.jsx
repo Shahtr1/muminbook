@@ -1,5 +1,5 @@
 import { Flex, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
 import { File } from "@/components/layout/reading/resources/File.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
@@ -11,8 +11,7 @@ export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const itemWidth = useBreakpointValue({ base: "70px", sm: "100px" });
-  const [searchParams] = useSearchParams();
-  const originalPath = searchParams.get("op");
+  const originalPath = location.state?.originalPath;
 
   const pathSegments = location.pathname.split("/").filter(Boolean);
 
@@ -60,7 +59,10 @@ export const FolderView = () => {
                     `/reading/${baseSegment}/${[
                       ...pathSegments.slice(folderPathIndex + 1),
                       encodeURIComponent(res.name),
-                    ].join("/")}${isTrashView ? "?op=" + res.path : ""}`,
+                    ].join("/")}`,
+                    isTrashView
+                      ? { state: { originalPath: res.path } }
+                      : undefined,
                   );
                 }}
                 empty={res.empty}

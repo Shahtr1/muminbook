@@ -13,7 +13,7 @@ import {
   ArrowUpIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { GoListUnordered } from "react-icons/go";
 import { useEffect, useRef, useState } from "react";
 
@@ -27,10 +27,12 @@ export const XBreadCrumb = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
+  const originalPath = location.state?.originalPath;
+
+  const isTrashView = location.pathname.includes("/reading/trash");
 
   const isFolderView =
-    location.pathname.includes("/reading/my-files") ||
-    location.pathname.includes("/reading/trash");
+    location.pathname.includes("/reading/my-files") || isTrashView;
 
   const segments = location.pathname.split("/").filter(Boolean);
   const [canGoBack, setCanGoBack] = useState(false);
@@ -66,12 +68,36 @@ export const XBreadCrumb = () => {
     }
   };
 
-  const buildPath = (index) => {
-    const pathSegments = segments.slice(0, index + 1);
-    return `/${pathSegments.join("/")}`;
-  };
-
   const canGoUp = segments.length > 1;
+
+  // Create breadcrumb items
+  const breadcrumbItems = segments.map((segment, index) => {
+    const pathSegments = segments.slice(0, index + 1);
+    const basePath = `/${pathSegments.join("/")}`;
+
+    let partialOriginalPath;
+    if (isTrashView && originalPath && index > 1) {
+      const originalPathSegments = originalPath.split("/");
+      const depthAfterTrash = index - 1;
+      partialOriginalPath = originalPathSegments
+        .slice(0, depthAfterTrash + 1)
+        .join("/");
+    }
+
+    const label = labelMap[segment]?.label || decodeURIComponent(segment);
+    const Icon = labelMap[segment]?.icon;
+    const isLast = index === segments.length - 1;
+
+    return {
+      label,
+      Icon,
+      path: basePath,
+      state: partialOriginalPath
+        ? { originalPath: partialOriginalPath }
+        : undefined,
+      isLast,
+    };
+  });
 
   return (
     <Flex align="center" gap={3}>
@@ -105,7 +131,7 @@ export const XBreadCrumb = () => {
         </Flex>
       )}
 
-      {/* Breadcrumb */}
+      {/* Breadcrumb Navigation */}
       <Breadcrumb
         as={Flex}
         spacing="5px"
@@ -120,43 +146,34 @@ export const XBreadCrumb = () => {
           msOverflowStyle: "none",
         }}
       >
-        {segments.map((segment, index) => {
-          const fullPath = buildPath(index);
-          const isLast = index === segments.length - 1;
-
-          const custom = labelMap[segment];
-          const label = custom?.label || decodeURIComponent(segment);
-          const Icon = custom?.icon;
-
-          return (
-            <BreadcrumbItem key={fullPath} isCurrentPage={isLast}>
-              <BreadcrumbLink
-                as={Link}
-                to={fullPath}
-                color="brand.500"
-                fontWeight="semibold"
-              >
-                <Flex align="center" gap={1}>
-                  {Icon && (
-                    <Icon
-                      color={theme.colors.brand["500"]}
-                      style={{ strokeWidth: 1.5 }}
-                    />
-                  )}
-                  <Text
-                    color="brand.500"
-                    maxW="120px"
-                    overflow="hidden"
-                    textOverflow="ellipsis"
-                    whiteSpace="nowrap"
-                  >
-                    {label}
-                  </Text>
-                </Flex>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          );
-        })}
+        {breadcrumbItems.map(({ path, state, label, Icon, isLast }) => (
+          <BreadcrumbItem key={path} isCurrentPage={isLast}>
+            <BreadcrumbLink
+              onClick={() => navigate(path, { state })}
+              color="brand.500"
+              fontWeight="semibold"
+              cursor="pointer"
+            >
+              <Flex align="center" gap={1}>
+                {Icon && (
+                  <Icon
+                    color={theme.colors.brand["500"]}
+                    style={{ strokeWidth: 1.5 }}
+                  />
+                )}
+                <Text
+                  color="brand.500"
+                  maxW="120px"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                >
+                  {label}
+                </Text>
+              </Flex>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        ))}
       </Breadcrumb>
     </Flex>
   );
