@@ -27,8 +27,7 @@ export const ReadingList = () => {
       <Folder
         onClick={() => navigate("my-files")}
         width={itemWidth}
-        empty={emptyMyFiles}
-        showItemToolbar={false}
+        resource={{ empty: emptyMyFiles }}
       />
 
       {readingItems().map((item) => (

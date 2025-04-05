@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Flex, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
 import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
-import { ResourceActionItems } from "@/components/layout/reading/resources/ResourceActionItems.jsx";
+import { MyFilesActionItems } from "@/components/layout/reading/resources/MyFilesActionItems.jsx";
 
-export const File = ({ id, onClick, width, label, path }) => {
+export const File = ({ onClick, width, folderPath, resource }) => {
   const dimensions = useBreakpointValue({
     base: "40px",
     sm: "60px",
@@ -28,7 +28,7 @@ export const File = ({ id, onClick, width, label, path }) => {
     >
       <ItemToolbar
         children={
-          <ResourceActionItems id={id} type="file" name={label} path={path} />
+          <MyFilesActionItems resource={resource} pathFromUrl={folderPath} />
         }
       />
       <Flex
@@ -39,7 +39,7 @@ export const File = ({ id, onClick, width, label, path }) => {
         overflow="hidden"
       >
         <FileSVG dimensions={dimensions} activeColor="brand.500" />
-        <Tooltip label={label} hasArrow placement="bottom">
+        <Tooltip label={resource.name} hasArrow placement="bottom">
           <Text
             fontSize={{ base: "10px", sm: "13px" }}
             color="brand.500"
@@ -49,7 +49,7 @@ export const File = ({ id, onClick, width, label, path }) => {
             whiteSpace="nowrap"
             maxW="100%"
           >
-            {label}
+            {resource.name}
           </Text>
         </Tooltip>
       </Flex>

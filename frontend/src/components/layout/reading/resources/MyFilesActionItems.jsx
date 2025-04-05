@@ -5,9 +5,13 @@ import RenameResourceModal from "@/components/layout/modals/RenameResourceModal.
 import TransferResourceModal from "@/components/layout/modals/TransferResourceModal.jsx";
 import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx";
 import { useMoveToTrashResource } from "@/hooks/resource/trash/useMoveToTrashResource.js";
+import { useRestoreFromTrashResource } from "@/hooks/resource/trash/useRestoreFromTrashResource.js";
 
-export const ResourceActionItems = ({ id, type, name, path }) => {
+export const MyFilesActionItems = ({ resource, pathFromUrl }) => {
+  const { id, type, name } = resource;
   const { mutate: trashResource } = useMoveToTrashResource();
+  const { mutate: restoreFromTrashResource } = useRestoreFromTrashResource();
+
   const {
     isOpen: isRenameOpen,
     onOpen: openRenameModal,
@@ -26,6 +30,18 @@ export const ResourceActionItems = ({ id, type, name, path }) => {
     onClose: onCloseTrash,
   } = useDisclosure();
 
+  const {
+    isOpen: isRestoreOpen,
+    onOpen: openRestoreModal,
+    onClose: onCloseRestore,
+  } = useDisclosure();
+
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: openDeleteModal,
+    onClose: onCloseDelete,
+  } = useDisclosure();
+
   const [isCopyAction, setIsCopyAction] = useState(true);
 
   const handleCopy = () => {
@@ -42,6 +58,14 @@ export const ResourceActionItems = ({ id, type, name, path }) => {
     trashResource(id);
   };
 
+  const handleRestore = () => {
+    restoreFromTrashResource({ id, path: resource.path });
+  };
+
+  const handleDelete = () => {
+    console.log("Delete logic here", id);
+  };
+
   return (
     <>
       <ActionItems
@@ -50,6 +74,8 @@ export const ResourceActionItems = ({ id, type, name, path }) => {
         onMoveToTrash={openTrashModal}
         onCopy={handleCopy}
         onMoveToFolder={handleMove}
+        onRestore={openRestoreModal}
+        onDelete={openDeleteModal}
       />
 
       <RenameResourceModal
@@ -65,8 +91,9 @@ export const ResourceActionItems = ({ id, type, name, path }) => {
         onClose={onCloseTransfer}
         isCopy={isCopyAction}
         id={id}
-        path={path}
+        path={pathFromUrl}
       />
+
       <ConfirmationModal
         isOpen={isTrashOpen}
         onClose={onCloseTrash}
@@ -77,6 +104,40 @@ export const ResourceActionItems = ({ id, type, name, path }) => {
         yesVariant="danger"
       >
         <Text>Are you sure you want to move it to trash?</Text>
+      </ConfirmationModal>
+      <ConfirmationModal
+        isOpen={isTrashOpen}
+        onClose={onCloseTrash}
+        title="Move to Trash"
+        yesLabel="Yes"
+        noLabel="No"
+        onSave={handleMoveToTrash}
+        yesVariant="danger"
+      >
+        <Text>Are you sure you want to move it to trash?</Text>
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        isOpen={isRestoreOpen}
+        onClose={onCloseRestore}
+        title="Restore Resource"
+        yesLabel="Restore"
+        noLabel="Cancel"
+        onSave={handleRestore}
+      >
+        <Text>Do you want to restore this resource?</Text>
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        isOpen={isDeleteOpen}
+        onClose={onCloseDelete}
+        title="Delete Permanently"
+        yesLabel="Delete"
+        noLabel="Cancel"
+        onSave={handleDelete}
+        yesVariant="danger"
+      >
+        <Text>This action will permanently delete the resource.</Text>
       </ConfirmationModal>
     </>
   );

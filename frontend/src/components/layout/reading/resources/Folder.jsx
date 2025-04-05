@@ -8,17 +8,11 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
-import { ResourceActionItems } from "@/components/layout/reading/resources/ResourceActionItems.jsx";
+import { MyFilesActionItems } from "@/components/layout/reading/resources/MyFilesActionItems.jsx";
 
-export const Folder = ({
-  id,
-  onClick,
-  width,
-  empty = true,
-  label = "My Files",
-  showItemToolbar = true,
-  path,
-}) => {
+export const Folder = ({ onClick, width, folderPath, resource }) => {
+  const { name = "My Files", empty = true } = resource;
+  const showItemToolbar = resource.name !== "lost+found" && name !== "My Files";
   const isFolderView =
     location.pathname.includes("/reading/my-files") ||
     location.pathname.includes("/reading/trash");
@@ -54,12 +48,7 @@ export const Folder = ({
       {showItemToolbar && (
         <ItemToolbar
           children={
-            <ResourceActionItems
-              id={id}
-              type="folder"
-              name={label}
-              path={path}
-            />
+            <MyFilesActionItems resource={resource} pathFromUrl={folderPath} />
           }
         />
       )}
@@ -73,7 +62,7 @@ export const Folder = ({
         overflow="hidden"
       >
         <FolderSVG dimensions={dimensions} empty={empty} />
-        <Tooltip label={label} hasArrow placement="bottom">
+        <Tooltip label={name} hasArrow placement="bottom">
           <Text
             fontSize={
               isFolderView
@@ -87,7 +76,7 @@ export const Folder = ({
             whiteSpace="nowrap"
             maxWidth="100%"
           >
-            {label}
+            {name}
           </Text>
         </Tooltip>
       </Flex>

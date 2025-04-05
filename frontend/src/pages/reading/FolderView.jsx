@@ -37,7 +37,7 @@ export const FolderView = () => {
       overflow="visible"
     >
       {resources.map((res) => {
-        const resPath = res.path?.replace(/^\/?my-files\//, "");
+        const pathWithoutMyFiles = res.path?.replace(/^\/?my-files\//, "");
 
         if (res.type === "folder" && res.name === "lost+found" && res.empty) {
           return null;
@@ -52,8 +52,6 @@ export const FolderView = () => {
               align="center"
             >
               <Folder
-                id={res._id}
-                label={res.name}
                 onClick={() => {
                   navigate(
                     `/reading/${baseSegment}/${[
@@ -65,13 +63,12 @@ export const FolderView = () => {
                       : undefined,
                   );
                 }}
-                empty={res.empty}
                 width={itemWidth}
-                showItemToolbar={res.name !== "lost+found"}
-                path={folderPath}
+                folderPath={folderPath}
+                resource={{ ...res, id: res._id }}
               />
               {isTrashView && (
-                <Tooltip label={resPath} hasArrow placement="bottom">
+                <Tooltip label={pathWithoutMyFiles} hasArrow placement="bottom">
                   <Text
                     fontSize={{ base: "9px", sm: "12px" }}
                     maxW={itemWidth}
@@ -79,7 +76,7 @@ export const FolderView = () => {
                     whiteSpace="nowrap"
                     pb={2}
                   >
-                    {resPath}
+                    {pathWithoutMyFiles}
                   </Text>
                 </Tooltip>
               )}
@@ -90,16 +87,15 @@ export const FolderView = () => {
         return (
           <Flex flexDir="column" key={res._id} justify="center" align="center">
             <File
-              id={res._id}
-              label={res.name}
-              path={folderPath}
+              folderPath={folderPath}
               onClick={() => {
                 // TODO: handle file open here
               }}
               width={itemWidth}
+              resource={{ ...res, id: res._id }}
             />
             {isTrashView && (
-              <Tooltip label={resPath} hasArrow placement="bottom">
+              <Tooltip label={pathWithoutMyFiles} hasArrow placement="bottom">
                 <Text
                   fontSize={{ base: "9px", sm: "12px" }}
                   maxW={itemWidth}
@@ -107,7 +103,7 @@ export const FolderView = () => {
                   whiteSpace="nowrap"
                   pb={2}
                 >
-                  {resPath}
+                  {pathWithoutMyFiles}
                 </Text>
               </Tooltip>
             )}
