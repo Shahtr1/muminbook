@@ -9,13 +9,18 @@ import {
 } from "@chakra-ui/react";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
 import { MyFilesActionItems } from "@/components/layout/reading/resources/MyFilesActionItems.jsx";
+import { useAccessTracker } from "@/hooks/resource/useAccessTracker.js";
 
 export const Folder = ({ onClick, width, folderPath, resource }) => {
-  const { name = "My Files", empty = true } = resource;
-  const showItemToolbar = resource.name !== "lost+found" && name !== "My Files";
+  const { updateAccessedAt } = useAccessTracker();
+  const { id, name = "My Files", empty = true } = resource;
+  const lostAndFound = resource.name === "lost+found";
+  const myFiles = resource.name === "my-files" || !resource.name;
+  const showItemToolbar = !lostAndFound && !myFiles;
+
+  const isTrashView = location.pathname.includes("/reading/trash");
   const isFolderView =
-    location.pathname.includes("/reading/my-files") ||
-    location.pathname.includes("/reading/trash");
+    location.pathname.includes("/reading/my-files") || isTrashView;
 
   const bgColor = useColorModeValue("white", "gray.800");
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
@@ -25,6 +30,11 @@ export const Folder = ({ onClick, width, folderPath, resource }) => {
   });
 
   const [hasMounted, setHasMounted] = useState(false);
+
+  const handleClick = () => {
+    if (!lostAndFound && !myFiles && !isTrashView) updateAccessedAt(id);
+    onClick();
+  };
 
   useEffect(() => {
     setHasMounted(true);
@@ -57,7 +67,7 @@ export const Folder = ({ onClick, width, folderPath, resource }) => {
         justify={isSmallScreen && !isFolderView ? "start" : "center"}
         align="center"
         flexDirection={isSmallScreen && !isFolderView ? "row" : "column"}
-        onClick={onClick}
+        onClick={handleClick}
         gap={isSmallScreen && !isFolderView ? 5 : "unset"}
         overflow="hidden"
       >

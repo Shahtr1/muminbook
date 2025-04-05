@@ -7,8 +7,9 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
 import { ResourcesTrash } from "@/components/layout/reading/resources/ResourcesTrash.jsx";
+import { ResourcesOverview } from "@/components/layout/reading/resources/ResourcesOverview.jsx";
 
-export const ReadingSidebar = () => {
+export const ReadingSidebar = ({ overview }) => {
   const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ export const ReadingSidebar = () => {
       <>
         <ResourcesTrash />
         {/*Quick Access and Pinned*/}
+        <ResourcesOverview overview={overview} />
         {/*Resource Tree*/}
         <Flex overflow="auto" py={2}>
           <ResourcesTree

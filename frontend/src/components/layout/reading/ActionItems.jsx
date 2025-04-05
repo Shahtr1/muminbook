@@ -13,9 +13,11 @@ import {
   HiTrash,
 } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
+import { BsPinAngle, BsPinAngleFill } from "react-icons/bs";
 
 export const ActionItems = ({
   variant = "resources",
+  isPinned = false,
   onRename,
   onCopy,
   onMoveToFolder,
@@ -24,6 +26,7 @@ export const ActionItems = ({
   onDelete,
   onRestoreAll,
   onEmptyTrash,
+  onPin,
 }) => {
   const bg = useColorModeValue("gray.100", "gray.700");
   const location = useLocation();
@@ -123,6 +126,17 @@ export const ActionItems = ({
             undefined,
             onRename,
           )}
+          {renderItem(
+            isPinned ? (
+              <BsPinAngleFill size={iconSize} />
+            ) : (
+              <BsPinAngle size={iconSize} />
+            ),
+            isPinned ? "Unpin" : "Pin",
+            undefined,
+            onPin,
+          )}
+
           {!isLostAndFound &&
             renderItem(
               <HiDuplicate size={iconSize} />,

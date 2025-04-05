@@ -44,3 +44,5 @@ export const restoreAllFromTrash = async () => API.patch(`/resources/restore`);
 export const restoreFromTrash = async (id) =>
   API.patch(`/resources/${id}/restore`);
 export const deleteResource = async (id) => API.delete(`/resources/${id}`);
+export const getOverview = async () => API.get(`/resources/overview`);
+export const updateAccess = async (id) => API.patch(`/resources/${id}/access`);
