@@ -43,3 +43,4 @@ export const emptyTrash = async () => API.delete(`/resources/trash`);
 export const restoreAllFromTrash = async () => API.patch(`/resources/restore`);
 export const restoreFromTrash = async (id) =>
   API.patch(`/resources/${id}/restore`);
+export const deleteResource = async (id) => API.delete(`/resources/${id}`);

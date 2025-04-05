@@ -1,4 +1,11 @@
-import { Flex, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  Flex,
+  Text,
+  Tooltip,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
 import { File } from "@/components/layout/reading/resources/File.jsx";
@@ -28,22 +35,82 @@ export const FolderView = () => {
   if (isError) return <SomethingWentWrong />;
 
   return (
-    <Flex
-      flexWrap="wrap"
-      overflowY="auto"
-      gap={{ base: 5, sm: 12 }}
-      height="fit-content"
-      p="10px 25px"
-      overflow="visible"
-    >
-      {resources.map((res) => {
-        const pathWithoutMyFiles = res.path?.replace(/^\/?my-files\//, "");
+    <Flex flexDir={isTrashView ? "column" : "row"} w="100%">
+      {isTrashView && (
+        <Flex px={3} w="100%" align="center" mt={1} mb={2}>
+          <Alert
+            status="info"
+            variant="left-accent"
+            fontSize={{ base: "10px", sm: "sm" }}
+            h={{ base: "40px", sm: "50px" }}
+          >
+            <AlertIcon />
+            <Text>
+              Items in trash will be automatically deleted after 30 days
+            </Text>
+          </Alert>
+        </Flex>
+      )}
+      <Flex
+        flexWrap="wrap"
+        overflowY="auto"
+        gap={{ base: 5, sm: 12 }}
+        height="fit-content"
+        p="10px 25px"
+        overflow="visible"
+      >
+        {resources.map((res) => {
+          const pathWithoutMyFiles = res.path?.replace(/^\/?my-files\//, "");
 
-        if (res.type === "folder" && res.name === "lost+found" && res.empty) {
-          return null;
-        }
+          if (res.type === "folder" && res.name === "lost+found" && res.empty) {
+            return null;
+          }
 
-        if (res.type === "folder") {
+          if (res.type === "folder") {
+            return (
+              <Flex
+                flexDir="column"
+                key={res._id}
+                justify="center"
+                align="center"
+              >
+                <Folder
+                  onClick={() => {
+                    navigate(
+                      `/reading/${baseSegment}/${[
+                        ...pathSegments.slice(folderPathIndex + 1),
+                        encodeURIComponent(res.name),
+                      ].join("/")}`,
+                      isTrashView
+                        ? { state: { originalPath: res.path } }
+                        : undefined,
+                    );
+                  }}
+                  width={itemWidth}
+                  folderPath={folderPath}
+                  resource={{ ...res, id: res._id }}
+                />
+                {isTrashView && (
+                  <Tooltip
+                    label={pathWithoutMyFiles}
+                    hasArrow
+                    placement="bottom"
+                  >
+                    <Text
+                      fontSize={{ base: "9px", sm: "12px" }}
+                      maxW={itemWidth}
+                      overflowX="auto"
+                      whiteSpace="nowrap"
+                      pb={2}
+                    >
+                      {pathWithoutMyFiles}
+                    </Text>
+                  </Tooltip>
+                )}
+              </Flex>
+            );
+          }
+
           return (
             <Flex
               flexDir="column"
@@ -51,20 +118,12 @@ export const FolderView = () => {
               justify="center"
               align="center"
             >
-              <Folder
+              <File
+                folderPath={folderPath}
                 onClick={() => {
-                  navigate(
-                    `/reading/${baseSegment}/${[
-                      ...pathSegments.slice(folderPathIndex + 1),
-                      encodeURIComponent(res.name),
-                    ].join("/")}`,
-                    isTrashView
-                      ? { state: { originalPath: res.path } }
-                      : undefined,
-                  );
+                  // TODO: handle file open here
                 }}
                 width={itemWidth}
-                folderPath={folderPath}
                 resource={{ ...res, id: res._id }}
               />
               {isTrashView && (
@@ -82,34 +141,8 @@ export const FolderView = () => {
               )}
             </Flex>
           );
-        }
-
-        return (
-          <Flex flexDir="column" key={res._id} justify="center" align="center">
-            <File
-              folderPath={folderPath}
-              onClick={() => {
-                // TODO: handle file open here
-              }}
-              width={itemWidth}
-              resource={{ ...res, id: res._id }}
-            />
-            {isTrashView && (
-              <Tooltip label={pathWithoutMyFiles} hasArrow placement="bottom">
-                <Text
-                  fontSize={{ base: "9px", sm: "12px" }}
-                  maxW={itemWidth}
-                  overflowX="auto"
-                  whiteSpace="nowrap"
-                  pb={2}
-                >
-                  {pathWithoutMyFiles}
-                </Text>
-              </Tooltip>
-            )}
-          </Flex>
-        );
-      })}
+        })}
+      </Flex>
     </Flex>
   );
 };

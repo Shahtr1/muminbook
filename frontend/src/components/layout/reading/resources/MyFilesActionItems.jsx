@@ -6,11 +6,13 @@ import TransferResourceModal from "@/components/layout/modals/TransferResourceMo
 import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx";
 import { useMoveToTrashResource } from "@/hooks/resource/trash/useMoveToTrashResource.js";
 import { useRestoreFromTrashResource } from "@/hooks/resource/trash/useRestoreFromTrashResource.js";
+import { useDeleteResource } from "@/hooks/resource/trash/useDeleteResource.js";
 
 export const MyFilesActionItems = ({ resource, pathFromUrl }) => {
   const { id, type, name } = resource;
   const { mutate: trashResource } = useMoveToTrashResource();
   const { mutate: restoreFromTrashResource } = useRestoreFromTrashResource();
+  const { mutate: deleteResource } = useDeleteResource();
 
   const {
     isOpen: isRenameOpen,
@@ -63,7 +65,7 @@ export const MyFilesActionItems = ({ resource, pathFromUrl }) => {
   };
 
   const handleDelete = () => {
-    console.log("Delete logic here", id);
+    deleteResource(id);
   };
 
   return (
