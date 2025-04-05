@@ -15,7 +15,7 @@ export const ReadingHeader = ({ isFolderView }) => {
             ? "File Explorer"
             : "Explore Islamic Knowledge & Wisdom"}
         </Text>
-        <Flex flexDirection="column" maxH="reading-header-lg" overflowY="auto">
+        <Flex flexDirection="column" overflowY="auto">
           {!isFolderView && (
             <Text fontSize={{ base: "12px", sm: "14px" }}>
               Deepen your understanding of Islam through a vast collection of
