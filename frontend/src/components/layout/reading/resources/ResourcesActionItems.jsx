@@ -1,5 +1,5 @@
 import { Text, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 import RenameResourceModal from "@/components/layout/modals/RenameResourceModal.jsx";
 import TransferResourceModal from "@/components/layout/modals/TransferResourceModal.jsx";
@@ -17,6 +17,10 @@ export const ResourcesActionItems = ({ resource, pathFromUrl }) => {
   const { mutate: togglePinResource } = useTogglePinResource();
 
   const [isPinned, setIsPinned] = useState(pinned);
+
+  useEffect(() => {
+    setIsPinned(pinned);
+  }, [pinned]);
 
   const {
     isOpen: isRenameOpen,

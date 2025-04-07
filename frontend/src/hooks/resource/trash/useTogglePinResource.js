@@ -5,6 +5,7 @@ import { useXToast } from "@/hooks/useXToast.js";
 export const useTogglePinResource = () => {
   const toast = useXToast();
   const queryClient = useQueryClient();
+  const path = location.pathname.replace("/reading/", "");
 
   return useMutation({
     mutationFn: async ({ id, pinned }) => {
@@ -14,6 +15,13 @@ export const useTogglePinResource = () => {
     onSuccess: ({ id, pinned }) => {
       toast.success(`${pinned ? "Unpinned..." : "Pinned..."}`);
       queryClient.invalidateQueries({ queryKey: ["overview"] });
+      queryClient.setQueryData(["resources", path], (oldData) => {
+        if (!Array.isArray(oldData)) return oldData;
+
+        return oldData.map((item) =>
+          item._id === id ? { ...item, pinned: !pinned } : item,
+        );
+      });
     },
     onError: toast.error,
     onSettled: toast.stopLoading,
