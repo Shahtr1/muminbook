@@ -8,7 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
-import { MyFilesActionItems } from "@/components/layout/reading/resources/MyFilesActionItems.jsx";
+import { ResourcesActionItems } from "@/components/layout/reading/resources/ResourcesActionItems.jsx";
 import { useAccessTracker } from "@/hooks/resource/useAccessTracker.js";
 
 export const Folder = ({ onClick, width, folderPath, resource }) => {
@@ -58,7 +58,10 @@ export const Folder = ({ onClick, width, folderPath, resource }) => {
       {showItemToolbar && (
         <ItemToolbar
           children={
-            <MyFilesActionItems resource={resource} pathFromUrl={folderPath} />
+            <ResourcesActionItems
+              resource={resource}
+              pathFromUrl={folderPath}
+            />
           }
         />
       )}

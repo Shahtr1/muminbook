@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Flex, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
 import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
-import { MyFilesActionItems } from "@/components/layout/reading/resources/MyFilesActionItems.jsx";
+import { ResourcesActionItems } from "@/components/layout/reading/resources/ResourcesActionItems.jsx";
 
 export const File = ({ onClick, width, folderPath, resource }) => {
   const dimensions = useBreakpointValue({
@@ -28,7 +28,7 @@ export const File = ({ onClick, width, folderPath, resource }) => {
     >
       <ItemToolbar
         children={
-          <MyFilesActionItems resource={resource} pathFromUrl={folderPath} />
+          <ResourcesActionItems resource={resource} pathFromUrl={folderPath} />
         }
       />
       <Flex

@@ -46,6 +46,7 @@ export const getResourceChildren = async (
       child.type === ResourceType.Folder
         ? !childCountMap.get((child._id as PrimaryId).toString())
         : undefined,
+    pinned: child.pinned,
   }));
 
   // Custom ordering: lost+found → folders → files

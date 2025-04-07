@@ -17,7 +17,8 @@ import { BsPinAngle, BsPinAngleFill } from "react-icons/bs";
 
 export const ActionItems = ({
   variant = "resources",
-  isPinned = false,
+  type = "folder",
+  pinned = false,
   onRename,
   onCopy,
   onMoveToFolder,
@@ -126,16 +127,17 @@ export const ActionItems = ({
             undefined,
             onRename,
           )}
-          {renderItem(
-            isPinned ? (
-              <BsPinAngleFill size={iconSize} />
-            ) : (
-              <BsPinAngle size={iconSize} />
-            ),
-            isPinned ? "Unpin" : "Pin",
-            undefined,
-            onPin,
-          )}
+          {type === "folder" &&
+            renderItem(
+              pinned ? (
+                <BsPinAngleFill size={iconSize} />
+              ) : (
+                <BsPinAngle size={iconSize} />
+              ),
+              pinned ? "Unpin" : "Pin",
+              undefined,
+              onPin,
+            )}
 
           {!isLostAndFound &&
             renderItem(

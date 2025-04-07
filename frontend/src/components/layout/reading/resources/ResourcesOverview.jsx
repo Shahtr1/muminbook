@@ -4,13 +4,12 @@ import { BsPinAngle, BsPinAngleFill } from "react-icons/bs";
 export const ResourcesOverview = ({ overview }) => {
   const hoverBg = useColorModeValue("gray.100", "gray.700");
   const { pinned, quickAccess } = overview;
-  console.log("overview", overview);
   const togglePin = (id) => {
     console.log("id", id);
   };
 
   return (
-    <Flex flexDir="column" h="280px" overflowY="auto">
+    <Flex flexDir="column" minH="180px" overflowY="auto">
       {pinned.map((item) => {
         return (
           <Flex w="100%" py="1px" px={2}>

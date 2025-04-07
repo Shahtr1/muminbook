@@ -7,12 +7,16 @@ import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx"
 import { useMoveToTrashResource } from "@/hooks/resource/trash/useMoveToTrashResource.js";
 import { useRestoreFromTrashResource } from "@/hooks/resource/trash/useRestoreFromTrashResource.js";
 import { useDeleteResource } from "@/hooks/resource/trash/useDeleteResource.js";
+import { useTogglePinResource } from "@/hooks/resource/trash/useTogglePinResource.js";
 
-export const MyFilesActionItems = ({ resource, pathFromUrl }) => {
-  const { id, type, name } = resource;
+export const ResourcesActionItems = ({ resource, pathFromUrl }) => {
+  const { id, type, name, pinned } = resource;
   const { mutate: trashResource } = useMoveToTrashResource();
   const { mutate: restoreFromTrashResource } = useRestoreFromTrashResource();
   const { mutate: deleteResource } = useDeleteResource();
+  const { mutate: togglePinResource } = useTogglePinResource();
+
+  const [isPinned, setIsPinned] = useState(pinned);
 
   const {
     isOpen: isRenameOpen,
@@ -68,16 +72,30 @@ export const MyFilesActionItems = ({ resource, pathFromUrl }) => {
     deleteResource(id);
   };
 
+  const togglePin = () => {
+    togglePinResource(
+      { id, pinned: isPinned },
+      {
+        onSuccess: () => {
+          setIsPinned((prev) => !prev);
+        },
+      },
+    );
+  };
+
   return (
     <>
       <ActionItems
         variant="resources"
+        type={type}
+        pinned={isPinned}
         onRename={openRenameModal}
         onMoveToTrash={openTrashModal}
         onCopy={handleCopy}
         onMoveToFolder={handleMove}
         onRestore={openRestoreModal}
         onDelete={openDeleteModal}
+        onPin={togglePin}
       />
 
       <RenameResourceModal
