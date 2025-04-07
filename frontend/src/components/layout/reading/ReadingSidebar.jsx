@@ -47,13 +47,16 @@ export const ReadingSidebar = ({ overview }) => {
       borderColor={borderColor}
       flexDir="column"
       zIndex={1}
+      gap={2}
     >
       <>
         <ResourcesTrash />
         {/*Quick Access and Pinned*/}
         <ResourcesOverview overview={overview} />
         {/*Resource Tree*/}
-        <Flex overflow="auto" py={2}>
+        <Flex overflow="auto" py={1}>
+          {/* TODO: update resources tree, so it can also set access at when user clicks on folders,
+          but keep in mind that not to change Resources tree, as it is used in Move and Copy*/}
           <ResourcesTree
             activePath={currentPath}
             onSelect={(path) => navigate(`/reading/${path}`)}

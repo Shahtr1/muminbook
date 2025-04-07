@@ -10,7 +10,8 @@ export const useTogglePinResource = () => {
   return useMutation({
     mutationFn: async ({ id, pinned }) => {
       toast.startLoading(`${pinned ? "Unpinning..." : "Pinning..."}`);
-      return await togglePin(id);
+      await togglePin(id);
+      return { id, pinned };
     },
     onSuccess: ({ id, pinned }) => {
       toast.success(`${pinned ? "Unpinned..." : "Pinned..."}`);

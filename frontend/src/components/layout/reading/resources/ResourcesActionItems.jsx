@@ -1,5 +1,5 @@
 import { Text, useDisclosure } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 import RenameResourceModal from "@/components/layout/modals/RenameResourceModal.jsx";
 import TransferResourceModal from "@/components/layout/modals/TransferResourceModal.jsx";
@@ -7,20 +7,18 @@ import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx"
 import { useMoveToTrashResource } from "@/hooks/resource/trash/useMoveToTrashResource.js";
 import { useRestoreFromTrashResource } from "@/hooks/resource/trash/useRestoreFromTrashResource.js";
 import { useDeleteResource } from "@/hooks/resource/trash/useDeleteResource.js";
-import { useTogglePinResource } from "@/hooks/resource/trash/useTogglePinResource.js";
+import { useTogglePinResource } from "@/hooks/resource/useTogglePinResource.js";
+import { useCachedResource } from "@/hooks/resource/useCachedResource.js";
 
 export const ResourcesActionItems = ({ resource, pathFromUrl }) => {
-  const { id, type, name, pinned } = resource;
+  const cachedResource = useCachedResource(resource._id, pathFromUrl);
+  const current = cachedResource || resource;
+
+  const { _id: id, type, name, pinned } = current;
   const { mutate: trashResource } = useMoveToTrashResource();
   const { mutate: restoreFromTrashResource } = useRestoreFromTrashResource();
   const { mutate: deleteResource } = useDeleteResource();
   const { mutate: togglePinResource } = useTogglePinResource();
-
-  const [isPinned, setIsPinned] = useState(pinned);
-
-  useEffect(() => {
-    setIsPinned(pinned);
-  }, [pinned]);
 
   const {
     isOpen: isRenameOpen,
@@ -77,14 +75,7 @@ export const ResourcesActionItems = ({ resource, pathFromUrl }) => {
   };
 
   const togglePin = () => {
-    togglePinResource(
-      { id, pinned: isPinned },
-      {
-        onSuccess: () => {
-          setIsPinned((prev) => !prev);
-        },
-      },
-    );
+    togglePinResource({ id, pinned });
   };
 
   return (
@@ -92,7 +83,7 @@ export const ResourcesActionItems = ({ resource, pathFromUrl }) => {
       <ActionItems
         variant="resources"
         type={type}
-        pinned={isPinned}
+        pinned={pinned}
         onRename={openRenameModal}
         onMoveToTrash={openTrashModal}
         onCopy={handleCopy}

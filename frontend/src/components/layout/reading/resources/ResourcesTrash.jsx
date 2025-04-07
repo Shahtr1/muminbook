@@ -54,7 +54,7 @@ export const ResourcesTrash = () => {
 
   return (
     <>
-      <Flex w="100%" justify="center" align="center" gap={3} pb={2}>
+      <Flex w="100%" justify="center" align="center" gap={3} pb={1}>
         <Flex
           justify="center"
           align="center"

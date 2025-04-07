@@ -20,6 +20,7 @@ export const useRestoreAllResource = () => {
       queryClient.invalidateQueries({
         queryKey: ["resources"],
       });
+      queryClient.invalidateQueries({ queryKey: ["overview"] });
     },
     onError: toast.error,
     onSettled: toast.stopLoading,

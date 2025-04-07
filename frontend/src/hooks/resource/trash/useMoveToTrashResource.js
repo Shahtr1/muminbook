@@ -23,6 +23,7 @@ export const useMoveToTrashResource = () => {
           queryKey: ["trash"],
         });
         queryClient.invalidateQueries({ queryKey: ["isTrashEmpty"] });
+        queryClient.invalidateQueries({ queryKey: ["overview"] });
       }
     },
     onError: toast.error,
