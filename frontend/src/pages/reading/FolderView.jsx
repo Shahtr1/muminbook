@@ -39,7 +39,7 @@ export const FolderView = () => {
       flexDir={isTrashView ? "column" : "row"}
       w="100%"
       height="fit-content"
-      overflow="auto"
+      overflow="visible"
       css={{
         "&::-webkit-scrollbar": { display: "none" },
         scrollbarWidth: "none",

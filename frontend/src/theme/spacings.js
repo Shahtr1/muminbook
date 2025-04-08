@@ -4,6 +4,7 @@ const common_spacings = {
   "reading-layout-padding-top-lg": "32px",
   "reading-header-sm": "50px",
   "reading-header-lg": "60px",
+  "sidebar-width": "200px",
 };
 
 const spacings = {
