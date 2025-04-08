@@ -14,7 +14,14 @@ import { useResources } from "@/hooks/resource/useResources.js";
 import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import { FileSVG } from "@/components/svgs/FileSVG.jsx";
 
-const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
+const TreeNode = ({
+  path,
+  name,
+  level = 0,
+  activePath,
+  onSelect,
+  showFiles = true,
+}) => {
   const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
   const [isExpanded, setIsExpanded] = useState(false);
   const [shouldFetch, setShouldFetch] = useState(path === "my-files");
@@ -110,38 +117,40 @@ const TreeNode = ({ path, name, level = 0, activePath, onSelect }) => {
                   level={level + 1}
                   activePath={activePath}
                   onSelect={onSelect}
+                  showFiles={showFiles}
                 />
               );
             }
 
-            // Render files
-            return (
-              <Box key={res.name} pl={(level + 1) * 2}>
-                <Flex
-                  align="center"
-                  p={1}
-                  cursor="pointer"
-                  gap="5px"
-                  onClick={() => {
-                    // TODO: handle file click (intentionally left empty)
-                  }}
-                  borderRadius="sm"
-                  role="group"
-                >
-                  <FileSVG dimensions="15px" activeColor="brand.500" />
+            if (showFiles)
+              // Render files
+              return (
+                <Box key={res.name} pl={(level + 1) * 2}>
+                  <Flex
+                    align="center"
+                    p={1}
+                    cursor="pointer"
+                    gap="5px"
+                    onClick={() => {
+                      // TODO: handle file click (intentionally left empty)
+                    }}
+                    borderRadius="sm"
+                    role="group"
+                  >
+                    <FileSVG dimensions="15px" activeColor="brand.500" />
 
-                  <Tooltip label={res.name} hasArrow placement="auto-end">
-                    <Text
-                      fontSize="13px"
-                      whiteSpace="nowrap"
-                      _groupHover={{ color: "brand.600" }}
-                    >
-                      {res.name}
-                    </Text>
-                  </Tooltip>
-                </Flex>
-              </Box>
-            );
+                    <Tooltip label={res.name} hasArrow placement="auto-end">
+                      <Text
+                        fontSize="13px"
+                        whiteSpace="nowrap"
+                        _groupHover={{ color: "brand.600" }}
+                      >
+                        {res.name}
+                      </Text>
+                    </Tooltip>
+                  </Flex>
+                </Box>
+              );
           })}
       </Collapse>
     </Box>
@@ -152,6 +161,7 @@ export const ResourcesTree = ({
   rootPath = "my-files",
   activePath,
   onSelect,
+  showFiles = true,
 }) => {
   return (
     <TreeNode
@@ -160,6 +170,7 @@ export const ResourcesTree = ({
       level={0}
       activePath={activePath}
       onSelect={onSelect}
+      showFiles={showFiles}
     />
   );
 };

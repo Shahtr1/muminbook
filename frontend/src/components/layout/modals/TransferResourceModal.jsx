@@ -119,6 +119,7 @@ const TransferResourceModal = ({
           <ResourcesTree
             activePath={currentPath}
             onSelect={(path) => setDestinationPath(path)}
+            showFiles={false}
           />
         </Flex>
       </Flex>

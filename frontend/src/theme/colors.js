@@ -40,13 +40,25 @@ const colors = {
     dark: whiteAlpha700,
   },
   rd: {
-    body: {
-      dark: "#3c3c3c",
-      light: "#f8f8f8",
+    bg: {
+      dark: "#181818",
+      light: "#8b949e",
+    },
+    bg_content: {
+      dark: "#1f1f1f",
+      light: "#fff",
+    },
+    icon: {
+      dark: "#868686",
+      light: "#616161",
     },
     content: {
-      dark: "#acacac",
-      light: "#323232",
+      dark: "#d7d7d7",
+      light: "#616161",
+    },
+    bold: {
+      dark: "#d7d7d7",
+      light: "#1f1f1f",
     },
   },
   bg: {
