@@ -18,7 +18,7 @@ export const ReadingSidebar = ({ overview }) => {
   const navigate = useNavigate();
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
 
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
