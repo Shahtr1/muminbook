@@ -35,7 +35,17 @@ export const FolderView = () => {
   if (isError) return <SomethingWentWrong />;
 
   return (
-    <Flex flexDir={isTrashView ? "column" : "row"} w="100%">
+    <Flex
+      flexDir={isTrashView ? "column" : "row"}
+      w="100%"
+      height="fit-content"
+      overflow="auto"
+      css={{
+        "&::-webkit-scrollbar": { display: "none" },
+        scrollbarWidth: "none",
+        msOverflowStyle: "none",
+      }}
+    >
       {isTrashView && (
         <Flex px={3} w="100%" align="center" mt={1} mb={2}>
           <Alert
@@ -55,7 +65,6 @@ export const FolderView = () => {
         flexWrap="wrap"
         overflowY="auto"
         gap={{ base: 5, sm: 12 }}
-        height="fit-content"
         p="10px 25px"
         overflow="visible"
       >

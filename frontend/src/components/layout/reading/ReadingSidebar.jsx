@@ -38,7 +38,7 @@ export const ReadingSidebar = ({ overview }) => {
     <Flex
       h={`calc(100vh - ${navbarHeight + breadcrumbHeight + readingPaddingTop + readingHeaderHeight}px)`}
       position="sticky"
-      top={`calc(${navbarHeight + breadcrumbHeight}px)`}
+      top={`${navbarHeight + breadcrumbHeight}px`}
       minH={`calc(100vh - ${navbarHeight + breadcrumbHeight + readingPaddingTop + readingHeaderHeight}px)`}
       minW={wrapperWidth}
       maxW={wrapperWidth}

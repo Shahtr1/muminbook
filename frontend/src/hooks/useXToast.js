@@ -18,6 +18,9 @@ export const useXToast = () => {
 
   const error = (err) => {
     let message = "Something went wrong!";
+    if (err?.message) {
+      message = err.message;
+    }
     if (err && err.errors && err.errors.length > 0) {
       message = err.errors[0].message;
     }
