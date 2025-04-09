@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { AUTH } from "@/hooks/useAuth.js";
 import { useNavigate } from "react-router-dom";
 
-export const NavbarReadingMode = () => {
+export const WindowNavbar = () => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
   const bgColor = useColorModeValue("rd.body.light", "rd.body.dark");

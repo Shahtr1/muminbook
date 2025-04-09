@@ -25,11 +25,11 @@ import AdminGuard from "@/AdminGuard.jsx";
 import { Admin } from "@/pages/Admin.jsx";
 import { SuperBoard } from "@/components/layout/admin/SuperBoard.jsx";
 import { AdminFamilyTree } from "@/components/layout/admin/AdminFamilyTree.jsx";
-import { ReadingView } from "@/pages/reading/ReadingView.jsx";
 import { FolderView } from "@/pages/reading/FolderView.jsx";
 import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
 import { RemoveTrailingSlash } from "@/utils/RemoveTrailingSlash.jsx";
 import { ReadingLayout } from "@/pages/reading/ReadingLayout.jsx";
+import { Suhuf } from "@/pages/reading/Suhuf.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -68,12 +68,14 @@ function App() {
             <Route index element={<ReadingList />} />
             <Route path="my-files/*" element={<FolderView />} />
             <Route path="trash/*" element={<FolderView />} />
-            <Route path=":id" element={<ReadingView />} />
           </Route>
+
+          <Route path="suhuf" element={<Suhuf />}></Route>
 
           <Route path="features" element={<Features />}>
             <Route index element={<Navigate to="family-tree" />} />
             <Route path="family-tree" element={<FamilyTree />}></Route>
+            <Route path="suhuf" element={<Navigate to="/suhuf" />}></Route>
           </Route>
 
           <Route element={<AdminGuard />}>

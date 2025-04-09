@@ -5,15 +5,15 @@ import { Navbar } from "@/components/layout/navbar/Navbar.jsx";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { NavbarReadingMode } from "@/components/layout/navbar/NavbarReadingMode.jsx";
+import { WindowNavbar } from "@/components/layout/navbar/WindowNavbar.jsx";
 
 export const AppContainer = () => {
   const { user, isLoading, isError } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data: readingMode } = useQuery({
-    queryKey: ["readingMode"],
-    queryFn: () => queryClient.getQueryData(["readingMode"]) || false,
+  const { data: windowMode } = useQuery({
+    queryKey: ["windowMode"],
+    queryFn: () => queryClient.getQueryData(["windowMode"]) || false,
     staleTime: 0,
   });
 
@@ -26,9 +26,9 @@ export const AppContainer = () => {
       direction="column"
       minH="100vh"
       h="100vh"
-      pt={readingMode ? undefined : "navbar-height"}
+      pt={windowMode ? undefined : "navbar-height"}
     >
-      {readingMode ? <NavbarReadingMode /> : <Navbar />}
+      {windowMode ? <WindowNavbar /> : <Navbar />}
       <Flex flex="1">
         <Outlet />
       </Flex>
