@@ -133,7 +133,7 @@ export const Navbar = () => {
             }
           })}
           <XDivider orientation="vertical" height="100%" />
-          <DarkModeToggle disableInteraction={true} navbar={true} />
+          <DarkModeToggle disableInteraction={true} variant="navbar" />
         </Flex>
       </Flex>
     </Flex>

@@ -29,7 +29,7 @@ import { FolderView } from "@/pages/reading/FolderView.jsx";
 import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
 import { RemoveTrailingSlash } from "@/utils/RemoveTrailingSlash.jsx";
 import { ReadingLayout } from "@/pages/reading/ReadingLayout.jsx";
-import { Suhuf } from "@/pages/reading/Suhuf.jsx";
+import { Suhuf } from "@/pages/Suhuf.jsx";
 
 function App() {
   const navigate = useNavigate();

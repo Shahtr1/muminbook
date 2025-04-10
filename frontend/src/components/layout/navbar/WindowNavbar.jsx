@@ -1,19 +1,40 @@
-import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Icon, Image, Text, useColorModeValue } from "@chakra-ui/react";
 import { navItems } from "@/data/navbarItems.js";
 import { useQueryClient } from "@tanstack/react-query";
 import { AUTH } from "@/hooks/useAuth.js";
 import { useNavigate } from "react-router-dom";
+import { IoCloseOutline, IoRemoveOutline } from "react-icons/io5";
+import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 
-export const WindowNavbar = () => {
+export const WindowNavbar = ({ children }) => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
-  const bgColor = useColorModeValue("rd.body.light", "rd.body.dark");
+  const bgColor = useColorModeValue("rd.bg.light", "rd.bg.dark");
+  const iconActiveColor = useColorModeValue("rd.bold.light", "rd.bold.dark");
+  const invertedIconActiveColor = useColorModeValue(
+    "rd.bold.dark",
+    "rd.bold.light",
+  );
+  const iconHoverGray = useColorModeValue(
+    "rd.icon.hover.light",
+    "rd.icon.hover.dark",
+  );
   const navigate = useNavigate();
 
+  const minimize = () => {};
+  const close = () => {};
+
   return (
-    <Flex bgColor={bgColor} h="30px" align="center">
-      {navItems(user).map((item) => {
-        return (
+    <Flex bgColor={bgColor} align="center" justify="space-between" pl={2}>
+      <Flex gap={2} py="2px" align="center">
+        <Image
+          w={25}
+          src="/images/logos/logo-image.png"
+          alt="Muminbook Logo"
+          cursor="pointer"
+          onClick={() => navigate("/")}
+        />
+        {navItems(user).map((item) => (
           <Text
             key={item.id}
             variant="rd"
@@ -22,8 +43,40 @@ export const WindowNavbar = () => {
           >
             {item.label}
           </Text>
-        );
-      })}
+        ))}
+      </Flex>
+      <Flex flex={1}>{children}</Flex>
+
+      <Flex h="100%">
+        <DarkModeToggle variant="window" />
+        <Flex
+          _hover={{ bg: iconHoverGray }}
+          cursor="pointer"
+          align="center"
+          justify="center"
+          w="28px"
+          onClick={minimize}
+        >
+          <Icon as={IoRemoveOutline} boxSize={5} color={iconActiveColor} />
+        </Flex>
+        <Flex
+          _hover={{ bg: "red.600" }}
+          cursor="pointer"
+          align="center"
+          justify="center"
+          w="28px"
+          role="group"
+          onClick={close}
+        >
+          <Icon
+            as={IoCloseOutline}
+            boxSize={5}
+            color={iconActiveColor}
+            _hover={{ bg: "red.600" }}
+            _groupHover={{ color: invertedIconActiveColor }}
+          />
+        </Flex>
+      </Flex>
     </Flex>
   );
 };

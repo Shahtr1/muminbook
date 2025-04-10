@@ -5,7 +5,7 @@ export const DarkModeToggle = ({
   position,
   inset,
   disableInteraction = false,
-  navbar = false,
+  variant = "auth",
 }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -14,18 +14,20 @@ export const DarkModeToggle = ({
       aria-label="Toggle Dark Mode"
       icon={
         colorMode === "light" ? (
-          <MoonIcon color={navbar ? "text.primary" : undefined} />
+          <MoonIcon color={variant === "navbar" ? "text.primary" : undefined} />
         ) : (
-          <SunIcon color={navbar ? "white" : undefined} />
+          <SunIcon color={variant === "navbar" ? "white" : undefined} />
         )
       }
       onClick={toggleColorMode}
       variant="ghost"
-      size="lg"
+      size={variant === "window" ? "xs" : "lg"}
       position={position}
       inset={inset}
       _hover={disableInteraction ? { bg: "transparent" } : undefined}
       _active={disableInteraction ? { transform: "none" } : undefined}
+      borderRadius="none"
+      w="28px"
     />
   );
 };

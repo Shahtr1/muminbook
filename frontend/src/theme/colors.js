@@ -42,7 +42,7 @@ const colors = {
   rd: {
     bg: {
       dark: "#181818",
-      light: "#8b949e",
+      light: "#f8f8f8",
     },
     bg_content: {
       dark: "#1f1f1f",
@@ -51,6 +51,10 @@ const colors = {
     icon: {
       dark: "#868686",
       light: "#616161",
+      hover: {
+        dark: "#3b3b3b",
+        light: "#e1e1e1",
+      },
     },
     content: {
       dark: "#d7d7d7",

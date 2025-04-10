@@ -8,6 +8,7 @@ import queryClient from "./config/queryClient.js";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./theme/index.js";
 import { HelmetProvider } from "react-helmet-async";
+import { WindowNavbarProvider } from "@/context/WindowNavbarContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -16,7 +17,9 @@ createRoot(document.getElementById("root")).render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <HelmetProvider>
-            <App />
+            <WindowNavbarProvider>
+              <App />
+            </WindowNavbarProvider>
           </HelmetProvider>
           <ReactQueryDevtools position="bottom" initialIsOpen={false} />
         </BrowserRouter>

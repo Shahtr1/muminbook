@@ -6,10 +6,12 @@ import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { WindowNavbar } from "@/components/layout/navbar/WindowNavbar.jsx";
+import { useWindowNavbar } from "@/context/WindowNavbarContext";
 
 export const AppContainer = () => {
   const { user, isLoading, isError } = useAuth();
   const queryClient = useQueryClient();
+  const { navbarChildren } = useWindowNavbar();
 
   const { data: windowMode } = useQuery({
     queryKey: ["windowMode"],
@@ -18,17 +20,16 @@ export const AppContainer = () => {
   });
 
   if (isError) return <SomethingWentWrong height="100vh" />;
+  if (isLoading) return <Loader height="100vh" />;
 
-  return isLoading ? (
-    <Loader height="100vh" />
-  ) : user ? (
+  return user ? (
     <Flex
       direction="column"
       minH="100vh"
       h="100vh"
       pt={windowMode ? undefined : "navbar-height"}
     >
-      {windowMode ? <WindowNavbar /> : <Navbar />}
+      {windowMode ? <WindowNavbar>{navbarChildren}</WindowNavbar> : <Navbar />}
       <Flex flex="1">
         <Outlet />
       </Flex>

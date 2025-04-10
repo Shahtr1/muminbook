@@ -19,7 +19,8 @@ const textTheme = {
       fontSize: "sm",
     }),
     rd: (props) => ({
-      color: mode("blue", "yellow")(props),
+      color: mode("rd.bold.light", "rd.bold.dark")(props),
+      fontSize: "13px",
     }),
   },
   defaultProps: {
