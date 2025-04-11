@@ -6,6 +6,7 @@ export const DarkModeToggle = ({
   inset,
   disableInteraction = false,
   variant = "auth",
+  height = "auto",
 }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -28,6 +29,7 @@ export const DarkModeToggle = ({
       _active={disableInteraction ? { transform: "none" } : undefined}
       borderRadius="none"
       w="28px"
+      h={height}
     />
   );
 };

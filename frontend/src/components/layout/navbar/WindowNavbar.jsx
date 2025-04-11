@@ -1,14 +1,10 @@
-import { Flex, Icon, Image, Text, useColorModeValue } from "@chakra-ui/react";
-import { navItems } from "@/data/navbarItems.js";
-import { useQueryClient } from "@tanstack/react-query";
-import { AUTH } from "@/hooks/useAuth.js";
+import { Flex, Icon, Image, useColorModeValue } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { IoCloseOutline, IoRemoveOutline } from "react-icons/io5";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
+import { WindowMenu } from "@/components/layout/navbar/menus/WindowMenu.jsx";
 
 export const WindowNavbar = ({ children }) => {
-  const queryClient = useQueryClient();
-  const user = queryClient.getQueryData([AUTH]);
   const bgColor = useColorModeValue("rd.bg.light", "rd.bg.dark");
   const iconActiveColor = useColorModeValue("rd.bold.light", "rd.bold.dark");
   const invertedIconActiveColor = useColorModeValue(
@@ -34,21 +30,13 @@ export const WindowNavbar = ({ children }) => {
           cursor="pointer"
           onClick={() => navigate("/")}
         />
-        {navItems(user).map((item) => (
-          <Text
-            key={item.id}
-            variant="rd"
-            cursor="pointer"
-            onClick={() => navigate(item.link)}
-          >
-            {item.label}
-          </Text>
-        ))}
+
+        <WindowMenu />
       </Flex>
       <Flex flex={1}>{children}</Flex>
 
       <Flex h="100%">
-        <DarkModeToggle variant="window" />
+        <DarkModeToggle variant="window" height="100%" />
         <Flex
           _hover={{ bg: iconHoverGray }}
           cursor="pointer"

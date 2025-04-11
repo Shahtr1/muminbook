@@ -7,6 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { XDivider } from "@/components/layout/XDivider.jsx";
+import { notificationItems } from "@/data/notificationItems.js";
 
 export const NotificationMenu = ({
   children,
@@ -15,14 +16,6 @@ export const NotificationMenu = ({
   onMouseEnter,
   onMouseLeave,
 }) => {
-  const notifications = [
-    { id: "1", label: "Notification 1", link: "/notifications/1" },
-    { id: "2", label: "Notification 2", link: "/notifications/2" },
-    { id: "3", label: "Notification 3", link: "/notifications/3" },
-    { id: "4", label: "Notification 4", link: "/notifications/4" },
-    { id: "5", label: "Notification 5", link: "/notifications/5" },
-  ];
-
   return (
     <Menu isLazy placement="bottom-end" onOpen={onOpen} onClose={onClose}>
       <MenuButton
@@ -58,7 +51,7 @@ export const NotificationMenu = ({
 
         <XDivider />
 
-        {notifications.map((item) => (
+        {notificationItems.map((item) => (
           <MenuItem key={item.id} onClick={() => navigate(item.link)}>
             <Text fontSize="13px">{item.label}</Text>
           </MenuItem>

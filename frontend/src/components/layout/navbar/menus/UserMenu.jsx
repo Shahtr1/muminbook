@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "@/lib/services/api.js";
 import { AUTH } from "@/hooks/useAuth.js";
 import { XDivider } from "@/components/layout/XDivider.jsx";
+import { userItems } from "@/data/userItems.js";
 
 export const UserMenu = ({
   children,
@@ -35,17 +36,6 @@ export const UserMenu = ({
       navigate("/login", { replace: true });
     },
   });
-
-  const menuItems = [
-    { id: "admin", label: "Admin", link: "/admin", roles: ["admin"] },
-    { id: "edit-profile", label: "Edit Profile", link: "/edit-profile" },
-    {
-      id: "settings-and-privacy",
-      label: "Settings & Privacy",
-      link: "/settings-and-privacy",
-    },
-    { id: "help", label: "Help", link: "/help" },
-  ];
 
   return (
     <Menu
@@ -98,7 +88,7 @@ export const UserMenu = ({
           Account
         </Text>
 
-        {menuItems
+        {userItems
           .filter(
             (item) =>
               !item.roles || item.roles.some((role) => roles.includes(role)),

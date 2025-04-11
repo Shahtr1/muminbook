@@ -9,9 +9,9 @@ import { Search2Icon } from "@chakra-ui/icons";
 import { navigate } from "@/lib/services/navigation.js";
 import { XDivider } from "@/components/layout/XDivider.jsx";
 import { NavMenuItem } from "@/components/layout/navbar/NavMenuItem.jsx";
-import { NotificationMenu } from "@/components/layout/menus/NotificationMenu.jsx";
-import { UserMenu } from "@/components/layout/menus/UserMenu.jsx";
-import { FeaturesMenu } from "@/components/layout/menus/FeaturesMenu.jsx";
+import { NotificationMenu } from "@/components/layout/navbar/menus/NotificationMenu.jsx";
+import { UserMenu } from "@/components/layout/navbar/menus/UserMenu.jsx";
+import { FeaturesMenu } from "@/components/layout/navbar/menus/FeaturesMenu.jsx";
 import { navItems } from "@/data/navbarItems.js";
 import { XSearch } from "@/components/layout/XSearch.jsx";
 
