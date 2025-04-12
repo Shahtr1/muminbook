@@ -14,11 +14,11 @@ import {
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "@/lib/services/api.js";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
 import { XAlert } from "@/components/layout/XAlert.jsx";
 import { XDivider } from "@/components/layout/XDivider.jsx";
+import { login } from "@/lib/services/index.js";
 
 const Login = () => {
   const location = useLocation();

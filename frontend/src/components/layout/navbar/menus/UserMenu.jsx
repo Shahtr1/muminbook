@@ -8,10 +8,10 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { logout } from "@/lib/services/api.js";
 import { AUTH } from "@/hooks/useAuth.js";
 import { XDivider } from "@/components/layout/XDivider.jsx";
 import { userItems } from "@/data/userItems.js";
+import { logout } from "@/lib/services/index.js";
 
 export const UserMenu = ({
   children,

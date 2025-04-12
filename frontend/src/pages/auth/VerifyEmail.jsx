@@ -11,9 +11,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { verifyEmail } from "@/lib/services/api.js";
 import { useQuery } from "@tanstack/react-query";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
+import { verifyEmail } from "@/lib/services/index.js";
 
 const VerifyEmail = () => {
   const { code } = useParams();

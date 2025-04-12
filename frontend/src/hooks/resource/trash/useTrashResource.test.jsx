@@ -60,7 +60,7 @@ const mockTrashData = [
   { _id: "10", name: "random.txt", type: "file", path: "my-files/random.txt" },
 ];
 
-vi.mock("@/lib/services/api.js", () => ({
+vi.mock("@/lib/services/index.js", () => ({
   getTrash: vi.fn(),
 }));
 
