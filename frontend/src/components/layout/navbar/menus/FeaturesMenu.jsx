@@ -19,7 +19,10 @@ export const FeaturesMenu = ({
   onMouseLeave,
 }) => {
   const navigate = useNavigate();
-
+  const handleFeatureClick = (item) => {
+    if (item.action) item.action();
+    else if (item.link) navigate(item.link);
+  };
   return (
     <Menu isLazy placement="bottom-end" onOpen={onOpen} onClose={onClose}>
       <MenuButton
@@ -65,7 +68,7 @@ export const FeaturesMenu = ({
               h={50}
             >
               <Flex
-                onClick={() => navigate(item.link)}
+                onClick={() => handleFeatureClick(item)}
                 borderRadius="sm"
                 padding={3}
                 align="center"

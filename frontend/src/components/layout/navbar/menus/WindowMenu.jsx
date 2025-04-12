@@ -31,6 +31,11 @@ export const WindowMenu = () => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
 
+  const handleActionClick = (item) => {
+    if (item.action) item.action();
+    else if (item.link) navigate(item.link);
+  };
+
   const itemMap = {
     user: userItems,
     notifications: notificationItems,
@@ -106,7 +111,7 @@ export const WindowMenu = () => {
                   whiteSpace="nowrap"
                   _hover={{ bg: hoverGray }}
                   w="100%"
-                  onClick={() => navigate(it.link)}
+                  onClick={() => handleActionClick(it)}
                 >
                   <Text
                     key={it.id}
@@ -137,7 +142,7 @@ export const WindowMenu = () => {
               cursor="pointer"
               p="3px"
               fontSize="12px"
-              onClick={() => navigate(it.link)}
+              onClick={() => handleActionClick(it)}
             >
               {it.label}
             </Text>

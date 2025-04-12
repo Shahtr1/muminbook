@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { isTrashEmpty } from "@/lib/services/api.js";
+import { isTrashEmpty } from "@/lib/services/index.js";
 
 export const useIsTrashEmpty = () => {
   const { data, ...rest } = useQuery({

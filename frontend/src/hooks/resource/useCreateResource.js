@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { createResource } from "@/lib/services/api.js";
 import queryClient from "@/config/queryClient.js";
 import { useXToast } from "@/hooks/useXToast.js";
+import { createResource } from "@/lib/services/index.js";
 
 export const useCreateResource = () => {
   const toast = useXToast();

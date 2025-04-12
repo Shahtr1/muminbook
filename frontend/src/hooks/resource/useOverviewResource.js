@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getOverview } from "@/lib/services/api.js";
+import { getOverview } from "@/lib/services/index.js";
 
 const Overview = "overview";
 

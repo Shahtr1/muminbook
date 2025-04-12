@@ -23,6 +23,10 @@ export const SidebarItem = forwardRef(
     },
     ref,
   ) => {
+    const handleActionClick = () => {
+      if (item.action) item.action();
+      else if (item.link) navigate(item.link);
+    };
     const textColor = useColorModeValue("text-primary", "whiteAlpha.900");
     const isSmallScreen = useBreakpointValue({ base: true, sm: false });
     const navigate = useNavigate();
@@ -96,7 +100,7 @@ export const SidebarItem = forwardRef(
               : undefined
           }
           borderColor={active ? "brand.500" : "transparent"}
-          onClick={() => subItems.length == 0 && navigate(item.link)}
+          onClick={() => subItems.length === 0 && handleActionClick()}
           direction={isOpen ? "row" : "column"}
           border={(!isOpen && !isSmallScreen) || isSubItem ? "none" : undefined}
           {...(isMenu ? menuButtonStyles : {})}

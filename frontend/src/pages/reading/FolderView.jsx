@@ -47,7 +47,7 @@ export const FolderView = () => {
       }}
     >
       {isTrashView && (
-        <Flex px={3} w="100%" align="center" mt={1} mb={2}>
+        <Flex px={3} w="95%" align="center" mt={1} mb={2} mx="auto">
           <Alert
             status="info"
             variant="left-accent"

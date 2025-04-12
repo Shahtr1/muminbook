@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSessions } from "../../lib/services/api.js";
+import { getSessions } from "@/lib/services/index.js";
 
 export const SESSIONS = "sessions";
 

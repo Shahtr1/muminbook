@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getFamilyTree } from "../lib/services/api.js";
+import { getFamilyTree } from "@/lib/services/index.js";
 
 export const FAMILY_TREE = "family_tree";
 

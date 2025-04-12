@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useTrashResource } from "./useTrashResource.js";
-import * as api from "@/lib/services/api.js";
+import * as api from "@/lib/services/index.js";
 
 // 🧪 Comprehensive mock data
 const mockTrashData = [
