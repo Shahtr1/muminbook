@@ -22,11 +22,11 @@ import { IoChevronForwardOutline, IoMenuOutline } from "react-icons/io5";
 export const WindowMenu = () => {
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const hoverGray = useColorModeValue(
-    "rd.icon.hover.light",
-    "rd.icon.hover.dark",
+    "wn.icon.hover.light",
+    "wn.icon.hover.dark",
   );
-  const bgColor = useColorModeValue("rd.bg.light", "rd.bg.dark");
-  const iconActiveColor = useColorModeValue("rd.bold.light", "rd.bold.dark");
+  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
+  const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
@@ -65,7 +65,7 @@ export const WindowMenu = () => {
           >
             {label ? (
               <>
-                <Text variant="rd" cursor="pointer" p="3px" fontSize="12px">
+                <Text variant="wn" cursor="pointer" p="3px" fontSize="12px">
                   {label}
                 </Text>
                 {isSubMenu && (
@@ -110,7 +110,7 @@ export const WindowMenu = () => {
                 >
                   <Text
                     key={it.id}
-                    variant="rd"
+                    variant="wn"
                     cursor="pointer"
                     p="3px"
                     fontSize="12px"
@@ -133,7 +133,7 @@ export const WindowMenu = () => {
           return (
             <Text
               key={it.id}
-              variant="rd"
+              variant="wn"
               cursor="pointer"
               p="3px"
               fontSize="12px"

@@ -5,15 +5,15 @@ import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { WindowMenu } from "@/components/layout/navbar/menus/WindowMenu.jsx";
 
 export const WindowNavbar = ({ children }) => {
-  const bgColor = useColorModeValue("rd.bg.light", "rd.bg.dark");
-  const iconActiveColor = useColorModeValue("rd.bold.light", "rd.bold.dark");
+  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
+  const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const invertedIconActiveColor = useColorModeValue(
-    "rd.bold.dark",
-    "rd.bold.light",
+    "wn.bold.dark",
+    "wn.bold.light",
   );
   const iconHoverGray = useColorModeValue(
-    "rd.icon.hover.light",
-    "rd.icon.hover.dark",
+    "wn.icon.hover.light",
+    "wn.icon.hover.dark",
   );
   const navigate = useNavigate();
 

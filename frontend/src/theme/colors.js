@@ -39,7 +39,7 @@ const colors = {
     light: secondaryText,
     dark: whiteAlpha700,
   },
-  rd: {
+  wn: {
     bg: {
       dark: "#181818",
       light: "#f8f8f8",

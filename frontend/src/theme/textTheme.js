@@ -18,8 +18,8 @@ const textTheme = {
       color: mode("text.secondary", "whiteAlpha.600")(props),
       fontSize: "sm",
     }),
-    rd: (props) => ({
-      color: mode("rd.bold.light", "rd.bold.dark")(props),
+    wn: (props) => ({
+      color: mode("wn.bold.light", "wn.bold.dark")(props),
       fontSize: "13px",
     }),
   },
