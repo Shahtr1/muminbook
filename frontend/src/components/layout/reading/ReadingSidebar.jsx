@@ -1,51 +1,28 @@
-import {
-  Flex,
-  IconButton,
-  useBreakpointValue,
-  useColorModeValue,
-  useTheme,
-} from "@chakra-ui/react";
+import { Flex, IconButton, useColorModeValue } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
 import { ResourcesTrash } from "@/components/layout/reading/resources/ResourcesTrash.jsx";
 import { ResourcesOverview } from "@/components/layout/reading/resources/ResourcesOverview.jsx";
 import { LuMenu } from "react-icons/lu";
 import { useState } from "react";
+import { useReadingLayoutConfig } from "@/hooks/useReadingLayoutConfig";
 
 export const ReadingSidebar = ({ overview }) => {
-  const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
 
   const [isSidebarOpen, setSidebarOpen] = useState(true);
-
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
-  const navbarHeight = parseInt(theme.space["navbar-height"]);
-  const breadcrumbHeight = 40;
+  const { sidebarWidth, totalHeaderOffset, navbarHeight, breadcrumbHeight } =
+    useReadingLayoutConfig();
 
-  const readingPaddingTop = parseInt(
-    useBreakpointValue({
-      base: theme.space["reading-layout-padding-top-sm"],
-      sm: theme.space["reading-layout-padding-top-lg"],
-    }) || 0,
-  );
-
-  const readingHeaderHeight = parseInt(
-    useBreakpointValue({
-      base: theme.space["reading-header-sm"],
-      sm: theme.space["reading-header-lg"],
-    }) || 0,
-  );
-
-  const sidebarWidth = theme.space["sidebar-width"];
   const currentPath =
     location.pathname.replace(/^\/reading\//, "") || "my-files";
 
   return (
     <>
-      {/* Toggle Button - floats on left side of the page */}
       <IconButton
         icon={<LuMenu fontSize="20px" />}
         aria-label="Toggle Sidebar"
@@ -59,20 +36,10 @@ export const ReadingSidebar = ({ overview }) => {
       />
 
       <Flex
-        h={`calc(100vh - ${
-          navbarHeight +
-          breadcrumbHeight +
-          readingPaddingTop +
-          readingHeaderHeight
-        }px)`}
+        h={`calc(100vh - ${totalHeaderOffset}px)`}
+        minH={`calc(100vh - ${totalHeaderOffset}px)`}
+        top={`${breadcrumbHeight}px`}
         position="sticky"
-        top={`${navbarHeight + breadcrumbHeight}px`}
-        minH={`calc(100vh - ${
-          navbarHeight +
-          breadcrumbHeight +
-          readingPaddingTop +
-          readingHeaderHeight
-        }px)`}
         w={sidebarWidth}
         minW={sidebarWidth}
         maxW={sidebarWidth}

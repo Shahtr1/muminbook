@@ -12,7 +12,6 @@ import ForgotPassword from "./pages/auth/ForgotPassword.jsx";
 import { ResetPassword } from "./pages/auth/ResetPassword.jsx";
 import { AppContainer } from "./components/layout/AppContainer.jsx";
 import { Dashboard } from "./pages/Dashboard.jsx";
-import { setNavigate } from "./lib/services/navigation.js";
 import { Helmet } from "react-helmet-async";
 import { Terms } from "@/pages/company/Terms.jsx";
 import { Cookies } from "@/pages/company/Cookies.jsx";
@@ -30,6 +29,7 @@ import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
 import { RemoveTrailingSlash } from "@/utils/RemoveTrailingSlash.jsx";
 import { ReadingLayout } from "@/pages/reading/ReadingLayout.jsx";
 import { Suhuf } from "@/pages/Suhuf.jsx";
+import { setNavigate } from "@/lib/services/index.js";
 
 function App() {
   const navigate = useNavigate();
@@ -70,7 +70,7 @@ function App() {
             <Route path="trash/*" element={<FolderView />} />
           </Route>
 
-          <Route path="wn/:id/suhuf" element={<Suhuf />}></Route>
+          <Route path="suhuf/:id" element={<Suhuf />}></Route>
 
           <Route path="features" element={<Features />}>
             <Route index element={<Navigate to="family-tree" />} />

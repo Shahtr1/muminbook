@@ -1,19 +1,18 @@
 import { FamilyTreeSVG } from "@/components/svgs/FamilyTreeSVG.jsx";
 import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
 import { useNavigate } from "react-router-dom";
-import { useCreateWindow } from "@/hooks/window/useCreateWindow.js";
+import { useCreateSuhuf } from "@/hooks/suhuf/useCreateSuhuf.js";
 
 export const featureItems = () => {
   const navigate = useNavigate();
-  const { mutate: createWindow } = useCreateWindow();
+  const { mutate: createSuhuf } = useCreateSuhuf();
 
   const openSuhuf = () => {
-    const newSuhufId = crypto.randomUUID();
-    createWindow(
-      { type: "suhuf", typeId: newSuhufId },
+    createSuhuf(
+      { title: "Untitled Suhuf" },
       {
-        onSuccess: (data) => {
-          navigate(`/wn/${data._id}/suhuf`);
+        onSuccess: ({ windowId, suhufId }) => {
+          navigate(`suhuf/${suhufId}`);
         },
       },
     );

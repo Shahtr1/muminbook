@@ -63,7 +63,7 @@ export const ReadingToolbar = () => {
       justify="space-between"
       bg={bgColor}
       position="sticky"
-      top="navbar-height"
+      top="0"
       zIndex="1099"
       py={2}
       boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : "none"}

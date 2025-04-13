@@ -11,6 +11,8 @@ import authenticate from "./middleware/authenticate";
 import familyTreeRoutes from "./routes/family-tree.route";
 import resourceRoutes from "./routes/resource.route";
 import "./jobs/trashCleanupJob";
+import suhufRoutes from "./routes/suhuf.route";
+import windowRoutes from "./routes/windowRoutes";
 
 const app = express();
 
@@ -38,6 +40,8 @@ app.use("/admin", authenticate(true), adminRoutes);
 app.use("/user", authenticate(), userRoutes);
 app.use("/family-tree", authenticate(), familyTreeRoutes);
 app.use("/resources", authenticate(), resourceRoutes);
+app.use("/windows", authenticate(), windowRoutes);
+app.use("/suhuf", authenticate(), suhufRoutes);
 
 app.use(errorHandler);
 

@@ -5,6 +5,7 @@ const common_spacings = {
   "reading-header-sm": "50px",
   "reading-header-lg": "60px",
   "sidebar-width": "200px",
+  "win-manager-height": "25px",
 };
 
 const spacings = {

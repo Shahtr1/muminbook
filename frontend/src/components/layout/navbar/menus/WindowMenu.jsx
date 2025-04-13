@@ -101,7 +101,12 @@ export const WindowMenu = () => {
           }}
         >
           {list.map((it) => {
-            if (itemMap[it.id]) return menuList(itemMap[it.id], it.label, true);
+            if (itemMap[it.id])
+              return (
+                <Box key={it.id}>
+                  {menuList(itemMap[it.id], it.label, true)}
+                </Box>
+              );
             else
               return (
                 <MenuItem
@@ -113,13 +118,7 @@ export const WindowMenu = () => {
                   w="100%"
                   onClick={() => handleActionClick(it)}
                 >
-                  <Text
-                    key={it.id}
-                    variant="wn"
-                    cursor="pointer"
-                    p="3px"
-                    fontSize="12px"
-                  >
+                  <Text variant="wn" cursor="pointer" p="3px" fontSize="12px">
                     {it.label}
                   </Text>
                 </MenuItem>
@@ -133,7 +132,8 @@ export const WindowMenu = () => {
   const desktopNav = () => {
     {
       return parentItems.map((it) => {
-        if (itemMap[it.id]) return menuList(itemMap[it.id], it.label);
+        if (itemMap[it.id])
+          return <Box key={it.id}>{menuList(itemMap[it.id], it.label)}</Box>;
         else
           return (
             <Text

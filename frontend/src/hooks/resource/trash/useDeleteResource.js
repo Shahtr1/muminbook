@@ -17,11 +17,7 @@ export const useDeleteResource = () => {
       queryClient.invalidateQueries({ queryKey: ["trash"] });
       queryClient.invalidateQueries({ queryKey: ["isTrashEmpty"] });
     },
-    onError: (error) => {
-      toast.error(error?.message || "Failed to delete resource");
-    },
-    onSettled: () => {
-      toast.stopLoading();
-    },
+    onError: toast.error,
+    onSettled: toast.stopLoading,
   });
 };

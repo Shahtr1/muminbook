@@ -63,7 +63,6 @@ export const FolderView = () => {
       )}
       <Flex
         flexWrap="wrap"
-        overflowY="auto"
         gap={{ base: 5, sm: 12 }}
         p="10px 25px"
         overflow="visible"

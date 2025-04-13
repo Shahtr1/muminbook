@@ -1,0 +1,21 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useXToast } from "@/hooks/useXToast.js";
+import { deleteWindow } from "@/lib/services";
+
+export const useDeleteWindow = () => {
+  const toast = useXToast();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id) => {
+      toast.startLoading("Deleting window...");
+      return deleteWindow(id);
+    },
+    onSuccess: () => {
+      toast.success("Window deleted");
+      queryClient.invalidateQueries({ queryKey: ["windows"] });
+    },
+    onError: toast.error,
+    onSettled: toast.stopLoading,
+  });
+};

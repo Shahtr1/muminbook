@@ -6,7 +6,6 @@ import { AUTH } from "@/hooks/useAuth.js";
 import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Search2Icon } from "@chakra-ui/icons";
-import { navigate } from "@/lib/services/navigation.js";
 import { XDivider } from "@/components/layout/XDivider.jsx";
 import { NavMenuItem } from "@/components/layout/navbar/NavMenuItem.jsx";
 import { NotificationMenu } from "@/components/layout/navbar/menus/NotificationMenu.jsx";
