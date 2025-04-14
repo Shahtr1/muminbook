@@ -15,7 +15,6 @@ import {
   restoreAllResources,
   restoreResource,
 } from "../services/resource";
-import { dstPathSchema, renameSchema, resourceSchema } from "./resourceSchema";
 import mongoose from "mongoose";
 import { getUserId } from "../utils/getUserId";
 import { isMyFilesEmpty } from "../services/resource/isMyFilesEmpty-resource.service";
@@ -25,6 +24,8 @@ import {
   updateAccessedAt,
 } from "../services/resource/overview.service";
 import { isTrashEmpty } from "../services/resource/trash/isTrashEmpty-resource.service";
+import { dstPathSchema, resourceSchema } from "./schemas/resource.schema";
+import { renameSchema } from "./schemas/common.schema";
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
