@@ -1,23 +1,9 @@
 import { FamilyTreeSVG } from "@/components/svgs/FamilyTreeSVG.jsx";
 import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
-import { useNavigate } from "react-router-dom";
-import { useCreateSuhuf } from "@/hooks/suhuf/useCreateSuhuf.js";
+import { useOpenSuhuf } from "@/hooks/suhuf/useOpenSuhuf.js";
 
 export const featureItems = () => {
-  const navigate = useNavigate();
-  const { mutate: createSuhuf } = useCreateSuhuf();
-
-  const openSuhuf = () => {
-    createSuhuf(
-      { title: "Untitled Suhuf" },
-      {
-        onSuccess: ({ windowId, suhufId }) => {
-          navigate(`suhuf/${suhufId}`);
-        },
-      },
-    );
-  };
-
+  const openSuhuf = useOpenSuhuf();
   return [
     {
       id: "family-tree",

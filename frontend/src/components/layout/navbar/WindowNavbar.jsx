@@ -1,10 +1,10 @@
 import { Flex, Icon, Image, useColorModeValue } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IoCloseOutline, IoRemoveOutline } from "react-icons/io5";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { WindowMenu } from "@/components/layout/navbar/menus/WindowMenu.jsx";
 
-export const WindowNavbar = ({ children }) => {
+export const WindowNavbar = ({ children, onClose, onMinimize }) => {
   const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
   const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const invertedIconActiveColor = useColorModeValue(
@@ -16,9 +16,13 @@ export const WindowNavbar = ({ children }) => {
     "wn.icon.hover.dark",
   );
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const minimize = () => {};
-  const close = () => {};
+  let pathArray = location.pathname.split("/");
+  let typeId;
+  if (pathArray && pathArray.length > 0) {
+    typeId = location.pathname.split("/")[pathArray.length - 1];
+  }
 
   return (
     <Flex bgColor={bgColor} align="center" justify="space-between" pl={2}>
@@ -43,7 +47,7 @@ export const WindowNavbar = ({ children }) => {
           align="center"
           justify="center"
           w="28px"
-          onClick={minimize}
+          onClick={() => onMinimize(typeId)}
         >
           <Icon as={IoRemoveOutline} boxSize={5} color={iconActiveColor} />
         </Flex>
@@ -54,7 +58,7 @@ export const WindowNavbar = ({ children }) => {
           justify="center"
           w="28px"
           role="group"
-          onClick={close}
+          onClick={() => onClose(typeId)}
         >
           <Icon
             as={IoCloseOutline}

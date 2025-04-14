@@ -70,7 +70,7 @@ function App() {
             <Route path="trash/*" element={<FolderView />} />
           </Route>
 
-          <Route path="suhuf/:id" element={<Suhuf />}></Route>
+          <Route path="suhuf/:id" element={<Suhuf />} />
 
           <Route path="features" element={<Features />}>
             <Route index element={<Navigate to="family-tree" />} />

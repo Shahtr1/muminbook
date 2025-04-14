@@ -7,13 +7,14 @@ export const useDeleteWindow = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (id) => {
+    mutationFn: async ({ id }) => {
       toast.startLoading("Deleting window...");
       return deleteWindow(id);
     },
-    onSuccess: () => {
+    onSuccess: (_data, { typeId, type }) => {
       toast.success("Window deleted");
       queryClient.invalidateQueries({ queryKey: ["windows"] });
+      queryClient.removeQueries({ queryKey: [type, typeId] });
     },
     onError: toast.error,
     onSettled: toast.stopLoading,

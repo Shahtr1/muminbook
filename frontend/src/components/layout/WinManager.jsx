@@ -4,9 +4,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { useWindows } from "@/hooks/resource/useWindows.js";
 import { useDeleteWindow } from "@/hooks/useDeleteWindow.js";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export const WinManager = ({ onEmpty }) => {
+export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
   const { mutate: deleteWindow } = useDeleteWindow();
+  const navigate = useNavigate();
+  const location = useLocation();
   const borderColor = useColorModeValue("white", "gray.800");
   const hoverBg = useColorModeValue("brand.400", "brand.600");
   const winModeHoverBg = useColorModeValue(
@@ -28,31 +31,66 @@ export const WinManager = ({ onEmpty }) => {
     onEmpty?.(windows.length === 0);
   }, [windows.length]);
 
+  useEffect(() => {
+    if (closeWindowId) {
+      closeWindow(closeWindowId);
+    }
+  }, [closeWindowId]);
+
+  useEffect(() => {
+    if (minimizeWindowId) {
+      console.log("Minimize window:", minimizeWindowId);
+    }
+  }, [minimizeWindowId]);
+
   if (!windows.length) return null;
 
-  const closeWindow = (id) => {
-    deleteWindow(id);
+  const closeWindow = (typeId) => {
+    const windowToClose = windows.find((w) => w.typeId._id === typeId);
+    if (!windowToClose) return;
+
+    const isActive = isActiveWindow(typeId);
+    const remainingWindows = windows.filter((w) => w.typeId._id !== typeId);
+
+    if (isActive) {
+      if (remainingWindows.length > 0) {
+        const next = remainingWindows[0];
+        navigate(`/suhuf/${next.typeId._id}`);
+      } else navigate("/", { replace: true });
+    }
+
+    deleteWindow({ id: windowToClose._id, typeId, type: "suhuf" });
   };
 
-  const openWindow = (type) => {
-    console.log("open window", type);
+  const openWindow = (id) => {
+    navigate(`/suhuf/${id}`);
+  };
+
+  const isActiveWindow = (id) => {
+    return location.pathname === `/suhuf/${id}`;
   };
 
   return (
     <Flex px={1} h="win-manager-height" w="100%" overflowX="auto">
       {windows.map((win) => {
-        const { _id, typeId: type } = win;
+        const { typeId: type } = win;
         return (
           <Flex
             key={win._id}
             bgColor={
               windowMode
-                ? win.isActive
+                ? isActiveWindow(type._id)
                   ? activeWindowColor
                   : inActiveWindowColor
                 : "brand.500"
             }
-            _hover={{ bgColor: windowMode ? winModeHoverBg : hoverBg }}
+            _hover={{
+              bgColor: windowMode
+                ? isActiveWindow(type._id)
+                  ? activeWindowColor
+                  : winModeHoverBg
+                : hoverBg,
+            }}
             p={1}
             cursor="pointer"
             align="center"
@@ -62,10 +100,10 @@ export const WinManager = ({ onEmpty }) => {
             borderColor={borderColor}
             flex="1 1 0"
             minW="45px"
-            maxW="120px"
+            maxW="140px"
             justify="space-between"
             gap={1}
-            onClick={() => openWindow(type)}
+            onClick={() => openWindow(type?._id)}
           >
             <Tooltip label={type.title} hasArrow placement="top">
               <Text
@@ -78,15 +116,17 @@ export const WinManager = ({ onEmpty }) => {
                 {type.title}
               </Text>
             </Tooltip>
-            <Icon
-              as={RiCloseCircleFill}
-              fontSize="10px"
-              _hover={{ color: "red.600" }}
-              onClick={(e) => {
-                e.stopPropagation();
-                closeWindow(_id);
-              }}
-            />
+            {!isActiveWindow(type._id) && (
+              <Icon
+                as={RiCloseCircleFill}
+                fontSize="10px"
+                _hover={{ color: "red.600" }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeWindow(type._id);
+                }}
+              />
+            )}
           </Flex>
         );
       })}

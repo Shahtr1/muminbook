@@ -17,6 +17,8 @@ export const AppContainer = () => {
   const theme = useTheme();
 
   const [winManagerVisible, setWinManagerVisible] = useState(false);
+  const [handleWindowClose, setHandleWindowClose] = useState(null);
+  const [handleWindowMinimize, setHandleWindowMinimize] = useState(null);
 
   const winManagerHeight = winManagerVisible
     ? parseInt(theme.space["win-manager-height"])
@@ -41,7 +43,12 @@ export const AppContainer = () => {
         pt={windowMode ? undefined : "navbar-height"}
       >
         {windowMode ? (
-          <WindowNavbar>{navbarChildren}</WindowNavbar>
+          <WindowNavbar
+            onClose={(id) => setHandleWindowClose(id)}
+            onMinimize={(id) => setHandleWindowMinimize(id)}
+          >
+            {navbarChildren}
+          </WindowNavbar>
         ) : (
           <Navbar />
         )}
@@ -50,7 +57,11 @@ export const AppContainer = () => {
         </Flex>
       </Flex>
 
-      <WinManager onEmpty={(isEmpty) => setWinManagerVisible(!isEmpty)} />
+      <WinManager
+        onEmpty={(isEmpty) => setWinManagerVisible(!isEmpty)}
+        closeWindowId={handleWindowClose}
+        minimizeWindowId={handleWindowMinimize}
+      />
     </Flex>
   ) : (
     <Navigate
