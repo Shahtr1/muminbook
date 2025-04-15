@@ -7,6 +7,10 @@ import { XSearch } from "@/components/layout/XSearch.jsx";
 
 export const WindowNavbar = ({ children, onClose, onMinimize }) => {
   const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
+  const bgContentColor = useColorModeValue(
+    "wn.bg_content.light",
+    "wn.bg_content.dark",
+  );
   const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const invertedIconActiveColor = useColorModeValue(
     "wn.bold.dark",
@@ -37,7 +41,7 @@ export const WindowNavbar = ({ children, onClose, onMinimize }) => {
         />
 
         <WindowMenu />
-        <XSearch size="xs" width="100%" />
+        <XSearch size="xs" width="100%" bgColor={bgContentColor} />
       </Flex>
       <Flex flex={1}>{children}</Flex>
 
