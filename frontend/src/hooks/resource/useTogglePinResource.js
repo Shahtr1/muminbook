@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useXToast } from "@/hooks/useXToast.js";
-import { togglePin } from "@/lib/services/index.js";
+import { togglePin } from "@/services/index.js";
 
 export const useTogglePinResource = () => {
   const toast = useXToast();

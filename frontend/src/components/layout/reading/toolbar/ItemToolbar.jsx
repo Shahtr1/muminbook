@@ -30,7 +30,7 @@ export const ItemToolbar = ({ zIndex, isFavourite = false, children }) => {
         <StarIcon
           fontSize={isSmallScreen || isFolderView ? "11px" : "15px"}
           onClick={() => {
-            console.log("hi");
+            console.log("favourite clicked");
           }}
           color={isFavourite ? "brand.600" : "gray.500"}
         />

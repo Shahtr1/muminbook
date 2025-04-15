@@ -1,6 +1,6 @@
 import useAuth from "../../hooks/useAuth.js";
 import { Flex, useTheme } from "@chakra-ui/react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { Navbar } from "@/components/layout/navbar/Navbar.jsx";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
@@ -8,17 +8,23 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { WindowNavbar } from "@/components/layout/navbar/WindowNavbar.jsx";
 import { useWindowNavbar } from "@/context/WindowNavbarContext";
 import { WinManager } from "@/components/layout/WinManager.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { updateNavigationPath } from "@/utils/updateNavigationPath.js";
 
 export const AppContainer = () => {
   const { user, isLoading, isError } = useAuth();
   const queryClient = useQueryClient();
   const { navbarChildren } = useWindowNavbar();
   const theme = useTheme();
+  const location = useLocation();
 
   const [winManagerVisible, setWinManagerVisible] = useState(false);
   const [handleWindowClose, setHandleWindowClose] = useState(null);
   const [handleWindowMinimize, setHandleWindowMinimize] = useState(null);
+
+  useEffect(() => {
+    updateNavigationPath(location.pathname);
+  }, [location.pathname]);
 
   const winManagerHeight = winManagerVisible
     ? parseInt(theme.space["win-manager-height"])
@@ -44,8 +50,15 @@ export const AppContainer = () => {
       >
         {windowMode ? (
           <WindowNavbar
-            onClose={(id) => setHandleWindowClose(id)}
-            onMinimize={(id) => setHandleWindowMinimize(id)}
+            onClose={(id) => {
+              setHandleWindowClose(id);
+              setTimeout(() => setHandleWindowClose(null), 100);
+            }}
+            onMinimize={(id) => {
+              setHandleWindowMinimize(id);
+              // Reset after short delay to allow re-minimize of same tab
+              setTimeout(() => setHandleWindowMinimize(null), 100);
+            }}
           >
             {navbarChildren}
           </WindowNavbar>

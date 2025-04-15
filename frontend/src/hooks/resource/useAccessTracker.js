@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { updateAccess } from "@/lib/services/index.js";
+import { updateAccess } from "@/services/index.js";
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 

@@ -24,7 +24,7 @@ import { XDate } from "@/components/form/XDate.jsx";
 import { XRadio } from "@/components/form/XRadio.jsx";
 import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
 import { XAlert } from "@/components/layout/XAlert.jsx";
-import { register } from "@/lib/services/index.js";
+import { register } from "@/services/index.js";
 
 const Register = () => {
   const navigate = useNavigate();

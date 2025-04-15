@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSuhuf } from "@/lib/services/index.js";
+import { getSuhuf } from "@/services/index.js";
 
 export const useSuhuf = (id) => {
   return useQuery({

@@ -13,7 +13,7 @@ import {
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
-import { verifyEmail } from "@/lib/services/index.js";
+import { verifyEmail } from "@/services/index.js";
 
 const VerifyEmail = () => {
   const { code } = useParams();

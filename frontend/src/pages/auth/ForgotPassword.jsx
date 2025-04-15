@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { XAlert } from "@/components/layout/XAlert.jsx";
-import { sendPasswordResetEmail } from "@/lib/services/index.js";
+import { sendPasswordResetEmail } from "@/services/index.js";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

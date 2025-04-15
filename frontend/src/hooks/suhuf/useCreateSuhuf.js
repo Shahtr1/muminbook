@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useXToast } from "@/hooks/useXToast.js";
-import { createSuhuf } from "@/lib/services/suhuf.service.js";
+import { createSuhuf } from "@/services/suhuf.service.js";
 
 export const useCreateSuhuf = () => {
   const toast = useXToast();

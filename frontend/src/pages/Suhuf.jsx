@@ -11,10 +11,10 @@ export const Suhuf = () => {
 
   const { data: suhuf, isLoading, isError } = useSuhuf(suhufId);
 
-  // Setup window mode + navbar
   useEffect(() => {
     queryClient.setQueryData(["windowMode"], true);
     setNavbarChildren(<></>);
+
     return () => {
       queryClient.setQueryData(["windowMode"], false);
       setNavbarChildren(null);

@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import queryClient from "@/config/queryClient.js";
 import { useXToast } from "@/hooks/useXToast.js";
 import { useLocation } from "react-router-dom";
-import { renameResource } from "@/lib/services/index.js";
+import { renameResource } from "@/services/index.js";
 
 export const useRenameResource = () => {
   const location = useLocation();

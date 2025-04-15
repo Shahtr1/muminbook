@@ -1,4 +1,4 @@
-import API from "../../config/apiClient.js";
+import API from "../config/apiClient.js";
 
 export const getResources = (path = "my-files") =>
   API.get(`/resources?path=${path}`);

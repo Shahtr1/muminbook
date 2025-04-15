@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getUser } from "@/lib/services/index.js";
+import { getUser } from "@/services/index.js";
 
 export const AUTH = "auth";
 

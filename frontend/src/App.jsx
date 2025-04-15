@@ -28,8 +28,8 @@ import { FolderView } from "@/pages/reading/FolderView.jsx";
 import { ReadingList } from "@/components/layout/reading/ReadingList.jsx";
 import { RemoveTrailingSlash } from "@/utils/RemoveTrailingSlash.jsx";
 import { ReadingLayout } from "@/pages/reading/ReadingLayout.jsx";
+import { setNavigate } from "@/services/index.js";
 import { Suhuf } from "@/pages/Suhuf.jsx";
-import { setNavigate } from "@/lib/services/index.js";
 
 function App() {
   const navigate = useNavigate();

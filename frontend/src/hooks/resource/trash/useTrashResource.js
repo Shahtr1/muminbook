@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTrash } from "@/lib/services/index.js";
+import { getTrash } from "@/services/index.js";
 
 const Trash = "trash";
 

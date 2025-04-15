@@ -16,6 +16,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { BsPencilFill } from "react-icons/bs";
 import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx";
 import { useRenameSuhuf } from "@/hooks/suhuf/useRenameSuhuf.js";
+import { getPreviousNonWindowPath } from "@/utils/updateNavigationPath.js";
 
 export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
   const { mutate: renameSuhuf } = useRenameSuhuf();
@@ -56,7 +57,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
 
   useEffect(() => {
     if (minimizeWindowId) {
-      console.log("Minimize window:", minimizeWindowId);
+      navigate(getPreviousNonWindowPath());
     }
   }, [minimizeWindowId]);
 

@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import queryClient from "@/config/queryClient.js";
 import { useXToast } from "@/hooks/useXToast.js";
-import { renameSuhuf } from "@/lib/services/index.js";
+import { renameSuhuf } from "@/services/index.js";
 
 export const useRenameSuhuf = () => {
   const toast = useXToast();

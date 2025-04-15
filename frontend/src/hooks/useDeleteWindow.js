@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useXToast } from "@/hooks/useXToast.js";
-import { deleteWindow } from "@/lib/services";
+import { deleteWindow } from "@/services/index.js";
 
 export const useDeleteWindow = () => {
   const toast = useXToast();

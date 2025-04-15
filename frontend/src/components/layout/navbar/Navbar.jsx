@@ -3,7 +3,7 @@ import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
 import { NavItem } from "@/components/layout/navbar/NavItem.jsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { AUTH } from "@/hooks/useAuth.js";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Search2Icon } from "@chakra-ui/icons";
 import { XDivider } from "@/components/layout/XDivider.jsx";
@@ -19,6 +19,7 @@ export const Navbar = () => {
   const user = queryClient.getQueryData([AUTH]);
   const { colorMode } = useColorMode();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [isFocused, setIsFocused] = useState(false);
 

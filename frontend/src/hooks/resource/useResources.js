@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getResources } from "@/lib/services/index.js";
+import { getResources } from "@/services/index.js";
 
 const RESOURCES = "resources";
 
