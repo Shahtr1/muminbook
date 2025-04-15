@@ -8,4 +8,4 @@ export const updateNavigationPath = (nextPathname) => {
   currentPathname = nextPathname;
 };
 
-export const getPreviousNonWindowPath = () => previousPathname || "/dashboard";
+export const getPreviousNonWindowPath = () => previousPathname || "/";
