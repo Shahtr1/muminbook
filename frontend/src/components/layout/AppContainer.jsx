@@ -49,7 +49,7 @@ export const AppContainer = () => {
       minH="100vh"
       h="100vh"
       overflow="hidden"
-      backgroundColor={windowMode ? "black" : "unset"}
+      backgroundColor={windowMode ? windowBgColor : "unset"}
     >
       <Flex
         direction="column"
