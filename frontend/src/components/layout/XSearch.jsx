@@ -62,6 +62,7 @@ export const XSearch = ({
         (!dropdownRef.current || !dropdownRef.current.contains(event.target))
       ) {
         setIsFocused(false);
+        setSearch("");
         onFocusChange?.(false);
       }
     };
@@ -86,6 +87,7 @@ export const XSearch = ({
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         setIsFocused(false);
+        setSearch("");
         onFocusChange?.(false);
         searchInputRef.current?.blur();
       }
