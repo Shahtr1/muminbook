@@ -41,7 +41,13 @@ export const WindowNavbar = ({ children, onClose, onMinimize }) => {
         />
 
         <WindowMenu />
-        <XSearch size="xs" width="100%" bgColor={bgContentColor} />
+        <XSearch
+          size="xs"
+          width="100%"
+          bgColor={bgContentColor}
+          variant="dropdown"
+          isNavSearch
+        />
       </Flex>
       <Flex flex={1}>{children}</Flex>
 

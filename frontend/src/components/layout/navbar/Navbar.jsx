@@ -73,8 +73,10 @@ export const Navbar = () => {
           <XSearch
             focused={isFocused}
             onFocusChange={setIsFocused}
-            expand={true}
+            expand
             display={{ base: isFocused ? "flex" : "none", md: "flex" }}
+            variant="dropdown"
+            isNavSearch
           />
         </Flex>
 
