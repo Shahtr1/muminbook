@@ -1,5 +1,5 @@
 import useAuth from "../../hooks/useAuth.js";
-import { Flex, useTheme } from "@chakra-ui/react";
+import { Flex, useColorModeValue, useTheme } from "@chakra-ui/react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { Navbar } from "@/components/layout/navbar/Navbar.jsx";
 import { Loader } from "@/components/layout/Loader.jsx";
@@ -17,6 +17,10 @@ export const AppContainer = () => {
   const { navbarChildren } = useWindowNavbar();
   const theme = useTheme();
   const location = useLocation();
+  const windowBgColor = useColorModeValue(
+    "wn.bg_content.light",
+    "wn.bg_content.dark",
+  );
 
   const [winManagerVisible, setWinManagerVisible] = useState(false);
   const [handleWindowClose, setHandleWindowClose] = useState(null);
@@ -40,7 +44,13 @@ export const AppContainer = () => {
   if (isLoading) return <Loader height="100vh" />;
 
   return user ? (
-    <Flex direction="column" minH="100vh" h="100vh" overflow="hidden">
+    <Flex
+      direction="column"
+      minH="100vh"
+      h="100vh"
+      overflow="hidden"
+      backgroundColor={windowMode ? "black" : "unset"}
+    >
       <Flex
         direction="column"
         minH={`calc(100vh - ${winManagerHeight}px)`}

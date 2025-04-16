@@ -20,6 +20,8 @@ export const Suhuf = () => {
     );
   };
 
+  queryClient.setQueryData(["windowMode"], true);
+
   useEffect(() => {
     queryClient.setQueryData(["windowMode"], true);
     setNavbarChildren(navbarContent);
