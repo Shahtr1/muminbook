@@ -4,13 +4,15 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useWindowNavbar } from "@/context/WindowNavbarContext.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { Flex } from "@chakra-ui/react";
+import { Loader } from "@/components/layout/Loader.jsx";
+import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
   const queryClient = useQueryClient();
   const { setNavbarChildren } = useWindowNavbar();
 
-  const { data: suhuf, isLoading, isError } = useSuhuf(suhufId);
+  const { data: suhuf, isPending, isSuccess, isError } = useSuhuf(suhufId);
 
   const navbarContent = () => {
     return (
@@ -32,5 +34,11 @@ export const Suhuf = () => {
     };
   }, []);
 
-  return <div>Suhuf</div>;
+  return (
+    <Flex h="100%" w="100%">
+      {isPending && <Loader />}
+      {isError && <SomethingWentWrong />}
+      {isSuccess && <Flex>Suhuf</Flex>}
+    </Flex>
+  );
 };
