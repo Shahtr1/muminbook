@@ -6,7 +6,7 @@ import { EditorBottomPanel } from "@/components/layout/editor/EditorBottomPanel.
 
 export const EditorLayout = () => {
   return (
-    <Flex h="100vh" w="100vw" overflow="hidden">
+    <Flex h="100%" w="100%" overflow="hidden">
       {/* LEFT SIDEBAR */}
       <EditorLeftSidebar />
 

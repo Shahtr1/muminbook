@@ -13,6 +13,7 @@ import alertTheme from "@/theme/alertTheme.js";
 import spacings from "@/theme/spacings.js";
 import menuItemTheme from "@/theme/menuItemTheme.js";
 import skeletonTheme from "@/theme/skeletonTheme.js";
+import { tooltipTheme } from "@/theme/tooltipTheme.js";
 
 const config = {
   initialColorMode: "light",
@@ -41,6 +42,7 @@ const components = {
   FormLabel: formLabelTheme,
   Menu: menuItemTheme,
   Skeleton: skeletonTheme,
+  Tooltip: tooltipTheme,
 };
 
 const theme = extendTheme({
