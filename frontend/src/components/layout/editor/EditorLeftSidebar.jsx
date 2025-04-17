@@ -30,7 +30,7 @@ export const EditorLeftSidebar = () => {
             _hover={{ color: iconActiveColor }}
             cursor="pointer"
           >
-            <BsSearch size="18px" />
+            <BsSearch size="20px" />
           </Box>
         </Tooltip>
       </VStack>
