@@ -6,7 +6,7 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import { XDivider } from "@/components/layout/XDivider.jsx";
+import { XDivider } from "@/components/layout/x/XDivider.jsx";
 import { notificationItems } from "@/data/notificationItems.js";
 
 export const NotificationMenu = ({

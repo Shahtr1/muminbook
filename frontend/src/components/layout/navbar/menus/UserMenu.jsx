@@ -9,7 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AUTH } from "@/hooks/useAuth.js";
-import { XDivider } from "@/components/layout/XDivider.jsx";
+import { XDivider } from "@/components/layout/x/XDivider.jsx";
 import { userItems } from "@/data/userItems.js";
 import { logout } from "@/services/index.js";
 

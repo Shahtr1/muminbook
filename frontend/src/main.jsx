@@ -9,6 +9,7 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "./theme/index.js";
 import { HelmetProvider } from "react-helmet-async";
 import { WindowNavbarProvider } from "@/context/WindowNavbarContext.jsx";
+import "./styles/split.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

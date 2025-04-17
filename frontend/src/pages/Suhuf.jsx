@@ -6,6 +6,7 @@ import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { Flex } from "@chakra-ui/react";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { EditorLayout } from "@/components/layout/editor/EditorLayout.jsx";
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
@@ -35,10 +36,10 @@ export const Suhuf = () => {
   }, []);
 
   return (
-    <Flex h="100%" w="100%">
+    <Flex h="100%" w="100%" overflow="hidden">
       {isPending && <Loader />}
       {isError && <SomethingWentWrong />}
-      {isSuccess && <Flex>Suhuf</Flex>}
+      {isSuccess && <EditorLayout />}
     </Flex>
   );
 };
