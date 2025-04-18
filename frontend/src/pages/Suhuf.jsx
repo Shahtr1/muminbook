@@ -10,6 +10,7 @@ import { EditorLayout } from "@/components/layout/editor/EditorLayout.jsx";
 import { SidebarLeftSVG } from "@/components/svgs/sidebar/SidebarLeftSVG.jsx";
 import { SidebarBottomSVG } from "@/components/svgs/sidebar/SidebarBottomSVG.jsx";
 import { SidebarRightSVG } from "@/components/svgs/sidebar/SidebarRightSVG.jsx";
+import { defaultSidebarState } from "@/components/layout/sidebar/defaultSidebarState.js";
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
@@ -26,7 +27,8 @@ export const Suhuf = () => {
 
   const { data: sidebarState = {} } = useQuery({
     queryKey: ["sidebarState"],
-    queryFn: () => queryClient.getQueryData(["sidebarState"]),
+    queryFn: () =>
+      queryClient.getQueryData(["sidebarState"]) ?? defaultSidebarState,
     staleTime: 0,
   });
 

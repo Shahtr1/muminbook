@@ -8,6 +8,7 @@ import {
 import { BsFiles, BsSearch } from "react-icons/bs";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { defaultSidebarState } from "@/components/layout/sidebar/defaultSidebarState.js";
 
 export const EditorLeftSidebar = () => {
   const queryClient = useQueryClient();
@@ -21,7 +22,8 @@ export const EditorLeftSidebar = () => {
 
   const { data: sidebarState = {} } = useQuery({
     queryKey: ["sidebarState"],
-    queryFn: () => queryClient.getQueryData(["sidebarState"]) ?? {},
+    queryFn: () =>
+      queryClient.getQueryData(["sidebarState"]) ?? defaultSidebarState,
     staleTime: Infinity,
   });
 
