@@ -20,6 +20,7 @@ export const WindowNavbar = ({ children, onClose, onMinimize }) => {
     "wn.icon.hover.light",
     "wn.icon.hover.dark",
   );
+  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,7 +31,15 @@ export const WindowNavbar = ({ children, onClose, onMinimize }) => {
   }
 
   return (
-    <Flex bgColor={bgColor} align="center" justify="space-between" pl={2}>
+    <Flex
+      bgColor={bgColor}
+      align="center"
+      justify="space-between"
+      pl={2}
+      zIndex={2}
+      borderBottom="1px solid"
+      borderColor={borderColor}
+    >
       <Flex gap={2} py="2px" align="center">
         <Image
           w={25}
