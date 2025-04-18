@@ -29,7 +29,7 @@ export const DarkModeToggle = ({
       _active={disableInteraction ? { transform: "none" } : undefined}
       borderRadius="none"
       w="28px"
-      h={height}
+      h={variant === "auth" ? "40px" : height}
     />
   );
 };
