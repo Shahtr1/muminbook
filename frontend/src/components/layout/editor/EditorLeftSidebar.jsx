@@ -34,7 +34,7 @@ export const EditorLeftSidebar = () => {
     if (isOpen && !activeTab) {
       queryClient.setQueryData(["sidebarState"], (prev = {}) => ({
         ...prev,
-        leftTab: "readings",
+        leftTab: "explorer",
       }));
     }
   }, [isOpen, activeTab, queryClient]);
@@ -60,7 +60,7 @@ export const EditorLeftSidebar = () => {
   );
 
   const contentMap = {
-    readings: content("Readings", <Flex>📖 hi</Flex>),
+    explorer: content("Explorer", <Flex>📖 hi</Flex>),
     search: content("Search", <Flex>🔍 Bi</Flex>),
   };
 
@@ -79,14 +79,14 @@ export const EditorLeftSidebar = () => {
         zIndex={1}
       >
         <VStack spacing={5} align="center" w="100%">
-          <Tooltip variant="inverted" label="Readings" placement="right">
+          <Tooltip variant="inverted" label="Explorer" placement="right">
             <Flex
               color={
-                activeTab === "readings" && isOpen ? iconActiveColor : iconColor
+                activeTab === "explorer" && isOpen ? iconActiveColor : iconColor
               }
               _hover={{ color: iconActiveColor }}
               cursor="pointer"
-              onClick={() => toggleTab("readings")}
+              onClick={() => toggleTab("explorer")}
             >
               <BsFiles size="20px" />
             </Flex>

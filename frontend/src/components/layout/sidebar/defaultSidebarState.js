@@ -1,5 +1,5 @@
 export const defaultSidebarState = {
-  leftTab: "readings",
+  leftTab: "explorer",
   leftTabOpen: false,
   rightTab: null,
   rightTabOpen: false,
