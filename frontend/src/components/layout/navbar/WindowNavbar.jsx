@@ -40,7 +40,7 @@ export const WindowNavbar = ({ children, onClose, onMinimize }) => {
       borderBottom="1px solid"
       borderColor={borderColor}
     >
-      <Flex gap={2} py="2px" align="center">
+      <Flex gap={2} py="2px" align="center" pr={2}>
         <Image
           w={25}
           src="/images/logos/logo-image.png"
