@@ -68,7 +68,8 @@ export const EditorLeftSidebar = () => {
   const contentMap = {
     explorer: content(
       "Explorer",
-      <Flex h="100%">
+      <Flex h="100%" flexDir="column">
+        {/*TODO: Add Readings here*/}
         <ResourcesTree
           onSelect={(path) => {
             console.log("path", path);

@@ -100,10 +100,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
             top={isSmallScreen ? "unset" : "52px"}
             left={isSmallScreen ? "unset" : "10px"}
           >
-            <ArabicEnglishSVG
-              dimensions={isSmallScreen ? "55px" : "50px"}
-              activeColor={cardColor}
-            />
+            <ArabicEnglishSVG dimensions="50px" activeColor={cardColor} />
           </Box>
         </Flex>
 

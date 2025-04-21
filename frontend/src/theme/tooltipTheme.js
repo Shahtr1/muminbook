@@ -12,7 +12,6 @@ export const tooltipTheme = {
         color: textColor,
         border: "1px solid",
         borderColor: borderColor,
-        "--popper-arrow-bg": bgColor,
         fontSize: "12px",
       };
     },
