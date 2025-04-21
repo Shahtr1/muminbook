@@ -6,7 +6,7 @@ import { EditorBottomPanel } from "@/components/layout/editor/EditorBottomPanel.
 
 export const EditorLayout = () => {
   return (
-    <Flex h="100%" w="100%" overflow="hidden" pos="relative" zIndex={1}>
+    <Flex h="100%" w="100%" pos="relative" zIndex={1}>
       {/* LEFT SIDEBAR */}
       <EditorLeftSidebar />
 
@@ -18,7 +18,7 @@ export const EditorLayout = () => {
           minSize={100}
           gutterSize={4}
           className="split-vertical"
-          style={{ height: "100%", display: "flex", flexDirection: "column" }} // 👈 Fix here
+          style={{ height: "100%", display: "flex", flexDirection: "column" }}
         >
           <EditorPanel />
           <EditorBottomPanel />

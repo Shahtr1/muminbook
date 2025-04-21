@@ -21,6 +21,7 @@ const TreeNode = ({
   activePath,
   onSelect,
   showFiles = true,
+  isSmall = false,
 }) => {
   const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
   const [isExpanded, setIsExpanded] = useState(false);
@@ -77,7 +78,7 @@ const TreeNode = ({
           />
         ) : (
           <Flex align="center" gap="5px" overflow="hidden">
-            <FolderSVG dimensions="15px" />
+            <FolderSVG dimensions={isSmall ? "12px" : "15px"} />
             <Tooltip
               label={decodeURIComponent(name)}
               hasArrow
@@ -85,7 +86,7 @@ const TreeNode = ({
             >
               <Text
                 whiteSpace="nowrap"
-                fontSize="13px"
+                fontSize={isSmall ? "11px" : "13px"}
                 _groupHover={{ color: isActive ? "brand.500" : "brand.600" }}
                 color={isActive ? "brand.500" : defaultTextColor}
               >
@@ -118,6 +119,7 @@ const TreeNode = ({
                   activePath={activePath}
                   onSelect={onSelect}
                   showFiles={showFiles}
+                  isSmall={isSmall}
                 />
               );
             }
@@ -137,11 +139,14 @@ const TreeNode = ({
                     borderRadius="sm"
                     role="group"
                   >
-                    <FileSVG dimensions="15px" activeColor="brand.500" />
+                    <FileSVG
+                      dimensions={isSmall ? "12px" : "15px"}
+                      activeColor="brand.500"
+                    />
 
                     <Tooltip label={res.name} hasArrow placement="auto-end">
                       <Text
-                        fontSize="13px"
+                        fontSize={isSmall ? "11px" : "13px"}
                         whiteSpace="nowrap"
                         _groupHover={{ color: "brand.600" }}
                       >
@@ -162,6 +167,7 @@ export const ResourcesTree = ({
   activePath,
   onSelect,
   showFiles = true,
+  isSmall = false,
 }) => {
   return (
     <TreeNode
@@ -171,6 +177,7 @@ export const ResourcesTree = ({
       activePath={activePath}
       onSelect={onSelect}
       showFiles={showFiles}
+      isSmall={isSmall}
     />
   );
 };

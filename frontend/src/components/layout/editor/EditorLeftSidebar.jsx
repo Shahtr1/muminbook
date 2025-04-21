@@ -10,6 +10,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
 import { useParams } from "react-router-dom";
+import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
 
 export const EditorLeftSidebar = () => {
   const { id: suhufId } = useParams();
@@ -58,19 +59,31 @@ export const EditorLeftSidebar = () => {
       <Text fontSize="xs" fontWeight="bold" mb={2}>
         {title}
       </Text>
-      {children}
+      <Flex overflow="auto" pr={1}>
+        {children}
+      </Flex>
     </Flex>
   );
 
   const contentMap = {
-    explorer: content("Explorer", <Flex>📖 hi</Flex>),
+    explorer: content(
+      "Explorer",
+      <Flex h="100%">
+        <ResourcesTree
+          onSelect={(path) => {
+            console.log("path", path);
+          }}
+          isSmall={true}
+        />
+      </Flex>,
+    ),
     search: content("Search", <Flex>🔍 Bi</Flex>),
   };
 
   const activeContent = isOpen && activeTab ? contentMap[activeTab] : null;
 
   return (
-    <Flex>
+    <Flex h="100%">
       {/* Icons */}
       <Flex
         w="40px"
@@ -120,8 +133,9 @@ export const EditorLeftSidebar = () => {
         borderColor={borderColor}
         transition="margin-left 0.3s ease-in-out"
         marginLeft={isOpen ? "0" : `-${width}`}
+        h="100%"
       >
-        <VStack spacing={5} align="flex-start" w="100%" px={4}>
+        <VStack spacing={5} align="flex-start" w="100%" pl={2} h="100%">
           {activeContent}
         </VStack>
       </Flex>

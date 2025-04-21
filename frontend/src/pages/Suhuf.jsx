@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useWindowNavbar } from "@/context/WindowNavbarContext.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
-import { Flex, useColorModeValue, useToken } from "@chakra-ui/react";
+import { Flex, useColorModeValue, useTheme, useToken } from "@chakra-ui/react";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { EditorLayout } from "@/components/layout/editor/EditorLayout.jsx";
@@ -18,6 +18,7 @@ export const Suhuf = () => {
   const { setNavbarChildren } = useWindowNavbar();
   const tokenKey = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const [iconActiveColor] = useToken("colors", [tokenKey]);
+  const theme = useTheme();
 
   const [leftTabOpen, setLeftTabOpen] = useState(false);
   const [rightTabOpen, setRightTabOpen] = useState(false);
@@ -85,8 +86,14 @@ export const Suhuf = () => {
     };
   }, [navbarContent, queryClient, setNavbarChildren]);
 
+  const winNavbarHeight = "30px";
+
   return (
-    <Flex h="100%" w="100%" overflow="hidden">
+    <Flex
+      h={`calc(100vh - ${theme.sizes["win-manager-height"]} - ${winNavbarHeight}) `}
+      w="100%"
+      overflow="hidden"
+    >
       {isPending && <Loader />}
       {isError && <SomethingWentWrong />}
       {isSuccess && <EditorLayout />}
