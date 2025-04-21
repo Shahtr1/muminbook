@@ -42,7 +42,7 @@ const colors = {
   wn: {
     bg: {
       dark: "#181818",
-      light: "#ddd",
+      light: "#e5e5e5",
     },
     bg_content: {
       dark: "#1f1f1f",

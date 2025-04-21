@@ -1,6 +1,6 @@
 import {
+  Box,
   Flex,
-  Icon,
   Input,
   Text,
   Tooltip,
@@ -179,30 +179,53 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                     autoFocus
                     width="100px"
                   />
-                  <Icon
-                    as={RiCheckboxFill}
-                    boxSize="13px"
-                    cursor="pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      confirmEdit(type._id);
-                    }}
-                    color={windowMode ? "brand.500" : "white"}
-                  />
-                  <Icon
-                    as={RiCloseCircleFill}
-                    boxSize="13px"
-                    cursor="pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      cancelEdit(type._id);
-                    }}
-                    color="red.600"
-                  />
+
+                  <Tooltip
+                    label="Confirm"
+                    hasArrow={!windowMode}
+                    placement="top"
+                    variant={windowMode ? "inverted" : undefined}
+                  >
+                    <Box
+                      as="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        confirmEdit(type._id);
+                      }}
+                      _hover={{ color: "green.500" }}
+                      color={windowMode ? "brand.500" : "white"}
+                    >
+                      <RiCheckboxFill size="13px" />
+                    </Box>
+                  </Tooltip>
+
+                  <Tooltip
+                    label="Cancel"
+                    hasArrow={!windowMode}
+                    placement="top"
+                    variant={windowMode ? "inverted" : undefined}
+                  >
+                    <Box
+                      as="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        cancelEdit(type._id);
+                      }}
+                      _hover={{ color: "red.500" }}
+                      color="red.600"
+                    >
+                      <RiCloseCircleFill size="13px" />
+                    </Box>
+                  </Tooltip>
                 </Flex>
               ) : (
                 <>
-                  <Tooltip label={type.title} hasArrow placement="top">
+                  <Tooltip
+                    label={type.title}
+                    hasArrow={!windowMode}
+                    placement="top"
+                    variant={windowMode ? "inverted" : undefined}
+                  >
                     <Text
                       fontSize="12px"
                       fontWeight="600"
@@ -215,26 +238,42 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                   </Tooltip>
 
                   <Flex gap={2}>
-                    <Icon
-                      as={BsPencilFill}
-                      fontSize="10px"
-                      _hover={{ color: "gray.500" }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        startEdit(type._id, type.title);
-                      }}
-                    />
-                    {!isActiveWindow(type._id) && (
-                      <Icon
-                        as={RiCloseCircleFill}
-                        fontSize="10px"
-                        _hover={{ color: "red.600" }}
+                    <Tooltip
+                      label="Rename window"
+                      hasArrow={!windowMode}
+                      placement="top"
+                      variant={windowMode ? "inverted" : undefined}
+                    >
+                      <Box
+                        as="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setPendingCloseId(type._id);
-                          openModal();
+                          startEdit(type._id, type.title);
                         }}
-                      />
+                        _hover={{ color: "gray.500" }}
+                      >
+                        <BsPencilFill size="12px" />
+                      </Box>
+                    </Tooltip>
+                    {!isActiveWindow(type._id) && (
+                      <Tooltip
+                        label="Delete window"
+                        hasArrow={!windowMode}
+                        placement="top"
+                        variant={windowMode ? "inverted" : undefined}
+                      >
+                        <Box
+                          as="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setPendingCloseId(type._id);
+                            openModal();
+                          }}
+                          _hover={{ color: "red.600" }}
+                        >
+                          <RiCloseCircleFill size="12px" />
+                        </Box>
+                      </Tooltip>
                     )}
                   </Flex>
                 </>
