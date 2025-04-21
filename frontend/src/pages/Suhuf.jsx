@@ -10,7 +10,7 @@ import { EditorLayout } from "@/components/layout/editor/EditorLayout.jsx";
 import { SidebarLeftSVG } from "@/components/svgs/sidebar/SidebarLeftSVG.jsx";
 import { SidebarBottomSVG } from "@/components/svgs/sidebar/SidebarBottomSVG.jsx";
 import { SidebarRightSVG } from "@/components/svgs/sidebar/SidebarRightSVG.jsx";
-import { defaultSidebarState } from "@/components/layout/sidebar/defaultSidebarState.js";
+import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
@@ -26,9 +26,10 @@ export const Suhuf = () => {
   const { data: suhuf, isPending, isSuccess, isError } = useSuhuf(suhufId);
 
   const { data: sidebarState = {} } = useQuery({
-    queryKey: ["sidebarState"],
+    queryKey: ["sidebarState", suhufId],
     queryFn: () =>
-      queryClient.getQueryData(["sidebarState"]) ?? defaultSidebarState,
+      queryClient.getQueryData(["sidebarState", suhufId]) ??
+      getDefaultSidebarState(),
     staleTime: 0,
   });
 
@@ -42,14 +43,14 @@ export const Suhuf = () => {
 
   const handleClick = useCallback(
     (side) => {
-      queryClient.setQueryData(["sidebarState"], (prev = {}) => {
+      queryClient.setQueryData(["sidebarState", suhufId], (prev = {}) => {
         return {
           ...prev,
           [`${side}TabOpen`]: !prev?.[`${side}TabOpen`],
         };
       });
     },
-    [queryClient],
+    [queryClient, suhufId],
   );
 
   const navbarContent = useMemo(() => {

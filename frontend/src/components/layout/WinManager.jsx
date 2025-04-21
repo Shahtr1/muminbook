@@ -30,11 +30,12 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
     "wn.icon.hover.light",
     "wn.icon.hover.dark",
   );
-  const activeWindowColor = useColorModeValue(
+  const inActiveWindowColor = useColorModeValue(
     "wn.bg_content.light",
     "wn.bg_content.dark",
   );
-  const inActiveWindowColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
+  const activeWindowColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
+  const inactiveBorderColor = useColorModeValue("wn.bg.light", "text.primary");
   const { windows = [] } = useWindows();
 
   const queryClient = useQueryClient();
@@ -139,10 +140,16 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
               p={1}
               cursor="pointer"
               align="center"
-              borderTopRadius="md"
+              borderTopRadius={
+                windowMode && isActiveWindow(type._id) ? "none" : "md"
+              }
               border="1px solid"
               borderBottom="none"
-              borderColor={borderColor}
+              borderColor={
+                windowMode && isActiveWindow(type._id)
+                  ? borderColor
+                  : inactiveBorderColor
+              }
               flex="1 1 0"
               minW="45px"
               maxW="145px"

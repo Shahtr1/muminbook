@@ -8,9 +8,11 @@ import {
 import { BsFiles, BsSearch } from "react-icons/bs";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { defaultSidebarState } from "@/components/layout/sidebar/defaultSidebarState.js";
+import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
+import { useParams } from "react-router-dom";
 
 export const EditorLeftSidebar = () => {
+  const { id: suhufId } = useParams();
   const queryClient = useQueryClient();
 
   const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
@@ -21,9 +23,10 @@ export const EditorLeftSidebar = () => {
   const width = "150px";
 
   const { data: sidebarState = {} } = useQuery({
-    queryKey: ["sidebarState"],
+    queryKey: ["sidebarState", suhufId],
     queryFn: () =>
-      queryClient.getQueryData(["sidebarState"]) ?? defaultSidebarState,
+      queryClient.getQueryData(["sidebarState", suhufId]) ??
+      getDefaultSidebarState(),
     staleTime: Infinity,
   });
 
@@ -32,15 +35,15 @@ export const EditorLeftSidebar = () => {
 
   useEffect(() => {
     if (isOpen && !activeTab) {
-      queryClient.setQueryData(["sidebarState"], (prev = {}) => ({
+      queryClient.setQueryData(["sidebarState", suhufId], (prev = {}) => ({
         ...prev,
         leftTab: "explorer",
       }));
     }
-  }, [isOpen, activeTab, queryClient]);
+  }, [isOpen, activeTab, queryClient, suhufId]);
 
   const toggleTab = (tab) => {
-    queryClient.setQueryData(["sidebarState"], (prev = {}) => {
+    queryClient.setQueryData(["sidebarState", suhufId], (prev = {}) => {
       const isSameTab = prev.leftTab === tab;
       return {
         ...prev,
