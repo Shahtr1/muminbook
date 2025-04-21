@@ -68,6 +68,7 @@ const TreeNode = ({
             e.stopPropagation();
             toggle();
           }}
+          color={defaultTextColor}
         />
         {showLoadingLabel ? (
           <Skeleton
