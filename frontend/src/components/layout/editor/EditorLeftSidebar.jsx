@@ -73,7 +73,7 @@ export const EditorLeftSidebar = () => {
           onSelect={(path) => {
             console.log("path", path);
           }}
-          isSmall={true}
+          windowMode={true}
         />
       </Flex>,
     ),

@@ -21,7 +21,7 @@ const TreeNode = ({
   activePath,
   onSelect,
   showFiles = true,
-  isSmall = false,
+  windowMode = false,
 }) => {
   const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
   const [isExpanded, setIsExpanded] = useState(false);
@@ -79,15 +79,16 @@ const TreeNode = ({
           />
         ) : (
           <Flex align="center" gap="5px" overflow="hidden">
-            <FolderSVG dimensions={isSmall ? "12px" : "15px"} />
+            <FolderSVG dimensions={windowMode ? "12px" : "15px"} />
             <Tooltip
               label={decodeURIComponent(name)}
-              hasArrow
+              hasArrow={!windowMode}
               placement="auto-end"
+              variant={windowMode ? "inverted" : undefined}
             >
               <Text
                 whiteSpace="nowrap"
-                fontSize={isSmall ? "11px" : "13px"}
+                fontSize={windowMode ? "11px" : "13px"}
                 _groupHover={{ color: isActive ? "brand.500" : "brand.600" }}
                 color={isActive ? "brand.500" : defaultTextColor}
               >
@@ -120,7 +121,7 @@ const TreeNode = ({
                   activePath={activePath}
                   onSelect={onSelect}
                   showFiles={showFiles}
-                  isSmall={isSmall}
+                  windowMode={windowMode}
                 />
               );
             }
@@ -141,13 +142,18 @@ const TreeNode = ({
                     role="group"
                   >
                     <FileSVG
-                      dimensions={isSmall ? "12px" : "15px"}
+                      dimensions={windowMode ? "12px" : "15px"}
                       activeColor="brand.500"
                     />
 
-                    <Tooltip label={res.name} hasArrow placement="auto-end">
+                    <Tooltip
+                      label={res.name}
+                      hasArrow={!windowMode}
+                      placement="auto-end"
+                      variant={windowMode ? "inverted" : undefined}
+                    >
                       <Text
-                        fontSize={isSmall ? "11px" : "13px"}
+                        fontSize={windowMode ? "11px" : "13px"}
                         whiteSpace="nowrap"
                         _groupHover={{ color: "brand.600" }}
                       >
@@ -168,7 +174,7 @@ export const ResourcesTree = ({
   activePath,
   onSelect,
   showFiles = true,
-  isSmall = false,
+  windowMode = false,
 }) => {
   return (
     <TreeNode
@@ -178,7 +184,7 @@ export const ResourcesTree = ({
       activePath={activePath}
       onSelect={onSelect}
       showFiles={showFiles}
-      isSmall={isSmall}
+      windowMode={windowMode}
     />
   );
 };
