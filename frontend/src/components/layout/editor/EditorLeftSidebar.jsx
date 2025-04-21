@@ -55,7 +55,7 @@ export const EditorLeftSidebar = () => {
   };
 
   const content = (title, children) => (
-    <Flex flexDir="column" w="100%">
+    <Flex flexDir="column" w="100%" overflow="auto">
       <Text fontSize="xs" fontWeight="bold" mb={2}>
         {title}
       </Text>

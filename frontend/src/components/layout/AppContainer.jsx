@@ -17,10 +17,7 @@ export const AppContainer = () => {
   const { navbarChildren } = useWindowNavbar();
   const theme = useTheme();
   const location = useLocation();
-  const windowBgColor = useColorModeValue(
-    "wn.bg_content.light",
-    "wn.bg_content.dark",
-  );
+  const windowBgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
 
   const [winManagerVisible, setWinManagerVisible] = useState(false);
   const [handleWindowClose, setHandleWindowClose] = useState(null);
