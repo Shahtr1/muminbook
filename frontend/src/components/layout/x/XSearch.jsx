@@ -191,7 +191,7 @@ export const XSearch = ({
         _placeholder={{ color: color }}
         width={width}
       />
-      {!isFocused && (
+      {isNavSearch && !isFocused && (
         <InputRightElement
           height="100%"
           pr={3}
