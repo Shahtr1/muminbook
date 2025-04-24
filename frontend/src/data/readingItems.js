@@ -1,5 +1,17 @@
 export const readingItems = () => [
   {
+    id: "ibn-kathir-translation",
+    uuid: "ibn-kathir-translation",
+    label: "Ibn Kathir Translation",
+    cardColor: "#0EB25D",
+    description:
+      "One of the most respected Tafsirs.\n" +
+      "Explains Quranic verses with Hadith\n" +
+      "and historical context. Offers deep\n" +
+      "insight into meanings and themes.\n" +
+      "Used by scholars worldwide.",
+  },
+  {
     id: "sahih-international",
     uuid: "sahih-international",
     label: "Sahih International",
@@ -23,18 +35,7 @@ export const readingItems = () => [
       "Mubarakpuri. A must-read for Seerah\n" +
       "enthusiasts.",
   },
-  {
-    id: "ibn-kathir-translation",
-    uuid: "ibn-kathir-translation",
-    label: "Ibn Kathir Translation",
-    cardColor: "#0EB25D",
-    description:
-      "One of the most respected Tafsirs.\n" +
-      "Explains Quranic verses with Hadith\n" +
-      "and historical context. Offers deep\n" +
-      "insight into meanings and themes.\n" +
-      "Used by scholars worldwide.",
-  },
+
   {
     id: "sahih-al-bukhari",
     uuid: "sahih-al-bukhari",

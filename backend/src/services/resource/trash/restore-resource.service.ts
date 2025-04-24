@@ -3,7 +3,7 @@ import ResourceType from "../../../constants/enums/resourceType";
 import { PrimaryId } from "../../../constants/primaryId";
 import appAssert from "../../../utils/appAssert";
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../../../constants/http";
-import { getOrCreateLostAndFound } from "../../../utils/resource-helpers/getOrCreateLostAndFound";
+import { getOrCreateLostAndFound } from "../helpers/getOrCreateLostAndFound";
 import { getAllDescendants } from "../common-resource.service";
 
 const hasConflict = async (path: string, userId: PrimaryId) => {

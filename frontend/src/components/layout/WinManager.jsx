@@ -4,6 +4,7 @@ import {
   Input,
   Text,
   Tooltip,
+  useBreakpointValue,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -19,6 +20,7 @@ import { useRenameSuhuf } from "@/hooks/suhuf/useRenameSuhuf.js";
 import { getPreviousNonWindowPath } from "@/utils/updateNavigationPath.js";
 
 export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
+  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const { mutate: renameSuhuf } = useRenameSuhuf();
   const { mutate: deleteWindow } = useDeleteWindow();
   const navigate = useNavigate();
@@ -121,7 +123,12 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
 
   return (
     <>
-      <Flex px={1} h="win-manager-height" w="100%" overflowX="auto">
+      <Flex
+        px={isSmallScreen ? 3 : 1}
+        h="win-manager-height"
+        w="100%"
+        overflowX="auto"
+      >
         {windows.map((win) => {
           const { _id, typeId: type } = win;
           const isEditing = editModes[type._id];
@@ -155,7 +162,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                   : inactiveBorderColor
               }
               flex="1 1 0"
-              minW="45px"
+              minW="120px"
               maxW="145px"
               justify="space-between"
               gap={2}
@@ -177,7 +184,6 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                       e.key === "Enter" && confirmEdit(type._id);
                     }}
                     autoFocus
-                    width="100px"
                   />
 
                   <Tooltip

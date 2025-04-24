@@ -8,7 +8,7 @@ import initializeDefaultRBAC from "./config/initializeDefaultRBAC";
 import initializeFamilyTree from "./config/initializeFamilyTree";
 
 const initServer = async () => {
-  app.listen(PORT, async () => {
+  app.listen(Number(PORT), "0.0.0.0", async () => {
     await connectToDatabase();
     console.log(
       `Server is running on port ${PORT} in ${NODE_ENV} environment.`,

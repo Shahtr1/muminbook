@@ -1,5 +1,7 @@
-import ResourceModel, { ResourceDocument } from "../../models/resource.model";
-import { PrimaryId } from "../../constants/primaryId";
+import ResourceModel, {
+  ResourceDocument,
+} from "../../../models/resource.model";
+import { PrimaryId } from "../../../constants/primaryId";
 
 const cloneResource = (
   resource: ResourceDocument,

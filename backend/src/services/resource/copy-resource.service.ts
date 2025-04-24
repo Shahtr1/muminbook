@@ -7,7 +7,7 @@ import {
   buildClonedDescendants,
   buildClonedRootResource,
   generateCopyName,
-} from "../../utils/resource-helpers/copyHelpers";
+} from "./helpers/copyHelpers";
 import {
   assertNotRootFolder,
   getAllDescendants,
