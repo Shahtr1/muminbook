@@ -39,7 +39,7 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
   const flexDirection = isSmallScreen ? "row" : "column";
   const height = isSmallScreen
     ? "auto"
-    : `calc(100vh - ${theme.sizes["navbar-height"]} - ${windows.length > 0 ? theme.sizes["win-manager-height"] : "0px"})`;
+    : `calc(100dvh - ${theme.sizes["navbar-height"]} - ${windows.length > 0 ? theme.sizes["win-manager-height"] : "0px"})`;
   const width = isSmallScreen ? "100%" : isOpen ? "250px" : "auto";
 
   const activeItemRef = useRef(null);

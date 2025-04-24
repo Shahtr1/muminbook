@@ -57,6 +57,7 @@ export const Folder = ({ onClick, width, folderPath, resource }) => {
     >
       {showItemToolbar && (
         <ItemToolbar
+          right={isSmallScreen ? "-5px" : "5px"}
           children={
             <ResourcesActionItems
               resource={resource}

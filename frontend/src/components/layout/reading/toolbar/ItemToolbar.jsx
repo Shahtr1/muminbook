@@ -10,7 +10,12 @@ import {
 } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 
-export const ItemToolbar = ({ zIndex, isFavourite = false, children }) => {
+export const ItemToolbar = ({
+  zIndex,
+  isFavourite = false,
+  children,
+  right = "5px",
+}) => {
   const location = useLocation();
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const isFolderView =
@@ -21,7 +26,7 @@ export const ItemToolbar = ({ zIndex, isFavourite = false, children }) => {
     <Flex
       position="absolute"
       top={isFolderView ? "0" : "8px"}
-      right="5px"
+      right={right}
       gap={isFolderView ? 1 : 2}
       zIndex={zIndex ?? "auto"}
       align="center"

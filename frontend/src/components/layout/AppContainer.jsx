@@ -37,21 +37,21 @@ export const AppContainer = () => {
     staleTime: 0,
   });
 
-  if (isError) return <SomethingWentWrong height="100vh" />;
-  if (isLoading) return <Loader height="100vh" />;
+  if (isError) return <SomethingWentWrong height="100dvh" />;
+  if (isLoading) return <Loader height="100dvh" />;
 
   return user ? (
     <Flex
       direction="column"
-      minH="100vh"
-      h="100vh"
+      minH="100dvh"
+      h="100dvh"
       overflow="hidden"
       backgroundColor={windowMode ? windowBgColor : "unset"}
     >
       <Flex
         direction="column"
-        minH={`calc(100vh - ${winManagerHeight}px)`}
-        h={`calc(100vh - ${winManagerHeight}px)`}
+        minH={`calc(100dvh - ${winManagerHeight}px)`}
+        h={`calc(100dvh - ${winManagerHeight}px)`}
         overflow="auto"
         pt={windowMode ? undefined : "navbar-height"}
       >

@@ -48,7 +48,7 @@ const Login = () => {
     <>
       <DarkModeToggle position="absolute" inset="10px 20px auto auto" />
       <Flex
-        minH="100vh"
+        minH="100dvh"
         maxW="x-max-width"
         align="center"
         justify={{ base: "center", md: "space-between" }}

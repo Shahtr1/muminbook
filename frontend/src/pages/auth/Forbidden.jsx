@@ -21,7 +21,7 @@ export const Forbidden = () => {
   };
 
   return (
-    <Flex width="100%" height="100vh" justify="center" align="center">
+    <Flex width="100%" height="100dvh" justify="center" align="center">
       <Alert
         status="warning"
         w="fit-content"

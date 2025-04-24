@@ -107,7 +107,7 @@ const Register = () => {
   return (
     <>
       <DarkModeToggle position="absolute" inset="10px 20px auto auto" />
-      <Flex minH="100vh" align="center" justify="center">
+      <Flex minH="100dvh" align="center" justify="center">
         <Stack spacing={8} align="center">
           <Image
             cursor="pointer"

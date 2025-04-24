@@ -90,7 +90,7 @@ export const Suhuf = () => {
 
   return (
     <Flex
-      h={`calc(100vh - ${theme.sizes["win-manager-height"]} - ${winNavbarHeight}) `}
+      h={`calc(100dvh - ${theme.sizes["win-manager-height"]} - ${winNavbarHeight}) `}
       w="100%"
       overflow="hidden"
     >

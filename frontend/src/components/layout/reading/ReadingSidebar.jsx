@@ -36,8 +36,8 @@ export const ReadingSidebar = ({ overview }) => {
       />
 
       <Flex
-        h={`calc(100vh - ${totalHeaderOffset}px)`}
-        minH={`calc(100vh - ${totalHeaderOffset}px)`}
+        h={`calc(100dvh - ${totalHeaderOffset}px)`}
+        minH={`calc(100dvh - ${totalHeaderOffset}px)`}
         top={`${breadcrumbHeight}px`}
         position="sticky"
         w={sidebarWidth}
