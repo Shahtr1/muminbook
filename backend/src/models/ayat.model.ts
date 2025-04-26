@@ -1,5 +1,4 @@
 import mongoose, { Document, Schema } from "mongoose";
-import RevelationPlace from "../constants/enums/revelationPlace";
 import { PrimaryId } from "../constants/primaryId";
 
 export interface AyatDocument extends Document {
