@@ -4,6 +4,7 @@ import { PrimaryId } from "../constants/primaryId";
 
 export interface FamilyTreeDocument extends Document {
   uuid: string;
+
   biblicalName?: string;
   islamicName?: string;
   arabicName?: string;

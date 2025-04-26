@@ -1,16 +1,22 @@
-import FamilyTreeModel from "../models/family-tree.model";
-import { familyTreeApi } from "../data/familyTreeApi";
-import { PrimaryId } from "../constants/primaryId";
+import FamilyTreeModel from "../../models/family-tree.model";
+import { familyTreeApi } from "../../data/familyTreeApi";
+import { PrimaryId } from "../../constants/primaryId";
 
 const initializeFamilyTree = async () => {
   try {
+    console.log("🌳 Initializing Family Tree...");
+
     const existingRecords = await FamilyTreeModel.countDocuments();
     if (existingRecords > 0) {
+      console.log(
+        `ℹ️ Family Tree already initialized with ${existingRecords} entries.`,
+      );
       return;
     }
 
     const insertedMembers = new Map<string, PrimaryId>();
 
+    // First pass: insert members
     for (const member of familyTreeApi) {
       const {
         id,
@@ -35,6 +41,11 @@ const initializeFamilyTree = async () => {
       insertedMembers.set(id, savedMember._id as PrimaryId);
     }
 
+    console.log(`✅ Inserted ${insertedMembers.size} family tree members.`);
+
+    // Second pass: link parents
+    let linkedCount = 0;
+
     for (const member of familyTreeApi) {
       if (member.parents) {
         let parentsArray: PrimaryId[] = [];
@@ -52,10 +63,14 @@ const initializeFamilyTree = async () => {
           { uuid: member.uuid },
           { parents: parentsArray },
         );
+        linkedCount++;
       }
     }
+
+    console.log(`🔗 Linked parent relationships for ${linkedCount} members.`);
+    console.log("🎉 Family Tree initialized successfully.");
   } catch (error) {
-    console.error("Error while initializing Family Tree:", error);
+    console.error("❌ Error while initializing Family Tree:", error);
     process.exit(1);
   }
 };

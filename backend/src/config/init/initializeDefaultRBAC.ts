@@ -1,6 +1,6 @@
-import RoleModel from "../models/role.model";
-import RoleType from "../constants/enums/roleType";
-import UserModel from "../models/user.model";
+import RoleModel from "../../models/role.model";
+import RoleType from "../../constants/enums/roleType";
+import UserModel from "../../models/user.model";
 import {
   ADMIN_DATE_OF_BIRTH,
   ADMIN_EMAIL,
@@ -8,22 +8,25 @@ import {
   ADMIN_GENDER,
   ADMIN_LASTNAME,
   ADMIN_PASSWORD,
-} from "../constants/env";
-import UserRoleModel from "../models/user-role.model";
-import ResourceModel from "../models/resource.model";
-import ResourceType from "../constants/enums/resourceType";
+} from "../../constants/env";
+import UserRoleModel from "../../models/user-role.model";
+import ResourceModel from "../../models/resource.model";
+import ResourceType from "../../constants/enums/resourceType";
 
 const initializeDefaultRBAC = async () => {
   try {
+    console.log("🔐 Initializing default RBAC...");
+
     let userRole = await RoleModel.findOne({ type: RoleType.User });
     if (!userRole) {
       userRole = await RoleModel.create({
         type: RoleType.User,
         description: "This is the role assigned to user",
       });
+      console.log("✅ Created User role");
+    } else {
+      console.log("ℹ️  User role already exists");
     }
-
-    const userRoleId = userRole._id;
 
     let adminRole = await RoleModel.findOne({ type: RoleType.Admin });
     if (!adminRole) {
@@ -31,8 +34,10 @@ const initializeDefaultRBAC = async () => {
         type: RoleType.Admin,
         description: "This is the role assigned to admin",
       });
+      console.log("✅ Created Admin role");
+    } else {
+      console.log("ℹ️  Admin role already exists");
     }
-    const adminRoleId = adminRole._id;
 
     let admin = await UserModel.findOne({ email: ADMIN_EMAIL });
     if (!admin) {
@@ -45,40 +50,46 @@ const initializeDefaultRBAC = async () => {
         password: ADMIN_PASSWORD,
         verified: true,
       });
+      console.log("✅ Created admin user");
+    } else {
+      console.log("ℹ️  Admin user already exists");
     }
+
     const adminId = admin._id;
 
-    const existingAdminRole = await UserRoleModel.findOne({
+    const adminUserRole = await UserRoleModel.findOne({
       userId: adminId,
-      roleId: adminRoleId,
+      roleId: adminRole._id,
     });
 
-    if (!existingAdminRole) {
+    if (!adminUserRole) {
       await UserRoleModel.create({
         userId: adminId,
-        roleId: adminRoleId,
+        roleId: adminRole._id,
       });
+      console.log("✅ Assigned Admin role to admin user");
     }
 
-    const existingUserRoleForAdmin = await UserRoleModel.findOne({
+    const adminHasUserRole = await UserRoleModel.findOne({
       userId: adminId,
-      roleId: userRoleId,
+      roleId: userRole._id,
     });
 
-    if (!existingUserRoleForAdmin) {
+    if (!adminHasUserRole) {
       await UserRoleModel.create({
         userId: adminId,
-        roleId: userRoleId,
+        roleId: userRole._id,
       });
+      console.log("✅ Also assigned User role to admin user");
     }
 
-    const existingResourceForAdmin = await ResourceModel.findOne({
+    const adminFolder = await ResourceModel.findOne({
       userId: adminId,
       name: "my-files",
       type: ResourceType.Folder,
     });
 
-    if (!existingResourceForAdmin) {
+    if (!adminFolder) {
       await ResourceModel.create({
         name: "my-files",
         type: ResourceType.Folder,
@@ -87,9 +98,17 @@ const initializeDefaultRBAC = async () => {
         userId: adminId,
         pinned: true,
       });
+      console.log("✅ Created root resource folder for admin");
+    } else {
+      console.log("ℹ️  Resource folder already exists");
     }
+
+    console.log("🎉 Default RBAC initialized successfully.");
   } catch (error) {
-    console.log("Error while initializing default RBAC configuration", error);
+    console.error(
+      "❌ Error while initializing default RBAC configuration:",
+      error,
+    );
     process.exit(1);
   }
 };
