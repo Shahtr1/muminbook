@@ -47,7 +47,7 @@ export const ReadingSidebar = ({ overview }) => {
         borderRightWidth="1px"
         borderColor={borderColor}
         flexDir="column"
-        zIndex={1}
+        zIndex={100}
         gap={2}
         ml={isSidebarOpen ? 0 : `-${sidebarWidth}`}
         transition="margin-left 0.3s ease-in-out"

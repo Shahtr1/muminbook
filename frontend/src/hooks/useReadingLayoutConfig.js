@@ -1,7 +1,11 @@
 import { useBreakpointValue, useTheme } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 
 export const useReadingLayoutConfig = () => {
   const theme = useTheme();
+  const { data: windows = [] } = useQuery({
+    queryKey: ["windows"],
+  });
 
   const navbarHeight = parseInt(theme.space["navbar-height"]);
   const breadcrumbHeight = 40;
@@ -21,7 +25,11 @@ export const useReadingLayoutConfig = () => {
   );
 
   const totalHeaderOffset =
-    navbarHeight + breadcrumbHeight + readingPaddingTop + readingHeaderHeight;
+    navbarHeight +
+    breadcrumbHeight +
+    readingPaddingTop +
+    readingHeaderHeight +
+    parseInt(windows.length > 0 ? theme.sizes["win-manager-height"] : "0");
 
   const sidebarWidth = theme.space["sidebar-width"];
 
