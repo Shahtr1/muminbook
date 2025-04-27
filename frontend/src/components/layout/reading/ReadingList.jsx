@@ -6,8 +6,19 @@ import { useIsMyFilesEmpty } from "@/hooks/resource/useIsMyFilesEmpty.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { useReading } from "@/hooks/useReading.js";
+import { QuranSVG } from "@/components/svgs/QuranSVG.jsx";
+import { ArabicEnglishSVG } from "@/components/svgs/ArabicEnglishSVG.jsx";
+import { BookSVG } from "@/components/svgs/BookSVG.jsx";
+import { StorySVG } from "@/components/svgs/StorySVG.jsx";
 
 export const ReadingList = () => {
+  const readingSvgMap = {
+    quran: QuranSVG,
+    "sealed-nectar": StorySVG,
+    "sahih-bukhari": StorySVG,
+    "sahih-muslim": StorySVG,
+    "sahih-international": ArabicEnglishSVG,
+  };
   const gapSize = "25px";
   const itemWidth = useBreakpointValue({
     base: `100%`,
@@ -35,9 +46,17 @@ export const ReadingList = () => {
         resource={{ empty: emptyMyFiles }}
       />
 
-      {readings.map((item) => (
-        <ReadingCard key={item.id} {...item} width={itemWidth} />
-      ))}
+      {readings.map((item) => {
+        const SvgIcon = readingSvgMap[item.uuid] || BookSVG;
+        return (
+          <ReadingCard
+            key={item._id}
+            {...item}
+            svg={<SvgIcon dimensions="50px" activeColor={item.color} />}
+            width={itemWidth}
+          />
+        );
+      })}
     </Flex>
   );
 };

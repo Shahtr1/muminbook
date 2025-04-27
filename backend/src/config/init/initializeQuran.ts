@@ -2,10 +2,10 @@ import SurahModel from "../../models/surah.model";
 import JuzModel from "../../models/juz.model";
 import AyatModel from "../../models/ayat.model";
 import ReadingModel from "../../models/reading.model"; // ➡️ Import ReadingModel
-import { surahs } from "../../data/surahs";
+import { surahsApi } from "../../data/surahsApi";
 import { loadAyats } from "../../utils/loadAyats";
-import { juzList } from "../../data/juzList";
-import { readings } from "../../data/readings"; // ➡️ Import readings array
+import { juzListApi } from "../../data/juzListApi";
+import { readingsApi } from "../../data/readingsApi"; // ➡️ Import readings array
 
 const initializeQuran = async () => {
   try {
@@ -13,7 +13,7 @@ const initializeQuran = async () => {
     const existingJuz = await JuzModel.countDocuments();
     let juzMap = new Map();
     if (existingJuz === 0) {
-      const insertedJuz = await JuzModel.insertMany(juzList);
+      const insertedJuz = await JuzModel.insertMany(juzListApi);
       juzMap = new Map(insertedJuz.map((juz) => [juz.uuid, juz._id]));
       console.log("✅ Juz initialized successfully.");
     } else {
@@ -26,7 +26,7 @@ const initializeQuran = async () => {
     const existingSurahs = await SurahModel.countDocuments();
     let surahMap = new Map();
     if (existingSurahs === 0) {
-      const insertedSurahs = await SurahModel.insertMany(surahs);
+      const insertedSurahs = await SurahModel.insertMany(surahsApi);
       surahMap = new Map(
         insertedSurahs.map((surah) => [surah.uuid, surah._id]),
       );
@@ -62,10 +62,14 @@ const initializeQuran = async () => {
       );
     }
 
+    // Always replace Readings
+    // await ReadingModel.deleteMany({});
+    // console.log("🗑️ Existing Readings removed.");
+
     // Insert Readings if not already present
     const existingReadings = await ReadingModel.countDocuments();
     if (existingReadings === 0) {
-      await ReadingModel.insertMany(readings);
+      await ReadingModel.insertMany(readingsApi);
       console.log("✅  Readings initialized successfully.");
     } else {
       console.log(

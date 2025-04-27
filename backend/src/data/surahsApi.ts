@@ -1,7 +1,7 @@
 import RevelationPlace from "../constants/enums/revelationPlace";
 import { Surah } from "../services/surah.service";
 
-export const surahs: Surah[] = [
+export const surahsApi: Surah[] = [
   {
     uuid: 1,
     name: "الفاتحة",

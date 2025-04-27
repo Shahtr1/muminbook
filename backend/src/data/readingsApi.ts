@@ -1,9 +1,9 @@
 import { ReadingDocument } from "../models/reading.model";
 
-export const readings: Partial<ReadingDocument>[] = [
+export const readingsApi: Partial<ReadingDocument>[] = [
   {
     uuid: "quran",
-    label: "Qur'an",
+    label: "The Holy Qur'an",
     color: "#0EB25D",
     description:
       "The timeless and unaltered Arabic text of the Noble Qur'an.\n" +
@@ -24,7 +24,7 @@ export const readings: Partial<ReadingDocument>[] = [
   {
     uuid: "sealed-nectar",
     label: "The Sealed Nectar",
-    color: "#B20E0E",
+    color: "#db461e",
     description:
       "An award-winning biography of the Prophet Muhammad ﷺ,\n" +
       "offering a detailed and authentic account of his noble life.\n" +

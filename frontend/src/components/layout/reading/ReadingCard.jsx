@@ -7,12 +7,18 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { ArabicEnglishSVG } from "@/components/svgs/ArabicEnglishSVG.jsx";
 import { CardSVG } from "@/components/svgs/CardSVG.jsx";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
 import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 
-export const ReadingCard = ({ label, color, description, uuid, width }) => {
+export const ReadingCard = ({
+  label,
+  color,
+  description,
+  uuid,
+  width,
+  svg,
+}) => {
   const navigate = useNavigate();
   const bgColor = useColorModeValue("white", "gray.800");
 
@@ -100,7 +106,7 @@ export const ReadingCard = ({ label, color, description, uuid, width }) => {
             top={isSmallScreen ? "unset" : "52px"}
             left={isSmallScreen ? "unset" : "10px"}
           >
-            <ArabicEnglishSVG dimensions="50px" activeColor={color} />
+            {svg}
           </Box>
         </Flex>
 
