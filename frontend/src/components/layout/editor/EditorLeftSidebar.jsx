@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
 import { useParams } from "react-router-dom";
 import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
+import { ReadingsTree } from "@/components/layout/editor/ReadingsTree.jsx";
 
 export const EditorLeftSidebar = () => {
   const { id: suhufId } = useParams();
@@ -69,7 +70,11 @@ export const EditorLeftSidebar = () => {
     explorer: content(
       "Explorer",
       <Flex h="100%" flexDir="column">
-        {/*TODO: Add Readings here*/}
+        <ReadingsTree
+          onSelect={(path) => {
+            console.log("path", path);
+          }}
+        />
         <ResourcesTree
           onSelect={(path) => {
             console.log("path", path);
@@ -78,7 +83,7 @@ export const EditorLeftSidebar = () => {
         />
       </Flex>,
     ),
-    search: content("Search", <Flex>🔍 Bi</Flex>),
+    search: content("Search", <Flex>🔍 Search</Flex>),
   };
 
   const activeContent = isOpen && activeTab ? contentMap[activeTab] : null;

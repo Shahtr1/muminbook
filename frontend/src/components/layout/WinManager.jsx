@@ -258,9 +258,11 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                         }}
                         _hover={{ color: "gray.500" }}
                         color={
-                          isActiveWindow(type?._id)
-                            ? undefined
-                            : textDisabledColor
+                          windowMode
+                            ? isActiveWindow(type?._id)
+                              ? undefined
+                              : textDisabledColor
+                            : undefined
                         }
                       >
                         <BsPencilFill size="12px" />
@@ -282,9 +284,11 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                           }}
                           _hover={{ color: "red.600" }}
                           color={
-                            isActiveWindow(type?._id)
-                              ? undefined
-                              : textDisabledColor
+                            windowMode
+                              ? isActiveWindow(type?._id)
+                                ? undefined
+                                : textDisabledColor
+                              : undefined
                           }
                         >
                           <RiCloseCircleFill size="12px" />
