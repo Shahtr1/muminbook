@@ -1,6 +1,7 @@
 const whiteAlpha700 = "rgba(255, 255, 255, 0.7)";
 const primaryText = "#343637";
 const secondaryText = "#797C82";
+const disabledText = "#A2A5AC";
 
 const colors = {
   brand: {
@@ -30,6 +31,7 @@ const colors = {
   text: {
     primary: primaryText,
     secondary: secondaryText,
+    disabled: disabledText,
   },
   active: {
     light: primaryText,

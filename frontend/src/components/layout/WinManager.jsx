@@ -26,7 +26,10 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isOpen, onOpen: openModal, onClose } = useDisclosure();
-  const borderColor = useColorModeValue("white", "gray.800");
+  const textDisabledColor = useColorModeValue(
+    "text.secondary",
+    "text.disabled",
+  );
   const hoverBg = useColorModeValue("brand.400", "brand.600");
   const winModeHoverBg = useColorModeValue(
     "wn.icon.hover.light",
@@ -34,16 +37,9 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
   );
   const activeWindowColor = useColorModeValue(
     "wn.bg_content.light",
-    "wn.bg.dark",
-  );
-  const inActiveWindowColor = useColorModeValue(
-    "wn.bg.light",
     "wn.bg_content.dark",
   );
-  const inactiveBorderColor = useColorModeValue(
-    "whiteAlpha.900",
-    "text.primary",
-  );
+  const inActiveWindowColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
   const { windows = [] } = useWindows();
 
   const queryClient = useQueryClient();
@@ -128,6 +124,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
         h="win-manager-height"
         w="100%"
         overflowX="auto"
+        gap="1px"
       >
         {windows.map((win) => {
           const { _id, typeId: type } = win;
@@ -156,11 +153,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
               borderTopRadius="md"
               border="1px solid"
               borderBottom="none"
-              borderColor={
-                windowMode && isActiveWindow(type._id)
-                  ? borderColor
-                  : inactiveBorderColor
-              }
+              borderColor={windowMode ? activeWindowColor : "brand.500"}
               flex="1 1 0"
               minW="120px"
               maxW="145px"
@@ -238,6 +231,13 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                       whiteSpace="nowrap"
                       overflow="hidden"
                       textOverflow="ellipsis"
+                      color={
+                        windowMode
+                          ? isActiveWindow(type._id)
+                            ? undefined
+                            : textDisabledColor
+                          : undefined
+                      }
                     >
                       {type.title}
                     </Text>
@@ -257,6 +257,11 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                           startEdit(type._id, type.title);
                         }}
                         _hover={{ color: "gray.500" }}
+                        color={
+                          isActiveWindow(type?._id)
+                            ? undefined
+                            : textDisabledColor
+                        }
                       >
                         <BsPencilFill size="12px" />
                       </Box>
@@ -276,6 +281,11 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                             openModal();
                           }}
                           _hover={{ color: "red.600" }}
+                          color={
+                            isActiveWindow(type?._id)
+                              ? undefined
+                              : textDisabledColor
+                          }
                         >
                           <RiCloseCircleFill size="12px" />
                         </Box>
