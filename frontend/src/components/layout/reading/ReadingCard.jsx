@@ -12,7 +12,7 @@ import { CardSVG } from "@/components/svgs/CardSVG.jsx";
 import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
 import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
 
-export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
+export const ReadingCard = ({ label, color, description, uuid, width }) => {
   const navigate = useNavigate();
   const bgColor = useColorModeValue("white", "gray.800");
 
@@ -59,7 +59,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
           h={isSmallScreen ? "100%" : "50%"}
           bgColor={bgColor}
           borderTop={isSmallScreen ? "none" : "3px solid"}
-          borderColor={cardColor}
+          borderColor={color}
           opacity={isSmallScreen ? 0.8 : 0.9}
           zIndex="1000"
           flexDir="column"
@@ -71,7 +71,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
             textAlign={isSmallScreen ? "start" : "center"}
             fontSize="15px"
             fontWeight="bold"
-            color={cardColor}
+            color={color}
           >
             {label}
           </Text>
@@ -91,7 +91,7 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
           <Box
             border="2px solid"
             borderBottom="3px solid"
-            borderColor={cardColor}
+            borderColor={color}
             borderRadius="md"
             h="fit-content"
             position={isSmallScreen ? "relative" : "absolute"}
@@ -100,12 +100,12 @@ export const ReadingCard = ({ label, cardColor, description, uuid, width }) => {
             top={isSmallScreen ? "unset" : "52px"}
             left={isSmallScreen ? "unset" : "10px"}
           >
-            <ArabicEnglishSVG dimensions="50px" activeColor={cardColor} />
+            <ArabicEnglishSVG dimensions="50px" activeColor={color} />
           </Box>
         </Flex>
 
         <CardSVG
-          activeColor={cardColor}
+          activeColor={color}
           dimensions="250px"
           absolute={true}
           absoluteStyles={absoluteStyles}

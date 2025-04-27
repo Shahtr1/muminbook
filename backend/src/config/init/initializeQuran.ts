@@ -1,10 +1,11 @@
 import SurahModel from "../../models/surah.model";
 import JuzModel from "../../models/juz.model";
 import AyatModel from "../../models/ayat.model";
-
+import ReadingModel from "../../models/reading.model"; // ➡️ Import ReadingModel
 import { surahs } from "../../data/surahs";
 import { loadAyats } from "../../utils/loadAyats";
 import { juzList } from "../../data/juzList";
+import { readings } from "../../data/readings"; // ➡️ Import readings array
 
 const initializeQuran = async () => {
   try {
@@ -54,10 +55,21 @@ const initializeQuran = async () => {
       }));
 
       await AyatModel.insertMany(mappedAyats);
-      console.log("✅ Ayats initialized successfully.");
+      console.log("✅  Ayats initialized successfully.");
     } else {
       console.log(
         `ℹ️ Ayats already initialized (${existingAyats} entries found).`,
+      );
+    }
+
+    // Insert Readings if not already present
+    const existingReadings = await ReadingModel.countDocuments();
+    if (existingReadings === 0) {
+      await ReadingModel.insertMany(readings);
+      console.log("✅  Readings initialized successfully.");
+    } else {
+      console.log(
+        `ℹ️ Readings already initialized (${existingReadings} entries found).`,
       );
     }
   } catch (error) {

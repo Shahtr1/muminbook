@@ -20,3 +20,4 @@ export const deleteResource = (id) => API.delete(`/resources/${id}`);
 export const getOverview = () => API.get(`/resources/overview`);
 export const updateAccess = (id) => API.patch(`/resources/${id}/access`);
 export const togglePin = (id) => API.patch(`/resources/${id}/toggle-pin`);
+export const getReadings = () => API.get(`/readings`);

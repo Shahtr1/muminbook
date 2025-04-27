@@ -1,11 +1,11 @@
 import { Flex, useBreakpointValue } from "@chakra-ui/react";
 import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
-import { readingItems } from "@/data/readingItems.js";
 import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
 import { useNavigate } from "react-router-dom";
 import { useIsMyFilesEmpty } from "@/hooks/resource/useIsMyFilesEmpty.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { useReading } from "@/hooks/useReading.js";
 
 export const ReadingList = () => {
   const gapSize = "25px";
@@ -17,7 +17,12 @@ export const ReadingList = () => {
   });
 
   const navigate = useNavigate();
-  const { emptyMyFiles, isPending, isError } = useIsMyFilesEmpty();
+  const { emptyMyFiles, isMyFilesEmptyPending, isMyFilesEmptyError } =
+    useIsMyFilesEmpty();
+  const { readings, isReadingPending, isReadingError } = useReading();
+
+  const isPending = isMyFilesEmptyPending || isReadingPending;
+  const isError = isMyFilesEmptyError || isReadingError;
 
   if (isPending) return <Loader />;
   if (isError) return <SomethingWentWrong />;
@@ -30,7 +35,7 @@ export const ReadingList = () => {
         resource={{ empty: emptyMyFiles }}
       />
 
-      {readingItems().map((item) => (
+      {readings.map((item) => (
         <ReadingCard key={item.id} {...item} width={itemWidth} />
       ))}
     </Flex>

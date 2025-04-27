@@ -13,6 +13,7 @@ import resourceRoutes from "./routes/resource.route";
 import "./jobs/trashCleanupJob";
 import suhufRoutes from "./routes/suhuf.route";
 import windowRoute from "./routes/window.route";
+import readingRoutes from "./routes/reading.route";
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/family-tree", authenticate(), familyTreeRoutes);
 app.use("/resources", authenticate(), resourceRoutes);
 app.use("/windows", authenticate(), windowRoute);
 app.use("/suhuf", authenticate(), suhufRoutes);
+app.use("/readings", authenticate(), readingRoutes);
 
 app.use(errorHandler);
 
