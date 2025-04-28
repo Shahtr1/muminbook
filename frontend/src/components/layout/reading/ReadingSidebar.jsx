@@ -15,7 +15,7 @@ export const ReadingSidebar = ({ overview }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
-  const { sidebarWidth, totalHeaderOffset, navbarHeight, breadcrumbHeight } =
+  const { sidebarWidth, totalHeaderOffset, breadcrumbHeight } =
     useReadingLayoutConfig();
 
   const currentPath =

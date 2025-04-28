@@ -34,7 +34,6 @@ export const useReadingLayoutConfig = () => {
   const sidebarWidth = theme.space["sidebar-width"];
 
   return {
-    navbarHeight,
     breadcrumbHeight,
     readingPaddingTop,
     readingHeaderHeight,
