@@ -140,7 +140,7 @@ export const Suhuf = () => {
           >
             <Flex direction="column" gap={2}>
               <Tooltip
-                label={suhuf?.name || "Untitled Suhuf"}
+                label={suhuf?.title || "Untitled Suhuf"}
                 placement="left"
                 variant="inverted"
               >
@@ -151,7 +151,7 @@ export const Suhuf = () => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-                  {suhuf?.name || "Untitled Suhuf"}
+                  {suhuf?.title || "Untitled Suhuf"}
                 </Text>
               </Tooltip>
 
@@ -212,6 +212,7 @@ export const Suhuf = () => {
     borderColor,
     isSmallScreen,
     suhufMenuOpen,
+    suhuf,
   ]);
 
   useEffect(() => {
