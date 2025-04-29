@@ -2,7 +2,6 @@ import {
   Button,
   Flex,
   Icon,
-  Image,
   Menu,
   MenuButton,
   MenuList,
@@ -14,6 +13,7 @@ import {
 import { AddIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useOpenSuhuf } from "@/hooks/suhuf/useOpenSuhuf.js";
 import { useState } from "react";
+import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
 
 export const SuhufMenu = ({ suhuf }) => {
   const openSuhuf = useOpenSuhuf();
@@ -21,7 +21,6 @@ export const SuhufMenu = ({ suhuf }) => {
   const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
   const addButtonColor = useColorModeValue("white", "text.primary");
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -51,7 +50,7 @@ export const SuhufMenu = ({ suhuf }) => {
       >
         <Flex
           border={isSmallScreen ? "none" : "1px solid"}
-          borderColor={borderColor}
+          borderColor="brand.500"
           borderRadius="sm"
           cursor="pointer"
           align="center"
@@ -61,8 +60,10 @@ export const SuhufMenu = ({ suhuf }) => {
           mr={1}
           p={isSmallScreen ? "0" : "1px"}
         >
-          <Image src="/images/logos/suhuf-logo.png" alt="Suhuf Logo" w={5} />
-          {!isSmallScreen && <Icon as={ChevronDownIcon} fontSize="12px" />}
+          <SuhufSVG dimensions="20px" activeColor="brand.500" />
+          {!isSmallScreen && (
+            <Icon as={ChevronDownIcon} fontSize="12px" color="brand.500" />
+          )}
         </Flex>
       </MenuButton>
 
