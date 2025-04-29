@@ -11,9 +11,9 @@ import { useEffect } from "react";
 import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
 import { useParams } from "react-router-dom";
 import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
-import { ReadingsTree } from "@/components/layout/editor/ReadingsTree.jsx";
+import { ReadingsTree } from "@/components/layout/suhuf/ReadingsTree.jsx";
 
-export const EditorLeftSidebar = () => {
+export const SuhufLeftSidebar = () => {
   const { id: suhufId } = useParams();
   const queryClient = useQueryClient();
 

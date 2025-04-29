@@ -8,7 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-export const EditorBottomPanel = () => {
+export const SuhufBottomPanel = () => {
   const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
   return (
     <Box h="100%" w="100%" bg={bgColor} color="white">

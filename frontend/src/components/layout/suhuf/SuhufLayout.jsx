@@ -1,14 +1,14 @@
 import { Box, Flex } from "@chakra-ui/react";
 import Split from "react-split";
-import { EditorPanel } from "./EditorPanel";
-import { EditorLeftSidebar } from "@/components/layout/editor/EditorLeftSidebar.jsx";
-import { EditorBottomPanel } from "@/components/layout/editor/EditorBottomPanel.jsx";
+import { SuhufPanel } from "./SuhufPanel.jsx";
+import { SuhufLeftSidebar } from "@/components/layout/suhuf/SuhufLeftSidebar.jsx";
+import { SuhufBottomPanel } from "@/components/layout/suhuf/SuhufBottomPanel.jsx";
 
-export const EditorLayout = () => {
+export const SuhufLayout = () => {
   return (
     <Flex h="100%" w="100%" pos="relative" zIndex={1}>
       {/* LEFT SIDEBAR */}
-      <EditorLeftSidebar />
+      <SuhufLeftSidebar />
 
       {/* MAIN AREA */}
       <Box flex="1" display="flex" flexDirection="column" overflow="hidden">
@@ -20,8 +20,8 @@ export const EditorLayout = () => {
           className="split-vertical"
           style={{ height: "100%", display: "flex", flexDirection: "column" }}
         >
-          <EditorPanel />
-          <EditorBottomPanel />
+          <SuhufPanel />
+          <SuhufBottomPanel />
         </Split>
       </Box>
     </Flex>

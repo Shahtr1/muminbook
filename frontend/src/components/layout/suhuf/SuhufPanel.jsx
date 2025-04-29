@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import Split from "react-split";
 import { Editor } from "@monaco-editor/react";
 
-export const EditorPanel = ({
+export const SuhufPanel = ({
   showRightEditor,
   leftValue,
   onLeftChange,

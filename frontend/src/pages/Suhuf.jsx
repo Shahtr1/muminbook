@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { EditorLayout } from "@/components/layout/editor/EditorLayout.jsx";
+import { SuhufLayout } from "@/components/layout/suhuf/SuhufLayout.jsx";
 import { SidebarLeftSVG } from "@/components/svgs/sidebar/SidebarLeftSVG.jsx";
 import { SidebarBottomSVG } from "@/components/svgs/sidebar/SidebarBottomSVG.jsx";
 import { SidebarRightSVG } from "@/components/svgs/sidebar/SidebarRightSVG.jsx";
@@ -171,7 +171,7 @@ export const Suhuf = () => {
     >
       {isPending && <Loader logoImg="suhuf-logo.png" />}
       {isError && <SomethingWentWrong />}
-      {isSuccess && <EditorLayout />}
+      {isSuccess && <SuhufLayout />}
     </Flex>
   );
 };
