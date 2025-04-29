@@ -242,7 +242,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                       color={
                         windowMode
                           ? isActiveWindow(type._id)
-                            ? undefined
+                            ? "brand.500"
                             : textDisabledColor
                           : undefined
                       }
@@ -264,11 +264,15 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                           e.stopPropagation();
                           startEdit(type._id, type.title);
                         }}
-                        _hover={{ color: "gray.500" }}
+                        _hover={{
+                          color: isActiveWindow(type?._id)
+                            ? "brand.600"
+                            : "gray.500",
+                        }}
                         color={
                           windowMode
                             ? isActiveWindow(type?._id)
-                              ? undefined
+                              ? "brand.500"
                               : textDisabledColor
                             : undefined
                         }
