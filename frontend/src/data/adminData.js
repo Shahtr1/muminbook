@@ -1,7 +1,7 @@
 import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
 import { DashboardSVG } from "@/components/svgs/DashboardSVG.jsx";
 
-export const adminItems = () => [
+export const adminData = () => [
   {
     id: "superboard",
     label: "Superboard",

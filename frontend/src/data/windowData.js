@@ -1,4 +1,4 @@
-export const windowItems = [
+export const windowData = [
   {
     _id: "win1",
     userId: "user123",

@@ -1,4 +1,4 @@
-export const userItems = [
+export const userData = [
   { id: "admin", label: "Admin", link: "/admin", roles: ["admin"] },
   { id: "edit-profile", label: "Edit Profile", link: "/edit-profile" },
   {

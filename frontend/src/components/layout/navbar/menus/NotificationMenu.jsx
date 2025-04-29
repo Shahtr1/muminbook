@@ -6,8 +6,8 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import { XDivider } from "@/components/layout/x/XDivider.jsx";
-import { notificationItems } from "@/data/notificationItems.js";
+import { XDivider } from "@/components/layout/xcomp/XDivider.jsx";
+import { notificationsData } from "@/data/notificationsData.js";
 
 export const NotificationMenu = ({
   children,
@@ -51,7 +51,7 @@ export const NotificationMenu = ({
 
         <XDivider />
 
-        {notificationItems.map((item) => (
+        {notificationsData.map((item) => (
           <MenuItem key={item.id} onClick={() => navigate(item.link)}>
             <Text fontSize="13px">{item.label}</Text>
           </MenuItem>

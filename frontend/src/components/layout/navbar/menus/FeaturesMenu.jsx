@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { featureItems } from "@/data/featureItems.js";
+import { featureData } from "@/data/featureData.js";
 
 export const FeaturesMenu = ({
   children,
@@ -57,7 +57,7 @@ export const FeaturesMenu = ({
           templateColumns={{ base: "repeat(2, 1fr)", sm: "repeat(3, 1fr)" }}
           gap={{ base: 2, sm: 5 }}
         >
-          {featureItems().map((item) => (
+          {featureData().map((item) => (
             <MenuItem
               key={item.id}
               display="flex"

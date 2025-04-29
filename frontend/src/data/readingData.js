@@ -1,4 +1,4 @@
-export const readingItems = () => [
+export const readingData = () => [
   {
     id: "ibn-kathir-translation",
     uuid: "ibn-kathir-translation",

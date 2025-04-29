@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { XBreadCrumb } from "@/components/layout/reading/XBreadCrumb.jsx";
 import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "@chakra-ui/icons";
-import { XSearch } from "@/components/layout/x/XSearch.jsx";
+import { XSearch } from "@/components/layout/xcomp/XSearch.jsx";
 import { useEffect, useRef, useState } from "react";
 import { AddMenu } from "@/components/layout/reading/toolbar/AddMenu.jsx";
 import { useCreateResource } from "@/hooks/resource/useCreateResource.js";

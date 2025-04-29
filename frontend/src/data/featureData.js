@@ -2,7 +2,7 @@ import { FamilyTreeSVG } from "@/components/svgs/FamilyTreeSVG.jsx";
 import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
 import { useOpenSuhuf } from "@/hooks/suhuf/useOpenSuhuf.js";
 
-export const featureItems = () => {
+export const featureData = () => {
   const openSuhuf = useOpenSuhuf();
   return [
     {

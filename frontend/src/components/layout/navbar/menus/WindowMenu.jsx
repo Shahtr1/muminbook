@@ -11,13 +11,13 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { userItems } from "@/data/userItems.js";
-import { notificationItems } from "@/data/notificationItems.js";
-import { featureItems } from "@/data/featureItems.js";
+import { userData } from "@/data/userData.js";
+import { notificationsData } from "@/data/notificationsData.js";
+import { featureData } from "@/data/featureData.js";
 import { AUTH } from "@/hooks/useAuth.js";
 import { useQueryClient } from "@tanstack/react-query";
-import { navItems } from "@/data/navbarItems.js";
 import { IoChevronForwardOutline, IoMenuOutline } from "react-icons/io5";
+import { navItems } from "@/data/navbarData.js";
 
 export const WindowMenu = () => {
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
@@ -37,9 +37,9 @@ export const WindowMenu = () => {
   };
 
   const itemMap = {
-    user: userItems,
-    notifications: notificationItems,
-    features: featureItems(),
+    user: userData,
+    notifications: notificationsData,
+    features: featureData(),
   };
 
   const parentItems = navItems(user);

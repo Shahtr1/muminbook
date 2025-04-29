@@ -1,4 +1,4 @@
-export const myFiles = {
+export const myFilesData = {
   "my-files": {
     empty: {},
 

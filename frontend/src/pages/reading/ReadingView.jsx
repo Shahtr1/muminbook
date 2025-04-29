@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Box, Heading, Text, VStack } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { readingItems } from "@/data/readingItems.js";
+import { readingData } from "@/data/readingData.js";
 
 export const ReadingView = () => {
   const queryClient = useQueryClient();
@@ -16,7 +16,7 @@ export const ReadingView = () => {
   }, []);
 
   const { id } = useParams();
-  const item = readingItems().find((entry) => entry.id === id);
+  const item = readingData().find((entry) => entry.id === id);
 
   if (!item) {
     return (
