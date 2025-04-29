@@ -18,7 +18,7 @@ export const useOpenSuhuf = () => {
     let newTitle = baseTitle;
     let counter = 1;
     while (openTitles.includes(newTitle)) {
-      newTitle = `${baseTitle} (${counter})`;
+      newTitle = `(${counter}) ${baseTitle}`;
       counter++;
     }
 
