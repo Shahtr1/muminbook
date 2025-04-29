@@ -174,7 +174,15 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                     }
                     onKeyDown={(e) => {
                       e.stopPropagation();
-                      e.key === "Enter" && confirmEdit(type._id);
+                      if (e.key === "Enter") {
+                        confirmEdit(type._id);
+                      }
+                      if (e.key === "Escape") {
+                        cancelEdit(type._id);
+                      }
+                    }}
+                    onBlur={() => {
+                      cancelEdit(type._id);
                     }}
                     autoFocus
                   />
@@ -191,8 +199,8 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                         e.stopPropagation();
                         confirmEdit(type._id);
                       }}
-                      _hover={{ color: "green.500" }}
-                      color={windowMode ? "brand.500" : "white"}
+                      _hover={{ color: "green.600" }}
+                      color={windowMode ? "green.500" : "white"}
                     >
                       <RiCheckboxFill size="13px" />
                     </Box>
