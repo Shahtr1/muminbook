@@ -1,6 +1,10 @@
 import { Flex, Image, Spinner } from "@chakra-ui/react";
 
-export const Loader = ({ height = "100%", width = "100%" }) => {
+export const Loader = ({
+  height = "100%",
+  width = "100%",
+  logoImg = "logo-image.png",
+}) => {
   return (
     <Flex
       w={width}
@@ -19,7 +23,7 @@ export const Loader = ({ height = "100%", width = "100%" }) => {
       />
 
       <Image
-        src="/images/logos/logo-image.png"
+        src={`/images/logos/${logoImg}`}
         alt="Logo"
         position="absolute"
         top="50%"
