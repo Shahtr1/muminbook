@@ -1,37 +1,41 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useColorMode } from "@chakra-ui/react";
 import Split from "react-split";
-import { Editor } from "@monaco-editor/react";
+import { Editor, useMonaco } from "@monaco-editor/react";
+import { useEffect, useState } from "react";
+import { defineMbTheme } from "@/theme/monacoTheme.js";
 
-export const SuhufPanel = ({
-  showRightEditor,
-  leftValue,
-  onLeftChange,
-  rightValue,
-  onRightChange,
-}) => {
-  const editorOptions = {
-    theme: "vs-dark",
-    defaultLanguage: "plaintext",
-    options: {
-      wordWrap: "on",
-      fontSize: 14,
-    },
-  };
+export const SuhufPanel = ({ value, onValueChange }) => {
+  const { colorMode } = useColorMode();
+  const monaco = useMonaco();
+  const [themeReady, setThemeReady] = useState(false);
 
-  const renderLeftEditor = () => (
-    <Box h="100%" w="100%" overflow="hidden">
-      <Editor
-        height="100%"
-        value={leftValue}
-        onChange={onLeftChange}
-        {...editorOptions}
-      />
-    </Box>
+  const selectedTheme =
+    colorMode === "dark" ? "mb-theme-dark" : "mb-theme-light";
+
+  useEffect(() => {
+    if (monaco) {
+      defineMbTheme(monaco, colorMode);
+      setThemeReady(true);
+    }
+  }, [monaco, colorMode]);
+
+  // Force re-mount when theme changes
+  const editorKey = `editor-${selectedTheme}`;
+
+  const renderEditor = () => (
+    <Editor
+      key={editorKey}
+      height="100%"
+      defaultLanguage="plaintext"
+      value={value}
+      onChange={onValueChange}
+      theme={selectedTheme}
+      options={{
+        wordWrap: "on",
+        fontSize: 14,
+      }}
+    />
   );
-
-  if (!showRightEditor) {
-    return renderLeftEditor();
-  }
 
   return (
     <Split
@@ -41,17 +45,11 @@ export const SuhufPanel = ({
       gutterSize={4}
       style={{ display: "flex", width: "100%", height: "100%" }}
     >
-      {/* Left Editor */}
-      {renderLeftEditor()}
-
-      {/* Right Editor */}
       <Box h="100%" w="100%" overflow="hidden">
-        <Editor
-          height="100%"
-          value={rightValue}
-          onChange={onRightChange}
-          {...editorOptions}
-        />
+        {themeReady && renderEditor()}
+      </Box>
+      <Box h="100%" w="100%" overflow="hidden">
+        {themeReady && renderEditor()}
       </Box>
     </Split>
   );

@@ -48,7 +48,7 @@ const colors = {
     },
     bg_content: {
       dark: "#1f1f1f",
-      light: "#fff",
+      light: "#ffffff",
     },
     icon: {
       dark: "#868686",
