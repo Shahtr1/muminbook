@@ -1,15 +1,22 @@
-/* split.css */
 .gutter {
-    background-color: #2d2d2d;
     background-clip: content-box;
 }
 
 .gutter.gutter-horizontal {
     cursor: col-resize;
-    width: 6px;
+    width: 6px ;
 }
 
 .gutter.gutter-vertical {
     cursor: row-resize;
-    height: 6px;
+
 }
+
+.gutter-light {
+    background-color: #868686;
+}
+
+.gutter-dark {
+    background-color: #616161;
+}
+

@@ -11,7 +11,11 @@ import {
 import { RepeatIcon } from "@chakra-ui/icons";
 import React from "react";
 
-export const SomethingWentWrong = ({ height = "100%", width = "100%" }) => {
+export const SomethingWentWrong = ({
+  height = "100%",
+  width = "100%",
+  transparent = false,
+}) => {
   const handleRefresh = () => {
     window.location.reload();
   };
@@ -27,6 +31,7 @@ export const SomethingWentWrong = ({ height = "100%", width = "100%" }) => {
         alignItems="center"
         textAlign="center"
         p={6}
+        bg={transparent ? "transparent" : undefined}
       >
         <AlertIcon boxSize="24px" />
         <AlertTitle>

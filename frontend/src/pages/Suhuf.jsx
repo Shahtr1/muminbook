@@ -109,7 +109,7 @@ export const Suhuf = () => {
       w="100%"
       overflow="hidden"
     >
-      {isPending && <Loader logoImg="suhuf-logo.png" />}
+      {isPending && <Loader />}
       {isError && <SomethingWentWrong />}
       {isSuccess && <SuhufLayout />}
     </Flex>

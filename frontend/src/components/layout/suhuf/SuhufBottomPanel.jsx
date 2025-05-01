@@ -1,36 +1,19 @@
-import {
-  Box,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { useReading } from "@/hooks/useReading.js";
+import { Loader } from "@/components/layout/Loader.jsx";
+import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { useParams } from "react-router-dom";
 
 export const SuhufBottomPanel = () => {
+  const { id: suhufId } = useParams();
   const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
-  return (
-    <Box h="100%" w="100%" bg={bgColor} color="white">
-      <Tabs size="sm" variant="unstyled">
-        <TabList borderBottom="1px solid" borderColor="gray.600" px={4}>
-          <Tab _selected={{ color: "cyan.400" }}>Terminal</Tab>
-          <Tab _selected={{ color: "cyan.400" }}>Output</Tab>
-          <Tab _selected={{ color: "cyan.400" }}>Console</Tab>
-        </TabList>
+  const { readings, isPending, isError, isSuccess } = useReading();
 
-        <TabPanels>
-          <TabPanel>
-            <Box fontSize="sm">Terminal output here...</Box>
-          </TabPanel>
-          <TabPanel>
-            <Box fontSize="sm">Build results here...</Box>
-          </TabPanel>
-          <TabPanel>
-            <Box fontSize="sm">Console logs here...</Box>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+  return (
+    <Box h="100%" w="100%" bg={bgColor}>
+      {isPending && <Loader />}
+      {isError && <SomethingWentWrong transparent />}
+      {isSuccess && <Flex>...</Flex>}
     </Box>
   );
 };
