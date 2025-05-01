@@ -16,7 +16,7 @@ export const SuhufLayout = () => {
           direction="vertical"
           sizes={[75, 25]}
           minSize={100}
-          gutterSize={2}
+          gutterSize={3}
           className={colorMode === "dark" ? "gutter-dark" : "gutter-light"}
           style={{ height: "100%", display: "flex", flexDirection: "column" }}
         >

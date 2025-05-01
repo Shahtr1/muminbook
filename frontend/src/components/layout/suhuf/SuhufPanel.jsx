@@ -48,7 +48,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
       className={isSmallScreen ? "split-vertical" : "split-horizontal"}
       sizes={[75, 25]}
       minSize={200}
-      gutterSize={2}
+      gutterSize={3}
       style={{
         display: "flex",
         width: "100%",
