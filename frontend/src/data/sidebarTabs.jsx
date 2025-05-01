@@ -17,11 +17,15 @@ export const sidebarTabs = [
         />
       </Flex>
     ),
+    description:
+      "Browse and manage your readings and resources — add, rename, or delete files and folders.",
   },
   {
     key: "search",
     label: "Search",
     icon: BsSearch,
     renderContent: () => <Flex>🔍 Search</Flex>,
+    description:
+      "Quickly search through your files, ayahs, or notes to find what you need.",
   },
 ];

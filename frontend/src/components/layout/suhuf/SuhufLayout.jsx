@@ -11,7 +11,7 @@ export const SuhufLayout = () => {
     <Flex h="100%" w="100%" pos="relative" zIndex={1}>
       <SuhufLeftSidebar />
 
-      <Box flex="1" display="flex" flexDirection="column" overflow="hidden">
+      <Box flex="1" display="flex" flexDirection="column" overflow="auto">
         <Split
           direction="vertical"
           sizes={[75, 25]}
@@ -20,7 +20,10 @@ export const SuhufLayout = () => {
           className={colorMode === "dark" ? "gutter-dark" : "gutter-light"}
           style={{ height: "100%", display: "flex", flexDirection: "column" }}
         >
-          <SuhufPanel />
+          <Flex overflowY="auto" position="relative">
+            <SuhufPanel />
+          </Flex>
+
           <SuhufBottomPanel />
         </Split>
       </Box>

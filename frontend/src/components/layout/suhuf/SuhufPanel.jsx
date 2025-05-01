@@ -1,31 +1,15 @@
-import {
-  Box,
-  Flex,
-  Text,
-  useBreakpointValue,
-  useColorMode,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, useBreakpointValue, useColorMode } from "@chakra-ui/react";
 import Split from "react-split";
 import { useMonaco } from "@monaco-editor/react";
 import { useEffect, useState } from "react";
 import { defineMbTheme } from "@/theme/monacoTheme.js";
-import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
-import { sidebarTabs } from "@/data/sidebarTabs.jsx";
 import { useParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
+import { NoSelectionPane } from "@/components/layout/suhuf/NoSelectionPane.jsx";
 
 export const SuhufPanel = ({ value, onValueChange }) => {
   const { colorMode } = useColorMode();
   const { id: suhufId } = useParams();
-  const queryClient = useQueryClient();
-  const bgColor = useColorModeValue(
-    "wn.bg_content.light",
-    "wn.bg_content.dark",
-  );
-  const secondaryColor = useColorModeValue("wn.gutter.light", "wn.gutter.dark");
-  const suhufLogoSize = useBreakpointValue({ base: "90px", sm: "130px" });
-  const primaryColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
+
   const isSmallScreen = useBreakpointValue({ base: true, sm: false }) || false;
   const monaco = useMonaco();
   const [themeReady, setThemeReady] = useState(false);
@@ -43,72 +27,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
   // Force re-mount when theme changes
   const editorKey = `editor-${selectedTheme}`;
 
-  const toggleTab = (tabKey) => {
-    queryClient.setQueryData(["sidebarState", suhufId], (prev = {}) => {
-      const isSameTab = prev.leftTab === tabKey;
-      return {
-        ...prev,
-        leftTab: tabKey,
-        leftTabOpen: isSameTab ? !prev.leftTabOpen : true,
-      };
-    });
-  };
-
-  const noSelectionPane = () => (
-    <Flex
-      height="100%"
-      bgColor={bgColor}
-      justify="center"
-      align="center"
-      flexDir="column"
-    >
-      <SuhufSVG dimensions={suhufLogoSize} activeColor={secondaryColor} />
-      <Text
-        fontSize={{ base: "17px", sm: "22px" }}
-        fontWeight="semibold"
-        color={secondaryColor}
-        overflow="hidden"
-        mb={2}
-        align="center"
-      >
-        Welcome to Suhuf
-      </Text>
-      <Flex w="80%" flexDir="column">
-        <Text fontSize={{ base: "15px", sm: "18px" }} color={primaryColor}>
-          Built for seekers.
-        </Text>
-        <Text
-          fontSize={{ base: "15px", sm: "18px" }}
-          color={primaryColor}
-          mb={2}
-        >
-          Start
-        </Text>
-
-        {sidebarTabs.map(({ key, label, icon: Icon }) => (
-          <Flex
-            key={key}
-            align="center"
-            mb={2}
-            cursor="pointer"
-            onClick={() => {
-              toggleTab(key);
-            }}
-            color="brand.500"
-            gap={1}
-            _hover={{ textDecoration: "underline" }}
-          >
-            <Icon size="15px" />
-            <Text fontSize={{ base: "14px", sm: "17px" }} color="brand.500">
-              {label}
-            </Text>
-          </Flex>
-        ))}
-      </Flex>
-    </Flex>
-  );
-
-  const renderEditor = () => noSelectionPane();
+  const renderEditor = () => <NoSelectionPane suhufId={suhufId} />;
   // <Editor
   //   key={editorKey}
   //   height="100%"
@@ -137,10 +56,10 @@ export const SuhufPanel = ({ value, onValueChange }) => {
         flexDirection: isSmallScreen ? "column" : undefined,
       }}
     >
-      <Box h="100%" w="100%" overflow="hidden">
+      <Box h="100%" w="100%">
         {themeReady && renderEditor()}
       </Box>
-      <Box h="100%" w="100%" overflow="hidden">
+      <Box h="100%" w="100%">
         {themeReady && renderEditor()}
       </Box>
     </Split>
