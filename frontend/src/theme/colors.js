@@ -50,6 +50,10 @@ const colors = {
       dark: "#1f1f1f",
       light: "#ffffff",
     },
+    gutter: {
+      dark: "#3f3f3f",
+      light: "#d6d6d6",
+    },
     icon: {
       dark: "#868686",
       light: "#616161",

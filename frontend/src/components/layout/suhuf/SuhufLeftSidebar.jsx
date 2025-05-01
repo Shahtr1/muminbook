@@ -5,13 +5,11 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { BsFiles, BsSearch } from "react-icons/bs";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
 import { useParams } from "react-router-dom";
-import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
-import { ReadingsTree } from "@/components/layout/suhuf/ReadingsTree.jsx";
+import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
+import { sidebarTabs } from "@/data/sidebarTabs.jsx";
 
 export const SuhufLeftSidebar = () => {
   const { id: suhufId } = useParams();
@@ -44,53 +42,33 @@ export const SuhufLeftSidebar = () => {
     }
   }, [isOpen, activeTab, queryClient, suhufId]);
 
-  const toggleTab = (tab) => {
+  const toggleTab = (tabKey) => {
     queryClient.setQueryData(["sidebarState", suhufId], (prev = {}) => {
-      const isSameTab = prev.leftTab === tab;
+      const isSameTab = prev.leftTab === tabKey;
       return {
         ...prev,
-        leftTab: tab,
+        leftTab: tabKey,
         leftTabOpen: isSameTab ? !prev.leftTabOpen : true,
       };
     });
   };
 
-  const content = (title, children) => (
-    <Flex flexDir="column" w="100%" overflow="auto">
-      <Text fontSize="xs" fontWeight="bold" mb={2}>
-        {title}
-      </Text>
-      <Flex overflow="auto" pr={1}>
-        {children}
+  const activeTabData = sidebarTabs.find((tab) => tab.key === activeTab);
+  const activeContent =
+    isOpen && activeTabData ? (
+      <Flex flexDir="column" w="100%" overflow="auto">
+        <Text fontSize="xs" fontWeight="bold" mb={2}>
+          {activeTabData.label}
+        </Text>
+        <Flex overflow="auto" pr={1}>
+          {activeTabData.renderContent()}
+        </Flex>
       </Flex>
-    </Flex>
-  );
-
-  const contentMap = {
-    explorer: content(
-      "Explorer",
-      <Flex h="100%" flexDir="column">
-        <ReadingsTree
-          onSelect={(path) => {
-            console.log("path", path);
-          }}
-        />
-        <ResourcesTree
-          onSelect={(path) => {
-            console.log("path", path);
-          }}
-          windowMode={true}
-        />
-      </Flex>,
-    ),
-    search: content("Search", <Flex>🔍 Search</Flex>),
-  };
-
-  const activeContent = isOpen && activeTab ? contentMap[activeTab] : null;
+    ) : null;
 
   return (
     <Flex h="100%">
-      {/* Icons */}
+      {/* Icon bar */}
       <Flex
         w="40px"
         bg={bgColor}
@@ -101,31 +79,25 @@ export const SuhufLeftSidebar = () => {
         zIndex={1}
       >
         <VStack spacing={5} align="center" w="100%">
-          <Tooltip variant="inverted" label="Explorer" placement="right">
-            <Flex
-              color={
-                activeTab === "explorer" && isOpen ? iconActiveColor : iconColor
-              }
-              _hover={{ color: iconActiveColor }}
-              cursor="pointer"
-              onClick={() => toggleTab("explorer")}
+          {sidebarTabs.map(({ key, label, icon: Icon }) => (
+            <Tooltip
+              key={key}
+              variant="inverted"
+              label={label}
+              placement="right"
             >
-              <BsFiles size="20px" />
-            </Flex>
-          </Tooltip>
-
-          <Tooltip variant="inverted" label="Search" placement="right">
-            <Flex
-              color={
-                activeTab === "search" && isOpen ? iconActiveColor : iconColor
-              }
-              _hover={{ color: iconActiveColor }}
-              cursor="pointer"
-              onClick={() => toggleTab("search")}
-            >
-              <BsSearch size="20px" />
-            </Flex>
-          </Tooltip>
+              <Flex
+                color={
+                  activeTab === key && isOpen ? iconActiveColor : iconColor
+                }
+                _hover={{ color: iconActiveColor }}
+                cursor="pointer"
+                onClick={() => toggleTab(key)}
+              >
+                <Icon size="20px" />
+              </Flex>
+            </Tooltip>
+          ))}
         </VStack>
       </Flex>
 
