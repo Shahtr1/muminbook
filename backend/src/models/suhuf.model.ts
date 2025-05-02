@@ -20,7 +20,6 @@ export interface SuhufDocument extends mongoose.Document {
       isSplit?: boolean;
       splitRatio: number[];
     };
-    lastEdited?: Date;
   };
   createdAt: Date;
   updatedAt: Date;

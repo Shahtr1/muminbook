@@ -15,7 +15,6 @@ export const useDeleteWindow = () => {
       toast.success("Window deleted");
       queryClient.invalidateQueries({ queryKey: ["windows"] });
       queryClient.removeQueries({ queryKey: [type, typeId] });
-      queryClient.removeQueries({ queryKey: [type + "State", typeId] });
     },
     onError: toast.error,
     onSettled: toast.stopLoading,

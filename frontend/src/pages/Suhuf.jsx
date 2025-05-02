@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useWindowNavbar } from "@/context/WindowNavbarContext.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { Flex, useColorModeValue, useTheme, useToken } from "@chakra-ui/react";
@@ -9,66 +9,44 @@ import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { SuhufLayout } from "@/components/layout/suhuf/SuhufLayout.jsx";
 import { SidebarLeftSVG } from "@/components/svgs/sidebar/SidebarLeftSVG.jsx";
 import { SidebarBottomSVG } from "@/components/svgs/sidebar/SidebarBottomSVG.jsx";
-import { SidebarRightSVG } from "@/components/svgs/sidebar/SidebarRightSVG.jsx";
-import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
 import { SuhufMenu } from "@/components/layout/suhuf/SuhufMenu.jsx";
+import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
   const queryClient = useQueryClient();
   const { setNavbarChildren } = useWindowNavbar();
+
   const tokenKey = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const [iconActiveColor] = useToken("colors", [tokenKey]);
   const theme = useTheme();
 
-  const [leftTabOpen, setLeftTabOpen] = useState(false);
-  const [rightTabOpen, setRightTabOpen] = useState(false);
-  const [bottomTabOpen, setBottomTabOpen] = useState(false);
-
   const { data: suhuf, isPending, isSuccess, isError } = useSuhuf(suhufId);
+  const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
 
-  const { data: suhufState = {} } = useQuery({
-    queryKey: ["suhufState", suhufId],
-    queryFn: () => {
-      const state =
-        queryClient.getQueryData(["suhufState", suhufId]) ??
-        getDefaultSidebarState();
-      return {
-        ...getDefaultSidebarState(),
-        ...state,
-        panelSizes: state.panelSizes || [75, 25],
-      };
-    },
-    staleTime: 0,
-  });
-
-  useEffect(() => {
-    setLeftTabOpen(!!suhufState.leftTabOpen);
-    setRightTabOpen(!!suhufState.rightTabOpen);
-    setBottomTabOpen(!!suhufState.bottomTabOpen);
-  }, [suhufState]);
+  const layout = suhuf?.config?.layout || {};
+  const leftTabOpen = layout.isLeftTabOpen;
+  const bottomTabOpen = layout.isBottomTabOpen;
 
   queryClient.setQueryData(["windowMode"], true);
 
   const handleClick = useCallback(
     (side) => {
+      if (!suhuf) return;
+
+      const updated = { ...layout };
+
       if (side === "right") {
-        const currentState =
-          queryClient.getQueryData(["suhufState", suhufId]) ??
-          getDefaultSidebarState();
-        queryClient.setQueryData(["suhufState", suhufId], {
-          ...currentState,
-          rightTabOpen: !currentState.rightTabOpen,
-          panelSizes: currentState.panelSizes || [75, 25],
-        });
-      } else {
-        queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => ({
-          ...prev,
-          [`${side}TabOpen`]: !prev?.[`${side}TabOpen`],
-        }));
+        updated.rightTabOpen = !layout.rightTabOpen;
+      } else if (side === "left") {
+        updated.isLeftTabOpen = !layout.isLeftTabOpen;
+      } else if (side === "bottom") {
+        updated.isBottomTabOpen = !layout.isBottomTabOpen;
       }
+
+      updateLayout({ layout: updated });
     },
-    [queryClient, suhufId],
+    [updateLayout, suhuf],
   );
 
   const navbarContent = useMemo(() => {
@@ -88,23 +66,10 @@ export const Suhuf = () => {
               active={bottomTabOpen}
             />
           </div>
-          <div onClick={() => handleClick("right")}>
-            <SidebarRightSVG
-              activeColor={iconActiveColor}
-              active={rightTabOpen}
-            />
-          </div>
         </Flex>
       </Flex>
     );
-  }, [
-    leftTabOpen,
-    bottomTabOpen,
-    rightTabOpen,
-    iconActiveColor,
-    handleClick,
-    suhuf,
-  ]);
+  }, [leftTabOpen, bottomTabOpen, iconActiveColor, handleClick, suhuf]);
 
   useEffect(() => {
     queryClient.setQueryData(["windowMode"], true);

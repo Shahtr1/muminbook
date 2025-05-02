@@ -5,53 +5,37 @@ import { useEffect, useMemo, useState } from "react";
 import { defineMbTheme } from "@/theme/monacoTheme.js";
 import { useParams } from "react-router-dom";
 import { DefaultPanel } from "@/components/layout/suhuf/DefaultPanel.jsx";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
+import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
+import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
+import { useSplitPanelSizes } from "@/hooks/suhuf/useSplitPanelSizes.js";
 
 export const SuhufPanel = ({ value, onValueChange }) => {
   const { colorMode } = useColorMode();
   const { id: suhufId } = useParams();
-  const queryClient = useQueryClient();
+  const { data: suhuf } = useSuhuf(suhufId);
+  const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
+  const monaco = useMonaco();
 
-  const { data: suhufState = getDefaultSidebarState() } = useQuery({
-    queryKey: ["suhufState", suhufId],
-    queryFn: () => {
-      const state =
-        queryClient.getQueryData(["suhufState", suhufId]) ??
-        getDefaultSidebarState();
-      // Ensure panelSizes exists in state
-      return {
-        ...getDefaultSidebarState(),
-        ...state,
-        panelSizes: state.panelSizes || [75, 25],
-      };
-    },
-    staleTime: Infinity,
+  const isSmallScreen = useBreakpointValue({ base: true, sm: false }) || false;
+  const [themeReady, setThemeReady] = useState(false);
+
+  const layout = suhuf?.config?.layout || {};
+  const isSecondPanelOpen = layout.rightTabOpen;
+
+  // Panel sizing logic
+  const { sizes, handleResize } = useSplitPanelSizes({
+    layout,
+    isSecondPanelOpen,
+    onUpdateLayout: updateLayout,
   });
 
-  const isSecondPanelOpen = suhufState.rightTabOpen;
-  const isSmallScreen = useBreakpointValue({ base: true, sm: false }) || false;
-  const monaco = useMonaco();
-  const [themeReady, setThemeReady] = useState(false);
-  const [sizes, setSizes] = useState(suhufState.panelSizes || [75, 25]);
-
+  // Monaco theme setup
   useEffect(() => {
     if (monaco) {
       defineMbTheme(monaco, colorMode);
       setThemeReady(true);
     }
   }, [monaco, colorMode]);
-
-  // Handle panel state changes
-  useEffect(() => {
-    if (isSecondPanelOpen) {
-      // When opening, use saved sizes from suhufState
-      setSizes(suhufState.panelSizes || [75, 25]);
-    } else {
-      // When closing, maintain first panel's size
-      setSizes([sizes[0]]);
-    }
-  }, [isSecondPanelOpen, suhufState.panelSizes]);
 
   const renderEditor = () => <DefaultPanel suhufId={suhufId} />;
 
@@ -71,13 +55,11 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     }
 
     return panels;
-  }, [themeReady, isSecondPanelOpen, suhufId]);
+  }, [themeReady, isSecondPanelOpen]);
 
   return (
     <Split
-      key={`${isSmallScreen ? "vertical" : "horizontal"}-${
-        isSecondPanelOpen ? "two-panels" : "one-panel"
-      }`}
+      key={`${isSmallScreen ? "vertical" : "horizontal"}-${isSecondPanelOpen ? "two" : "one"}`}
       direction={isSmallScreen ? "vertical" : "horizontal"}
       sizes={isSecondPanelOpen ? sizes : [100]}
       minSize={200}
@@ -88,15 +70,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
         height: "100%",
         flexDirection: isSmallScreen ? "column" : undefined,
       }}
-      onDragEnd={(newSizes) => {
-        if (isSecondPanelOpen) {
-          setSizes(newSizes);
-          queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => ({
-            ...prev,
-            panelSizes: newSizes,
-          }));
-        }
-      }}
+      onDragEnd={handleResize}
     >
       {children}
     </Split>

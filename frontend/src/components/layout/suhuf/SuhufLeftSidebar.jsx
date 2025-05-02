@@ -5,15 +5,16 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getDefaultSidebarState } from "@/components/layout/sidebar/getDefaultSidebarState.js";
 import { sidebarTabs } from "@/data/sidebarTabs.jsx";
+import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
+import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
 
 export const SuhufLeftSidebar = () => {
   const { id: suhufId } = useParams();
-  const queryClient = useQueryClient();
+  const { data: suhuf } = useSuhuf(suhufId);
+  const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
 
   const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
@@ -22,34 +23,30 @@ export const SuhufLeftSidebar = () => {
 
   const width = "150px";
 
-  const { data: suhufState = {} } = useQuery({
-    queryKey: ["suhufState", suhufId],
-    queryFn: () =>
-      queryClient.getQueryData(["suhufState", suhufId]) ??
-      getDefaultSidebarState(),
-    staleTime: Infinity,
-  });
+  const layout = suhuf?.config?.layout || {};
+  const activeTab = layout.leftTab;
+  const isOpen = layout.isLeftTabOpen;
 
-  const activeTab = suhufState.leftTab;
-  const isOpen = suhufState.leftTabOpen;
-
+  // Set default tab if panel is open and no tab selected
   useEffect(() => {
     if (isOpen && !activeTab) {
-      queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => ({
-        ...prev,
-        leftTab: "explorer",
-      }));
+      updateLayout({
+        layout: {
+          ...layout,
+          leftTab: "explorer",
+        },
+      });
     }
-  }, [isOpen, activeTab, queryClient, suhufId]);
+  }, [isOpen, activeTab, layout, updateLayout]);
 
   const toggleTab = (tabKey) => {
-    queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => {
-      const isSameTab = prev.leftTab === tabKey;
-      return {
-        ...prev,
+    const isSame = tabKey === activeTab;
+    updateLayout({
+      layout: {
+        ...layout,
         leftTab: tabKey,
-        leftTabOpen: isSameTab ? !prev.leftTabOpen : true,
-      };
+        isLeftTabOpen: isSame ? !isOpen : true,
+      },
     });
   };
 

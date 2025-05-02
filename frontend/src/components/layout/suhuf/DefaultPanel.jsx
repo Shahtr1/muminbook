@@ -7,10 +7,13 @@ import {
 } from "@chakra-ui/react";
 import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
 import { sidebarTabs } from "@/data/sidebarTabs.jsx";
-import { useQueryClient } from "@tanstack/react-query";
+import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
+import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
 
 export const DefaultPanel = ({ suhufId }) => {
-  const queryClient = useQueryClient();
+  const { data: suhuf } = useSuhuf(suhufId);
+  const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
+
   const secondaryColor = useColorModeValue("wn.gutter.light", "wn.gutter.dark");
   const suhufLogoSize = useBreakpointValue({ base: "90px", sm: "130px" });
   const primaryColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
@@ -18,16 +21,23 @@ export const DefaultPanel = ({ suhufId }) => {
     "wn.bg_content.light",
     "wn.bg_content.dark",
   );
+
+  const layout = suhuf?.config?.layout || {};
+  const activeTab = layout.leftTab;
+  const isOpen = layout.isLeftTabOpen;
+
   const toggleTab = (tabKey) => {
-    queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => {
-      const isSameTab = prev.leftTab === tabKey;
-      return {
-        ...prev,
+    const isSame = activeTab === tabKey;
+
+    updateLayout({
+      layout: {
+        ...layout,
         leftTab: tabKey,
-        leftTabOpen: isSameTab ? !prev.leftTabOpen : true,
-      };
+        isLeftTabOpen: isSame ? !isOpen : true,
+      },
     });
   };
+
   return (
     <Flex height="100%" overflowY="auto" bgColor={bgColor} flexDir="column">
       <Box

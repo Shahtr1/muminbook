@@ -9,6 +9,7 @@ import SuhufModel from "../models/suhuf.model";
 import appAssert from "../utils/appAssert";
 import { renameSuhuf } from "../services/suhuf/rename-suhuf.service";
 import { nameSchema } from "./schemas/common.schema";
+import { layoutSchema } from "./schemas/layout.schema";
 
 export const createSuhufSchema = z.object({
   title: z.string().min(1).max(100).optional(),
@@ -55,4 +56,22 @@ export const renameSuhufHandler = catchErrors(async (req, res) => {
   const { message } = await renameSuhuf(suhufId, userId, title);
 
   return res.status(OK).json({ message });
+});
+
+export const layoutSuhufHandler = catchErrors(async (req, res) => {
+  assertUserAndSession(req);
+  const userId = await getUserId(req);
+  const suhufId = req.params.id;
+
+  const { layout } = layoutSchema.parse(req.body);
+
+  const updated = await SuhufModel.findOneAndUpdate(
+    { _id: suhufId, userId },
+    { $set: { "config.layout": layout } },
+    { new: true },
+  );
+
+  appAssert(updated, NOT_FOUND, "Suhuf not found");
+
+  return res.status(OK).json(updated);
 });
