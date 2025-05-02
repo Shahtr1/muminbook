@@ -1,11 +1,36 @@
 import mongoose from "mongoose";
 import { PrimaryId } from "../constants/primaryId";
+import FileType from "../constants/enums/fileType";
 
 export interface SuhufDocument extends mongoose.Document {
   userId: PrimaryId;
   title: string;
-  fileIds: PrimaryId[];
-  activeFileId?: PrimaryId;
+  config: {
+    panels: {
+      fileId: string;
+      fileType: FileType;
+      scrollPosition: number;
+      isActive: boolean;
+      highlights?: {
+        color: string;
+        createdAt: Date;
+      }[];
+      comments?: {
+        color: string;
+        text: string;
+        createdAt: Date;
+      }[];
+    }[];
+    layout?: {
+      leftTab?: string;
+      isLeftTabOpen: boolean;
+      bottomTab?: string;
+      isBottomTabOpen: boolean;
+      isSplit?: boolean;
+      splitRatio: number[];
+    };
+    lastEdited?: Date;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,17 +47,8 @@ const suhufSchema = new mongoose.Schema<SuhufDocument>(
       type: String,
       default: "Untitled Suhuf",
     },
-    fileIds: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Resource",
-        required: true,
-      },
-    ],
-    activeFileId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Resource",
-      default: null,
+    config: {
+      type: Object,
     },
   },
   { timestamps: true },
