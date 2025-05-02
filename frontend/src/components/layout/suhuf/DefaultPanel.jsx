@@ -9,7 +9,7 @@ import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
 import { sidebarTabs } from "@/data/sidebarTabs.jsx";
 import { useQueryClient } from "@tanstack/react-query";
 
-export const DefaultPane = ({ suhufId }) => {
+export const DefaultPanel = ({ suhufId }) => {
   const queryClient = useQueryClient();
   const secondaryColor = useColorModeValue("wn.gutter.light", "wn.gutter.dark");
   const suhufLogoSize = useBreakpointValue({ base: "90px", sm: "130px" });

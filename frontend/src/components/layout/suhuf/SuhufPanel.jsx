@@ -4,7 +4,7 @@ import { useMonaco } from "@monaco-editor/react";
 import { useEffect, useState } from "react";
 import { defineMbTheme } from "@/theme/monacoTheme.js";
 import { useParams } from "react-router-dom";
-import { DefaultPane } from "@/components/layout/suhuf/DefaultPane.jsx";
+import { DefaultPanel } from "@/components/layout/suhuf/DefaultPanel.jsx";
 
 export const SuhufPanel = ({ value, onValueChange }) => {
   const { colorMode } = useColorMode();
@@ -27,7 +27,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
   // Force re-mount when theme changes
   const editorKey = `editor-${selectedTheme}`;
 
-  const renderEditor = () => <DefaultPane suhufId={suhufId} />;
+  const renderEditor = () => <DefaultPanel suhufId={suhufId} />;
   // <Editor
   //   key={editorKey}
   //   height="100%"
