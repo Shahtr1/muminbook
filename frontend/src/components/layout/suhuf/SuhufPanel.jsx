@@ -37,13 +37,9 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     }
   }, [monaco, colorMode]);
 
-  const renderEditor = () => (
-    <DefaultPanel
-      key={`${layout.leftTab}-${layout.isLeftTabOpen}`}
-      suhufId={suhufId}
-    />
-  );
+  const renderEditor = () => <DefaultPanel suhufId={suhufId} />;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const children = useMemo(() => {
     const panels = [
       <Box key="panel-1" h="100%" w="100%">
@@ -60,7 +56,12 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     }
 
     return panels;
-  }, [themeReady, isSecondPanelOpen]);
+    // Don't change below dependency array.
+    // The dependency array is intentionally limited.
+    // Re-rendering this memoized `children` array too frequently (e.g., on every minor layout change)
+    // causes Default Panel layout tab not to work, as it doesn't render on suhuf id changes
+    // We're only tracking layout keys that affect panel structure to ensure stable and performant rendering.
+  }, [themeReady, isSecondPanelOpen, suhufId]);
 
   return (
     <Split
