@@ -37,7 +37,12 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     }
   }, [monaco, colorMode]);
 
-  const renderEditor = () => <DefaultPanel suhufId={suhufId} />;
+  const renderEditor = () => (
+    <DefaultPanel
+      key={`${layout.leftTab}-${layout.isLeftTabOpen}`}
+      suhufId={suhufId}
+    />
+  );
 
   const children = useMemo(() => {
     const panels = [
