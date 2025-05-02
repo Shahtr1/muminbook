@@ -11,15 +11,6 @@ export interface SuhufDocument extends mongoose.Document {
       fileType: FileType;
       scrollPosition: number;
       isActive: boolean;
-      highlights?: {
-        color: string;
-        createdAt: Date;
-      }[];
-      comments?: {
-        color: string;
-        text: string;
-        createdAt: Date;
-      }[];
     }[];
     layout?: {
       leftTab?: string;
