@@ -22,20 +22,20 @@ export const SuhufLeftSidebar = () => {
 
   const width = "150px";
 
-  const { data: sidebarState = {} } = useQuery({
-    queryKey: ["sidebarState", suhufId],
+  const { data: suhufState = {} } = useQuery({
+    queryKey: ["suhufState", suhufId],
     queryFn: () =>
-      queryClient.getQueryData(["sidebarState", suhufId]) ??
+      queryClient.getQueryData(["suhufState", suhufId]) ??
       getDefaultSidebarState(),
     staleTime: Infinity,
   });
 
-  const activeTab = sidebarState.leftTab;
-  const isOpen = sidebarState.leftTabOpen;
+  const activeTab = suhufState.leftTab;
+  const isOpen = suhufState.leftTabOpen;
 
   useEffect(() => {
     if (isOpen && !activeTab) {
-      queryClient.setQueryData(["sidebarState", suhufId], (prev = {}) => ({
+      queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => ({
         ...prev,
         leftTab: "explorer",
       }));
@@ -43,7 +43,7 @@ export const SuhufLeftSidebar = () => {
   }, [isOpen, activeTab, queryClient, suhufId]);
 
   const toggleTab = (tabKey) => {
-    queryClient.setQueryData(["sidebarState", suhufId], (prev = {}) => {
+    queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => {
       const isSameTab = prev.leftTab === tabKey;
       return {
         ...prev,

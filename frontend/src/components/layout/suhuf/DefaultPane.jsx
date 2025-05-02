@@ -19,7 +19,7 @@ export const DefaultPane = ({ suhufId }) => {
     "wn.bg_content.dark",
   );
   const toggleTab = (tabKey) => {
-    queryClient.setQueryData(["sidebarState", suhufId], (prev = {}) => {
+    queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => {
       const isSameTab = prev.leftTab === tabKey;
       return {
         ...prev,

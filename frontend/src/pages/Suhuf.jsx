@@ -28,25 +28,25 @@ export const Suhuf = () => {
 
   const { data: suhuf, isPending, isSuccess, isError } = useSuhuf(suhufId);
 
-  const { data: sidebarState = {} } = useQuery({
-    queryKey: ["sidebarState", suhufId],
+  const { data: suhufState = {} } = useQuery({
+    queryKey: ["suhufState", suhufId],
     queryFn: () =>
-      queryClient.getQueryData(["sidebarState", suhufId]) ??
+      queryClient.getQueryData(["suhufState", suhufId]) ??
       getDefaultSidebarState(),
     staleTime: 0,
   });
 
   useEffect(() => {
-    setLeftTabOpen(!!sidebarState.leftTabOpen);
-    setRightTabOpen(!!sidebarState.rightTabOpen);
-    setBottomTabOpen(!!sidebarState.bottomTabOpen);
-  }, [sidebarState]);
+    setLeftTabOpen(!!suhufState.leftTabOpen);
+    setRightTabOpen(!!suhufState.rightTabOpen);
+    setBottomTabOpen(!!suhufState.bottomTabOpen);
+  }, [suhufState]);
 
   queryClient.setQueryData(["windowMode"], true);
 
   const handleClick = useCallback(
     (side) => {
-      queryClient.setQueryData(["sidebarState", suhufId], (prev = {}) => {
+      queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => {
         return {
           ...prev,
           [`${side}TabOpen`]: !prev?.[`${side}TabOpen`],
