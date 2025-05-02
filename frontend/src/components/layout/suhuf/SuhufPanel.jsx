@@ -20,7 +20,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
   const [themeReady, setThemeReady] = useState(false);
 
   const layout = suhuf?.config?.layout || {};
-  const isSecondPanelOpen = layout.rightTabOpen;
+  const isSecondPanelOpen = layout.isSplit;
 
   // Panel sizing logic
   const { sizes, handleResize } = useSplitPanelSizes({

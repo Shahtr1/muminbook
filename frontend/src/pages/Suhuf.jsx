@@ -3,7 +3,14 @@ import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useWindowNavbar } from "@/context/WindowNavbarContext.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
-import { Flex, useColorModeValue, useTheme, useToken } from "@chakra-ui/react";
+import {
+  Flex,
+  Tooltip,
+  useBreakpointValue,
+  useColorModeValue,
+  useTheme,
+  useToken,
+} from "@chakra-ui/react";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { SuhufLayout } from "@/components/layout/suhuf/SuhufLayout.jsx";
@@ -11,11 +18,14 @@ import { SidebarLeftSVG } from "@/components/svgs/sidebar/SidebarLeftSVG.jsx";
 import { SidebarBottomSVG } from "@/components/svgs/sidebar/SidebarBottomSVG.jsx";
 import { SuhufMenu } from "@/components/layout/suhuf/SuhufMenu.jsx";
 import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
+import { SplitHorizontalSVG } from "@/components/svgs/sidebar/SplitHorizontalSVG.jsx";
+import { SplitVerticalSVG } from "@/components/svgs/sidebar/SplitVerticalSVG.jsx";
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
   const queryClient = useQueryClient();
   const { setNavbarChildren } = useWindowNavbar();
+  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
 
   const tokenKey = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const [iconActiveColor] = useToken("colors", [tokenKey]);
@@ -25,22 +35,23 @@ export const Suhuf = () => {
   const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
 
   const layout = suhuf?.config?.layout || {};
-  const leftTabOpen = layout.isLeftTabOpen;
-  const bottomTabOpen = layout.isBottomTabOpen;
+  const leftTabOpen = layout?.isLeftTabOpen;
+  const bottomTabOpen = layout?.isBottomTabOpen;
+  const isSplit = layout?.isSplit;
 
   queryClient.setQueryData(["windowMode"], true);
 
   const handleClick = useCallback(
-    (side) => {
+    (op) => {
       if (!suhuf) return;
 
       const updated = { ...layout };
 
-      if (side === "right") {
-        updated.rightTabOpen = !layout.rightTabOpen;
-      } else if (side === "left") {
+      if (op === "split") {
+        updated.isSplit = !layout.isSplit;
+      } else if (op === "left") {
         updated.isLeftTabOpen = !layout.isLeftTabOpen;
-      } else if (side === "bottom") {
+      } else if (op === "bottom") {
         updated.isBottomTabOpen = !layout.isBottomTabOpen;
       }
 
@@ -54,22 +65,57 @@ export const Suhuf = () => {
       <Flex width="100%" justify="space-between">
         <SuhufMenu suhuf={suhuf} />
         <Flex gap={1} align="center">
-          <div onClick={() => handleClick("left")}>
-            <SidebarLeftSVG
-              activeColor={iconActiveColor}
-              active={leftTabOpen}
-            />
-          </div>
-          <div onClick={() => handleClick("bottom")}>
-            <SidebarBottomSVG
-              activeColor={iconActiveColor}
-              active={bottomTabOpen}
-            />
-          </div>
+          <Tooltip
+            label="Toggle left tab"
+            placement="bottom"
+            variant="inverted"
+          >
+            <div onClick={() => handleClick("left")}>
+              <SidebarLeftSVG
+                activeColor={iconActiveColor}
+                active={leftTabOpen}
+              />
+            </div>
+          </Tooltip>
+          <Tooltip
+            label="Toggle bottom tab"
+            placement="bottom"
+            variant="inverted"
+          >
+            <div onClick={() => handleClick("bottom")}>
+              <SidebarBottomSVG
+                activeColor={iconActiveColor}
+                active={bottomTabOpen}
+              />
+            </div>
+          </Tooltip>
+          <Tooltip label="Toggle split" placement="bottom" variant="inverted">
+            <div onClick={() => handleClick("split")}>
+              {isSmallScreen ? (
+                <SplitVerticalSVG
+                  activeColor={iconActiveColor}
+                  active={isSplit}
+                />
+              ) : (
+                <SplitHorizontalSVG
+                  activeColor={iconActiveColor}
+                  active={isSplit}
+                />
+              )}
+            </div>
+          </Tooltip>
         </Flex>
       </Flex>
     );
-  }, [leftTabOpen, bottomTabOpen, iconActiveColor, handleClick, suhuf]);
+  }, [
+    leftTabOpen,
+    bottomTabOpen,
+    iconActiveColor,
+    handleClick,
+    suhuf,
+    isSplit,
+    isSmallScreen,
+  ]);
 
   useEffect(() => {
     queryClient.setQueryData(["windowMode"], true);
