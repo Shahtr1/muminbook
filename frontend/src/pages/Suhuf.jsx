@@ -15,7 +15,6 @@ import { SuhufMenu } from "@/components/layout/suhuf/SuhufMenu.jsx";
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
-
   const queryClient = useQueryClient();
   const { setNavbarChildren } = useWindowNavbar();
   const tokenKey = useColorModeValue("wn.bold.light", "wn.bold.dark");
@@ -30,9 +29,16 @@ export const Suhuf = () => {
 
   const { data: suhufState = {} } = useQuery({
     queryKey: ["suhufState", suhufId],
-    queryFn: () =>
-      queryClient.getQueryData(["suhufState", suhufId]) ??
-      getDefaultSidebarState(),
+    queryFn: () => {
+      const state =
+        queryClient.getQueryData(["suhufState", suhufId]) ??
+        getDefaultSidebarState();
+      return {
+        ...getDefaultSidebarState(),
+        ...state,
+        panelSizes: state.panelSizes || [75, 25],
+      };
+    },
     staleTime: 0,
   });
 
@@ -46,12 +52,21 @@ export const Suhuf = () => {
 
   const handleClick = useCallback(
     (side) => {
-      queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => {
-        return {
+      if (side === "right") {
+        const currentState =
+          queryClient.getQueryData(["suhufState", suhufId]) ??
+          getDefaultSidebarState();
+        queryClient.setQueryData(["suhufState", suhufId], {
+          ...currentState,
+          rightTabOpen: !currentState.rightTabOpen,
+          panelSizes: currentState.panelSizes || [75, 25],
+        });
+      } else {
+        queryClient.setQueryData(["suhufState", suhufId], (prev = {}) => ({
           ...prev,
           [`${side}TabOpen`]: !prev?.[`${side}TabOpen`],
-        };
-      });
+        }));
+      }
     },
     [queryClient, suhufId],
   );
@@ -94,7 +109,6 @@ export const Suhuf = () => {
   useEffect(() => {
     queryClient.setQueryData(["windowMode"], true);
     setNavbarChildren(navbarContent);
-
     return () => {
       queryClient.setQueryData(["windowMode"], false);
       setNavbarChildren(null);
