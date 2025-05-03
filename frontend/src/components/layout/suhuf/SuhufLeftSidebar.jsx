@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { sidebarTabs } from "@/data/sidebarTabs.jsx";
+import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
 
@@ -50,7 +50,7 @@ export const SuhufLeftSidebar = () => {
     });
   };
 
-  const activeTabData = sidebarTabs.find((tab) => tab.key === activeTab);
+  const activeTabData = sidebarMenuData.find((tab) => tab.key === activeTab);
   const activeContent =
     isOpen && activeTabData ? (
       <Flex flexDir="column" w="100%" overflow="auto">
@@ -70,13 +70,14 @@ export const SuhufLeftSidebar = () => {
         w="40px"
         bg={bgColor}
         color="white"
-        py={5}
+        pt={5}
+        pb={2}
         borderRight="1px solid"
         borderColor={borderColor}
         zIndex={1}
       >
-        <VStack spacing={5} align="center" w="100%">
-          {sidebarTabs.map(({ key, label, icon: Icon }) => (
+        <VStack spacing={5} align="center" w="100%" overflow="auto">
+          {sidebarMenuData.map(({ key, label, icon: Icon }) => (
             <Tooltip
               key={key}
               variant="inverted"

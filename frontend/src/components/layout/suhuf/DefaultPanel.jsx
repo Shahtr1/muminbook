@@ -6,7 +6,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
-import { sidebarTabs } from "@/data/sidebarTabs.jsx";
+import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
 
@@ -70,7 +70,7 @@ export const DefaultPanel = ({ suhufId }) => {
             </Text>
           </Flex>
 
-          {sidebarTabs.map(({ key, label, icon: Icon, description }) => (
+          {sidebarMenuData.map(({ key, label, icon: Icon, description }) => (
             <Flex
               key={key}
               align="center"
