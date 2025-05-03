@@ -9,12 +9,12 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
-import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
+import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 
 export const SuhufLeftSidebar = () => {
   const { id: suhufId } = useParams();
   const { data: suhuf } = useSuhuf(suhufId);
-  const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
@@ -30,18 +30,18 @@ export const SuhufLeftSidebar = () => {
   // Set default tab if panel is open and no tab selected
   useEffect(() => {
     if (isOpen && !activeTab) {
-      updateLayout({
+      updateConfig({
         layout: {
           ...layout,
           leftTab: "explorer",
         },
       });
     }
-  }, [isOpen, activeTab, layout, updateLayout]);
+  }, [isOpen, activeTab, layout, updateConfig]);
 
   const toggleTab = (tabKey) => {
     const isSame = tabKey === activeTab;
-    updateLayout({
+    updateConfig({
       layout: {
         ...layout,
         leftTab: tabKey,

@@ -1,14 +1,14 @@
 import { useXToast } from "@/hooks/useXToast.js";
 import { useMutation } from "@tanstack/react-query";
-import { updateSuhufLayout } from "@/services/index.js";
+import { updateSuhufConfig } from "@/services/index.js";
 import queryClient from "@/config/queryClient.js";
 
-export const useUpdateSuhufLayout = (suhufId) => {
+export const useUpdateSuhufConfig = (suhufId) => {
   const toast = useXToast();
 
   return useMutation({
     mutationFn: async (layoutUpdate) => {
-      return await updateSuhufLayout(suhufId, layoutUpdate);
+      return await updateSuhufConfig(suhufId, layoutUpdate);
     },
     onSuccess: (updatedSuhuf, variables) => {
       queryClient.setQueryData(["suhuf", suhufId], updatedSuhuf);

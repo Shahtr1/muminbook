@@ -8,11 +8,11 @@ import {
 import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
 import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
-import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
+import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 
 export const DefaultPanel = ({ suhufId }) => {
   const { data: suhuf } = useSuhuf(suhufId);
-  const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const secondaryColor = useColorModeValue("wn.gutter.light", "wn.gutter.dark");
   const suhufLogoSize = useBreakpointValue({ base: "90px", sm: "130px" });
@@ -28,7 +28,7 @@ export const DefaultPanel = ({ suhufId }) => {
 
   const toggleTab = (tabKey) => {
     const isSame = activeTab === tabKey;
-    updateLayout({
+    updateConfig({
       layout: {
         ...layout,
         leftTab: tabKey,

@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
-import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
+import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export const SuhufBottomPanelHeader = ({ hasBorder = false, data = [] }) => {
   const { id: suhufId } = useParams();
   const { data: suhuf } = useSuhuf(suhufId);
-  const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const layout = suhuf?.config?.layout || {};
   const isOpen = layout?.isBottomTabOpen || false;
@@ -15,7 +15,7 @@ export const SuhufBottomPanelHeader = ({ hasBorder = false, data = [] }) => {
   const toggleBottomTab = () => {
     const newOpen = !isOpen;
 
-    updateLayout({
+    updateConfig({
       layout: {
         ...layout,
         isBottomTabOpen: newOpen,
@@ -36,6 +36,7 @@ export const SuhufBottomPanelHeader = ({ hasBorder = false, data = [] }) => {
       borderBottom="1px solid"
       borderTop={hasBorder ? "1px solid" : "none"}
       borderColor={borderColor}
+      onClick={toggleBottomTab}
     >
       <Flex w="100%" gap={5} overflowX="auto" flex="1">
         <Text variant="wn" cursor="pointer" fontSize="12px" py={1}>

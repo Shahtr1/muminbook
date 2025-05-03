@@ -17,7 +17,7 @@ import { SuhufLayout } from "@/components/layout/suhuf/SuhufLayout.jsx";
 import { SidebarLeftSVG } from "@/components/svgs/sidebar/SidebarLeftSVG.jsx";
 import { SidebarBottomSVG } from "@/components/svgs/sidebar/SidebarBottomSVG.jsx";
 import { SuhufMenu } from "@/components/layout/suhuf/SuhufMenu.jsx";
-import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
+import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { SplitHorizontalSVG } from "@/components/svgs/sidebar/SplitHorizontalSVG.jsx";
 import { SplitVerticalSVG } from "@/components/svgs/sidebar/SplitVerticalSVG.jsx";
 
@@ -32,7 +32,7 @@ export const Suhuf = () => {
   const theme = useTheme();
 
   const { data: suhuf, isPending, isSuccess, isError } = useSuhuf(suhufId);
-  const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const layout = suhuf?.config?.layout || {};
   const leftTabOpen = layout?.isLeftTabOpen;
@@ -45,19 +45,19 @@ export const Suhuf = () => {
     (op) => {
       if (!suhuf) return;
 
-      const updated = { ...layout };
+      const updatedLayout = { ...layout };
 
       if (op === "split") {
-        updated.isSplit = !layout.isSplit;
+        updatedLayout.isSplit = !layout.isSplit;
       } else if (op === "left") {
-        updated.isLeftTabOpen = !layout.isLeftTabOpen;
+        updatedLayout.isLeftTabOpen = !layout.isLeftTabOpen;
       } else if (op === "bottom") {
-        updated.isBottomTabOpen = !layout.isBottomTabOpen;
+        updatedLayout.isBottomTabOpen = !layout.isBottomTabOpen;
       }
 
-      updateLayout({ layout: updated });
+      updateConfig({ layout: updatedLayout });
     },
-    [updateLayout, suhuf],
+    [updateConfig, suhuf],
   );
 
   const navbarContent = useMemo(() => {

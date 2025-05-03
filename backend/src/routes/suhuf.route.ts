@@ -1,8 +1,8 @@
 import { Router } from "express";
 import {
+  configSuhufHandler,
   createSuhufHandler,
   getSuhufHandler,
-  layoutSuhufHandler,
   renameSuhufHandler,
 } from "../controllers/suhuf.controller";
 
@@ -12,6 +12,6 @@ const suhufRoutes = Router();
 suhufRoutes.post("/", createSuhufHandler);
 suhufRoutes.get("/:id", getSuhufHandler);
 suhufRoutes.patch("/:id/rename", renameSuhufHandler);
-suhufRoutes.patch("/:id/layout", layoutSuhufHandler);
+suhufRoutes.patch("/:id/config", configSuhufHandler);
 
 export default suhufRoutes;

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { PrimaryId } from "../constants/primaryId";
 import FileType from "../constants/enums/fileType";
+import Direction from "../constants/enums/direction";
 
 export interface SuhufDocument extends mongoose.Document {
   userId: PrimaryId;
@@ -11,6 +12,7 @@ export interface SuhufDocument extends mongoose.Document {
       fileType: FileType;
       scrollPosition: number;
       isActive: boolean;
+      direction: Direction;
     }[];
     layout?: {
       leftTab?: string;

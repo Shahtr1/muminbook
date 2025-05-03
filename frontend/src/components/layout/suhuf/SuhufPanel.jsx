@@ -6,14 +6,16 @@ import { defineMbTheme } from "@/theme/monacoTheme.js";
 import { useParams } from "react-router-dom";
 import { DefaultPanel } from "@/components/layout/suhuf/DefaultPanel.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
-import { useUpdateSuhufLayout } from "@/hooks/suhuf/useUpdateSuhufLayout.js";
+import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { useSplitPanelSizes } from "@/hooks/suhuf/useSplitPanelSizes.js";
 
 export const SuhufPanel = ({ value, onValueChange }) => {
   const { colorMode } = useColorMode();
   const { id: suhufId } = useParams();
   const { data: suhuf } = useSuhuf(suhufId);
-  const { mutate: updateLayout } = useUpdateSuhufLayout(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+  const selectedTheme =
+    colorMode === "dark" ? "mb-theme-dark" : "mb-theme-light";
   const monaco = useMonaco();
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false }) || false;
@@ -26,7 +28,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
   const { sizes, handleResize } = useSplitPanelSizes({
     layout,
     isSecondPanelOpen,
-    onUpdateLayout: updateLayout,
+    onUpdateLayout: updateConfig,
   });
 
   // Monaco theme setup
@@ -37,7 +39,26 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     }
   }, [monaco, colorMode]);
 
-  const renderEditor = () => <DefaultPanel suhufId={suhufId} />;
+  // Force re-mount when theme changes
+  const editorKey = `editor-${selectedTheme}`;
+
+  const renderEditor = () => (
+    <>
+      <DefaultPanel suhufId={suhufId} />
+      {/*<Editor*/}
+      {/*  key={editorKey}*/}
+      {/*  height="100%"*/}
+      {/*  defaultLanguage="plaintext"*/}
+      {/*  value={value}*/}
+      {/*  onChange={onValueChange}*/}
+      {/*  theme={selectedTheme}*/}
+      {/*  options={{*/}
+      {/*    wordWrap: "on",*/}
+      {/*    fontSize: 14,*/}
+      {/*  }}*/}
+      {/*/>*/}
+    </>
+  );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const children = useMemo(() => {

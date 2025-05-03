@@ -42,7 +42,7 @@ export const SuhufLayout = () => {
             <SuhufPanel />
           </Flex>
 
-          {isBottomOpen && <SuhufBottomPanel />}
+          {isBottomOpen ? <SuhufBottomPanel /> : <div />}
         </Split>
         {!isBottomOpen && <SuhufBottomPanelHeader hasBorder data={readings} />}
       </Flex>
