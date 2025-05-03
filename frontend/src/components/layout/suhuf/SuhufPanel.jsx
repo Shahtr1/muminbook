@@ -45,6 +45,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
   const renderEditor = () => (
     <>
       <DefaultPanel suhufId={suhufId} />
+      {/* Don't remove this comment, will work on that later */}
       {/*<Editor*/}
       {/*  key={editorKey}*/}
       {/*  height="100%"*/}
