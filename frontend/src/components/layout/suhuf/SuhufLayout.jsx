@@ -6,14 +6,11 @@ import { useParams } from "react-router-dom";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { SuhufBottomPanel } from "@/components/layout/suhuf/bottomPanel/SuhufBottomPanel.jsx";
 import { SuhufBottomPanelHeader } from "@/components/layout/suhuf/bottomPanel/SuhufBottomPanelHeader.jsx";
-import { useReading } from "@/hooks/useReading.js";
 
-export const SuhufLayout = () => {
+export const SuhufLayout = ({ readings }) => {
   const { colorMode } = useColorMode();
   const { id: suhufId } = useParams();
   const { data: suhuf } = useSuhuf(suhufId);
-  const { readings, isPending, isError, isSuccess } = useReading();
-
   const layout = suhuf?.config?.layout || {};
   const isBottomOpen = layout?.isBottomTabOpen;
 

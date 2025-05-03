@@ -20,6 +20,7 @@ import { SuhufMenu } from "@/components/layout/suhuf/SuhufMenu.jsx";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { SplitHorizontalSVG } from "@/components/svgs/sidebar/SplitHorizontalSVG.jsx";
 import { SplitVerticalSVG } from "@/components/svgs/sidebar/SplitVerticalSVG.jsx";
+import { useReading } from "@/hooks/useReading.js";
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
@@ -31,15 +32,23 @@ export const Suhuf = () => {
   const [iconActiveColor] = useToken("colors", [tokenKey]);
   const theme = useTheme();
 
-  const { data: suhuf, isPending, isSuccess, isError } = useSuhuf(suhufId);
+  const {
+    data: suhuf,
+    isPending: isSuhufLoading,
+    isError: isSuhufError,
+    isSuccess: isSuhufReady,
+  } = useSuhuf(suhufId);
+  const {
+    readings,
+    isPending: isReadingsLoading,
+    isError: isReadingsError,
+  } = useReading();
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const layout = suhuf?.config?.layout || {};
-  const leftTabOpen = layout?.isLeftTabOpen;
-  const bottomTabOpen = layout?.isBottomTabOpen;
-  const isSplit = layout?.isSplit;
-
-  queryClient.setQueryData(["windowMode"], true);
+  const leftTabOpen = layout.isLeftTabOpen;
+  const bottomTabOpen = layout.isBottomTabOpen;
+  const isSplit = layout.isSplit;
 
   const handleClick = useCallback(
     (op) => {
@@ -47,21 +56,19 @@ export const Suhuf = () => {
 
       const updatedLayout = { ...layout };
 
-      if (op === "split") {
-        updatedLayout.isSplit = !layout.isSplit;
-      } else if (op === "left") {
+      if (op === "split") updatedLayout.isSplit = !layout.isSplit;
+      else if (op === "left")
         updatedLayout.isLeftTabOpen = !layout.isLeftTabOpen;
-      } else if (op === "bottom") {
+      else if (op === "bottom")
         updatedLayout.isBottomTabOpen = !layout.isBottomTabOpen;
-      }
 
       updateConfig({ layout: updatedLayout });
     },
     [updateConfig, suhuf],
   );
 
-  const navbarContent = useMemo(() => {
-    return (
+  const navbarContent = useMemo(
+    () => (
       <Flex width="100%" justify="space-between">
         <SuhufMenu suhuf={suhuf} />
         <Flex gap={1} align="center">
@@ -106,16 +113,17 @@ export const Suhuf = () => {
           </Tooltip>
         </Flex>
       </Flex>
-    );
-  }, [
-    leftTabOpen,
-    bottomTabOpen,
-    iconActiveColor,
-    handleClick,
-    suhuf,
-    isSplit,
-    isSmallScreen,
-  ]);
+    ),
+    [
+      suhuf,
+      handleClick,
+      leftTabOpen,
+      bottomTabOpen,
+      isSplit,
+      isSmallScreen,
+      iconActiveColor,
+    ],
+  );
 
   useEffect(() => {
     queryClient.setQueryData(["windowMode"], true);
@@ -130,13 +138,13 @@ export const Suhuf = () => {
 
   return (
     <Flex
-      h={`calc(100dvh - ${theme.sizes["win-manager-height"]} - ${winNavbarHeight}) `}
+      h={`calc(100dvh - ${theme.sizes["win-manager-height"]} - ${winNavbarHeight})`}
       w="100%"
       overflow="hidden"
     >
-      {isPending && <Loader />}
-      {isError && <SomethingWentWrong />}
-      {isSuccess && <SuhufLayout />}
+      {(isSuhufLoading || isReadingsLoading) && <Loader />}
+      {(isSuhufError || isReadingsError) && <SomethingWentWrong />}
+      {isSuhufReady && <SuhufLayout readings={readings} />}
     </Flex>
   );
 };

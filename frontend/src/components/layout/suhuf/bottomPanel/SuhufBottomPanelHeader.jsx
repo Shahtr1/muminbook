@@ -4,7 +4,10 @@ import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-export const SuhufBottomPanelHeader = ({ hasBorder = false, data = [] }) => {
+export const SuhufBottomPanelHeader = ({
+  hasBorder = false,
+  readings = [],
+}) => {
   const { id: suhufId } = useParams();
   const { data: suhuf } = useSuhuf(suhufId);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
