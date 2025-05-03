@@ -1,5 +1,7 @@
 # MERN Authentication System
 
+## Created on _Jan 21, 2025_
+
 ## Overview
 
 This is a **MERN (MongoDB, Express, React, Node.js) authentication system** with Role-Based Access Control (
