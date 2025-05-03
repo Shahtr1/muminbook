@@ -28,13 +28,13 @@ export const sidebarMenuData = [
     description:
       "Quickly search through your files, ayahs, or notes to find what you need.",
   },
-  ...Array.from({ length: 20 }).map((_, i) => ({
-    key: `fake-tab-${i + 1}`,
-    label: `Fake Tab ${i + 1}`,
-    icon: i % 2 === 0 ? BsFiles : BsSearch,
-    renderContent: () => (
-      <Flex p={2}>📄 This is fake tab {i + 1} content.</Flex>
-    ),
-    description: `This is a placeholder description for Fake Tab ${i + 1}.`,
-  })),
+  // ...Array.from({ length: 20 }).map((_, i) => ({
+  //   key: `fake-tab-${i + 1}`,
+  //   label: `Fake Tab ${i + 1}`,
+  //   icon: i % 2 === 0 ? BsFiles : BsSearch,
+  //   renderContent: () => (
+  //     <Flex p={2}>📄 This is fake tab {i + 1} content.</Flex>
+  //   ),
+  //   description: `This is a placeholder description for Fake Tab ${i + 1}.`,
+  // })),
 ];
