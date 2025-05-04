@@ -22,16 +22,16 @@ export const SuhufPanel = ({ value, onValueChange }) => {
   const [themeReady, setThemeReady] = useState(false);
 
   const layout = suhuf?.config?.layout || {};
+  const panels = suhuf?.config?.panels || [];
   const isSecondPanelOpen = layout.isSplit;
+  const isSecondPanelActive = panels[1]?.active;
 
-  // Panel sizing logic
   const { sizes, handleResize } = useSplitPanelSizes({
     layout,
     isSecondPanelOpen,
     onUpdateLayout: updateConfig,
   });
 
-  // Monaco theme setup
   useEffect(() => {
     if (monaco) {
       defineMbTheme(monaco, colorMode);
@@ -39,13 +39,11 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     }
   }, [monaco, colorMode]);
 
-  // Force re-mount when theme changes
   const editorKey = `editor-${selectedTheme}`;
 
   const renderEditor = () => (
     <>
       <DefaultPanel suhufId={suhufId} />
-      {/* Don't remove this comment, will work on that later */}
       {/*<Editor*/}
       {/*  key={editorKey}*/}
       {/*  height="100%"*/}
@@ -61,29 +59,39 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     </>
   );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const children = useMemo(() => {
-    const panels = [
-      <Box key="panel-1" h="100%" w="100%">
-        {themeReady && renderEditor()}
-      </Box>,
-    ];
+  const panelElements = useMemo(() => {
+    const setActivePanel = (index) => {
+      const newPanels = panels.map((panel, i) => ({
+        ...panel,
+        active: i === index,
+      }));
 
-    if (isSecondPanelOpen) {
-      panels.push(
-        <Box key="panel-2" h="100%" w="100%">
+      updateConfig({ panels: newPanels });
+    };
+
+    const renderPanel = (index) => {
+      const isActive = index === 1 ? isSecondPanelActive : !isSecondPanelActive;
+      return (
+        <Box
+          key={`panel-${index + 1}`}
+          h="100%"
+          w="100%"
+          borderTop={isActive ? "2px solid" : "none"}
+          borderColor="brand.500"
+          onClick={() => {
+            setActivePanel(index);
+          }}
+        >
           {themeReady && renderEditor()}
-        </Box>,
+        </Box>
       );
-    }
+    };
 
-    return panels;
-    // Don't change below dependency array.
-    // The dependency array is intentionally limited.
-    // Re-rendering this memoized `children` array too frequently (e.g., on every minor layout change)
-    // causes Default Panel layout tab not to work, as it doesn't render on suhuf id changes
-    // We're only tracking layout keys that affect panel structure to ensure stable and performant rendering.
-  }, [themeReady, isSecondPanelOpen, suhufId]);
+    const elements = [renderPanel(0)];
+    if (isSecondPanelOpen) elements.push(renderPanel(1));
+
+    return elements;
+  }, [themeReady, isSecondPanelOpen, updateConfig, isSecondPanelActive]);
 
   return (
     <Split
@@ -100,7 +108,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
       }}
       onDragEnd={handleResize}
     >
-      {children}
+      {panelElements}
     </Split>
   );
 };

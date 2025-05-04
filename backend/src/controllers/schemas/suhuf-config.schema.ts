@@ -14,10 +14,10 @@ const layoutSchema = z.object({
 });
 
 const panelSchema = z.object({
-  fileId: z.string().min(1),
+  fileId: z.string().min(1).optional(),
   fileType: z.nativeEnum(FileType),
-  scrollPosition: z.number().min(0),
-  isActive: z.boolean(),
+  scrollPosition: z.number().min(0).optional(),
+  active: z.boolean(),
   direction: z.nativeEnum(Direction),
 });
 

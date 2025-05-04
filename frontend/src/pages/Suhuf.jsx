@@ -56,8 +56,20 @@ export const Suhuf = () => {
 
       const updatedLayout = { ...layout };
 
-      if (op === "split") updatedLayout.isSplit = !layout.isSplit;
-      else if (op === "left")
+      if (op === "split") {
+        const togglingToSplit = !layout.isSplit;
+        updatedLayout.isSplit = togglingToSplit;
+
+        if (!togglingToSplit && suhuf.config?.panels?.length) {
+          const updatedPanels = suhuf.config.panels.map((panel, index) => ({
+            ...panel,
+            active: index === 0,
+          }));
+
+          updateConfig({ layout: updatedLayout, panels: updatedPanels });
+          return;
+        }
+      } else if (op === "left")
         updatedLayout.isLeftTabOpen = !layout.isLeftTabOpen;
       else if (op === "bottom")
         updatedLayout.isBottomTabOpen = !layout.isBottomTabOpen;

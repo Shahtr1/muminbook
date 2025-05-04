@@ -8,10 +8,10 @@ export interface SuhufDocument extends mongoose.Document {
   title: string;
   config: {
     panels: {
-      fileId: string;
+      fileId?: string;
       fileType: FileType;
-      scrollPosition: number;
-      isActive: boolean;
+      scrollPosition?: number;
+      active: boolean;
       direction: Direction;
     }[];
     layout?: {
@@ -41,6 +41,20 @@ const suhufSchema = new mongoose.Schema<SuhufDocument>(
     },
     config: {
       type: Object,
+      default: {
+        panels: [
+          {
+            fileType: FileType.None,
+            active: true,
+            direction: Direction.Left,
+          },
+          {
+            fileType: FileType.None,
+            active: false,
+            direction: Direction.Right,
+          },
+        ],
+      },
     },
   },
   { timestamps: true },
