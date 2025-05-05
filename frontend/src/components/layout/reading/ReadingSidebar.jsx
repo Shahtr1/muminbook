@@ -5,7 +5,7 @@ import { ResourcesTrash } from "@/components/layout/reading/resources/ResourcesT
 import { ResourcesOverview } from "@/components/layout/reading/resources/ResourcesOverview.jsx";
 import { LuMenu } from "react-icons/lu";
 import { useState } from "react";
-import { useReadingLayoutConfig } from "@/hooks/useReadingLayoutConfig";
+import { useReadingLayoutConfig } from "@/hooks/reading/useReadingLayoutConfig.js";
 
 export const ReadingSidebar = ({ overview }) => {
   const location = useLocation();

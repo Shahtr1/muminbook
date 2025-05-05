@@ -5,6 +5,7 @@ export const useWindows = () => {
   const { data = [], ...rest } = useQuery({
     queryKey: ["windows"],
     queryFn: () => getWindows(),
+    refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     retry: false,
   });

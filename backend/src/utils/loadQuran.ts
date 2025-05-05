@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-export const loadAyats = (): any[] => {
+export const loadQuran = (): any[] => {
   const ayatDir = path.join(__dirname, "../data/ayats");
   const files = fs.readdirSync(ayatDir);
 

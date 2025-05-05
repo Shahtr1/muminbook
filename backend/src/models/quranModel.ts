@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 import { PrimaryId } from "../constants/primaryId";
 
-export interface AyatDocument extends Document {
+export interface QuranDocument extends Document {
   uuid: number;
   surahId: PrimaryId;
   ayat: string;
@@ -11,7 +11,7 @@ export interface AyatDocument extends Document {
   updatedAt: Date;
 }
 
-const ayatDocument = new Schema<AyatDocument>(
+const quranDocument = new Schema<QuranDocument>(
   {
     uuid: {
       type: Number,
@@ -42,8 +42,12 @@ const ayatDocument = new Schema<AyatDocument>(
   { timestamps: true },
 );
 
-ayatDocument.index({ uuid: 1 }, { unique: true });
+quranDocument.index({ uuid: 1 }, { unique: true });
 
-const AyatModel = mongoose.model<AyatDocument>("Ayat", ayatDocument, "ayats");
+const QuranModel = mongoose.model<QuranDocument>(
+  "Quran",
+  quranDocument,
+  "quran",
+);
 
-export default AyatModel;
+export default QuranModel;

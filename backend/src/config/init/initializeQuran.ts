@@ -1,9 +1,9 @@
 import SurahModel from "../../models/surah.model";
 import JuzModel from "../../models/juz.model";
-import AyatModel from "../../models/ayat.model";
+import QuranModel from "../../models/quranModel";
 import ReadingModel from "../../models/reading.model"; // ➡️ Import ReadingModel
 import { surahsApi } from "../../data/surahsApi";
-import { loadAyats } from "../../utils/loadAyats";
+import { loadQuran } from "../../utils/loadQuran";
 import { juzListApi } from "../../data/juzListApi";
 import { readingsApi } from "../../data/readingsApi"; // ➡️ Import readings array
 
@@ -41,24 +41,24 @@ const initializeQuran = async () => {
 
     // TODO: remove this after writing all ayats
     // Always replace Ayats
-    // await AyatModel.deleteMany({});
-    // console.log("🗑️ Existing Ayats removed.");
+    // await QuranModel.deleteMany({});
+    // console.log("🗑️ Existing Quran removed.");
 
-    // Insert Ayats if not already present
-    const existingAyats = await AyatModel.countDocuments();
-    if (existingAyats === 0) {
-      const rawAyats = loadAyats();
-      const mappedAyats = rawAyats.map((ayat) => ({
-        ...ayat,
-        surahId: surahMap.get(ayat.surahId),
-        juzId: juzMap.get(ayat.juzId),
+    // Insert Quran if not already present
+    const existingQuran = await QuranModel.countDocuments();
+    if (existingQuran === 0) {
+      const rawQuran = loadQuran();
+      const mappedQuran = rawQuran.map((quran) => ({
+        ...quran,
+        surahId: surahMap.get(quran.surahId),
+        juzId: juzMap.get(quran.juzId),
       }));
 
-      await AyatModel.insertMany(mappedAyats);
-      console.log("✅  Ayats initialized successfully.");
+      await QuranModel.insertMany(mappedQuran);
+      console.log("✅  Quran initialized successfully.");
     } else {
       console.log(
-        `ℹ️ Ayats already initialized (${existingAyats} entries found).`,
+        `ℹ️ Quran already initialized (${existingQuran} entries found).`,
       );
     }
 

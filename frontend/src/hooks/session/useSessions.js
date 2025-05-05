@@ -8,6 +8,9 @@ const useSessions = (opts = {}) => {
     queryKey: [SESSIONS],
     queryFn: getSessions,
     ...opts,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 
   return { sessions, ...rest };

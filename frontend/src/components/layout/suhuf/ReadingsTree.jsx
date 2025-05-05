@@ -11,13 +11,13 @@ import { ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
 import { FileSVG } from "@/components/svgs/FileSVG.jsx";
-import { useReading } from "@/hooks/useReading.js";
+import { useReadings } from "@/hooks/reading/useReadings.js";
 
 const TreeNode = ({ onSelect }) => {
   const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const { readings, isPending } = useReading();
+  const { readings, isPending } = useReadings();
 
   const toggle = () => {
     const nextExpanded = !isExpanded;

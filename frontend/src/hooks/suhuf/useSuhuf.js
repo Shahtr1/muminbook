@@ -6,5 +6,8 @@ export const useSuhuf = (id) => {
     queryKey: ["suhuf", id],
     queryFn: () => getSuhuf(id),
     enabled: !!id,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 };

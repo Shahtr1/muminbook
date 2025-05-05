@@ -8,6 +8,9 @@ const useFamilyTree = (opts = {}) => {
     queryKey: [FAMILY_TREE],
     queryFn: getFamilyTree,
     ...opts,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 
   return { familyTree, ...rest };

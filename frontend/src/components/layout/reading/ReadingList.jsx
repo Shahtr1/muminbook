@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useIsMyFilesEmpty } from "@/hooks/resource/useIsMyFilesEmpty.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { useReading } from "@/hooks/useReading.js";
+import { useReadings } from "@/hooks/reading/useReadings.js";
 import { QuranSVG } from "@/components/svgs/QuranSVG.jsx";
 import { ArabicEnglishSVG } from "@/components/svgs/ArabicEnglishSVG.jsx";
 import { BookSVG } from "@/components/svgs/BookSVG.jsx";
@@ -28,9 +28,16 @@ export const ReadingList = () => {
   });
 
   const navigate = useNavigate();
-  const { emptyMyFiles, isMyFilesEmptyPending, isMyFilesEmptyError } =
-    useIsMyFilesEmpty();
-  const { readings, isReadingPending, isReadingError } = useReading();
+  const {
+    emptyMyFiles,
+    isPending: isMyFilesEmptyPending,
+    isError: isMyFilesEmptyError,
+  } = useIsMyFilesEmpty();
+  const {
+    readings,
+    isPending: isReadingPending,
+    isError: isReadingError,
+  } = useReadings();
 
   const isPending = isMyFilesEmptyPending || isReadingPending;
   const isError = isMyFilesEmptyError || isReadingError;

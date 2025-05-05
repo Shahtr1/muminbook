@@ -20,7 +20,7 @@ import { SuhufMenu } from "@/components/layout/suhuf/SuhufMenu.jsx";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { SplitHorizontalSVG } from "@/components/svgs/sidebar/SplitHorizontalSVG.jsx";
 import { SplitVerticalSVG } from "@/components/svgs/sidebar/SplitVerticalSVG.jsx";
-import { useReading } from "@/hooks/useReading.js";
+import { useReadings } from "@/hooks/reading/useReadings.js";
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
@@ -42,7 +42,7 @@ export const Suhuf = () => {
     readings,
     isPending: isReadingsLoading,
     isError: isReadingsError,
-  } = useReading();
+  } = useReadings();
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const layout = suhuf?.config?.layout || {};
@@ -136,6 +136,8 @@ export const Suhuf = () => {
       iconActiveColor,
     ],
   );
+
+  queryClient.setQueryData(["windowMode"], true);
 
   useEffect(() => {
     queryClient.setQueryData(["windowMode"], true);

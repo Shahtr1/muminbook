@@ -8,6 +8,7 @@ export const useResources = (path = "my-files") => {
     queryKey: [RESOURCES, path],
     queryFn: () => getResources(path),
     enabled: Boolean(path),
+    refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     retry: false,
   });

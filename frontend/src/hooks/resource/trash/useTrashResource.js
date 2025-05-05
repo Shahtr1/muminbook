@@ -8,6 +8,7 @@ export const useTrashResource = (virtualPath = "trash", originalPath = "") => {
   const { data: allTrash = [], ...rest } = useQuery({
     queryKey: [Trash],
     queryFn: getTrash,
+    refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     retry: false,
   });
