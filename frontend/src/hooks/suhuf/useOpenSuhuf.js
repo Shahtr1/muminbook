@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCreateSuhuf } from "@/hooks/suhuf/useCreateSuhuf.js";
 
-export const useOpenSuhuf = () => {
+export const useOpenSuhuf = (onSuccess) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { mutate: createSuhuf } = useCreateSuhuf();
@@ -27,6 +27,7 @@ export const useOpenSuhuf = () => {
       {
         onSuccess: ({ suhufId }) => {
           navigate(`/suhuf/${suhufId}`);
+          onSuccess(suhufId);
         },
       },
     );

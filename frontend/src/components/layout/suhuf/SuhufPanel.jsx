@@ -1,25 +1,20 @@
-import { Box, useBreakpointValue, useColorMode } from "@chakra-ui/react";
+import { Box, useBreakpointValue } from "@chakra-ui/react";
 import Split from "react-split";
-import { useMonaco } from "@monaco-editor/react";
-import { useEffect, useMemo, useState } from "react";
-import { defineMbTheme } from "@/theme/monacoTheme.js";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { DefaultPanel } from "@/components/layout/suhuf/DefaultPanel.jsx";
+import { ReadingPanel } from "@/components/layout/suhuf/ReadingPanel.jsx";
+import { EditorPanel } from "@/components/layout/suhuf/EditorPanel.jsx";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { useSplitPanelSizes } from "@/hooks/suhuf/useSplitPanelSizes.js";
 
-export const SuhufPanel = ({ value, onValueChange }) => {
-  const { colorMode } = useColorMode();
+export const SuhufPanel = () => {
   const { id: suhufId } = useParams();
   const { data: suhuf } = useSuhuf(suhufId);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
-  const selectedTheme =
-    colorMode === "dark" ? "mb-theme-dark" : "mb-theme-light";
-  const monaco = useMonaco();
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false }) || false;
-  const [themeReady, setThemeReady] = useState(false);
 
   const layout = suhuf?.config?.layout || {};
   const panels = suhuf?.config?.panels || [];
@@ -32,32 +27,18 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     onUpdateLayout: updateConfig,
   });
 
-  useEffect(() => {
-    if (monaco) {
-      defineMbTheme(monaco, colorMode);
-      setThemeReady(true);
+  const renderPanelContent = (panel) => {
+    const type = panel?.fileType || "none";
+
+    switch (type) {
+      case "reading":
+        return <ReadingPanel />;
+      case "user":
+        return <EditorPanel />;
+      default:
+        return <DefaultPanel suhufId={suhufId} />;
     }
-  }, [monaco, colorMode]);
-
-  const editorKey = `editor-${selectedTheme}`;
-
-  const renderEditor = () => (
-    <>
-      <DefaultPanel suhufId={suhufId} />
-      {/*<Editor*/}
-      {/*  key={editorKey}*/}
-      {/*  height="100%"*/}
-      {/*  defaultLanguage="plaintext"*/}
-      {/*  value={value}*/}
-      {/*  onChange={onValueChange}*/}
-      {/*  theme={selectedTheme}*/}
-      {/*  options={{*/}
-      {/*    wordWrap: "on",*/}
-      {/*    fontSize: 14,*/}
-      {/*  }}*/}
-      {/*/>*/}
-    </>
-  );
+  };
 
   const panelElements = useMemo(() => {
     const setActivePanel = (index) => {
@@ -73,7 +54,9 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     };
 
     const renderPanel = (index) => {
+      const panel = panels[index];
       const isActive = index === 1 ? isSecondPanelActive : !isSecondPanelActive;
+
       return (
         <Box
           key={`panel-${index + 1}`}
@@ -85,7 +68,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
             setActivePanel(index);
           }}
         >
-          {themeReady && renderEditor()}
+          {renderPanelContent(panel)}
         </Box>
       );
     };
@@ -94,7 +77,7 @@ export const SuhufPanel = ({ value, onValueChange }) => {
     if (isSecondPanelOpen) elements.push(renderPanel(1));
 
     return elements;
-  }, [themeReady, isSecondPanelOpen, updateConfig, isSecondPanelActive]);
+  }, [isSecondPanelOpen, updateConfig, isSecondPanelActive]);
 
   return (
     <Split
