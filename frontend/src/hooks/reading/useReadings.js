@@ -13,10 +13,10 @@ export const useReadings = () => {
   return { readings: data, ...rest };
 };
 
-export const useReading = (id) => {
+export const useReading = (id, page = 1) => {
   const { data, ...rest } = useQuery({
-    queryKey: ["reading", id],
-    queryFn: () => getReading(id),
+    queryKey: ["reading", id, page],
+    queryFn: () => getReading(id, page),
     enabled: !!id,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
