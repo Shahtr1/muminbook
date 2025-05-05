@@ -61,6 +61,9 @@ export const SuhufPanel = ({ value, onValueChange }) => {
 
   const panelElements = useMemo(() => {
     const setActivePanel = (index) => {
+      const currentActiveIndex = panels.findIndex((p) => p.active);
+      if (currentActiveIndex === index) return;
+
       const newPanels = panels.map((panel, i) => ({
         ...panel,
         active: i === index,
