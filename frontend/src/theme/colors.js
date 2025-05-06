@@ -59,7 +59,7 @@ const colors = {
       light: "#616161",
       hover: {
         dark: "#3b3b3b",
-        light: "#e1e1e1",
+        light: "#d7d6d6",
       },
     },
     content: {

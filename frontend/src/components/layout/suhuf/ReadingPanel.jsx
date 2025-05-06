@@ -2,24 +2,36 @@ import { Flex, useColorModeValue } from "@chakra-ui/react";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { useReading } from "@/hooks/reading/useReadings.js";
 import { Loader } from "@/components/layout/Loader.jsx";
+import { QuranUI } from "@/components/layout/reading/ui/QuranUI.jsx";
 
-export const ReadingPanel = ({ id }) => {
+export const ReadingPanel = ({ id, page = 1 }) => {
   const bgColor = useColorModeValue(
     "wn.bg_content.light",
     "wn.bg_content.dark",
   );
+
   if (!id) {
     console.error("No FileID present in reading panel.");
     return <SomethingWentWrong />;
   }
 
-  const { reading, isPending, isError, isSuccess } = useReading(id);
+  const { reading, isPending, isError, isSuccess } = useReading(id, page);
+
+  const renderUI = () => {
+    switch (id.toLowerCase()) {
+      case "quran":
+        return <QuranUI reading={reading} />;
+      default:
+        console.error(`No UI for reading type ${id}`);
+        return <SomethingWentWrong />;
+    }
+  };
 
   return (
     <Flex height="100%" overflowY="auto" bgColor={bgColor} flexDir="column">
       {isPending && <Loader />}
       {isError && <SomethingWentWrong />}
-      {isSuccess && <Flex>Reading Panel</Flex>}
+      {isSuccess && renderUI()}
     </Flex>
   );
 };

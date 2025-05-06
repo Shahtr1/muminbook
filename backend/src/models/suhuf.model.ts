@@ -3,6 +3,12 @@ import { PrimaryId } from "../constants/primaryId";
 import FileType from "../constants/enums/fileType";
 import Direction from "../constants/enums/direction";
 
+type ReadingLayout = {
+  id: string;
+  sidebar?: string;
+  sidebarOpen?: boolean;
+};
+
 export interface SuhufDocument extends mongoose.Document {
   userId: PrimaryId;
   title: string;
@@ -19,6 +25,9 @@ export interface SuhufDocument extends mongoose.Document {
       isLeftTabOpen: boolean;
       bottomTab?: string;
       isBottomTabOpen: boolean;
+      reading: ReadingLayout[];
+      leftReadingTab?: string;
+      leftReadingTabOpen?: boolean;
       isSplit?: boolean;
       splitRatio: number[];
     };

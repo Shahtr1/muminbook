@@ -2,7 +2,13 @@ import { z } from "zod";
 import FileType from "../../constants/enums/fileType";
 import Direction from "../../constants/enums/direction";
 
-const layoutSchema = z.object({
+export const readingLayoutSchema = z.object({
+  id: z.string().min(1),
+  sidebar: z.string().optional(),
+  sidebarOpen: z.boolean().optional(),
+});
+
+export const layoutSchema = z.object({
   layout: z.object({
     leftTab: z.string().optional(),
     isLeftTabOpen: z.boolean().optional(),
@@ -10,6 +16,7 @@ const layoutSchema = z.object({
     isBottomTabOpen: z.boolean().optional(),
     isSplit: z.boolean().optional(),
     splitRatio: z.array(z.number().min(0).max(100)).length(2).optional(),
+    reading: z.array(readingLayoutSchema).optional(),
   }),
 });
 
