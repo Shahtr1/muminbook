@@ -28,7 +28,6 @@ export const SuhufPanel = () => {
   });
 
   const renderPanelContent = (panel) => {
-    console.log("panel", panel);
     const type = panel?.fileType || "none";
 
     switch (type) {
