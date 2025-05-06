@@ -28,6 +28,7 @@ export const SuhufPanel = () => {
   });
 
   const renderPanelContent = (panel) => {
+    console.log("panel", panel);
     const type = panel?.fileType || "none";
 
     switch (type) {
@@ -77,7 +78,7 @@ export const SuhufPanel = () => {
     if (isSecondPanelOpen) elements.push(renderPanel(1));
 
     return elements;
-  }, [isSecondPanelOpen, updateConfig, isSecondPanelActive]);
+  }, [isSecondPanelOpen, updateConfig, isSecondPanelActive, suhufId]);
 
   return (
     <Split
