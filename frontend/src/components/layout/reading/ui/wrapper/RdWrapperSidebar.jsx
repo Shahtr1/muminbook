@@ -16,6 +16,10 @@ export const RdWrapperSidebar = () => {
   const { id: suhufId } = useParams();
   const { data: suhuf } = useSuhuf(suhufId);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+  const bgContentColor = useColorModeValue(
+    "wn.bg_content.light",
+    "wn.bg_content.dark",
+  );
 
   const layout = suhuf?.config?.layout || {};
   const readingLayouts = layout.reading || [];
@@ -71,7 +75,7 @@ export const RdWrapperSidebar = () => {
   };
 
   return (
-    <Flex h="100%">
+    <Flex h={`calc(100% - 3px)`} m="3px" overflowX="hidden">
       {/* Tab icons */}
       <Flex
         h="100%"
@@ -79,8 +83,10 @@ export const RdWrapperSidebar = () => {
         bgColor={bgColor}
         align="center"
         flexDir="column"
-        borderRight="1px solid"
-        borderRightColor={borderColor}
+        border="1px solid"
+        borderColor={borderColor}
+        borderTopLeftRadius="sm"
+        borderBottomLeftRadius="sm"
         gap={2}
         py={2}
         zIndex={1}
@@ -123,11 +129,15 @@ export const RdWrapperSidebar = () => {
         bgColor={bgColor}
         align="flex-start"
         flexDir="column"
-        borderRight="1px solid"
-        borderRightColor={borderColor}
         transition="margin-left 0.2s ease-in-out"
         marginLeft={isOpen ? "0" : "-150px"}
+        border="1px solid"
+        borderColor={borderColor}
+        borderTopRightRadius="sm"
+        borderBottomRightRadius="sm"
+        borderLeft="none"
         p={2}
+        zIndex={isOpen ? undefined : -1}
       >
         {isOpen && activeTab === "highlights" && <Box>Highlight content</Box>}
         {isOpen && activeTab === "comments" && <Box>Comment content</Box>}

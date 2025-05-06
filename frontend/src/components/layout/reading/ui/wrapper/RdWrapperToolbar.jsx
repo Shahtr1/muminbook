@@ -24,7 +24,7 @@ export const RdWrapperToolbar = () => {
       borderRadius="sm"
       border="1px solid"
       borderColor={borderColor}
-      m={1}
+      m="3px"
     >
       <Flex
         h="100%"
@@ -37,12 +37,7 @@ export const RdWrapperToolbar = () => {
         py={2}
       >
         {toolbarData.map((item) => (
-          <Tooltip
-            variant="inverted"
-            label={item.label}
-            key={item.id}
-            placement="left"
-          >
+          <Tooltip variant="inverted" label={item.label} placement="left">
             <Flex
               _hover={{ bg: iconHoverGray }}
               w="80%"
