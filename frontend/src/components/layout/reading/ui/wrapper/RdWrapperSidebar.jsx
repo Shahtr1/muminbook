@@ -94,6 +94,9 @@ export const RdWrapperSidebar = () => {
           >
             <Flex
               _hover={{ bg: iconHoverGray }}
+              bg={
+                activeTab === item.id && isOpen ? iconHoverGray : "transparent"
+              }
               w="80%"
               justify="center"
               p={1}
