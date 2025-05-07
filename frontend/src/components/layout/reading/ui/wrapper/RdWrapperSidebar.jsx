@@ -12,7 +12,7 @@ const readingSidebarData = [
   { label: "Highlights", id: "highlights", icon: BsHighlights },
 ];
 
-export const RdWrapperSidebar = () => {
+export const RdWrapperSidebar = ({ fileId }) => {
   const { id: suhufId } = useParams();
   const { data: suhuf } = useSuhuf(suhufId);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
@@ -23,9 +23,6 @@ export const RdWrapperSidebar = () => {
 
   const layout = suhuf?.config?.layout || {};
   const readingLayouts = layout.reading || [];
-  const panels = suhuf?.config?.panels || [];
-  const activePanel = panels.find((p) => p.active);
-  const fileId = activePanel?.fileId;
 
   const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");

@@ -37,7 +37,12 @@ export const RdWrapperToolbar = () => {
         py={2}
       >
         {toolbarData.map((item) => (
-          <Tooltip variant="inverted" label={item.label} placement="left">
+          <Tooltip
+            variant="inverted"
+            key={item.id}
+            label={item.label}
+            placement="left"
+          >
             <Flex
               _hover={{ bg: iconHoverGray }}
               w="80%"

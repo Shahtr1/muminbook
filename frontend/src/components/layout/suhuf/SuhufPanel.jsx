@@ -1,6 +1,6 @@
 import { Box, useBreakpointValue } from "@chakra-ui/react";
 import Split from "react-split";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DefaultPanel } from "@/components/layout/suhuf/DefaultPanel.jsx";
 import { ReadingPanel } from "@/components/layout/suhuf/ReadingPanel.jsx";
@@ -19,7 +19,9 @@ export const SuhufPanel = () => {
   const layout = suhuf?.config?.layout || {};
   const panels = suhuf?.config?.panels || [];
   const isSecondPanelOpen = layout.isSplit;
-  const isSecondPanelActive = panels[1]?.active;
+  const initialActiveIndex = panels.findIndex((p) => p.active) || 0;
+
+  const [activePanelIndex, setActivePanelIndex] = useState(initialActiveIndex);
 
   const { sizes, handleResize } = useSplitPanelSizes({
     layout,
@@ -27,12 +29,29 @@ export const SuhufPanel = () => {
     onUpdateLayout: updateConfig,
   });
 
+  const handlePanelClick = (index) => {
+    if (index === activePanelIndex) return;
+
+    setActivePanelIndex(index);
+
+    const updatedPanels = panels.map((panel, i) => ({
+      ...panel,
+      active: i === index,
+    }));
+
+    updateConfig({ panels: updatedPanels });
+  };
+
   const renderPanelContent = (panel) => {
     const type = panel?.fileType || "none";
 
     switch (type) {
       case "reading":
-        return <ReadingPanel id={panel?.fileId} />;
+        return panel?.fileId ? (
+          <ReadingPanel id={panel.fileId} />
+        ) : (
+          <DefaultPanel suhufId={suhufId} />
+        );
       case "user":
         return <EditorPanel />;
       default:
@@ -41,21 +60,9 @@ export const SuhufPanel = () => {
   };
 
   const panelElements = useMemo(() => {
-    const setActivePanel = (index) => {
-      const currentActiveIndex = panels.findIndex((p) => p.active);
-      if (currentActiveIndex === index) return;
-
-      const newPanels = panels.map((panel, i) => ({
-        ...panel,
-        active: i === index,
-      }));
-
-      updateConfig({ panels: newPanels });
-    };
-
     const renderPanel = (index) => {
       const panel = panels[index];
-      const isActive = index === 1 ? isSecondPanelActive : !isSecondPanelActive;
+      const isActive = index === activePanelIndex;
 
       return (
         <Box
@@ -64,9 +71,7 @@ export const SuhufPanel = () => {
           w="100%"
           borderTop={isActive ? "2px solid" : "none"}
           borderColor="brand.500"
-          onClick={() => {
-            setActivePanel(index);
-          }}
+          onClick={() => handlePanelClick(index)}
         >
           {renderPanelContent(panel)}
         </Box>
@@ -75,9 +80,8 @@ export const SuhufPanel = () => {
 
     const elements = [renderPanel(0)];
     if (isSecondPanelOpen) elements.push(renderPanel(1));
-
     return elements;
-  }, [isSecondPanelOpen, updateConfig, isSecondPanelActive, suhufId]);
+  }, [panels, isSecondPanelOpen, activePanelIndex, suhufId]);
 
   return (
     <Split

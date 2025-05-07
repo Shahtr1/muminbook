@@ -10,11 +10,6 @@ export const ReadingPanel = ({ id, page = 1 }) => {
     "wn.bg_content.dark",
   );
 
-  if (!id) {
-    console.error("No FileID present in reading panel.");
-    return <SomethingWentWrong />;
-  }
-
   const { reading, isPending, isError, isSuccess } = useReading(id, page);
 
   const renderUI = () => {
