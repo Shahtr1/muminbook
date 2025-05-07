@@ -61,7 +61,7 @@ export const RdWrapperUI = ({ fileId, children }) => {
               borderRadius="sm"
             >
               <PopoverArrow bgColor={bgColor} border="none" />
-              <PopoverBody whiteSpace="pre-wrap" bgColor={bgColor}>
+              <PopoverBody whiteSpace="wrap" bgColor={bgColor}>
                 {description}
               </PopoverBody>
             </PopoverContent>
