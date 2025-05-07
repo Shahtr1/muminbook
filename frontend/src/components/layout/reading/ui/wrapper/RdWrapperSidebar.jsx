@@ -16,10 +16,6 @@ export const RdWrapperSidebar = ({ fileId }) => {
   const { id: suhufId } = useParams();
   const { data: suhuf } = useSuhuf(suhufId);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
-  const bgContentColor = useColorModeValue(
-    "wn.bg_content.light",
-    "wn.bg_content.dark",
-  );
 
   const layout = suhuf?.config?.layout || {};
   const readingLayouts = layout.reading || [];
@@ -72,7 +68,7 @@ export const RdWrapperSidebar = ({ fileId }) => {
   };
 
   return (
-    <Flex h={`calc(100% - 3px)`} m="3px" overflowX="hidden">
+    <Flex h={`calc(100% - 5px)`} m="3px" overflowX="hidden">
       {/* Tab icons */}
       <Flex
         h="100%"

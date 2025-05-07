@@ -13,7 +13,7 @@ export const useReadings = () => {
   return { readings: data, ...rest };
 };
 
-export const useReading = (id, page = 1) => {
+export const useReadingDetail = (id, page = 1) => {
   const { data, ...rest } = useQuery({
     queryKey: ["reading", id, page],
     queryFn: () => getReading(id, page),

@@ -1,6 +1,6 @@
 import { Flex, useColorModeValue } from "@chakra-ui/react";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { useReading } from "@/hooks/reading/useReadings.js";
+import { useReadingDetail } from "@/hooks/reading/useReadings.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { QuranUI } from "@/components/layout/reading/ui/QuranUI.jsx";
 
@@ -10,12 +10,12 @@ export const ReadingPanel = ({ id, page = 1 }) => {
     "wn.bg_content.dark",
   );
 
-  const { reading, isPending, isError, isSuccess } = useReading(id, page);
+  const { reading, isPending, isError, isSuccess } = useReadingDetail(id, page);
 
   const renderUI = () => {
     switch (id.toLowerCase()) {
       case "quran":
-        return <QuranUI reading={reading} />;
+        return <QuranUI fileId={id} />;
       default:
         console.error(`No UI for reading type ${id}`);
         return <SomethingWentWrong />;
