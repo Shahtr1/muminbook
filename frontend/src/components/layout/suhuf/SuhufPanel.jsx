@@ -1,6 +1,6 @@
 import { Box, useBreakpointValue } from "@chakra-ui/react";
 import Split from "react-split";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DefaultPanel } from "@/components/layout/suhuf/DefaultPanel.jsx";
 import { ReadingPanel } from "@/components/layout/suhuf/ReadingPanel.jsx";
@@ -19,9 +19,14 @@ export const SuhufPanel = () => {
   const layout = suhuf?.config?.layout || {};
   const panels = suhuf?.config?.panels || [];
   const isSecondPanelOpen = layout.isSplit;
-  const initialActiveIndex = panels.findIndex((p) => p.active) || 0;
 
-  const [activePanelIndex, setActivePanelIndex] = useState(initialActiveIndex);
+  const [activePanelIndex, setActivePanelIndex] = useState(0);
+  useEffect(() => {
+    const activeIndex = panels.findIndex((p) => p.active);
+    if (activeIndex >= 0) {
+      setActivePanelIndex(activeIndex);
+    }
+  }, [panels]);
 
   const { sizes, handleResize } = useSplitPanelSizes({
     layout,
@@ -47,11 +52,7 @@ export const SuhufPanel = () => {
 
     switch (type) {
       case "reading":
-        return panel?.fileId ? (
-          <ReadingPanel id={panel.fileId} />
-        ) : (
-          <DefaultPanel suhufId={suhufId} />
-        );
+        return <ReadingPanel id={panel.fileId} />;
       case "user":
         return <EditorPanel />;
       default:
@@ -79,7 +80,7 @@ export const SuhufPanel = () => {
     };
 
     const elements = [renderPanel(0)];
-    if (isSecondPanelOpen) elements.push(renderPanel(1));
+    if (isSecondPanelOpen && panels.length > 1) elements.push(renderPanel(1));
     return elements;
   }, [panels, isSecondPanelOpen, activePanelIndex, suhufId]);
 
