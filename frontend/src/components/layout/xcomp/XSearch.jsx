@@ -26,6 +26,7 @@ export const XSearch = ({
   variant = "default",
   isNavSearch = false,
   debounceDelay = 300,
+  placeholder = "Search",
 }) => {
   const xColor = color || useColorModeValue("default.light", "default.dark");
   const searchInputRef = useRef(null);
@@ -183,7 +184,7 @@ export const XSearch = ({
         ref={searchInputRef}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search"
+        placeholder={placeholder}
         size={size}
         onFocus={handleFocus}
         transition="all 0.3s ease-in-out"

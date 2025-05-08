@@ -1,15 +1,22 @@
-import { Box, Flex, Icon, Tooltip, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Icon, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { FaComments, FaList } from "react-icons/fa";
 import { BsHighlights } from "react-icons/bs";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { SurahsList } from "@/components/layout/reading/ui/wrapper/list/SurahsList.jsx";
+import { CommentsList } from "@/components/layout/reading/ui/wrapper/list/CommentsList.jsx";
+import { HighlightsList } from "@/components/layout/reading/ui/wrapper/list/HighlightsList.jsx";
 
 const readingSidebarData = [
   { label: "List", id: "list", icon: FaList },
   { label: "Comments", id: "comments", icon: FaComments },
-  { label: "Highlights", id: "highlights", icon: BsHighlights },
+  {
+    label: "Highlights",
+    id: "highlights",
+    icon: BsHighlights,
+  },
 ];
 
 export const RdWrapperSidebar = ({ fileId }) => {
@@ -68,7 +75,7 @@ export const RdWrapperSidebar = ({ fileId }) => {
   };
 
   return (
-    <Flex h={`calc(100% - 5px)`} m="3px" overflowX="hidden">
+    <Flex h={`calc(100% - 5px)`} m="3px" overflowY="auto">
       {/* Tab icons */}
       <Flex
         h="100%"
@@ -131,10 +138,11 @@ export const RdWrapperSidebar = ({ fileId }) => {
         borderLeft="none"
         p={2}
         zIndex={isOpen ? undefined : -1}
+        overflowY="auto"
       >
-        {isOpen && activeTab === "highlights" && <Box>Highlight content</Box>}
-        {isOpen && activeTab === "comments" && <Box>Comment content</Box>}
-        {isOpen && activeTab === "list" && <Box>List content</Box>}
+        {isOpen && activeTab === "highlights" && <HighlightsList />}
+        {isOpen && activeTab === "comments" && <CommentsList />}
+        {isOpen && activeTab === "list" && <SurahsList />}
       </Flex>
     </Flex>
   );

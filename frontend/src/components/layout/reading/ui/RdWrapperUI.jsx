@@ -22,6 +22,7 @@ import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 export const RdWrapperUI = ({ fileId, children }) => {
   const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
+  const panelNavHeight = "22px";
 
   const { readings } = useReadings();
   const reading = readings.find((r) => r.uuid === fileId);
@@ -53,7 +54,7 @@ export const RdWrapperUI = ({ fileId, children }) => {
   return (
     <Flex h="100%" w="100%" direction="column">
       <Flex
-        h="22px"
+        h={panelNavHeight}
         borderBottom="1px solid"
         borderColor={borderColor}
         bgColor={bgColor}
@@ -98,7 +99,7 @@ export const RdWrapperUI = ({ fileId, children }) => {
         </Flex>
       </Flex>
 
-      <Flex h="100%" w="100%">
+      <Flex h={`calc(100% - ${panelNavHeight})`} w="100%">
         <RdWrapperSidebar fileId={fileId} />
         <Flex flex={1}>{children}</Flex>
         <RdWrapperToolbar />
