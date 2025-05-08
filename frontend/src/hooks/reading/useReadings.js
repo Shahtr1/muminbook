@@ -8,6 +8,7 @@ export const useReadings = () => {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     retry: false,
+    staleTime: Infinity,
   });
 
   return { readings: data, ...rest };
@@ -21,6 +22,7 @@ export const useReadingDetail = (id, page = 1) => {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     retry: false,
+    staleTime: Infinity,
   });
 
   return {

@@ -8,6 +8,7 @@ export const useSurahs = () => {
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     retry: false,
+    staleTime: Infinity,
   });
 
   return { surahs: data, ...rest };

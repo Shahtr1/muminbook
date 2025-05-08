@@ -22,12 +22,17 @@ export const SurahsList = () => {
       {isError && <SomethingWentWrong transparent />}
 
       {isSuccess && (
-        <Flex direction="column" py="1px" w="100%" overflowY="auto" gap={1}>
+        <Flex
+          direction="column"
+          py="1px"
+          w="100%"
+          overflowY="auto"
+          gap={1}
+          position="relative"
+        >
           <XSearch
             bgColor={bgContentColor}
             size="xs"
-            width="100%"
-            parentWidth="auto"
             expand={false}
             placeholder="Surahs"
           />

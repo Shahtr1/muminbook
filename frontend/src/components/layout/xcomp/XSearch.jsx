@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import { useEffect, useRef, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const XSearch = ({
   focused = false,
@@ -34,11 +34,8 @@ export const XSearch = ({
   const dropdownRef = useRef(null);
   const theme = useTheme();
   const queryClient = useQueryClient();
-  const { data: windowMode } = useQuery({
-    queryKey: ["windowMode"],
-    queryFn: () => queryClient.getQueryData(["windowMode"]) || false,
-    staleTime: 0,
-  });
+
+  const windowMode = queryClient.getQueryData(["windowMode"]) || false;
 
   const [isFocused, setIsFocused] = useState(focused);
   const [search, setSearch] = useState("");

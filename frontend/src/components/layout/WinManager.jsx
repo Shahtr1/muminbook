@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { RiCheckboxFill, RiCloseCircleFill } from "react-icons/ri";
 import { useWindows } from "@/hooks/resource/useWindows.js";
 import { useDeleteWindow } from "@/hooks/useDeleteWindow.js";
@@ -44,11 +44,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
 
   const queryClient = useQueryClient();
 
-  const { data: windowMode } = useQuery({
-    queryKey: ["windowMode"],
-    queryFn: () => queryClient.getQueryData(["windowMode"]) || false,
-    staleTime: 0,
-  });
+  const windowMode = queryClient.getQueryData(["windowMode"]) || false;
 
   const [editModes, setEditModes] = useState({});
   const [editedTitles, setEditedTitles] = useState({});
