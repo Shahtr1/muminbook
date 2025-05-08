@@ -61,9 +61,7 @@ export const RdWrapperUI = ({ fileId, children }) => {
               borderRadius="sm"
             >
               <PopoverArrow bgColor={bgColor} />
-              <PopoverBody whiteSpace="wrap" bgColor={bgColor}>
-                {description}
-              </PopoverBody>
+              <PopoverBody bgColor={bgColor}>{description}</PopoverBody>
             </PopoverContent>
           </Popover>
           <Tooltip variant="inverted" placement="bottom" label="Close file">
