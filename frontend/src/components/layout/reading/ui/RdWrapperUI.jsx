@@ -15,6 +15,9 @@ import { RdWrapperToolbar } from "@/components/layout/reading/ui/wrapper/RdWrapp
 import { useReadings } from "@/hooks/reading/useReadings.js";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { RiCloseCircleFill, RiInformationFill } from "react-icons/ri";
+import { useParams } from "react-router-dom";
+import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
+import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 
 export const RdWrapperUI = ({ fileId, children }) => {
   const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
@@ -23,11 +26,28 @@ export const RdWrapperUI = ({ fileId, children }) => {
   const { readings } = useReadings();
   const reading = readings.find((r) => r.uuid === fileId);
 
+  const { id: suhufId } = useParams();
+  const { data: suhuf } = useSuhuf(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+
+  const panels = suhuf?.config?.panels || [];
+
   if (!reading) return <SomethingWentWrong />;
   const { label, description } = reading;
 
   const closeReading = () => {
-    // Implement closing logic if needed
+    const updatedPanels = panels.map((panel) => {
+      if (panel.fileId === fileId) {
+        return {
+          ...panel,
+          fileId: undefined,
+          fileType: "none",
+        };
+      }
+      return panel;
+    });
+
+    updateConfig({ panels: updatedPanels });
   };
 
   return (
