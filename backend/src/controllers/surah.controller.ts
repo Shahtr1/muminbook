@@ -5,6 +5,6 @@ import SurahModel from "../models/surah.model";
 
 export const getSurahHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
-  const surahs = await SurahModel.find();
+  const surahs = await SurahModel.find().sort({ uuid: 1 });
   return res.status(OK).json(surahs);
 });
