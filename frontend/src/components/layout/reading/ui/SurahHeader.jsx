@@ -7,7 +7,7 @@ export const SurahHeader = () => {
   return (
     <Flex w="100%" justify="center" align="center" h="40px" gap={1}>
       <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
-      <SurahSVG dimensions="100px" activeColor={frameColor} />
+      <SurahSVG activeColor={frameColor} />
       <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
     </Flex>
   );
