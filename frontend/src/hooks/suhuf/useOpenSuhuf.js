@@ -27,7 +27,7 @@ export const useOpenSuhuf = (onSuccess) => {
       {
         onSuccess: ({ suhufId }) => {
           navigate(`/suhuf/${suhufId}`);
-          onSuccess(suhufId);
+          if (typeof onSuccess === "function") onSuccess(suhufId);
         },
       },
     );
