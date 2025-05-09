@@ -21,13 +21,14 @@ export const getReading = async (id: string, page = 1) => {
   );
 
   const skip = (page - 1) * PAGE_SIZE;
-  let data: any[];
-  let total: number;
+  let data: any[] = [];
+  let total: number = 0;
 
   if (id.toLowerCase() === "quran") {
     total = await QuranModel.countDocuments();
     data = await QuranModel.find({})
       .populate("surahId")
+      .populate("juzId")
       .sort({ uuid: 1 })
       .skip(skip)
       .limit(PAGE_SIZE)
