@@ -17,7 +17,16 @@ export const SurahHeader = ({ rtl = false }) => {
       <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
       <AyatSVG dimensions="30px" activeColor={frameColor} />
       <SurahSVG activeColor={frameColor} />
-      <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
+      <Flex
+        flex={1}
+        align="center"
+        gap={1}
+        flexDir={rtl ? "row-reverse" : "row"}
+      >
+        <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
+        <AyatSVG dimensions="22px" activeColor={frameColor} />
+        <SurahSVG isSmall activeColor={frameColor} />
+      </Flex>
     </Flex>
   );
 };
