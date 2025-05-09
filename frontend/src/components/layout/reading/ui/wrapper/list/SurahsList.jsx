@@ -85,15 +85,21 @@ export const SurahsList = () => {
                         {surah.meaning}
                       </Text>
                     </Tooltip>
-                    <Flex
-                      align="center"
-                      color={iconColor}
-                      fontSize="9px"
-                      gap="1px"
+                    <Tooltip
+                      variant="inverted"
+                      placement="right"
+                      label="Total ayats"
                     >
-                      <MdNumbers size={10} />
-                      <Text color={iconColor}>{surah.totalAyats}</Text>
-                    </Flex>
+                      <Flex
+                        align="center"
+                        color={iconColor}
+                        fontSize="9px"
+                        gap="1px"
+                      >
+                        <MdNumbers size={10} />
+                        <Text color={iconColor}>{surah.totalAyats}</Text>
+                      </Flex>
+                    </Tooltip>
                   </Flex>
                 </Flex>
               </Flex>

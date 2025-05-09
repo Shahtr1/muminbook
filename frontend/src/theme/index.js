@@ -26,6 +26,11 @@ const styles = {
       color: mode("black", "whiteAlpha.900")(props),
       bg: mode("bg.light", "bg.dark")(props),
       fontFamily: "'Nunito Sans', sans-serif",
+      scrollbarWidth: "none",
+      msOverflowStyle: "none",
+    },
+    "body::-webkit-scrollbar, *::-webkit-scrollbar": {
+      display: "none",
     },
   }),
 };
