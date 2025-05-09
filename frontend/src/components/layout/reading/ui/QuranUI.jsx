@@ -1,7 +1,10 @@
 import { RdWrapperUI } from "@/components/layout/reading/ui/RdWrapperUI.jsx";
-import { useColorModeValue } from "@chakra-ui/react";
+import { SurahHeader } from "@/components/layout/reading/ui/SurahHeader.jsx";
 
 export const QuranUI = ({ fileId }) => {
-  const frameColor = useColorModeValue("text.primary", "whiteAlpha.900");
-  return <RdWrapperUI fileId={fileId}>hi</RdWrapperUI>;
+  return (
+    <RdWrapperUI fileId={fileId}>
+      <SurahHeader />
+    </RdWrapperUI>
+  );
 };

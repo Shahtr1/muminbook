@@ -10,7 +10,14 @@ export const SVG = ({
   viewBox,
   absolute = false,
   absoluteStyles,
+  widthHeight = [],
 }) => {
+  let width = 0;
+  let height = 0;
+  if (widthHeight.length > 0) {
+    width = widthHeight[0];
+    height = widthHeight[1];
+  }
   const defaultActiveColor = useColorModeValue("active.light", "active.dark");
   const defaultDefaultColor = useColorModeValue(
     "default.light",
@@ -30,8 +37,8 @@ export const SVG = ({
   return (
     <Box
       as="svg"
-      width={dimensions}
-      height={dimensions}
+      width={width || dimensions}
+      height={height || dimensions}
       viewBox={viewBox}
       fill={isHovered || active ? computedActiveColor : computedDefaultColor}
       xmlns="http://www.w3.org/2000/svg"

@@ -7,6 +7,7 @@ import { XSearch } from "@/components/layout/xcomp/XSearch.jsx";
 import { MdNumbers } from "react-icons/md";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import { VscFilter } from "react-icons/vsc";
 
 export const SurahsList = () => {
   const { surahs, isPending, isError, isSuccess } = useSurahs();
@@ -14,6 +15,7 @@ export const SurahsList = () => {
     "wn.bg_content.light",
     "wn.bg_content.dark",
   );
+  const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
   const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
 
@@ -87,12 +89,16 @@ export const SurahsList = () => {
           gap={1}
           position="relative"
         >
-          <XSearch
-            bgColor={bgContentColor}
-            size="xs"
-            expand={false}
-            placeholder="Surahs"
-          />
+          <Flex align="center" gap={2}>
+            <XSearch
+              bgColor={bgContentColor}
+              size="xs"
+              expand={false}
+              placeholder="Surahs"
+            />
+            <VscFilter />
+            {/*<VscFilterFilled />*/}
+          </Flex>
           <Flex flex={1}>
             <AutoSizer>
               {({ height, width }) => (
