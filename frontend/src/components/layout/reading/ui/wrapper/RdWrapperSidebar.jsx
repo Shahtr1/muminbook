@@ -12,11 +12,7 @@ import { HighlightsList } from "@/components/layout/reading/ui/wrapper/list/High
 const readingSidebarData = [
   { label: "List", id: "list", icon: FaList },
   { label: "Comments", id: "comments", icon: FaComments },
-  {
-    label: "Highlights",
-    id: "highlights",
-    icon: BsHighlights,
-  },
+  { label: "Highlights", id: "highlights", icon: BsHighlights },
 ];
 
 export const RdWrapperSidebar = ({ fileId }) => {
@@ -34,6 +30,10 @@ export const RdWrapperSidebar = ({ fileId }) => {
     "wn.icon.hover.dark",
   );
   const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
+  const bgContentColor = useColorModeValue(
+    "wn.bg_content.light",
+    "wn.bg_content.dark",
+  );
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
 
   if (!fileId) {
@@ -75,8 +75,9 @@ export const RdWrapperSidebar = ({ fileId }) => {
   };
 
   return (
-    <Flex h={`calc(100% - 5px)`} m="3px" overflowY="auto">
+    <Flex h="calc(100% - 5px)" m="3px" marginLeft={0} position="relative">
       {/* Tab icons */}
+      <Flex h="100%" w="3px" bgColor={bgContentColor} zIndex={2}></Flex>
       <Flex
         h="100%"
         w="30px"
@@ -85,11 +86,9 @@ export const RdWrapperSidebar = ({ fileId }) => {
         flexDir="column"
         border="1px solid"
         borderColor={borderColor}
-        borderTopLeftRadius="sm"
-        borderBottomLeftRadius="sm"
         gap={2}
         py={2}
-        zIndex={1}
+        zIndex={2}
       >
         {readingSidebarData.map((item) => (
           <Tooltip
@@ -122,23 +121,25 @@ export const RdWrapperSidebar = ({ fileId }) => {
         ))}
       </Flex>
 
-      {/* Content panel */}
+      {/* Sliding content panel */}
       <Flex
+        position="absolute"
+        top={0}
+        left="30px"
         h="100%"
-        w="155px"
+        w="160px"
         bgColor={bgColor}
-        align="flex-start"
-        flexDir="column"
-        transition="margin-left 0.2s ease-in-out"
-        marginLeft={isOpen ? "0" : "-150px"}
         border="1px solid"
+        borderLeft="none"
         borderColor={borderColor}
         borderTopRightRadius="sm"
         borderBottomRightRadius="sm"
-        borderLeft="none"
         p={2}
-        zIndex={isOpen ? undefined : -1}
+        flexDir="column"
         overflowY="auto"
+        transition="transform 0.2s ease-in-out"
+        transform={isOpen ? "translateX(0)" : "translateX(-160px)"}
+        zIndex={1}
       >
         {isOpen && activeTab === "highlights" && <HighlightsList />}
         {isOpen && activeTab === "comments" && <CommentsList />}
