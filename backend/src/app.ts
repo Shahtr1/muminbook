@@ -15,6 +15,7 @@ import suhufRoutes from "./routes/suhuf.route";
 import windowRoute from "./routes/window.route";
 import readingRoutes from "./routes/reading.route";
 import surahRoutes from "./routes/surah.route";
+import juzRoutes from "./routes/juz.route";
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use("/windows", authenticate(), windowRoute);
 app.use("/suhuf", authenticate(), suhufRoutes);
 app.use("/readings", authenticate(), readingRoutes);
 app.use("/surahs", authenticate(), surahRoutes);
+app.use("/juz", authenticate(), juzRoutes);
 
 app.use(errorHandler);
 

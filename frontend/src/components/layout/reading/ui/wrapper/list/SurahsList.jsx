@@ -1,23 +1,38 @@
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import React from "react";
-import { useSurahs } from "@/hooks/surah/useSurahs.js";
+import React, { useState } from "react";
+import { useSurahs } from "@/hooks/quran/useSurahs.js";
 import { Flex, Text, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { XSearch } from "@/components/layout/xcomp/XSearch.jsx";
 import { MdNumbers } from "react-icons/md";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-import { VscFilter } from "react-icons/vsc";
+import { VscFilter, VscFilterFilled } from "react-icons/vsc";
+import { useJuz } from "@/hooks/quran/useJuz.js";
 
 export const SurahsList = () => {
-  const { surahs, isPending, isError, isSuccess } = useSurahs();
+  const {
+    surahs,
+    isPending: isSurahsPending,
+    isError: isSurahsError,
+  } = useSurahs();
+
+  const { juz, isPending: isJuzPending, isError: isJuzError } = useJuz();
+
   const bgContentColor = useColorModeValue(
     "wn.bg_content.light",
     "wn.bg_content.dark",
   );
-  const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
   const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
+
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const toggleFilter = () => setIsFilterOpen((prev) => !prev);
+
+  const handleJuzFocusChange = (focused) => {
+    if (!focused) setIsFilterOpen(false);
+  };
 
   const Row = ({ index, style }) => {
     const surah = surahs[index];
@@ -75,46 +90,59 @@ export const SurahsList = () => {
     );
   };
 
+  if (isSurahsPending || isJuzPending) return <Loader />;
+  if (isSurahsError || isJuzError) return <SomethingWentWrong transparent />;
+
   return (
-    <>
-      {isPending && <Loader />}
-      {isError && <SomethingWentWrong transparent />}
-      {isSuccess && (
-        <Flex
-          direction="column"
-          py="1px"
-          w="100%"
-          h="100%"
-          overflowY="auto"
-          gap={1}
-          position="relative"
-        >
-          <Flex align="center" gap={2}>
-            <XSearch
-              bgColor={bgContentColor}
-              size="xs"
-              expand={false}
-              placeholder="Surahs"
-            />
-            <VscFilter />
-            {/*<VscFilterFilled />*/}
-          </Flex>
-          <Flex flex={1}>
-            <AutoSizer>
-              {({ height, width }) => (
-                <List
-                  height={height}
-                  width={width}
-                  itemCount={surahs.length}
-                  itemSize={50}
-                >
-                  {Row}
-                </List>
-              )}
-            </AutoSizer>
+    <Flex
+      direction="column"
+      py="1px"
+      w="100%"
+      h="100%"
+      overflowY="auto"
+      gap={1}
+      position="relative"
+    >
+      <Flex direction="column" gap={1}>
+        <Flex align="center" gap={2}>
+          <XSearch
+            bgColor={bgContentColor}
+            size="xs"
+            expand={false}
+            placeholder="Surahs"
+          />
+          <Flex cursor="pointer" onClick={toggleFilter}>
+            {isFilterOpen ? <VscFilterFilled /> : <VscFilter />}
           </Flex>
         </Flex>
-      )}
-    </>
+
+        {isFilterOpen && (
+          <XSearch
+            bgColor={bgContentColor}
+            size="xs"
+            expand={false}
+            placeholder="Filter by Juz"
+            showIcon={false}
+            variant="dropdown"
+            onFocusChange={handleJuzFocusChange}
+          />
+        )}
+      </Flex>
+
+      <Flex flex={1}>
+        <AutoSizer>
+          {({ height, width }) => (
+            <List
+              height={height}
+              width={width}
+              itemCount={surahs.length}
+              itemSize={50}
+            >
+              {Row}
+            </List>
+          )}
+        </AutoSizer>
+      </Flex>
+    </Flex>
   );
 };

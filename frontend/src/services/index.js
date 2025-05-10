@@ -7,3 +7,4 @@ export * from "./navigation.service.js";
 export * from "./suhuf.service.js";
 export * from "./reading.service.js";
 export * from "./surah.service.js";
+export * from "./juz.service.js";

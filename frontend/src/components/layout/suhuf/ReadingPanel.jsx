@@ -15,7 +15,7 @@ export const ReadingPanel = ({ id, page = 1 }) => {
   const renderUI = () => {
     switch (id.toLowerCase()) {
       case "quran":
-        return <QuranUI fileId={id} />;
+        return <QuranUI fileId={id} page={reading} />;
       default:
         console.error(`No UI for reading type ${id}`);
         return <SomethingWentWrong />;

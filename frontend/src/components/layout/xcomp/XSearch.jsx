@@ -27,6 +27,8 @@ export const XSearch = ({
   isNavSearch = false,
   debounceDelay = 300,
   placeholder = "Search",
+  showIcon = true,
+  dropdownContent,
 }) => {
   const xColor = color || useColorModeValue("default.light", "default.dark");
   const searchInputRef = useRef(null);
@@ -108,7 +110,7 @@ export const XSearch = ({
   }, [onFocusChange]);
 
   useEffect(() => {
-    if (variant !== "dropdown" && !isNavSearch) return;
+    if (variant !== "dropdown" || !isNavSearch) return;
     const handleGlobalKeydown = (e) => {
       if (e.ctrlKey && e.key.toLowerCase() === "k") {
         e.preventDefault();
@@ -137,31 +139,31 @@ export const XSearch = ({
       id="dropdown"
       ref={dropdownRef}
       direction="column"
-      pos="fixed"
+      pos={isNavSearch ? "fixed" : "unset"}
       top={windowMode ? "30px" : `${theme.sizes["navbar-height"]}`}
-      left="50%"
-      transform="translateX(-50%)"
-      w="99vw"
-      maxW="99vw"
-      bg={dropdownBg}
+      left={isNavSearch ? "50%" : "unset"}
+      transform={isNavSearch ? "translateX(-50%)" : "unset"}
+      w={isNavSearch ? "99vw" : "auto"}
+      maxW={isNavSearch ? "99vw" : "auto"}
       border="1px solid"
       borderColor={borderColor}
       borderRadius="sm"
       boxShadow="md"
       zIndex={10}
-      p={1}
       mt={1}
     >
-      <Flex
-        px={3}
-        py={2}
-        _hover={{
-          bg: dropdownHover,
-          cursor: "pointer",
-        }}
-      >
-        Quran
-      </Flex>
+      {dropdownContent ??
+        (import.meta.env.VITE_NODE_ENV === "development" && (
+          <Text
+            fontSize="xs"
+            p={2}
+            color="red.400"
+            bgColor={bgColor}
+            align="center"
+          >
+            Warning: `dropdownContent` is not provided for dropdown variant.
+          </Text>
+        ))}
     </Flex>
   );
 
@@ -173,10 +175,13 @@ export const XSearch = ({
       transition="all 0.3s ease-in-out"
       position="relative"
       w={parentWidth}
+      flexDir="column"
     >
-      <InputLeftElement height="100%" w={size === "xs" ? 7 : undefined}>
-        <Search2Icon color={xColor} fontSize={size} />
-      </InputLeftElement>
+      {showIcon && (
+        <InputLeftElement height="100%" w={size === "xs" ? 7 : undefined}>
+          <Search2Icon color={xColor} fontSize={size} />
+        </InputLeftElement>
+      )}
       <Input
         ref={searchInputRef}
         value={search}
