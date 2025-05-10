@@ -1,7 +1,7 @@
 import { SVG } from "@/components/svgs/SVG.jsx";
 
 export const SurahSVG = ({ active, activeColor, isSmall = false }) => {
-  const widthHeight = isSmall ? [69, 25] : [105, 31];
+  const widthHeight = isSmall ? [79, 25] : [105, 31];
   return (
     <>
       <SVG widthHeight={widthHeight} active={active} viewBox="0 0 1129 340">
