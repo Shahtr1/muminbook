@@ -77,7 +77,11 @@ export const SurahsList = () => {
                   {surah.meaning}
                 </Text>
               </Tooltip>
-              <Tooltip variant="inverted" placement="right" label="Total ayats">
+              <Tooltip
+                variant="inverted"
+                placement="right"
+                label={`Total ayats: ${surah.totalAyats}`}
+              >
                 <Flex align="center" color={iconColor} fontSize="9px" gap="1px">
                   <MdNumbers size={10} />
                   <Text color={iconColor}>{surah.totalAyats}</Text>

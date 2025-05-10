@@ -104,7 +104,9 @@ export const RdWrapperUI = ({ fileId, children }) => {
         <Flex flex={1} w="100%" justify="center" p={2}>
           {children}
         </Flex>
-        <RdWrapperToolbar />
+        <RdWrapperToolbar
+          onToolSelect={(id) => console.log("Tool selected: ", id)}
+        />
       </Flex>
     </Flex>
   );
