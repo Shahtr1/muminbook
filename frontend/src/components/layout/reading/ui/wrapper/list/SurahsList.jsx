@@ -30,10 +30,6 @@ export const SurahsList = () => {
 
   const toggleFilter = () => setIsFilterOpen((prev) => !prev);
 
-  const handleJuzFocusChange = (focused) => {
-    if (!focused) setIsFilterOpen(false);
-  };
-
   const Row = ({ index, style }) => {
     const surah = surahs[index];
     return (
@@ -128,7 +124,6 @@ export const SurahsList = () => {
             placeholder="Filter by Juz"
             showIcon={false}
             variant="dropdown"
-            onFocusChange={handleJuzFocusChange}
           />
         )}
       </Flex>
