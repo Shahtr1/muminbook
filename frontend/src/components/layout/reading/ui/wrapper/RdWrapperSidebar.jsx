@@ -125,7 +125,7 @@ export const RdWrapperSidebar = ({ fileId }) => {
       {/* Content panel */}
       <Flex
         h="100%"
-        w="150px"
+        w="155px"
         bgColor={bgColor}
         align="flex-start"
         flexDir="column"

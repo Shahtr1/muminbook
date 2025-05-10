@@ -50,8 +50,8 @@ export const SurahsList = () => {
             p={1}
           >
             <Flex justify="space-between" align="center">
-              <Text whiteSpace="nowrap" fontSize="11px">
-                {surah.transliteration}
+              <Text whiteSpace="nowrap" fontSize="10px">
+                {surah.uuid}. {surah.transliteration}
               </Text>
               <Text color={iconColor} fontSize="9px">
                 {surah.revelationPlace === "mecca" ? "Meccan" : "Medinan"}
@@ -65,7 +65,7 @@ export const SurahsList = () => {
               >
                 <Text
                   color={iconColor}
-                  fontSize="10px"
+                  fontSize="9px"
                   whiteSpace="nowrap"
                   overflow="hidden"
                   textOverflow="ellipsis"
