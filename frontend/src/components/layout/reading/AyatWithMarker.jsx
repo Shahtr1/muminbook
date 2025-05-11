@@ -6,7 +6,10 @@ import {
 } from "@chakra-ui/react";
 import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
 
-export const AyahWithMarker = ({ ayah, surah, juz, number }) => {
+export const AyatWithMarker = ({ data }) => {
+  const { ayat, uuid: number, surahId: surah, juzId: juz } = data;
+  const surahId = surah?.uuid;
+  const juzId = juz?.uuid;
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const svgImage = useColorModeValue(
     "/images/frames/ayat-dark.svg",
@@ -18,11 +21,13 @@ export const AyahWithMarker = ({ ayah, surah, juz, number }) => {
   const numberFontSize = isSmallScreen ? "14px" : "16px";
   return (
     <span
+      id={`ayat-${number}`}
+      data-surah-id={surahId}
+      data-juz-id={juzId}
       style={{
         fontSize: `${fontSize}`,
         lineHeight: `${isSmallScreen ? "2.5rem" : "3.1rem"}`,
       }}
-      className={`s-${surah.uuid}-j-${juz.uuid}`}
     >
       <Flex
         as="span"
@@ -32,7 +37,7 @@ export const AyahWithMarker = ({ ayah, surah, juz, number }) => {
         borderRadius="sm"
         px={isSmallScreen ? 1 : 2}
       >
-        {ayah}
+        {ayat}
       </Flex>
       <Flex
         display="inline-flex"

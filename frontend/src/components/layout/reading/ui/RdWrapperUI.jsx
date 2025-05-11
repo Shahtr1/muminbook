@@ -18,8 +18,9 @@ import { RiCloseCircleFill, RiInformationFill } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
+import { forwardRef } from "react";
 
-export const RdWrapperUI = ({ fileId, children }) => {
+export const RdWrapperUI = forwardRef(({ fileId, children }, ref) => {
   const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
   const panelNavHeight = "22px";
@@ -101,7 +102,7 @@ export const RdWrapperUI = ({ fileId, children }) => {
 
       <Flex h={`calc(100% - ${panelNavHeight})`} w="100%">
         <RdWrapperSidebar fileId={fileId} />
-        <Flex flex={1} w="100%" flexDir="column" overflow="auto">
+        <Flex flex={1} w="100%" flexDir="column" overflow="auto" ref={ref}>
           {children}
         </Flex>
         <RdWrapperToolbar
@@ -110,4 +111,4 @@ export const RdWrapperUI = ({ fileId, children }) => {
       </Flex>
     </Flex>
   );
-};
+});
