@@ -9,9 +9,14 @@ import { SurahSVG } from "@/components/svgs/frames/SurahSVG.jsx";
 import { AyatSVG } from "@/components/svgs/frames/AyatSVG.jsx";
 import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
 
-export const SurahHeader = ({ rtl = false }) => {
+export const SurahHeader = ({ rtl = false, surah, juz }) => {
   const frameColor = useColorModeValue("text.primary", "whiteAlpha.900");
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+  const surahName = rtl ? surah.name : surah.transliteration;
+  const surahNumber = rtl ? toArabicNumeral(surah.uuid) : surah.uuid;
+  const juzName = rtl ? juz.name : juz.transliteration;
+  const juzNumber = rtl ? toArabicNumeral(juz.uuid) : juz.uuid;
+
   return (
     <Flex
       w="100%"
@@ -27,11 +32,33 @@ export const SurahHeader = ({ rtl = false }) => {
       fontSize={rtl ? "20px" : "13px"}
     >
       <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
-      <AyatSVG
-        dimensions={isSmallScreen ? "25px" : "35px"}
-        activeColor={frameColor}
-      />
-      <SurahSVG isSmall={isSmallScreen} activeColor={frameColor} />
+      <Flex position="relative" justify="center" align="center">
+        <AyatSVG
+          dimensions={isSmallScreen ? "25px" : "35px"}
+          activeColor={frameColor}
+        />
+        <Text
+          position="absolute"
+          top="40%"
+          left="50%"
+          transform="translate(-50%, -50%)"
+          fontSize={isSmallScreen ? "18px" : "25px"}
+        >
+          {surahNumber}
+        </Text>
+      </Flex>
+      <Flex position="relative" justify="center" align="center">
+        <SurahSVG isSmall={isSmallScreen} activeColor={frameColor} />
+        <Text
+          position="absolute"
+          top="45%"
+          left="50%"
+          transform="translate(-50%, -50%)"
+          fontSize={isSmallScreen ? "17px" : "25px"}
+        >
+          {surahName}
+        </Text>
+      </Flex>
 
       {isSmallScreen && (
         <Box
@@ -45,7 +72,9 @@ export const SurahHeader = ({ rtl = false }) => {
         >
           <Text>{rtl ? "الجزء" : "Juz"}</Text>
           <Text mx={1}>-</Text>
-          <Text>{rtl ? toArabicNumeral(1) : "1"}</Text>
+          <Text>{juzNumber}</Text>
+          <Text mx={1}>-</Text>
+          <Text>{juzName}</Text>
         </Box>
       )}
 
@@ -54,8 +83,30 @@ export const SurahHeader = ({ rtl = false }) => {
         {!isSmallScreen && (
           <>
             <Text>{rtl ? "الجزء" : "Juz"}</Text>
-            <AyatSVG dimensions="25px" activeColor={frameColor} />
-            <SurahSVG isSmall activeColor={frameColor} />
+            <Flex position="relative" justify="center" align="center">
+              <AyatSVG dimensions="25px" activeColor={frameColor} />
+              <Text
+                position="absolute"
+                top="37%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+                fontSize="17px"
+              >
+                {juzNumber}
+              </Text>
+            </Flex>
+            <Flex position="relative" justify="center" align="center">
+              <SurahSVG isSmall activeColor={frameColor} />
+              <Text
+                position="absolute"
+                top="37%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+                fontSize="17px"
+              >
+                {juzName}
+              </Text>
+            </Flex>
           </>
         )}
       </Flex>

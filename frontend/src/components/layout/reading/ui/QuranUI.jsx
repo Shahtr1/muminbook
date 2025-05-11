@@ -72,7 +72,9 @@ export const QuranUI = ({ fileId }) => {
     return data?.pages.flatMap((pageData, pageIndex) =>
       pageData.data.map((dt, index) => (
         <Box as="span" key={`${pageIndex}-${dt.uuid}`} display="inline">
-          {dt.surahStart && <SurahHeader rtl />}
+          {dt.surahStart && (
+            <SurahHeader rtl surah={dt.surahId} juz={dt.juzId} />
+          )}
           <AyatWithMarker data={dt} />
         </Box>
       )),
