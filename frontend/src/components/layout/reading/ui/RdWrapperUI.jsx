@@ -102,7 +102,14 @@ export const RdWrapperUI = forwardRef(({ fileId, children }, ref) => {
 
       <Flex h={`calc(100% - ${panelNavHeight})`} w="100%">
         <RdWrapperSidebar fileId={fileId} />
-        <Flex flex={1} w="100%" flexDir="column" overflow="auto" ref={ref}>
+        <Flex
+          flex={1}
+          w="100%"
+          flexDir="column"
+          overflow="auto"
+          ref={ref}
+          scrollBehavior="smooth"
+        >
           {children}
         </Flex>
         <RdWrapperToolbar
