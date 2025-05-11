@@ -32,6 +32,14 @@ const styles = {
     "body::-webkit-scrollbar, *::-webkit-scrollbar": {
       display: "none",
     },
+    "@font-face": [
+      {
+        fontFamily: "ArabicFont",
+        src: "url('/fonts/al_mushaf-font.ttf') format('truetype')",
+        fontWeight: "normal",
+        fontStyle: "normal",
+      },
+    ],
   }),
 };
 

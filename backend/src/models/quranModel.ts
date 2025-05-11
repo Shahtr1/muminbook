@@ -7,6 +7,7 @@ export interface QuranDocument extends Document {
   ayat: string;
   audioUrl: string;
   juzId: PrimaryId;
+  surahStart: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -37,6 +38,10 @@ const quranDocument = new Schema<QuranDocument>(
       ref: "Juz",
       required: true,
       index: true,
+    },
+    surahStart: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true },

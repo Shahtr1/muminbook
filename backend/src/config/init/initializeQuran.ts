@@ -32,6 +32,7 @@ const initializeSurahs = async () => {
 };
 
 const initializeQuranVerses = async (juzMap: any, surahMap: any) => {
+  // await QuranModel.deleteMany({});
   const existing = await QuranModel.countDocuments();
   if (existing === 0) {
     const rawQuran = loadQuran();

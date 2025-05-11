@@ -22,11 +22,13 @@ export const SurahHeader = ({ rtl = false }) => {
       flexDir={rtl ? "row-reverse" : "row"}
       flexWrap="wrap"
       position="relative"
-      mb={isSmallScreen ? 2 : 0}
+      mb={isSmallScreen ? 4 : 0}
+      fontFamily={rtl ? "ArabicFont" : "Nunito Sans"}
+      fontSize={rtl ? "20px" : "13px"}
     >
       <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
       <AyatSVG
-        dimensions={isSmallScreen ? "22px" : "30px"}
+        dimensions={isSmallScreen ? "25px" : "35px"}
         activeColor={frameColor}
       />
       <SurahSVG isSmall={isSmallScreen} activeColor={frameColor} />
@@ -36,9 +38,9 @@ export const SurahHeader = ({ rtl = false }) => {
           dir={rtl ? "rtl" : "ltr"}
           display="flex"
           alignItems="center"
-          fontSize="xs"
+          fontSize="18px"
           position="absolute"
-          bottom="-2"
+          bottom="-5"
           left="50%"
           transform="translateX(-50%)"
         >
@@ -57,8 +59,8 @@ export const SurahHeader = ({ rtl = false }) => {
         <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
         {!isSmallScreen && (
           <>
-            <Text fontSize="13px">{rtl ? "الجزء" : "Juz"}</Text>
-            <AyatSVG dimensions="22px" activeColor={frameColor} />
+            <Text>{rtl ? "الجزء" : "Juz"}</Text>
+            <AyatSVG dimensions="25px" activeColor={frameColor} />
             <SurahSVG isSmall activeColor={frameColor} />
           </>
         )}

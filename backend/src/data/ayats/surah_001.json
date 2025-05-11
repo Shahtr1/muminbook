@@ -4,7 +4,8 @@
     "surahId": 1,
     "juzId": 1,
     "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
-    "audioUrl": "001001"
+    "audioUrl": "001001",
+    "surahStart": true
   },
   {
     "uuid": 2,
