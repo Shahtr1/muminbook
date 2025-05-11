@@ -16,7 +16,7 @@ export const QuranUI = ({ fileId, page }) => {
         dir="rtl"
       >
         {ayatData.map((dt, index) => (
-          <span>
+          <span key={index}>
             {dt.surahStart && <SurahHeader rtl />}
             <AyahWithMarker key={index} ayah={dt.ayat} />
           </span>
