@@ -28,7 +28,6 @@ export const QuranUI = ({ fileId, page }) => {
 
   const scrollRef = useRef(null);
   const queryClient = useQueryClient();
-
   const [topAyat, setTopAyat] = useState(null);
 
   useEffect(() => {
@@ -84,6 +83,24 @@ export const QuranUI = ({ fileId, page }) => {
     return juzId + ": " + juz.find((j) => j.uuid === +juzId)?.transliteration;
   };
 
+  const renderAyat = () => {
+    let ayatNumber = 0;
+    return ayatData.map((dt, index) => {
+      if (dt.surahStart) {
+        ayatNumber = 1;
+      } else {
+        ayatNumber++;
+      }
+
+      return (
+        <Box as="span" key={index} display="inline">
+          {dt.surahStart && <SurahHeader rtl />}
+          <AyatWithMarker data={dt} number={ayatNumber} />
+        </Box>
+      );
+    });
+  };
+
   return (
     <RdWrapperUI fileId={fileId} ref={scrollRef}>
       <Flex gap={1} direction="column" position="relative">
@@ -113,12 +130,7 @@ export const QuranUI = ({ fileId, page }) => {
             textAlign="right"
             dir="rtl"
           >
-            {ayatData.map((dt, index) => (
-              <Box as="span" key={index} display="inline">
-                {dt.surahStart && <SurahHeader rtl />}
-                <AyatWithMarker data={dt} number={index} />
-              </Box>
-            ))}
+            {renderAyat()}
           </Box>
         </Flex>
       </Flex>

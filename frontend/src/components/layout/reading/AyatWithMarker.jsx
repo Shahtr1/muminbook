@@ -6,8 +6,8 @@ import {
 } from "@chakra-ui/react";
 import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
 
-export const AyatWithMarker = ({ data }) => {
-  const { ayat, uuid: number, surahId: surah, juzId: juz } = data;
+export const AyatWithMarker = ({ data, number }) => {
+  const { ayat, uuid, surahId: surah, juzId: juz } = data;
   const surahId = surah?.uuid;
   const juzId = juz?.uuid;
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
@@ -19,9 +19,10 @@ export const AyatWithMarker = ({ data }) => {
 
   const fontSize = isSmallScreen ? "25px" : "30px";
   const numberFontSize = isSmallScreen ? "14px" : "16px";
+
   return (
     <span
-      id={`ayat-${number}`}
+      id={`ayat-${uuid}`}
       data-surah-id={surahId}
       data-juz-id={juzId}
       style={{
