@@ -8,16 +8,18 @@ export const QuranUI = ({ fileId, page }) => {
 
   return (
     <RdWrapperUI fileId={fileId}>
-      <SurahHeader rtl />
       <Box
         fontFamily="ArabicFont"
-        dir="rtl"
         whiteSpace="normal"
         wordBreak="break-word"
         textAlign="right"
+        dir="rtl"
       >
         {ayatData.map((dt, index) => (
-          <AyahWithMarker key={index} ayah={dt.ayat} />
+          <span>
+            {dt.surahStart && <SurahHeader rtl />}
+            <AyahWithMarker key={index} ayah={dt.ayat} />
+          </span>
         ))}
       </Box>
     </RdWrapperUI>

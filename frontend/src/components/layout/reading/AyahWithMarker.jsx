@@ -12,6 +12,7 @@ export const AyahWithMarker = ({ ayah, number }) => {
     "/images/frames/ayat-dark.svg",
     "/images/frames/ayat-light.svg",
   );
+  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
 
   const fontSize = isSmallScreen ? "25px" : "30px";
   const numberFontSize = isSmallScreen ? "14px" : "16px";
@@ -19,13 +20,28 @@ export const AyahWithMarker = ({ ayah, number }) => {
   return (
     <span
       style={{
-        marginLeft: "6px",
         fontSize: `${fontSize}`,
-        lineHeight: `${isSmallScreen ? "2.5rem" : "3rem"}`,
+        lineHeight: `${isSmallScreen ? "2.5rem" : "3.1rem"}`,
       }}
     >
-      <span style={{ marginLeft: "6px" }}>{ayah}</span>
-      <Flex display="inline-flex" position="relative" w="24px" h="24px">
+      <Flex
+        as="span"
+        display="inline"
+        cursor="pointer"
+        _hover={{ bgColor: bgColor }}
+        borderRadius="sm"
+        px={isSmallScreen ? 1 : 2}
+      >
+        {ayah}
+      </Flex>
+      <Flex
+        display="inline-flex"
+        position="relative"
+        w="24px"
+        h="24px"
+        mx={isSmallScreen ? 1 : 2}
+        dir="rtl"
+      >
         <Text
           style={{
             display: "inline-block",

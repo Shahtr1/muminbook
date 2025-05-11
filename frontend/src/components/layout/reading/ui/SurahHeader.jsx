@@ -19,10 +19,10 @@ export const SurahHeader = ({ rtl = false }) => {
       align="center"
       h="40px"
       gap={1}
-      flexDir={rtl ? "row-reverse" : "row"}
       flexWrap="wrap"
       position="relative"
-      mb={isSmallScreen ? 4 : 0}
+      mb={isSmallScreen ? 4 : 2}
+      mt={2}
       fontFamily={rtl ? "ArabicFont" : "Nunito Sans"}
       fontSize={rtl ? "20px" : "13px"}
     >
@@ -35,7 +35,6 @@ export const SurahHeader = ({ rtl = false }) => {
 
       {isSmallScreen && (
         <Box
-          dir={rtl ? "rtl" : "ltr"}
           display="flex"
           alignItems="center"
           fontSize="18px"
@@ -50,12 +49,7 @@ export const SurahHeader = ({ rtl = false }) => {
         </Box>
       )}
 
-      <Flex
-        flex={1}
-        align="center"
-        gap={1}
-        flexDir={rtl ? "row-reverse" : "row"}
-      >
+      <Flex flex={1} align="center" gap={1}>
         <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
         {!isSmallScreen && (
           <>
