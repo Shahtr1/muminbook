@@ -18,7 +18,7 @@ export const QuranUI = ({ fileId, page }) => {
         {ayatData.map((dt, index) => (
           <span key={index}>
             {dt.surahStart && <SurahHeader rtl />}
-            <AyahWithMarker key={index} ayah={dt.ayat} />
+            <AyahWithMarker ayah={dt.ayat} />
           </span>
         ))}
       </Box>
