@@ -43,6 +43,7 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
           left="50%"
           transform="translate(-50%, -50%)"
           fontSize={isSmallScreen ? "18px" : "25px"}
+          whiteSpace="nowrap"
         >
           {surahNumber}
         </Text>
@@ -55,6 +56,7 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
           left="50%"
           transform="translate(-50%, -50%)"
           fontSize={isSmallScreen ? "17px" : "25px"}
+          whiteSpace="nowrap"
         >
           {surahName}
         </Text>
@@ -72,9 +74,9 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
         >
           <Text>{rtl ? "الجزء" : "Juz"}</Text>
           <Text mx={1}>-</Text>
-          <Text>{juzNumber}</Text>
+          <Text whiteSpace="nowrap">{juzNumber}</Text>
           <Text mx={1}>-</Text>
-          <Text>{juzName}</Text>
+          <Text whiteSpace="nowrap">{juzName}</Text>
         </Box>
       )}
 
@@ -91,6 +93,7 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
                 left="50%"
                 transform="translate(-50%, -50%)"
                 fontSize="17px"
+                whiteSpace="nowrap"
               >
                 {juzNumber}
               </Text>
@@ -103,6 +106,7 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
                 left="50%"
                 transform="translate(-50%, -50%)"
                 fontSize="17px"
+                whiteSpace="nowrap"
               >
                 {juzName}
               </Text>
