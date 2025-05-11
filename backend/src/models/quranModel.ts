@@ -3,6 +3,7 @@ import { PrimaryId } from "../constants/primaryId";
 
 export interface QuranDocument extends Document {
   uuid: number;
+  sno: number;
   surahId: PrimaryId;
   ayat: string;
   audioUrl: string;
@@ -15,6 +16,11 @@ export interface QuranDocument extends Document {
 const quranDocument = new Schema<QuranDocument>(
   {
     uuid: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    sno: {
       type: Number,
       required: true,
       unique: true,
