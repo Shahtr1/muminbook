@@ -17,6 +17,7 @@ export const QuranUI = ({ fileId, page }) => {
   );
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const marginX = isSmallScreen ? 1 : 2;
+
   return (
     <RdWrapperUI fileId={fileId}>
       <Flex gap={1} flexDir="column" position="relative">
@@ -45,7 +46,12 @@ export const QuranUI = ({ fileId, page }) => {
                 <Box as="span" display="inline">
                   {dt.surahStart && <SurahHeader rtl />}
                 </Box>
-                <AyahWithMarker ayah={dt.ayat} />
+                <AyahWithMarker
+                  ayah={dt.ayat}
+                  surah={dt.surahId}
+                  juz={dt.juzId}
+                  number={168}
+                />
               </span>
             ))}
           </Box>
