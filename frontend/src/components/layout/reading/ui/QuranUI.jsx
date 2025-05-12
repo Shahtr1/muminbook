@@ -197,7 +197,7 @@ export const QuranUI = ({ fileId }) => {
       scrollEl.removeEventListener("scroll", handleScroll);
       ayatElementsRef.current = [];
     };
-  }, [queryClient]);
+  }, [queryClient, surahs, juz]);
 
   if (isSurahsPending || isJuzPending) return <Loader />;
   if (isSurahsError || isJuzError) return <SomethingWentWrong />;
