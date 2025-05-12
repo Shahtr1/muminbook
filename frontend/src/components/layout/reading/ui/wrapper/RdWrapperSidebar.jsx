@@ -8,9 +8,12 @@ import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { SurahsList } from "@/components/layout/reading/ui/wrapper/list/SurahsList.jsx";
 import { CommentsList } from "@/components/layout/reading/ui/wrapper/list/CommentsList.jsx";
 import { HighlightsList } from "@/components/layout/reading/ui/wrapper/list/HighlightsList.jsx";
+import { VscFilterFilled } from "react-icons/vsc";
+import { FilterAyatList } from "@/components/layout/reading/ui/wrapper/list/FilterAyatList.jsx";
 
 const readingSidebarData = [
   { label: "List", id: "list", icon: FaList },
+  { label: "Filter ayats", id: "filter", icon: VscFilterFilled },
   { label: "Comments", id: "comments", icon: FaComments },
   { label: "Highlights", id: "highlights", icon: BsHighlights },
 ];
@@ -150,6 +153,7 @@ export const RdWrapperSidebar = ({ fileId }) => {
         {isOpen && activeTab === "highlights" && <HighlightsList />}
         {isOpen && activeTab === "comments" && <CommentsList />}
         {isOpen && activeTab === "list" && <SurahsList />}
+        {isOpen && activeTab === "filter" && <FilterAyatList />}
       </Flex>
     </Flex>
   );

@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   Box,
@@ -16,6 +22,8 @@ import { useJuz } from "@/hooks/quran/useJuz.js";
 import { useInView } from "react-intersection-observer";
 import { useReadingDetail } from "@/hooks/reading/useReadings.js";
 import { debounce } from "lodash";
+import { Loader } from "@/components/layout/Loader.jsx";
+import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 
 export const QuranUI = ({ fileId }) => {
   const {
@@ -28,8 +36,13 @@ export const QuranUI = ({ fileId }) => {
     isFetchingPreviousPage,
   } = useReadingDetail(fileId);
 
-  const { surahs } = useSurahs();
-  const { juz } = useJuz();
+  const {
+    surahs,
+    isPending: isSurahsPending,
+    isError: isSurahsError,
+  } = useSurahs();
+
+  const { juz, isPending: isJuzPending, isError: isJuzError } = useJuz();
   const color = useColorModeValue("text.primary", "whiteAlpha.900");
   const bgContentColor = useColorModeValue(
     "wn.bg_content.light",
@@ -185,6 +198,9 @@ export const QuranUI = ({ fileId }) => {
       ayatElementsRef.current = [];
     };
   }, [queryClient]);
+
+  if (isSurahsPending || isJuzPending) return <Loader />;
+  if (isSurahsError || isJuzError) return <SomethingWentWrong />;
 
   return (
     <RdWrapperUI fileId={fileId} ref={scrollRef}>

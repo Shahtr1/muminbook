@@ -1,23 +1,16 @@
-import { Loader } from "@/components/layout/Loader.jsx";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import React, { useState } from "react";
+import React from "react";
 import { useSurahs } from "@/hooks/quran/useSurahs.js";
 import { Flex, Text, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { XSearch } from "@/components/layout/xcomp/XSearch.jsx";
 import { MdNumbers } from "react-icons/md";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-import { VscFilter, VscFilterFilled } from "react-icons/vsc";
 import { useJuz } from "@/hooks/quran/useJuz.js";
 
 export const SurahsList = () => {
-  const {
-    surahs,
-    isPending: isSurahsPending,
-    isError: isSurahsError,
-  } = useSurahs();
+  const { surahs } = useSurahs();
 
-  const { juz, isPending: isJuzPending, isError: isJuzError } = useJuz();
+  const { juz } = useJuz();
 
   const bgContentColor = useColorModeValue(
     "wn.bg_content.light",
@@ -25,10 +18,10 @@ export const SurahsList = () => {
   );
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
   const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
-
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-  const toggleFilter = () => setIsFilterOpen((prev) => !prev);
+  const iconHoverGray = useColorModeValue(
+    "wn.icon.hover.light",
+    "wn.icon.hover.dark",
+  );
 
   const Row = ({ index, style }) => {
     const surah = surahs[index];
@@ -44,7 +37,7 @@ export const SurahsList = () => {
           <Flex
             cursor="pointer"
             w="100%"
-            _hover={{ bgColor: bgContentColor }}
+            _hover={{ bgColor: iconHoverGray }}
             borderRadius="sm"
             direction="column"
             p={1}
@@ -90,9 +83,6 @@ export const SurahsList = () => {
     );
   };
 
-  if (isSurahsPending || isJuzPending) return <Loader />;
-  if (isSurahsError || isJuzError) return <SomethingWentWrong transparent />;
-
   return (
     <Flex
       direction="column"
@@ -104,28 +94,12 @@ export const SurahsList = () => {
       position="relative"
     >
       <Flex direction="column" gap={1}>
-        <Flex align="center" gap={2}>
-          <XSearch
-            bgColor={bgContentColor}
-            size="xs"
-            expand={false}
-            placeholder="Surahs"
-          />
-          <Flex cursor="pointer" onClick={toggleFilter}>
-            {isFilterOpen ? <VscFilterFilled /> : <VscFilter />}
-          </Flex>
-        </Flex>
-
-        {isFilterOpen && (
-          <XSearch
-            bgColor={bgContentColor}
-            size="xs"
-            expand={false}
-            placeholder="Filter by Juz"
-            showIcon={false}
-            variant="dropdown"
-          />
-        )}
+        <XSearch
+          bgColor={bgContentColor}
+          size="xs"
+          expand={false}
+          placeholder="Surahs"
+        />
       </Flex>
 
       <Flex flex={1}>
