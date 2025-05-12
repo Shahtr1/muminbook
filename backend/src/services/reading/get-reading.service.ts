@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import appAssert from "../../utils/appAssert";
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from "../../constants/http";
 import QuranModel from "../../models/quranModel";
+import SurahModel from "../../models/surah.model";
 
 const PAGE_SIZE = 50;
 
@@ -55,4 +56,21 @@ export const getReading = async (id: string, page = 1) => {
     hasNextPage: page < totalPages,
     hasPrevPage: page > 1,
   };
+};
+
+export const getReadingBySurah = async (
+  collection: string,
+  surahId: number,
+) => {
+  const surah = await SurahModel.findOne({ uuid: surahId });
+  appAssert(surah, NOT_FOUND, "Surah not found");
+
+  const firstAyah = await QuranModel.findOne({ surahId: surah._id }).sort({
+    uuid: 1,
+  });
+  appAssert(firstAyah, NOT_FOUND, "No ayah found for this surah");
+
+  const page = Math.floor((firstAyah.uuid - 1) / PAGE_SIZE) + 1;
+
+  return await getReading(collection, page);
 };
