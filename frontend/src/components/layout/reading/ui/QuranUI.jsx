@@ -69,16 +69,24 @@ export const QuranUI = ({ fileId }) => {
 
   // Memoized rendered ayat with stable keys
   const renderedAyat = useMemo(() => {
-    return data?.pages.flatMap((pageData, pageIndex) =>
-      pageData.data.map((dt, index) => (
-        <Box as="span" key={`${pageIndex}-${dt.uuid}`} display="inline">
-          {dt.surahStart && (
-            <SurahHeader rtl surah={dt.surahId} juz={dt.juzId} />
-          )}
-          <AyatWithMarker key={dt.uuid} data={dt} />
-        </Box>
-      )),
-    );
+    let lastJuzId = null;
+    return data?.pages.flatMap((pageData, pageIndex) => {
+      return pageData.data.map((dt) => {
+        const isNewJuz = dt.juzId.uuid !== lastJuzId;
+        if (isNewJuz) {
+          lastJuzId = dt.juzId.uuid;
+        }
+
+        return (
+          <Box as="span" key={`${pageIndex}-${dt.uuid}`} display="inline">
+            {dt.surahStart && (
+              <SurahHeader rtl surah={dt.surahId} juz={dt.juzId} />
+            )}
+            <AyatWithMarker data={dt} isNewJuz={isNewJuz} />
+          </Box>
+        );
+      });
+    });
   }, [data?.pages]);
 
   // Debounced infinite scroll handler

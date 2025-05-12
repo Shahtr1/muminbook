@@ -5,8 +5,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
+import { transparentize } from "@chakra-ui/theme-tools";
 
-export const AyatWithMarker = ({ data }) => {
+export const AyatWithMarker = ({ data, isNewJuz }) => {
   const { ayat, uuid, sno, surahId: surah, juzId: juz } = data;
   const surahId = surah?.uuid;
   const juzId = juz?.uuid;
@@ -19,6 +20,10 @@ export const AyatWithMarker = ({ data }) => {
 
   const fontSize = isSmallScreen ? "25px" : "30px";
   const numberFontSize = isSmallScreen ? "14px" : "16px";
+  const highlightBg = useColorModeValue(
+    transparentize("brand.500", 0.3),
+    transparentize("brand.500", 0.2),
+  );
 
   return (
     <span
@@ -34,9 +39,10 @@ export const AyatWithMarker = ({ data }) => {
         as="span"
         display="inline"
         cursor="pointer"
-        _hover={{ bgColor: bgColor }}
+        _hover={{ bgColor: isNewJuz ? highlightBg : bgColor }}
         borderRadius="sm"
         px={isSmallScreen ? 1 : 2}
+        bgColor={isNewJuz ? highlightBg : undefined}
       >
         {ayat}
       </Flex>
