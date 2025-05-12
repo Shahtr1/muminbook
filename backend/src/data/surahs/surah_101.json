@@ -1,0 +1,178 @@
+[
+  {
+    "uuid": 6158,
+    "sno": 1,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ٱلْقَارِعَةُ",
+    "audioUrl": "101001",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6159,
+    "sno": 2,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "مَا ٱلْقَارِعَةُ",
+    "audioUrl": "101002",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6160,
+    "sno": 3,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "وَمَآ أَدْرَىٰكَ مَا ٱلْقَارِعَةُ",
+    "audioUrl": "101003",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6161,
+    "sno": 4,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "يَوْمَ يَكُونُ ٱلنَّاسُ كَٱلْفَرَاشِ ٱلْمَبْثُوثِ",
+    "audioUrl": "101004",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6162,
+    "sno": 5,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "وَتَكُونُ ٱلْجِبَالُ كَٱلْعِهْنِ ٱلْمَنفُوشِ",
+    "audioUrl": "101005",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6163,
+    "sno": 6,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "فَأَمَّا مَن ثَقُلَتْ مَوَٰزِينُهُۥ",
+    "audioUrl": "101006",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6164,
+    "sno": 7,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "فَهُوَ فِى عِيشَةٍۢ رَّاضِيَةٍۢ",
+    "audioUrl": "101007",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6165,
+    "sno": 8,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "وَأَمَّا مَنْ خَفَّتْ مَوَٰزِينُهُۥ",
+    "audioUrl": "101008",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6166,
+    "sno": 9,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "فَأُمُّهُۥ هَاوِيَةٌۭ",
+    "audioUrl": "101009",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6167,
+    "sno": 10,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "وَمَآ أَدْرَىٰكَ مَا هِيَهْ",
+    "audioUrl": "101010",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6168,
+    "sno": 11,
+    "surahId": 101,
+    "juzId": 30,
+    "ayat": "نَارٌ حَامِيَةٌۢ",
+    "audioUrl": "101011",
+    "manzil": 7,
+    "ruku": 543,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "uuid": 6180,
+    "sno": 1,
+    "surahId": 104,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَيْلٌۭ لِّكُلِّ هُمَزَةٍۢ لُّمَزَةٍ",
+    "audioUrl": "104001",
+    "manzil": 7,
+    "ruku": 546,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6181,
+    "sno": 2,
+    "surahId": 104,
+    "juzId": 30,
+    "ayat": "ٱلَّذِى جَمَعَ مَالًۭا وَعَدَّدَهُۥ",
+    "audioUrl": "104002",
+    "manzil": 7,
+    "ruku": 546,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6182,
+    "sno": 3,
+    "surahId": 104,
+    "juzId": 30,
+    "ayat": "يَحْسَبُ أَنَّ مَالَهُۥٓ أَخْلَدَهُۥ",
+    "audioUrl": "104003",
+    "manzil": 7,
+    "ruku": 546,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6183,
+    "sno": 4,
+    "surahId": 104,
+    "juzId": 30,
+    "ayat": "كَلَّا ۖ لَيُنۢبَذَنَّ فِى ٱلْحُطَمَةِ",
+    "audioUrl": "104004",
+    "manzil": 7,
+    "ruku": 546,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6184,
+    "sno": 5,
+    "surahId": 104,
+    "juzId": 30,
+    "ayat": "وَمَآ أَدْرَىٰكَ مَا ٱلْحُطَمَةُ",
+    "audioUrl": "104005",
+    "manzil": 7,
+    "ruku": 546,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6185,
+    "sno": 6,
+    "surahId": 104,
+    "juzId": 30,
+    "ayat": "نَارُ ٱللَّهِ ٱلْمُوقَدَةُ",
+    "audioUrl": "104006",
+    "manzil": 7,
+    "ruku": 546,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6186,
+    "sno": 7,
+    "surahId": 104,
+    "juzId": 30,
+    "ayat": "ٱلَّتِى تَطَّلِعُ عَلَى ٱلْأَفْـِٔدَةِ",
+    "audioUrl": "104007",
+    "manzil": 7,
+    "ruku": 546,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6187,
+    "sno": 8,
+    "surahId": 104,
+    "juzId": 30,
+    "ayat": "إِنَّهَا عَلَيْهِم مُّؤْصَدَةٌۭ",
+    "audioUrl": "104008",
+    "manzil": 7,
+    "ruku": 546,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6188,
+    "sno": 9,
+    "surahId": 104,
+    "juzId": 30,
+    "ayat": "فِى عَمَدٍۢ مُّمَدَّدَةٍۭ",
+    "audioUrl": "104009",
+    "manzil": 7,
+    "ruku": 546,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

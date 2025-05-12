@@ -1,0 +1,962 @@
+[
+  {
+    "uuid": 4676,
+    "sno": 1,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلذَّٰرِيَٰتِ ذَرْوًۭا",
+    "audioUrl": "051001",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 4677,
+    "sno": 2,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "فَٱلْحَٰمِلَٰتِ وِقْرًۭا",
+    "audioUrl": "051002",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4678,
+    "sno": 3,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "فَٱلْجَٰرِيَٰتِ يُسْرًۭا",
+    "audioUrl": "051003",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4679,
+    "sno": 4,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "فَٱلْمُقَسِّمَٰتِ أَمْرًا",
+    "audioUrl": "051004",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4680,
+    "sno": 5,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "إِنَّمَا تُوعَدُونَ لَصَادِقٌۭ",
+    "audioUrl": "051005",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4681,
+    "sno": 6,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "وَإِنَّ ٱلدِّينَ لَوَٰقِعٌۭ",
+    "audioUrl": "051006",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4682,
+    "sno": 7,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "وَٱلسَّمَآءِ ذَاتِ ٱلْحُبُكِ",
+    "audioUrl": "051007",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4683,
+    "sno": 8,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "إِنَّكُمْ لَفِى قَوْلٍۢ مُّخْتَلِفٍۢ",
+    "audioUrl": "051008",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4684,
+    "sno": 9,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "يُؤْفَكُ عَنْهُ مَنْ أُفِكَ",
+    "audioUrl": "051009",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4685,
+    "sno": 10,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "قُتِلَ ٱلْخَرَّٰصُونَ",
+    "audioUrl": "051010",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4686,
+    "sno": 11,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "ٱلَّذِينَ هُمْ فِى غَمْرَةٍۢ سَاهُونَ",
+    "audioUrl": "051011",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4687,
+    "sno": 12,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "يَسْـَٔلُونَ أَيَّانَ يَوْمُ ٱلدِّينِ",
+    "audioUrl": "051012",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4688,
+    "sno": 13,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "يَوْمَ هُمْ عَلَى ٱلنَّارِ يُفْتَنُونَ",
+    "audioUrl": "051013",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4689,
+    "sno": 14,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "ذُوقُوا۟ فِتْنَتَكُمْ هَٰذَا ٱلَّذِى كُنتُم بِهِۦ تَسْتَعْجِلُونَ",
+    "audioUrl": "051014",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4690,
+    "sno": 15,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "إِنَّ ٱلْمُتَّقِينَ فِى جَنَّٰتٍۢ وَعُيُونٍ",
+    "audioUrl": "051015",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4691,
+    "sno": 16,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "ءَاخِذِينَ مَآ ءَاتَىٰهُمْ رَبُّهُمْ ۚ إِنَّهُمْ كَانُوا۟ قَبْلَ ذَٰلِكَ مُحْسِنِينَ",
+    "audioUrl": "051016",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4692,
+    "sno": 17,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "كَانُوا۟ قَلِيلًۭا مِّنَ ٱلَّيْلِ مَا يَهْجَعُونَ",
+    "audioUrl": "051017",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4693,
+    "sno": 18,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "وَبِٱلْأَسْحَارِ هُمْ يَسْتَغْفِرُونَ",
+    "audioUrl": "051018",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4694,
+    "sno": 19,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "وَفِىٓ أَمْوَٰلِهِمْ حَقٌّۭ لِّلسَّآئِلِ وَٱلْمَحْرُومِ",
+    "audioUrl": "051019",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4695,
+    "sno": 20,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "وَفِى ٱلْأَرْضِ ءَايَٰتٌۭ لِّلْمُوقِنِينَ",
+    "audioUrl": "051020",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4696,
+    "sno": 21,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "وَفِىٓ أَنفُسِكُمْ ۚ أَفَلَا تُبْصِرُونَ",
+    "audioUrl": "051021",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4697,
+    "sno": 22,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "وَفِى ٱلسَّمَآءِ رِزْقُكُمْ وَمَا تُوعَدُونَ",
+    "audioUrl": "051022",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4698,
+    "sno": 23,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "فَوَرَبِّ ٱلسَّمَآءِ وَٱلْأَرْضِ إِنَّهُۥ لَحَقٌّۭ مِّثْلَ مَآ أَنَّكُمْ تَنطِقُونَ",
+    "audioUrl": "051023",
+    "manzil": 7,
+    "ruku": 455,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4699,
+    "sno": 24,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "هَلْ أَتَىٰكَ حَدِيثُ ضَيْفِ إِبْرَٰهِيمَ ٱلْمُكْرَمِينَ",
+    "audioUrl": "051024",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4700,
+    "sno": 25,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "إِذْ دَخَلُوا۟ عَلَيْهِ فَقَالُوا۟ سَلَٰمًۭا ۖ قَالَ سَلَٰمٌۭ قَوْمٌۭ مُّنكَرُونَ",
+    "audioUrl": "051025",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4701,
+    "sno": 26,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "فَرَاغَ إِلَىٰٓ أَهْلِهِۦ فَجَآءَ بِعِجْلٍۢ سَمِينٍۢ",
+    "audioUrl": "051026",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4702,
+    "sno": 27,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "فَقَرَّبَهُۥٓ إِلَيْهِمْ قَالَ أَلَا تَأْكُلُونَ",
+    "audioUrl": "051027",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4703,
+    "sno": 28,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "فَأَوْجَسَ مِنْهُمْ خِيفَةًۭ ۖ قَالُوا۟ لَا تَخَفْ ۖ وَبَشَّرُوهُ بِغُلَٰمٍ عَلِيمٍۢ",
+    "audioUrl": "051028",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4704,
+    "sno": 29,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "فَأَقْبَلَتِ ٱمْرَأَتُهُۥ فِى صَرَّةٍۢ فَصَكَّتْ وَجْهَهَا وَقَالَتْ عَجُوزٌ عَقِيمٌۭ",
+    "audioUrl": "051029",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4705,
+    "sno": 30,
+    "surahId": 51,
+    "juzId": 26,
+    "ayat": "قَالُوا۟ كَذَٰلِكِ قَالَ رَبُّكِ ۖ إِنَّهُۥ هُوَ ٱلْحَكِيمُ ٱلْعَلِيمُ",
+    "audioUrl": "051030",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 208,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4706,
+    "sno": 31,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "۞ قَالَ فَمَا خَطْبُكُمْ أَيُّهَا ٱلْمُرْسَلُونَ",
+    "audioUrl": "051031",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4707,
+    "sno": 32,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "قَالُوٓا۟ إِنَّآ أُرْسِلْنَآ إِلَىٰ قَوْمٍۢ مُّجْرِمِينَ",
+    "audioUrl": "051032",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4708,
+    "sno": 33,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "لِنُرْسِلَ عَلَيْهِمْ حِجَارَةًۭ مِّن طِينٍۢ",
+    "audioUrl": "051033",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4709,
+    "sno": 34,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "مُّسَوَّمَةً عِندَ رَبِّكَ لِلْمُسْرِفِينَ",
+    "audioUrl": "051034",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4710,
+    "sno": 35,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَأَخْرَجْنَا مَن كَانَ فِيهَا مِنَ ٱلْمُؤْمِنِينَ",
+    "audioUrl": "051035",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4711,
+    "sno": 36,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَمَا وَجَدْنَا فِيهَا غَيْرَ بَيْتٍۢ مِّنَ ٱلْمُسْلِمِينَ",
+    "audioUrl": "051036",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4712,
+    "sno": 37,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَتَرَكْنَا فِيهَآ ءَايَةًۭ لِّلَّذِينَ يَخَافُونَ ٱلْعَذَابَ ٱلْأَلِيمَ",
+    "audioUrl": "051037",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4713,
+    "sno": 38,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَفِى مُوسَىٰٓ إِذْ أَرْسَلْنَٰهُ إِلَىٰ فِرْعَوْنَ بِسُلْطَٰنٍۢ مُّبِينٍۢ",
+    "audioUrl": "051038",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4714,
+    "sno": 39,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَتَوَلَّىٰ بِرُكْنِهِۦ وَقَالَ سَٰحِرٌ أَوْ مَجْنُونٌۭ",
+    "audioUrl": "051039",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4715,
+    "sno": 40,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَأَخَذْنَٰهُ وَجُنُودَهُۥ فَنَبَذْنَٰهُمْ فِى ٱلْيَمِّ وَهُوَ مُلِيمٌۭ",
+    "audioUrl": "051040",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4716,
+    "sno": 41,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَفِى عَادٍ إِذْ أَرْسَلْنَا عَلَيْهِمُ ٱلرِّيحَ ٱلْعَقِيمَ",
+    "audioUrl": "051041",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4717,
+    "sno": 42,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "مَا تَذَرُ مِن شَىْءٍ أَتَتْ عَلَيْهِ إِلَّا جَعَلَتْهُ كَٱلرَّمِيمِ",
+    "audioUrl": "051042",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4718,
+    "sno": 43,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَفِى ثَمُودَ إِذْ قِيلَ لَهُمْ تَمَتَّعُوا۟ حَتَّىٰ حِينٍۢ",
+    "audioUrl": "051043",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4719,
+    "sno": 44,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَعَتَوْا۟ عَنْ أَمْرِ رَبِّهِمْ فَأَخَذَتْهُمُ ٱلصَّٰعِقَةُ وَهُمْ يَنظُرُونَ",
+    "audioUrl": "051044",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4720,
+    "sno": 45,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَمَا ٱسْتَطَٰعُوا۟ مِن قِيَامٍۢ وَمَا كَانُوا۟ مُنتَصِرِينَ",
+    "audioUrl": "051045",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4721,
+    "sno": 46,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَقَوْمَ نُوحٍۢ مِّن قَبْلُ ۖ إِنَّهُمْ كَانُوا۟ قَوْمًۭا فَٰسِقِينَ",
+    "audioUrl": "051046",
+    "manzil": 7,
+    "ruku": 456,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4722,
+    "sno": 47,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَٱلسَّمَآءَ بَنَيْنَٰهَا بِأَيْي۟دٍۢ وَإِنَّا لَمُوسِعُونَ",
+    "audioUrl": "051047",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4723,
+    "sno": 48,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَٱلْأَرْضَ فَرَشْنَٰهَا فَنِعْمَ ٱلْمَٰهِدُونَ",
+    "audioUrl": "051048",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4724,
+    "sno": 49,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَمِن كُلِّ شَىْءٍ خَلَقْنَا زَوْجَيْنِ لَعَلَّكُمْ تَذَكَّرُونَ",
+    "audioUrl": "051049",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4725,
+    "sno": 50,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَفِرُّوٓا۟ إِلَى ٱللَّهِ ۖ إِنِّى لَكُم مِّنْهُ نَذِيرٌۭ مُّبِينٌۭ",
+    "audioUrl": "051050",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4726,
+    "sno": 51,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَلَا تَجْعَلُوا۟ مَعَ ٱللَّهِ إِلَٰهًا ءَاخَرَ ۖ إِنِّى لَكُم مِّنْهُ نَذِيرٌۭ مُّبِينٌۭ",
+    "audioUrl": "051051",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4727,
+    "sno": 52,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "كَذَٰلِكَ مَآ أَتَى ٱلَّذِينَ مِن قَبْلِهِم مِّن رَّسُولٍ إِلَّا قَالُوا۟ سَاحِرٌ أَوْ مَجْنُونٌ",
+    "audioUrl": "051052",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4728,
+    "sno": 53,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "أَتَوَاصَوْا۟ بِهِۦ ۚ بَلْ هُمْ قَوْمٌۭ طَاغُونَ",
+    "audioUrl": "051053",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4729,
+    "sno": 54,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَتَوَلَّ عَنْهُمْ فَمَآ أَنتَ بِمَلُومٍۢ",
+    "audioUrl": "051054",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4730,
+    "sno": 55,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَذَكِّرْ فَإِنَّ ٱلذِّكْرَىٰ تَنفَعُ ٱلْمُؤْمِنِينَ",
+    "audioUrl": "051055",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4731,
+    "sno": 56,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "وَمَا خَلَقْتُ ٱلْجِنَّ وَٱلْإِنسَ إِلَّا لِيَعْبُدُونِ",
+    "audioUrl": "051056",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4732,
+    "sno": 57,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "مَآ أُرِيدُ مِنْهُم مِّن رِّزْقٍۢ وَمَآ أُرِيدُ أَن يُطْعِمُونِ",
+    "audioUrl": "051057",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4733,
+    "sno": 58,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "إِنَّ ٱللَّهَ هُوَ ٱلرَّزَّاقُ ذُو ٱلْقُوَّةِ ٱلْمَتِينُ",
+    "audioUrl": "051058",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4734,
+    "sno": 59,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَإِنَّ لِلَّذِينَ ظَلَمُوا۟ ذَنُوبًۭا مِّثْلَ ذَنُوبِ أَصْحَٰبِهِمْ فَلَا يَسْتَعْجِلُونِ",
+    "audioUrl": "051059",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4735,
+    "sno": 60,
+    "surahId": 51,
+    "juzId": 27,
+    "ayat": "فَوَيْلٌۭ لِّلَّذِينَ كَفَرُوا۟ مِن يَوْمِهِمُ ٱلَّذِى يُوعَدُونَ",
+    "audioUrl": "051060",
+    "manzil": 7,
+    "ruku": 457,
+    "hizbQuarter": 209,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

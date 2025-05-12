@@ -75,7 +75,13 @@ export const RdWrapperSidebar = ({ fileId }) => {
   };
 
   return (
-    <Flex h="calc(100% - 5px)" m="3px" marginLeft={0} position="relative">
+    <Flex
+      h="calc(100% - 5px)"
+      m="3px"
+      marginLeft={0}
+      position="relative"
+      zIndex={3}
+    >
       {/* Tab icons */}
       <Flex h="100%" w="3px" bgColor={bgContentColor} zIndex={2}></Flex>
       <Flex

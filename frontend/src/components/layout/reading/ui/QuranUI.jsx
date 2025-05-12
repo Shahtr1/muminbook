@@ -15,7 +15,7 @@ import { useSurahs } from "@/hooks/quran/useSurahs.js";
 import { useJuz } from "@/hooks/quran/useJuz.js";
 import { useInView } from "react-intersection-observer";
 import { useReadingDetail } from "@/hooks/reading/useReadings.js";
-import { debounce, throttle } from "lodash";
+import { debounce } from "lodash";
 
 export const QuranUI = ({ fileId }) => {
   const {
@@ -75,11 +75,11 @@ export const QuranUI = ({ fileId }) => {
           {dt.surahStart && (
             <SurahHeader rtl surah={dt.surahId} juz={dt.juzId} />
           )}
-          <AyatWithMarker data={dt} />
+          <AyatWithMarker key={dt.uuid} data={dt} />
         </Box>
       )),
     );
-  }, [data]);
+  }, [data?.pages]);
 
   // Debounced infinite scroll handler
   useEffect(() => {
@@ -116,9 +116,6 @@ export const QuranUI = ({ fileId }) => {
   useEffect(() => {
     const scrollEl = scrollRef.current;
     if (!scrollEl) return;
-
-    let lastTopAyat = null;
-
     // Cache ayat elements once
     if (ayatElementsRef.current.length === 0) {
       ayatElementsRef.current = Array.from(
@@ -126,13 +123,21 @@ export const QuranUI = ({ fileId }) => {
       );
     }
 
-    const handleScroll = throttle(() => {
-      window.requestAnimationFrame(() => {
+    const handleScroll = debounce(() => {
+      requestAnimationFrame(() => {
+        const scrollEl = scrollRef.current;
+        if (!scrollEl) return;
+
         let closest = null;
         let minDist = Infinity;
         const viewportTop = scrollEl.getBoundingClientRect().top;
 
-        for (const el of ayatElementsRef.current) {
+        // Re-fetch elements on each scroll to avoid stale refs
+        const ayatElements = Array.from(
+          scrollEl.querySelectorAll("[id^='ayat-']"),
+        );
+
+        for (const el of ayatElements) {
           const rect = el.getBoundingClientRect();
           const dist = Math.abs(rect.top - viewportTop);
 
@@ -146,22 +151,22 @@ export const QuranUI = ({ fileId }) => {
           const ayatDetails = {
             ayat: parseInt(closest.id.replace("ayat-", "")),
             surahId: closest.dataset.surahId,
-            juzId: closest.dataset.juzId,
+            juzId: closest.dataset.juzId, // Now reflects the latest DOM state
           };
 
+          // Only update if values changed
           if (
-            !lastTopAyat ||
-            lastTopAyat.ayat !== ayatDetails.ayat ||
-            lastTopAyat.surahId !== ayatDetails.surahId ||
-            lastTopAyat.juzId !== ayatDetails.juzId
+            !topAyat ||
+            topAyat.ayat !== ayatDetails.ayat ||
+            topAyat.surahId !== ayatDetails.surahId ||
+            topAyat.juzId !== ayatDetails.juzId
           ) {
             setTopAyat(ayatDetails);
             queryClient.setQueryData(["topAyat"], ayatDetails);
-            lastTopAyat = ayatDetails;
           }
         }
       });
-    }, 50);
+    }, 100);
 
     scrollEl.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Initial calculation

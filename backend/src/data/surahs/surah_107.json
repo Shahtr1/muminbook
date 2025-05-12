@@ -1,0 +1,114 @@
+[
+  {
+    "uuid": 6198,
+    "sno": 1,
+    "surahId": 107,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ أَرَءَيْتَ ٱلَّذِى يُكَذِّبُ بِٱلدِّينِ",
+    "audioUrl": "107001",
+    "manzil": 7,
+    "ruku": 549,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6199,
+    "sno": 2,
+    "surahId": 107,
+    "juzId": 30,
+    "ayat": "فَذَٰلِكَ ٱلَّذِى يَدُعُّ ٱلْيَتِيمَ",
+    "audioUrl": "107002",
+    "manzil": 7,
+    "ruku": 549,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6200,
+    "sno": 3,
+    "surahId": 107,
+    "juzId": 30,
+    "ayat": "وَلَا يَحُضُّ عَلَىٰ طَعَامِ ٱلْمِسْكِينِ",
+    "audioUrl": "107003",
+    "manzil": 7,
+    "ruku": 549,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6201,
+    "sno": 4,
+    "surahId": 107,
+    "juzId": 30,
+    "ayat": "فَوَيْلٌۭ لِّلْمُصَلِّينَ",
+    "audioUrl": "107004",
+    "manzil": 7,
+    "ruku": 549,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6202,
+    "sno": 5,
+    "surahId": 107,
+    "juzId": 30,
+    "ayat": "ٱلَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ",
+    "audioUrl": "107005",
+    "manzil": 7,
+    "ruku": 549,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6203,
+    "sno": 6,
+    "surahId": 107,
+    "juzId": 30,
+    "ayat": "ٱلَّذِينَ هُمْ يُرَآءُونَ",
+    "audioUrl": "107006",
+    "manzil": 7,
+    "ruku": 549,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6204,
+    "sno": 7,
+    "surahId": 107,
+    "juzId": 30,
+    "ayat": "وَيَمْنَعُونَ ٱلْمَاعُونَ",
+    "audioUrl": "107007",
+    "manzil": 7,
+    "ruku": 549,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

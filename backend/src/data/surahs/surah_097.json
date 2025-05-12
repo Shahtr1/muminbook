@@ -1,0 +1,82 @@
+[
+  {
+    "uuid": 6126,
+    "sno": 1,
+    "surahId": 97,
+    "juzId": 30,
+    "ayat": "بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ إِنَّآ أَنزَلْنَٰهُ فِى لَيْلَةِ ٱلْقَدْرِ",
+    "audioUrl": "097001",
+    "manzil": 7,
+    "ruku": 539,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6127,
+    "sno": 2,
+    "surahId": 97,
+    "juzId": 30,
+    "ayat": "وَمَآ أَدْرَىٰكَ مَا لَيْلَةُ ٱلْقَدْرِ",
+    "audioUrl": "097002",
+    "manzil": 7,
+    "ruku": 539,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6128,
+    "sno": 3,
+    "surahId": 97,
+    "juzId": 30,
+    "ayat": "لَيْلَةُ ٱلْقَدْرِ خَيْرٌۭ مِّنْ أَلْفِ شَهْرٍۢ",
+    "audioUrl": "097003",
+    "manzil": 7,
+    "ruku": 539,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6129,
+    "sno": 4,
+    "surahId": 97,
+    "juzId": 30,
+    "ayat": "تَنَزَّلُ ٱلْمَلَٰٓئِكَةُ وَٱلرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍۢ",
+    "audioUrl": "097004",
+    "manzil": 7,
+    "ruku": 539,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6130,
+    "sno": 5,
+    "surahId": 97,
+    "juzId": 30,
+    "ayat": "سَلَٰمٌ هِىَ حَتَّىٰ مَطْلَعِ ٱلْفَجْرِ",
+    "audioUrl": "097005",
+    "manzil": 7,
+    "ruku": 539,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "uuid": 6177,
+    "sno": 1,
+    "surahId": 103,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلْعَصْرِ",
+    "audioUrl": "103001",
+    "manzil": 7,
+    "ruku": 545,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6178,
+    "sno": 2,
+    "surahId": 103,
+    "juzId": 30,
+    "ayat": "إِنَّ ٱلْإِنسَٰنَ لَفِى خُسْرٍ",
+    "audioUrl": "103002",
+    "manzil": 7,
+    "ruku": 545,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6179,
+    "sno": 3,
+    "surahId": 103,
+    "juzId": 30,
+    "ayat": "إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ",
+    "audioUrl": "103003",
+    "manzil": 7,
+    "ruku": 545,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

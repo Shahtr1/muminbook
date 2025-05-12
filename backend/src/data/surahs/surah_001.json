@@ -1,0 +1,114 @@
+[
+  {
+    "uuid": 1,
+    "sno": 1,
+    "surahId": 1,
+    "juzId": 1,
+    "ayat": "﻿بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+    "audioUrl": "001001",
+    "manzil": 1,
+    "ruku": 1,
+    "hizbQuarter": 1,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 2,
+    "sno": 2,
+    "surahId": 1,
+    "juzId": 1,
+    "ayat": "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ",
+    "audioUrl": "001002",
+    "manzil": 1,
+    "ruku": 1,
+    "hizbQuarter": 1,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 3,
+    "sno": 3,
+    "surahId": 1,
+    "juzId": 1,
+    "ayat": "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+    "audioUrl": "001003",
+    "manzil": 1,
+    "ruku": 1,
+    "hizbQuarter": 1,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 4,
+    "sno": 4,
+    "surahId": 1,
+    "juzId": 1,
+    "ayat": "مَٰلِكِ يَوْمِ ٱلدِّينِ",
+    "audioUrl": "001004",
+    "manzil": 1,
+    "ruku": 1,
+    "hizbQuarter": 1,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 5,
+    "sno": 5,
+    "surahId": 1,
+    "juzId": 1,
+    "ayat": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+    "audioUrl": "001005",
+    "manzil": 1,
+    "ruku": 1,
+    "hizbQuarter": 1,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6,
+    "sno": 6,
+    "surahId": 1,
+    "juzId": 1,
+    "ayat": "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
+    "audioUrl": "001006",
+    "manzil": 1,
+    "ruku": 1,
+    "hizbQuarter": 1,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 7,
+    "sno": 7,
+    "surahId": 1,
+    "juzId": 1,
+    "ayat": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
+    "audioUrl": "001007",
+    "manzil": 1,
+    "ruku": 1,
+    "hizbQuarter": 1,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

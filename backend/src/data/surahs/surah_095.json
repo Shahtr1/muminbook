@@ -1,0 +1,130 @@
+[
+  {
+    "uuid": 6099,
+    "sno": 1,
+    "surahId": 95,
+    "juzId": 30,
+    "ayat": "بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلتِّينِ وَٱلزَّيْتُونِ",
+    "audioUrl": "095001",
+    "manzil": 7,
+    "ruku": 537,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6100,
+    "sno": 2,
+    "surahId": 95,
+    "juzId": 30,
+    "ayat": "وَطُورِ سِينِينَ",
+    "audioUrl": "095002",
+    "manzil": 7,
+    "ruku": 537,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6101,
+    "sno": 3,
+    "surahId": 95,
+    "juzId": 30,
+    "ayat": "وَهَٰذَا ٱلْبَلَدِ ٱلْأَمِينِ",
+    "audioUrl": "095003",
+    "manzil": 7,
+    "ruku": 537,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6102,
+    "sno": 4,
+    "surahId": 95,
+    "juzId": 30,
+    "ayat": "لَقَدْ خَلَقْنَا ٱلْإِنسَٰنَ فِىٓ أَحْسَنِ تَقْوِيمٍۢ",
+    "audioUrl": "095004",
+    "manzil": 7,
+    "ruku": 537,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6103,
+    "sno": 5,
+    "surahId": 95,
+    "juzId": 30,
+    "ayat": "ثُمَّ رَدَدْنَٰهُ أَسْفَلَ سَٰفِلِينَ",
+    "audioUrl": "095005",
+    "manzil": 7,
+    "ruku": 537,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6104,
+    "sno": 6,
+    "surahId": 95,
+    "juzId": 30,
+    "ayat": "إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍۢ",
+    "audioUrl": "095006",
+    "manzil": 7,
+    "ruku": 537,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6105,
+    "sno": 7,
+    "surahId": 95,
+    "juzId": 30,
+    "ayat": "فَمَا يُكَذِّبُكَ بَعْدُ بِٱلدِّينِ",
+    "audioUrl": "095007",
+    "manzil": 7,
+    "ruku": 537,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6106,
+    "sno": 8,
+    "surahId": 95,
+    "juzId": 30,
+    "ayat": "أَلَيْسَ ٱللَّهُ بِأَحْكَمِ ٱلْحَٰكِمِينَ",
+    "audioUrl": "095008",
+    "manzil": 7,
+    "ruku": 537,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

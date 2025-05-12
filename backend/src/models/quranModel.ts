@@ -9,6 +9,13 @@ export interface QuranDocument extends Document {
   audioUrl: string;
   juzId: PrimaryId;
   surahStart: boolean;
+  manzil: number;
+  ruku: number;
+  hizbQuarter: number;
+  sajda: {
+    recommended: boolean;
+    obligatory: boolean;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -23,7 +30,6 @@ const quranDocument = new Schema<QuranDocument>(
     sno: {
       type: Number,
       required: true,
-      unique: true,
     },
     surahId: {
       type: Schema.Types.ObjectId,
@@ -48,6 +54,22 @@ const quranDocument = new Schema<QuranDocument>(
     surahStart: {
       type: Boolean,
       default: false,
+    },
+    manzil: {
+      type: Number,
+      required: true,
+    },
+    ruku: {
+      type: Number,
+      required: true,
+    },
+    hizbQuarter: {
+      type: Number,
+      required: true,
+    },
+    sajda: {
+      recommended: { type: Boolean, default: false },
+      obligatory: { type: Boolean, default: false },
     },
   },
   { timestamps: true },

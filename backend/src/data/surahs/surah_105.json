@@ -1,0 +1,82 @@
+[
+  {
+    "uuid": 6189,
+    "sno": 1,
+    "surahId": 105,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَٰبِ ٱلْفِيلِ",
+    "audioUrl": "105001",
+    "manzil": 7,
+    "ruku": 547,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6190,
+    "sno": 2,
+    "surahId": 105,
+    "juzId": 30,
+    "ayat": "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِى تَضْلِيلٍۢ",
+    "audioUrl": "105002",
+    "manzil": 7,
+    "ruku": 547,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6191,
+    "sno": 3,
+    "surahId": 105,
+    "juzId": 30,
+    "ayat": "وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ",
+    "audioUrl": "105003",
+    "manzil": 7,
+    "ruku": 547,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6192,
+    "sno": 4,
+    "surahId": 105,
+    "juzId": 30,
+    "ayat": "تَرْمِيهِم بِحِجَارَةٍۢ مِّن سِجِّيلٍۢ",
+    "audioUrl": "105004",
+    "manzil": 7,
+    "ruku": 547,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6193,
+    "sno": 5,
+    "surahId": 105,
+    "juzId": 30,
+    "ayat": "فَجَعَلَهُمْ كَعَصْفٍۢ مَّأْكُولٍۭ",
+    "audioUrl": "105005",
+    "manzil": 7,
+    "ruku": 547,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

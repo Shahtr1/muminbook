@@ -1,0 +1,98 @@
+[
+  {
+    "uuid": 6231,
+    "sno": 1,
+    "surahId": 114,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ",
+    "audioUrl": "114001",
+    "manzil": 7,
+    "ruku": 556,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6232,
+    "sno": 2,
+    "surahId": 114,
+    "juzId": 30,
+    "ayat": "مَلِكِ ٱلنَّاسِ",
+    "audioUrl": "114002",
+    "manzil": 7,
+    "ruku": 556,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6233,
+    "sno": 3,
+    "surahId": 114,
+    "juzId": 30,
+    "ayat": "إِلَٰهِ ٱلنَّاسِ",
+    "audioUrl": "114003",
+    "manzil": 7,
+    "ruku": 556,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6234,
+    "sno": 4,
+    "surahId": 114,
+    "juzId": 30,
+    "ayat": "مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ",
+    "audioUrl": "114004",
+    "manzil": 7,
+    "ruku": 556,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6235,
+    "sno": 5,
+    "surahId": 114,
+    "juzId": 30,
+    "ayat": "ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ",
+    "audioUrl": "114005",
+    "manzil": 7,
+    "ruku": 556,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6236,
+    "sno": 6,
+    "surahId": 114,
+    "juzId": 30,
+    "ayat": "مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ",
+    "audioUrl": "114006",
+    "manzil": 7,
+    "ruku": 556,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

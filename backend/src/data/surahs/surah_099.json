@@ -1,0 +1,130 @@
+[
+  {
+    "uuid": 6139,
+    "sno": 1,
+    "surahId": 99,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ إِذَا زُلْزِلَتِ ٱلْأَرْضُ زِلْزَالَهَا",
+    "audioUrl": "099001",
+    "manzil": 7,
+    "ruku": 541,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6140,
+    "sno": 2,
+    "surahId": 99,
+    "juzId": 30,
+    "ayat": "وَأَخْرَجَتِ ٱلْأَرْضُ أَثْقَالَهَا",
+    "audioUrl": "099002",
+    "manzil": 7,
+    "ruku": 541,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6141,
+    "sno": 3,
+    "surahId": 99,
+    "juzId": 30,
+    "ayat": "وَقَالَ ٱلْإِنسَٰنُ مَا لَهَا",
+    "audioUrl": "099003",
+    "manzil": 7,
+    "ruku": 541,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6142,
+    "sno": 4,
+    "surahId": 99,
+    "juzId": 30,
+    "ayat": "يَوْمَئِذٍۢ تُحَدِّثُ أَخْبَارَهَا",
+    "audioUrl": "099004",
+    "manzil": 7,
+    "ruku": 541,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6143,
+    "sno": 5,
+    "surahId": 99,
+    "juzId": 30,
+    "ayat": "بِأَنَّ رَبَّكَ أَوْحَىٰ لَهَا",
+    "audioUrl": "099005",
+    "manzil": 7,
+    "ruku": 541,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6144,
+    "sno": 6,
+    "surahId": 99,
+    "juzId": 30,
+    "ayat": "يَوْمَئِذٍۢ يَصْدُرُ ٱلنَّاسُ أَشْتَاتًۭا لِّيُرَوْا۟ أَعْمَٰلَهُمْ",
+    "audioUrl": "099006",
+    "manzil": 7,
+    "ruku": 541,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6145,
+    "sno": 7,
+    "surahId": 99,
+    "juzId": 30,
+    "ayat": "فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًۭا يَرَهُۥ",
+    "audioUrl": "099007",
+    "manzil": 7,
+    "ruku": 541,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6146,
+    "sno": 8,
+    "surahId": 99,
+    "juzId": 30,
+    "ayat": "وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍۢ شَرًّۭا يَرَهُۥ",
+    "audioUrl": "099008",
+    "manzil": 7,
+    "ruku": 541,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

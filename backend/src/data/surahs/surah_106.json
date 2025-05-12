@@ -1,0 +1,66 @@
+[
+  {
+    "uuid": 6194,
+    "sno": 1,
+    "surahId": 106,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ لِإِيلَٰفِ قُرَيْشٍ",
+    "audioUrl": "106001",
+    "manzil": 7,
+    "ruku": 548,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6195,
+    "sno": 2,
+    "surahId": 106,
+    "juzId": 30,
+    "ayat": "إِۦلَٰفِهِمْ رِحْلَةَ ٱلشِّتَآءِ وَٱلصَّيْفِ",
+    "audioUrl": "106002",
+    "manzil": 7,
+    "ruku": 548,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6196,
+    "sno": 3,
+    "surahId": 106,
+    "juzId": 30,
+    "ayat": "فَلْيَعْبُدُوا۟ رَبَّ هَٰذَا ٱلْبَيْتِ",
+    "audioUrl": "106003",
+    "manzil": 7,
+    "ruku": 548,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6197,
+    "sno": 4,
+    "surahId": 106,
+    "juzId": 30,
+    "ayat": "ٱلَّذِىٓ أَطْعَمَهُم مِّن جُوعٍۢ وَءَامَنَهُم مِّنْ خَوْفٍۭ",
+    "audioUrl": "106004",
+    "manzil": 7,
+    "ruku": 548,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]
