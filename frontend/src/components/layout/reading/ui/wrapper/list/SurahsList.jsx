@@ -6,11 +6,17 @@ import { MdNumbers } from "react-icons/md";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useJuz } from "@/hooks/quran/useJuz.js";
+import { useQuery } from "@tanstack/react-query";
 
 export const SurahsList = () => {
   const { surahs } = useSurahs();
-
   const { juz } = useJuz();
+
+  const { data: topAyat } = useQuery({
+    queryKey: ["topAyat"],
+    queryFn: () => queryClient.getQueryData(["topAyat"]) || false,
+    staleTime: 0,
+  });
 
   const bgContentColor = useColorModeValue(
     "wn.bg_content.light",
@@ -38,6 +44,9 @@ export const SurahsList = () => {
             cursor="pointer"
             w="100%"
             _hover={{ bgColor: iconHoverGray }}
+            bgColor={
+              surah.uuid === +topAyat?.surahId ? iconHoverGray : undefined
+            }
             borderRadius="sm"
             direction="column"
             p={1}
