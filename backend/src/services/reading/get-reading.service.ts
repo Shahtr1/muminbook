@@ -18,18 +18,11 @@ export const getReading = async (id: string) => {
     `Data of '${id}' not found in the database.`,
   );
 
-  let data: any[] = [];
-
   if (id.toLowerCase() === "quran") {
-    data = await QuranModel.find({}, { createdAt: 0, updatedAt: 0 })
+    return QuranModel.find({}, { createdAt: 0, updatedAt: 0 })
       .sort({ uuid: 1 })
       .lean();
   } else {
-    data = await db.collection(id).find({}).sort({ uuid: 1 }).toArray();
+    return await db.collection(id).find({}).sort({ uuid: 1 }).toArray();
   }
-
-  return {
-    data,
-    total: data.length,
-  };
 };

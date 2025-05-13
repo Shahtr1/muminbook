@@ -7,10 +7,8 @@ import {
 import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
 import { transparentize } from "@chakra-ui/theme-tools";
 
-export const AyatWithMarker = ({ data, isNewJuz }) => {
-  const { ayat, uuid, sno, surahId: surah, juzId: juz } = data;
-  const surahId = surah?.uuid;
-  const juzId = juz?.uuid;
+export const AyatWithMarker = ({ data, surahId, juzId, isNewJuz }) => {
+  const { ayat, uuid, sno } = data;
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const svgImage = useColorModeValue(
     "/images/frames/ayat-dark.svg",

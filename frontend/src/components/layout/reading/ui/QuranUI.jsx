@@ -1,37 +1,19 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  Box,
-  Flex,
-  Spinner,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import React, { useMemo } from "react";
+import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useSurahs } from "@/hooks/quran/useSurahs.js";
 import { useJuz } from "@/hooks/quran/useJuz.js";
-import { useInView } from "react-intersection-observer";
 import { RdWrapperUI } from "@/components/layout/reading/ui/RdWrapperUI.jsx";
-import { SurahHeader } from "@/components/layout/reading/ui/SurahHeader.jsx";
-import { AyatWithMarker } from "@/components/layout/reading/AyatWithMarker.jsx";
-import { debounce } from "lodash";
 import { useReadingDetail } from "@/hooks/reading/useReadings.js";
-import { useQueryClient } from "@tanstack/react-query";
+import { AyatWithMarker } from "@/components/layout/reading/AyatWithMarker.jsx";
+import { Loader } from "@/components/layout/Loader.jsx";
+import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { SurahHeader } from "@/components/layout/reading/ui/SurahHeader.jsx";
 
 export const QuranUI = ({ fileId }) => {
   const {
-    data,
-    fetchNextPage,
-    fetchPreviousPage,
-    hasNextPage,
-    hasPreviousPage,
-    isFetchingNextPage,
-    isFetchingPreviousPage,
+    reading,
+    isPending: isReadingPending,
+    isError: isReadingError,
   } = useReadingDetail(fileId);
 
   const {
@@ -39,187 +21,42 @@ export const QuranUI = ({ fileId }) => {
     isPending: isSurahsPending,
     isError: isSurahsError,
   } = useSurahs();
-  const { juz, isPending: isJuzPending, isError: isJuzError } = useJuz();
+  const { juzList, isPending: isJuzPending, isError: isJuzError } = useJuz();
 
-  const color = useColorModeValue("text.primary", "whiteAlpha.900");
-  const bgContentColor = useColorModeValue(
-    "wn.bg_content.light",
-    "wn.bg_content.dark",
-  );
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const marginX = isSmallScreen ? 1 : 2;
 
-  const scrollRef = useRef(null);
-  const queryClient = useQueryClient();
-  const [topAyat, setTopAyat] = useState(null);
-  const [isFetching, setIsFetching] = useState(false);
-  const ayatElementsRef = useRef([]);
-
-  // More precise intersection observers with thresholds
-  const { ref: topRef, inView: topInView } = useInView({ threshold: 0.1 });
-  const { ref: bottomRef, inView: bottomInView } = useInView({
-    threshold: 0.1,
-  });
-
-  // Memoized functions with proper dependencies
-  const getSurahName = useCallback(
-    (surahId) => {
-      const surah = surahs.find((s) => s.uuid === +surahId);
-      return `${surahId}: ${surah?.transliteration || ""}`;
-    },
-    [surahs],
-  );
-
-  const getJuzName = useCallback(
-    (juzId) => {
-      const juzItem = juz.find((j) => j.uuid === +juzId);
-      return `${juzId}: ${juzItem?.transliteration || ""}`;
-    },
-    [juz],
-  );
-
-  // Memoized rendered ayat with stable keys
   const renderedAyat = useMemo(() => {
     let lastJuzId = null;
-    return data?.pages.flatMap((pageData, pageIndex) => {
-      return pageData.data.map((dt) => {
-        const isNewJuz = dt.juzId.uuid !== lastJuzId;
-        if (isNewJuz) {
-          lastJuzId = dt.juzId.uuid;
-        }
-
-        return (
-          <Box as="span" key={`${pageIndex}-${dt.uuid}`} display="inline">
-            {dt.surahStart && (
-              <SurahHeader rtl surah={dt.surahId} juz={dt.juzId} />
-            )}
-            <AyatWithMarker data={dt} isNewJuz={isNewJuz} />
-          </Box>
-        );
-      });
-    });
-  }, [data?.pages]);
-
-  // Debounced infinite scroll handler
-  useEffect(() => {
-    const fetchData = debounce(async () => {
-      if (isFetching) return;
-      setIsFetching(true);
-      try {
-        if (bottomInView && hasNextPage && !isFetchingNextPage) {
-          await fetchNextPage();
-        } else if (topInView && hasPreviousPage && !isFetchingPreviousPage) {
-          await fetchPreviousPage();
-        }
-      } finally {
-        setIsFetching(false);
+    return reading?.map((dt) => {
+      const surah = surahs.find((s) => s._id === dt.surahId);
+      const juz = juzList.find((j) => j._id === dt.juzId);
+      const isNewJuz = juz.uuid !== lastJuzId;
+      if (isNewJuz) {
+        lastJuzId = juz.uuid;
       }
-    }, 300);
-
-    fetchData();
-    return () => fetchData.cancel();
-  }, [
-    bottomInView,
-    topInView,
-    hasNextPage,
-    hasPreviousPage,
-    isFetchingNextPage,
-    isFetchingPreviousPage,
-    isFetching,
-    fetchNextPage,
-    fetchPreviousPage,
-  ]);
-
-  // Optimized scroll handler with throttling and caching
-  useEffect(() => {
-    const scrollEl = scrollRef.current;
-    if (!scrollEl) return;
-    // Cache ayat elements once
-    if (ayatElementsRef.current.length === 0) {
-      ayatElementsRef.current = Array.from(
-        scrollEl.querySelectorAll("[id^='ayat-']"),
+      return (
+        <Box as="span" key={`${dt.uuid}`} display="inline">
+          {dt.surahStart && <SurahHeader rtl surah={surah} juz={juz} />}
+          <AyatWithMarker
+            data={dt}
+            isNewJuz={isNewJuz}
+            surahId={surah.uuid}
+            juzId={juz.uuid}
+          />
+        </Box>
       );
-    }
+    });
+  }, [reading]);
 
-    const handleScroll = debounce(() => {
-      requestAnimationFrame(() => {
-        const scrollEl = scrollRef.current;
-        if (!scrollEl) return;
-
-        let closest = null;
-        let minDist = Infinity;
-        const viewportTop = scrollEl.getBoundingClientRect().top;
-
-        // Re-fetch elements on each scroll to avoid stale refs
-        const ayatElements = Array.from(
-          scrollEl.querySelectorAll("[id^='ayat-']"),
-        );
-
-        for (const el of ayatElements) {
-          const rect = el.getBoundingClientRect();
-          const dist = Math.abs(rect.top - viewportTop);
-
-          if (rect.top >= viewportTop && dist < minDist) {
-            minDist = dist;
-            closest = el;
-          }
-        }
-
-        if (closest) {
-          const ayatDetails = {
-            ayat: parseInt(closest.id.replace("ayat-", "")),
-            surahId: closest.dataset.surahId,
-            juzId: closest.dataset.juzId, // Now reflects the latest DOM state
-          };
-
-          // Only update if values changed
-          if (
-            !topAyat ||
-            topAyat.ayat !== ayatDetails.ayat ||
-            topAyat.surahId !== ayatDetails.surahId ||
-            topAyat.juzId !== ayatDetails.juzId
-          ) {
-            setTopAyat(ayatDetails);
-            queryClient.setQueryData(["topAyat"], ayatDetails);
-          }
-        }
-      });
-    }, 100);
-
-    scrollEl.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial calculation
-
-    return () => {
-      handleScroll.cancel();
-      scrollEl.removeEventListener("scroll", handleScroll);
-      ayatElementsRef.current = [];
-    };
-  }, [queryClient]);
+  if (isReadingPending || isSurahsPending || isJuzPending) return <Loader />;
+  if (isReadingError || isSurahsError || isJuzError)
+    return <SomethingWentWrong />;
 
   return (
-    <RdWrapperUI fileId={fileId} ref={scrollRef}>
+    <RdWrapperUI fileId={fileId}>
       <Flex gap={1} direction="column" position="relative">
-        {topAyat && (
-          <Flex
-            mx={marginX}
-            mb={1}
-            borderBottom="1px solid"
-            borderColor={color}
-            position="sticky"
-            top="0"
-            bgColor={bgContentColor}
-            zIndex={1}
-            justify="space-between"
-            px={1}
-            fontWeight="600"
-          >
-            <Text fontSize="12px">Juz {getJuzName(topAyat.juzId)}</Text>
-            <Text fontSize="12px">Surah {getSurahName(topAyat.surahId)}</Text>
-          </Flex>
-        )}
-
         <Flex flex={1} px={marginX} py={1} direction="column">
-          <div ref={topRef} />
           <Box
             fontFamily="ArabicFont"
             whiteSpace="normal"
@@ -228,10 +65,7 @@ export const QuranUI = ({ fileId }) => {
             dir="rtl"
           >
             {renderedAyat}
-            {isFetchingNextPage && <Spinner size="sm" mt={2} />}
-            {isFetchingPreviousPage && <Spinner size="sm" mb={2} />}
           </Box>
-          <div ref={bottomRef} />
         </Flex>
       </Flex>
     </RdWrapperUI>

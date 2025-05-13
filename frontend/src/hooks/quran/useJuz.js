@@ -11,5 +11,5 @@ export const useJuz = () => {
     staleTime: Infinity,
   });
 
-  return { juz: data, ...rest };
+  return { juzList: data, ...rest };
 };
