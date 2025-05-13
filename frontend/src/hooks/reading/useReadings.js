@@ -14,16 +14,15 @@ export const useReadings = () => {
   return { readings: data, ...rest };
 };
 
-export const useReadingDetail = (id) => {
+export const useReadingFromPage = (id, startingPage = 1) => {
   return useInfiniteQuery({
     queryKey: ["reading", id],
-    queryFn: ({ pageParam = 1 }) => getReading(id, pageParam),
-    getNextPageParam: (lastPage) => {
-      return lastPage.hasNextPage ? lastPage.page + 1 : undefined;
-    },
-    getPreviousPageParam: (firstPage) => {
-      return firstPage.hasPrevPage ? firstPage.page - 1 : undefined;
-    },
+    queryFn: ({ pageParam = startingPage }) => getReading(id, pageParam),
+    initialPageParam: startingPage,
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNextPage ? lastPage.page + 1 : undefined,
+    getPreviousPageParam: (firstPage) =>
+      firstPage.hasPrevPage ? firstPage.page - 1 : undefined,
     enabled: !!id,
     staleTime: Infinity,
     refetchOnReconnect: false,

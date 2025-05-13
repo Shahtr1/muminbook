@@ -72,5 +72,7 @@ export const getReadingBySurah = async (
 
   const page = Math.floor((firstAyah.uuid - 1) / PAGE_SIZE) + 1;
 
-  return await getReading(collection, page);
+  const result = await getReading(collection, page);
+
+  return { startingPage: page, ...result };
 };
