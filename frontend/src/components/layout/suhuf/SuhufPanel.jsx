@@ -52,7 +52,7 @@ export const SuhufPanel = () => {
 
     switch (type) {
       case "reading":
-        return <ReadingPanel id={panel.fileId} panel={panel} />;
+        return <ReadingPanel id={panel.fileId} />;
       case "user":
         return <EditorPanel />;
       default:

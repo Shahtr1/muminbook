@@ -1,26 +1,13 @@
 import React from "react";
 import { useSurahs } from "@/hooks/quran/useSurahs.js";
-import { useJuz } from "@/hooks/quran/useJuz.js";
 import { Flex, Text, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { MdNumbers } from "react-icons/md";
 import { XSearch } from "@/components/layout/xcomp/XSearch.jsx";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-import { useParams } from "react-router-dom";
-import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
-import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { useQueryClient } from "@tanstack/react-query";
-import { getReadingBySurah } from "@/services/index.js";
-import { useXToast } from "@/hooks/useXToast.js";
 
 export const SurahsList = () => {
   const { surahs } = useSurahs();
-  const { juz } = useJuz();
-  const { id: suhufId } = useParams();
-  const { data: suhuf } = useSuhuf(suhufId);
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
-  const queryClient = useQueryClient();
-  const toast = useXToast();
 
   const bgContentColor = useColorModeValue(
     "wn.bg_content.light",
@@ -33,55 +20,8 @@ export const SurahsList = () => {
     "wn.icon.hover.dark",
   );
 
-  const panels = suhuf?.config?.panels || [];
-  const activePanelIndex = panels.findIndex((p) => p.active);
-  const selectedSurahId = panels[activePanelIndex]?.selectedSurah?.id;
-
-  const handleSurahClick = async (surah) => {
-    try {
-      const result = await getReadingBySurah("quran", surah.uuid);
-      const { startingPage, data, ...rest } = result;
-
-      queryClient.setQueryData(["reading", "quran"], (old) => {
-        if (!old) {
-          return {
-            pages: [{ page: startingPage, data, ...rest }],
-            pageParams: [startingPage],
-          };
-        }
-
-        const alreadyExists = old.pages.some((p) => p.page === startingPage);
-        if (alreadyExists) return old;
-
-        return {
-          ...old,
-          pages: [...old.pages, { page: startingPage, data, ...rest }],
-          pageParams: [...old.pageParams, startingPage],
-        };
-      });
-
-      const updatedPanels = panels.map((panel, index) =>
-        index === activePanelIndex
-          ? {
-              ...panel,
-              selectedSurah: {
-                id: surah.uuid,
-                startingPage,
-              },
-            }
-          : panel,
-      );
-
-      updateConfig({ panels: updatedPanels });
-    } catch (err) {
-      console.error("Failed to load surah:", err);
-      toast.error(err);
-    }
-  };
-
   const Row = ({ index, style }) => {
     const surah = surahs[index];
-    const isSelected = surah.uuid === selectedSurahId;
 
     return (
       <div style={style}>
@@ -96,11 +36,9 @@ export const SurahsList = () => {
             cursor="pointer"
             w="100%"
             _hover={{ bgColor: iconHoverGray }}
-            bgColor={isSelected ? iconHoverGray : undefined}
             borderRadius="sm"
             direction="column"
             p={1}
-            onClick={() => handleSurahClick(surah)}
           >
             <Flex justify="space-between" align="center">
               <Text whiteSpace="nowrap" fontSize="10px">

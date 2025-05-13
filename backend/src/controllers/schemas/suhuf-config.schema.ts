@@ -21,12 +21,6 @@ export const layoutSchema = z.object({
 });
 
 const panelSchema = z.object({
-  selectedSurah: z
-    .object({
-      id: z.number(),
-      startingPage: z.number(),
-    })
-    .optional(),
   fileId: z.string().min(1).optional(),
   fileType: z.nativeEnum(FileType),
   scrollPosition: z.number().min(0).optional(),

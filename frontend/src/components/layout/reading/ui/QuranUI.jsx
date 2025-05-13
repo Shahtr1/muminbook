@@ -13,7 +13,6 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useReadingFromPage } from "@/hooks/reading/useReadings.js";
 import { useSurahs } from "@/hooks/quran/useSurahs.js";
 import { useJuz } from "@/hooks/quran/useJuz.js";
 import { useInView } from "react-intersection-observer";
@@ -21,10 +20,10 @@ import { RdWrapperUI } from "@/components/layout/reading/ui/RdWrapperUI.jsx";
 import { SurahHeader } from "@/components/layout/reading/ui/SurahHeader.jsx";
 import { AyatWithMarker } from "@/components/layout/reading/AyatWithMarker.jsx";
 import { debounce } from "lodash";
-import { Loader } from "@/components/layout/Loader.jsx";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { useReadingDetail } from "@/hooks/reading/useReadings.js";
+import { useQueryClient } from "@tanstack/react-query";
 
-export const QuranUI = ({ fileId, selectedSurah }) => {
+export const QuranUI = ({ fileId }) => {
   const {
     data,
     fetchNextPage,
@@ -33,7 +32,7 @@ export const QuranUI = ({ fileId, selectedSurah }) => {
     hasPreviousPage,
     isFetchingNextPage,
     isFetchingPreviousPage,
-  } = useReadingFromPage(fileId);
+  } = useReadingDetail(fileId);
 
   const {
     surahs,
@@ -51,36 +50,57 @@ export const QuranUI = ({ fileId, selectedSurah }) => {
   const marginX = isSmallScreen ? 1 : 2;
 
   const scrollRef = useRef(null);
-  const hasScrolledToSurah = useRef(false);
+  const queryClient = useQueryClient();
+  const [topAyat, setTopAyat] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
+  const ayatElementsRef = useRef([]);
 
+  // More precise intersection observers with thresholds
   const { ref: topRef, inView: topInView } = useInView({ threshold: 0.1 });
   const { ref: bottomRef, inView: bottomInView } = useInView({
     threshold: 0.1,
   });
 
-  // Reset scroll flag when selectedSurah changes
-  useEffect(() => {
-    hasScrolledToSurah.current = false;
-  }, [selectedSurah?.id]);
+  // Memoized functions with proper dependencies
+  const getSurahName = useCallback(
+    (surahId) => {
+      const surah = surahs.find((s) => s.uuid === +surahId);
+      return `${surahId}: ${surah?.transliteration || ""}`;
+    },
+    [surahs],
+  );
 
-  // Scroll to selectedSurah after it's available
-  useEffect(() => {
-    if (
-      !selectedSurah?.id ||
-      !data?.pages?.length ||
-      hasScrolledToSurah.current
-    )
-      return;
+  const getJuzName = useCallback(
+    (juzId) => {
+      const juzItem = juz.find((j) => j.uuid === +juzId);
+      return `${juzId}: ${juzItem?.transliteration || ""}`;
+    },
+    [juz],
+  );
 
-    const el = document.querySelector(`[data-surah-id='${selectedSurah.id}']`);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      hasScrolledToSurah.current = true;
-    }
-  }, [data?.pages, selectedSurah]);
+  // Memoized rendered ayat with stable keys
+  const renderedAyat = useMemo(() => {
+    let lastJuzId = null;
+    return data?.pages.flatMap((pageData, pageIndex) => {
+      return pageData.data.map((dt) => {
+        const isNewJuz = dt.juzId.uuid !== lastJuzId;
+        if (isNewJuz) {
+          lastJuzId = dt.juzId.uuid;
+        }
 
-  // Infinite Scroll handler
+        return (
+          <Box as="span" key={`${pageIndex}-${dt.uuid}`} display="inline">
+            {dt.surahStart && (
+              <SurahHeader rtl surah={dt.surahId} juz={dt.juzId} />
+            )}
+            <AyatWithMarker data={dt} isNewJuz={isNewJuz} />
+          </Box>
+        );
+      });
+    });
+  }, [data?.pages]);
+
+  // Debounced infinite scroll handler
   useEffect(() => {
     const fetchData = debounce(async () => {
       if (isFetching) return;
@@ -110,45 +130,76 @@ export const QuranUI = ({ fileId, selectedSurah }) => {
     fetchPreviousPage,
   ]);
 
-  const getSurahName = useCallback(
-    (surahId) => {
-      const surah = surahs.find((s) => s.uuid === +surahId);
-      return `${surahId}: ${surah?.transliteration || ""}`;
-    },
-    [surahs],
-  );
+  // Optimized scroll handler with throttling and caching
+  useEffect(() => {
+    const scrollEl = scrollRef.current;
+    if (!scrollEl) return;
+    // Cache ayat elements once
+    if (ayatElementsRef.current.length === 0) {
+      ayatElementsRef.current = Array.from(
+        scrollEl.querySelectorAll("[id^='ayat-']"),
+      );
+    }
 
-  const renderedAyat = useMemo(() => {
-    let lastJuzId = null;
-    return data?.pages.flatMap((pageData, pageIndex) =>
-      pageData.data.map((dt) => {
-        const isNewJuz = dt.juzId.uuid !== lastJuzId;
-        if (isNewJuz) lastJuzId = dt.juzId.uuid;
+    const handleScroll = debounce(() => {
+      requestAnimationFrame(() => {
+        const scrollEl = scrollRef.current;
+        if (!scrollEl) return;
 
-        return (
-          <Box
-            as="span"
-            key={`${pageIndex}-${dt.uuid}`}
-            display="inline"
-            data-surah-id={dt.surahId.uuid}
-          >
-            {dt.surahStart && (
-              <SurahHeader rtl surah={dt.surahId} juz={dt.juzId} />
-            )}
-            <AyatWithMarker data={dt} isNewJuz={isNewJuz} />
-          </Box>
+        let closest = null;
+        let minDist = Infinity;
+        const viewportTop = scrollEl.getBoundingClientRect().top;
+
+        // Re-fetch elements on each scroll to avoid stale refs
+        const ayatElements = Array.from(
+          scrollEl.querySelectorAll("[id^='ayat-']"),
         );
-      }),
-    );
-  }, [data?.pages]);
 
-  if (isSurahsPending || isJuzPending) return <Loader />;
-  if (isSurahsError || isJuzError) return <SomethingWentWrong />;
+        for (const el of ayatElements) {
+          const rect = el.getBoundingClientRect();
+          const dist = Math.abs(rect.top - viewportTop);
+
+          if (rect.top >= viewportTop && dist < minDist) {
+            minDist = dist;
+            closest = el;
+          }
+        }
+
+        if (closest) {
+          const ayatDetails = {
+            ayat: parseInt(closest.id.replace("ayat-", "")),
+            surahId: closest.dataset.surahId,
+            juzId: closest.dataset.juzId, // Now reflects the latest DOM state
+          };
+
+          // Only update if values changed
+          if (
+            !topAyat ||
+            topAyat.ayat !== ayatDetails.ayat ||
+            topAyat.surahId !== ayatDetails.surahId ||
+            topAyat.juzId !== ayatDetails.juzId
+          ) {
+            setTopAyat(ayatDetails);
+            queryClient.setQueryData(["topAyat"], ayatDetails);
+          }
+        }
+      });
+    }, 100);
+
+    scrollEl.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial calculation
+
+    return () => {
+      handleScroll.cancel();
+      scrollEl.removeEventListener("scroll", handleScroll);
+      ayatElementsRef.current = [];
+    };
+  }, [queryClient]);
 
   return (
     <RdWrapperUI fileId={fileId} ref={scrollRef}>
       <Flex gap={1} direction="column" position="relative">
-        {selectedSurah && (
+        {topAyat && (
           <Flex
             mx={marginX}
             mb={1}
@@ -162,10 +213,8 @@ export const QuranUI = ({ fileId, selectedSurah }) => {
             px={1}
             fontWeight="600"
           >
-            <Text fontSize="12px">
-              Starting from Surah {getSurahName(selectedSurah.id)}
-            </Text>
-            <Text fontSize="12px">Page {selectedSurah.startingPage}</Text>
+            <Text fontSize="12px">Juz {getJuzName(topAyat.juzId)}</Text>
+            <Text fontSize="12px">Surah {getSurahName(topAyat.surahId)}</Text>
           </Flex>
         )}
 
