@@ -3,7 +3,7 @@ import appAssert from "../../utils/appAssert";
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from "../../constants/http";
 import QuranModel from "../../models/quran.model";
 
-export const getReading = async (id: string) => {
+export const getReading = async (id: string, query?: any) => {
   const db = mongoose.connection.db;
   appAssert(db, INTERNAL_SERVER_ERROR, "Database not connected");
 
@@ -19,8 +19,18 @@ export const getReading = async (id: string) => {
   );
 
   if (id.toLowerCase() === "quran") {
-    return QuranModel.find({}, { createdAt: 0, updatedAt: 0 })
+    const { surahId, juzId, ruku, hizbQuarter, skip = 0, limit = 20 } = query;
+
+    const mongoQuery: any = {};
+    if (surahId) mongoQuery.surahId = new mongoose.Types.ObjectId(surahId);
+    if (juzId) mongoQuery.juzId = new mongoose.Types.ObjectId(juzId);
+    if (ruku) mongoQuery.ruku = parseInt(ruku);
+    if (hizbQuarter) mongoQuery.hizbQuarter = parseInt(hizbQuarter);
+
+    return QuranModel.find(mongoQuery, { createdAt: 0, updatedAt: 0 })
       .sort({ uuid: 1 })
+      .skip(Number(skip))
+      .limit(Number(limit))
       .lean();
   } else {
     return await db.collection(id).find({}).sort({ uuid: 1 }).toArray();

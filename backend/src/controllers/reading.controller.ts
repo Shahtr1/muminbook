@@ -13,7 +13,7 @@ export const getAllReadingsHandler = catchErrors(async (req, res) => {
 export const getReadingHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
 
-  const result = await getReading(req.params.id);
+  const result = await getReading(req.params.id, req.query);
 
   return res.status(OK).json(result);
 });

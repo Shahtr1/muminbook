@@ -75,6 +75,10 @@ const quranDocument = new Schema<QuranDocument>(
 );
 
 quranDocument.index({ uuid: 1 }, { unique: true });
+quranDocument.index({ surahId: 1 });
+quranDocument.index({ juzId: 1 });
+quranDocument.index({ ruku: 1 });
+quranDocument.index({ hizbQuarter: 1 });
 
 const QuranModel = mongoose.model<QuranDocument>(
   "Quran",
