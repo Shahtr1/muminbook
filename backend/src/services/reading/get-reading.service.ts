@@ -3,9 +3,7 @@ import appAssert from "../../utils/appAssert";
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from "../../constants/http";
 import QuranModel from "../../models/quran.model";
 
-const PAGE_SIZE = 50;
-
-export const getReading = async (id: string, page = 1) => {
+export const getReading = async (id: string) => {
   const db = mongoose.connection.db;
   appAssert(db, INTERNAL_SERVER_ERROR, "Database not connected");
 
@@ -20,39 +18,18 @@ export const getReading = async (id: string, page = 1) => {
     `Data of '${id}' not found in the database.`,
   );
 
-  const skip = (page - 1) * PAGE_SIZE;
-  let data: any[];
-  let total: number;
+  let data: any[] = [];
 
   if (id.toLowerCase() === "quran") {
-    total = await QuranModel.countDocuments();
-    data = await QuranModel.find({})
-      .populate("surahId")
-      .populate("juzId")
+    data = await QuranModel.find({}, { createdAt: 0, updatedAt: 0 })
       .sort({ uuid: 1 })
-      .skip(skip)
-      .limit(PAGE_SIZE)
       .lean();
   } else {
-    total = await db.collection(id).countDocuments();
-    data = await db
-      .collection(id)
-      .find({})
-      .sort({ uuid: 1 })
-      .skip(skip)
-      .limit(PAGE_SIZE)
-      .toArray();
+    data = await db.collection(id).find({}).sort({ uuid: 1 }).toArray();
   }
-
-  const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return {
     data,
-    page,
-    pageSize: PAGE_SIZE,
-    total,
-    totalPages,
-    hasNextPage: page < totalPages,
-    hasPrevPage: page > 1,
+    total: data.length,
   };
 };
