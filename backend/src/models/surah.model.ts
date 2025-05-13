@@ -17,7 +17,6 @@ const surahSchema = new Schema<SurahDocument>(
     uuid: {
       type: Number,
       required: true,
-      unique: true,
     },
     name: {
       type: String,

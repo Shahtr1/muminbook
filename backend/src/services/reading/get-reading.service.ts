@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import appAssert from "../../utils/appAssert";
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from "../../constants/http";
-import QuranModel from "../../models/quranModel";
+import QuranModel from "../../models/quran.model";
 
 const PAGE_SIZE = 50;
 

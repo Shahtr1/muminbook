@@ -14,7 +14,6 @@ const ReadingSchema = new Schema<ReadingDocument>(
     uuid: {
       type: String,
       required: true,
-      unique: true,
     },
     label: {
       type: String,

@@ -25,7 +25,6 @@ const quranDocument = new Schema<QuranDocument>(
     uuid: {
       type: Number,
       required: true,
-      unique: true,
     },
     sno: {
       type: Number,
