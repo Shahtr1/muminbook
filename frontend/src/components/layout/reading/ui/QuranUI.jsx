@@ -36,21 +36,20 @@ export const QuranUI = ({
   );
 
   const loadMoreRef = useRef();
+  const quranUiRef = useRef();
 
-  // ⬇️ Automatically load next chunk if screen is short
+  // Automatically load next chunk if screen is short
   useEffect(() => {
-    if (data?.pages?.length === 1) {
-      requestAnimationFrame(() => {
-        const { scrollHeight } = document.documentElement;
-        const { innerHeight } = window;
-        if (scrollHeight <= innerHeight && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
-        }
-      });
-    }
+    requestAnimationFrame(() => {
+      const { innerHeight } = window;
+      const uiHeight = quranUiRef?.current?.offsetHeight;
+      if (uiHeight <= innerHeight && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    });
   }, [data, hasNextPage, isFetchingNextPage]);
 
-  // ⬇️ IntersectionObserver for lazy scroll
+  // IntersectionObserver for lazy scroll
   useEffect(() => {
     if (!loadMoreRef.current || !hasNextPage) return;
 
@@ -67,7 +66,7 @@ export const QuranUI = ({
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const marginX = isSmallScreen ? 1 : 2;
 
-  // ⬇️ Render ayahs with Surah & Juz headers
+  // Render ayahs with Surah & Juz headers
   const renderedAyat = useMemo(() => {
     let lastJuzId = null;
     return data?.pages.flat().map((dt) => {
@@ -90,7 +89,7 @@ export const QuranUI = ({
         </Box>
       );
     });
-  }, [data, surahs, juzList]);
+  }, [surahs, juzList, data?.pages]);
 
   if (isReadingPending || isSurahsPending || isJuzPending) return <Loader />;
   if (isReadingError || isSurahsError || isJuzError)
@@ -98,7 +97,7 @@ export const QuranUI = ({
 
   return (
     <RdWrapperUI fileId={fileId}>
-      <Flex gap={1} direction="column" position="relative">
+      <Flex ref={quranUiRef} gap={1} direction="column" position="relative">
         <Flex flex={1} px={marginX} py={1} direction="column">
           <Box
             fontFamily="ArabicFont"
