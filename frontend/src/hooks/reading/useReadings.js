@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getReading, getReadings } from "@/services/index.js";
+import { getReadings } from "@/services/index.js";
 import API from "@/config/apiClient.js";
 import { useMemo } from "react";
 
@@ -14,19 +14,6 @@ export const useReadings = () => {
   });
 
   return { readings: data, ...rest };
-};
-
-export const useReadingDetail = (id) => {
-  const { data = [], ...rest } = useQuery({
-    queryKey: ["reading", id],
-    queryFn: () => getReading(id),
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    retry: false,
-    staleTime: Infinity,
-  });
-
-  return { reading: data, ...rest };
 };
 
 export const useReadingInfinite = (
