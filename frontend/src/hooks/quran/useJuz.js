@@ -3,7 +3,7 @@ import { getJuz } from "@/services/index.js";
 
 export const useJuz = () => {
   const { data = [], ...rest } = useQuery({
-    queryKey: ["juz"],
+    queryKey: ["juzList"],
     queryFn: getJuz,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,

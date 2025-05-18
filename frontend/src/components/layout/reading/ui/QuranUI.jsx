@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useSurahs } from "@/hooks/quran/useSurahs.js";
+import { useCachedQuery } from "@/hooks/useCachedQuery.js";
 import { useJuz } from "@/hooks/quran/useJuz.js";
 import { RdWrapperUI } from "@/components/layout/reading/ui/RdWrapperUI.jsx";
 import { useReadingInfinite } from "@/hooks/reading/useReadings.js";
@@ -11,11 +12,16 @@ import { AyatWithMarker } from "@/components/layout/reading/AyatWithMarker.jsx";
 
 export const QuranUI = ({ fileId }) => {
   const {
-    surahs,
+    data: surahs,
     isPending: isSurahsPending,
     isError: isSurahsError,
-  } = useSurahs();
-  const { juzList, isPending: isJuzPending, isError: isJuzError } = useJuz();
+  } = useCachedQuery(["surahs"], useSurahs);
+
+  const {
+    data: juzList,
+    isPending: isJuzListPending,
+    isError: isJuzListError,
+  } = useCachedQuery(["juzList"], useJuz);
 
   const {
     data,
@@ -29,8 +35,9 @@ export const QuranUI = ({ fileId }) => {
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const marginX = isSmallScreen ? 1 : 2;
 
-  if (isReadingPending || isSurahsPending || isJuzPending) return <Loader />;
-  if (isReadingError || isSurahsError || isJuzError)
+  if (isReadingPending || isSurahsPending || isJuzListPending)
+    return <Loader />;
+  if (isReadingError || isSurahsError || isJuzListError)
     return <SomethingWentWrong />;
 
   return (
@@ -44,6 +51,7 @@ export const QuranUI = ({ fileId }) => {
             textAlign="right"
             dir="rtl"
           >
+            {/*<SurahHeader>hi</SurahHeader>*/}
             <VirtualScroller
               items={data?.pages.flat() || []}
               renderItem={(item) => <AyatWithMarker item={item} />}

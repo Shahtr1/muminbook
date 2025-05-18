@@ -5,9 +5,16 @@ import { MdNumbers } from "react-icons/md";
 import { XSearch } from "@/components/layout/xcomp/XSearch.jsx";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import { Loader } from "@/components/layout/Loader.jsx";
+import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
+import { useCachedQuery } from "@/hooks/useCachedQuery.js";
 
 export const SurahsList = () => {
-  const { surahs } = useSurahs();
+  const {
+    data: surahs,
+    isPending,
+    isError,
+  } = useCachedQuery(["surahs"], useSurahs);
 
   const bgContentColor = useColorModeValue(
     "wn.bg_content.light",
@@ -80,6 +87,9 @@ export const SurahsList = () => {
       </div>
     );
   };
+
+  if (isPending) return <Loader />;
+  if (isError) return <SomethingWentWrong transparent />;
 
   return (
     <Flex
