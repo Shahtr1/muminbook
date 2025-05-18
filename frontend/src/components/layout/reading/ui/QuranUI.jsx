@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useSurahs } from "@/hooks/quran/useSurahs.js";
 import { useJuz } from "@/hooks/quran/useJuz.js";
@@ -26,35 +26,6 @@ export const QuranUI = ({ fileId }) => {
     isFetchingNextPage,
   } = useReadingInfinite({ fileId }, { enabled: true });
 
-  const loadMoreRef = useRef();
-  const quranUiRef = useRef();
-
-  // Automatically load next chunk if screen is short
-  // useEffect(() => {
-  //   requestAnimationFrame(() => {
-  //     const { innerHeight } = window;
-  //     const uiHeight = quranUiRef?.current?.offsetHeight;
-  //     if (uiHeight <= innerHeight && hasNextPage && !isFetchingNextPage) {
-  //       fetchNextPage();
-  //     }
-  //   });
-  // }, [data, hasNextPage, isFetchingNextPage]);
-
-  // IntersectionObserver for lazy scroll
-  useEffect(() => {
-    if (!loadMoreRef.current || !hasNextPage) return;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      console.log("entry.isIntersecting", entry.isIntersecting);
-      if (entry.isIntersecting) fetchNextPage();
-    });
-
-    const ref = loadMoreRef.current;
-    observer.observe(ref);
-
-    return () => observer.unobserve(ref);
-  }, [fetchNextPage, hasNextPage]);
-
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const marginX = isSmallScreen ? 1 : 2;
 
@@ -64,7 +35,7 @@ export const QuranUI = ({ fileId }) => {
 
   return (
     <RdWrapperUI fileId={fileId}>
-      <Flex ref={quranUiRef} gap={1} direction="column" position="relative">
+      <Flex gap={1} direction="column" position="relative">
         <Flex flex={1} px={marginX} py={1} direction="column">
           <Box
             fontFamily="ArabicFont"
@@ -73,14 +44,19 @@ export const QuranUI = ({ fileId }) => {
             textAlign="right"
             dir="rtl"
           >
-            <>
-              <VirtualScroller
-                items={data?.pages.flat() || []}
-                renderItem={(item) => <AyatWithMarker item={item} />}
-                direction="rtl"
-                fontSize="30px"
-              />
-            </>
+            <VirtualScroller
+              items={data?.pages.flat() || []}
+              renderItem={(item) => <AyatWithMarker item={item} />}
+              direction="rtl"
+              fontSize="30px"
+              onLoadMore={() => {
+                if (hasNextPage && !isFetchingNextPage) {
+                  fetchNextPage();
+                }
+              }}
+              isFetching={isFetchingNextPage}
+              hasMore={hasNextPage}
+            />
           </Box>
         </Flex>
       </Flex>
