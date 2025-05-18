@@ -1,4 +1,4 @@
-import { Flex, useColorMode } from "@chakra-ui/react";
+import { Flex, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import Split from "react-split";
 import { SuhufPanel } from "./SuhufPanel.jsx";
 import { SuhufLeftSidebar } from "@/components/layout/suhuf/SuhufLeftSidebar.jsx";

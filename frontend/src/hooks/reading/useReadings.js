@@ -16,18 +16,10 @@ export const useReadings = () => {
   return { readings: data, ...rest };
 };
 
-export const useReadingInfinite = (
-  { fileId, surahId, juzId, ruku, hizbQuarter, limit = 500 },
-  options = {},
-) => {
+export const useReadingInfinite = ({ fileId, limit = 500 }, options = {}) => {
   const queryKey = useMemo(() => {
-    const key = ["reading", fileId];
-    if (surahId) key.push(["surahId", surahId]);
-    if (juzId) key.push(["juzId", juzId]);
-    if (ruku != null) key.push(["ruku", ruku]);
-    if (hizbQuarter != null) key.push(["hizbQuarter", hizbQuarter]);
-    return key;
-  }, [fileId, surahId, juzId, ruku, hizbQuarter]);
+    return ["reading", fileId];
+  }, [fileId]);
 
   return useInfiniteQuery({
     queryKey,
@@ -36,12 +28,6 @@ export const useReadingInfinite = (
         skip: pageParam.toString(),
         limit: limit.toString(),
       });
-
-      if (surahId) params.append("surahId", surahId);
-      if (juzId) params.append("juzId", juzId);
-      if (ruku != null) params.append("ruku", ruku.toString());
-      if (hizbQuarter != null)
-        params.append("hizbQuarter", hizbQuarter.toString());
 
       return API.get(`/readings/${fileId}?${params}`);
     },

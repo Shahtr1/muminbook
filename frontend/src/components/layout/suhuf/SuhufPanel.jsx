@@ -6,6 +6,7 @@ import { ReadingPanel } from "@/components/layout/suhuf/ReadingPanel.jsx";
 import { EditorPanel } from "@/components/layout/suhuf/EditorPanel.jsx";
 import { DefaultPanel } from "@/components/layout/suhuf/DefaultPanel.jsx";
 import Split from "react-split";
+import { Loader } from "@/components/layout/Loader.jsx";
 
 export const SuhufPanel = ({ suhuf }) => {
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
@@ -87,7 +88,7 @@ export const SuhufPanel = ({ suhuf }) => {
     (sizes.length === 2 && sizes.every((s) => typeof s === "number"));
 
   if (!isSplitReady) {
-    return null; // or <Box>Loading panel layout...</Box>
+    return <Loader />;
   }
 
   return (

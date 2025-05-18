@@ -10,13 +10,7 @@ import { VirtualScroller } from "@/components/layout/custom/VirtualScroller.jsx"
 import { SurahHeader } from "@/components/layout/reading/ui/SurahHeader.jsx";
 import { AyatWithMarker } from "@/components/layout/reading/AyatWithMarker.jsx";
 
-export const QuranUI = ({
-  fileId,
-  surahId = null,
-  juzId = null,
-  ruku = null,
-  hizbQuarter = null,
-}) => {
+export const QuranUI = ({ fileId }) => {
   const {
     surahs,
     isPending: isSurahsPending,
@@ -31,10 +25,7 @@ export const QuranUI = ({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useReadingInfinite(
-    { fileId, surahId, juzId, ruku, hizbQuarter },
-    { enabled: true },
-  );
+  } = useReadingInfinite({ fileId }, { enabled: true });
 
   const loadMoreRef = useRef();
   const quranUiRef = useRef();
