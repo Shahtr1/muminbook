@@ -17,7 +17,7 @@ export const useReadings = () => {
 };
 
 export const useReadingInfinite = (
-  { fileId, surahId, juzId, ruku, hizbQuarter, limit = 20 },
+  { fileId, surahId, juzId, ruku, hizbQuarter, limit = 500 },
   options = {},
 ) => {
   const queryKey = useMemo(() => {
