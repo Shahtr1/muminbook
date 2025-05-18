@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Box, Flex, Spinner, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useSurahs } from "@/hooks/quran/useSurahs.js";
 import { useJuz } from "@/hooks/quran/useJuz.js";
 import { RdWrapperUI } from "@/components/layout/reading/ui/RdWrapperUI.jsx";
@@ -7,8 +7,6 @@ import { useReadingInfinite } from "@/hooks/reading/useReadings.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { VirtualScroller } from "@/components/layout/custom/VirtualScroller.jsx";
-import { SurahHeader } from "@/components/layout/reading/ui/SurahHeader.jsx";
-import { AyatWithMarker } from "@/components/layout/reading/AyatWithMarker.jsx";
 
 export const QuranUI = ({ fileId }) => {
   const {
@@ -31,15 +29,15 @@ export const QuranUI = ({ fileId }) => {
   const quranUiRef = useRef();
 
   // Automatically load next chunk if screen is short
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      const { innerHeight } = window;
-      const uiHeight = quranUiRef?.current?.offsetHeight;
-      if (uiHeight <= innerHeight && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    });
-  }, [data, hasNextPage, isFetchingNextPage]);
+  // useEffect(() => {
+  //   requestAnimationFrame(() => {
+  //     const { innerHeight } = window;
+  //     const uiHeight = quranUiRef?.current?.offsetHeight;
+  //     if (uiHeight <= innerHeight && hasNextPage && !isFetchingNextPage) {
+  //       fetchNextPage();
+  //     }
+  //   });
+  // }, [data, hasNextPage, isFetchingNextPage]);
 
   // IntersectionObserver for lazy scroll
   useEffect(() => {
@@ -77,38 +75,9 @@ export const QuranUI = ({ fileId }) => {
             <>
               <VirtualScroller
                 items={data?.pages.flat() || []}
-                renderItem={(dt) => {
-                  const surah = surahs.find((s) => s._id === dt.surahId);
-                  const juz = juzList.find((j) => j._id === dt.juzId);
-                  if (!surah || !juz) return null;
-
-                  return (
-                    <Box as="span" display="inline">
-                      {dt.surahStart && (
-                        <SurahHeader rtl surah={surah} juz={juz} />
-                      )}
-                      <AyatWithMarker
-                        data={dt}
-                        isNewJuz={false}
-                        surahId={surah.uuid}
-                        juzId={juz.uuid}
-                      />
-                    </Box>
-                  );
-                }}
-                footer={
-                  hasNextPage && (
-                    <Box
-                      as="span"
-                      display="inline"
-                      ref={loadMoreRef}
-                      textAlign="center"
-                      py={4}
-                    >
-                      <Spinner size="sm" />
-                    </Box>
-                  )
-                }
+                renderItem={(item) => `${item.ayat} `}
+                direction="rtl"
+                fontSize="30px"
               />
             </>
           </Box>

@@ -16,7 +16,7 @@ export const useReadings = () => {
   return { readings: data, ...rest };
 };
 
-export const useReadingInfinite = ({ fileId, limit = 500 }, options = {}) => {
+export const useReadingInfinite = ({ fileId, limit = 50000 }, options = {}) => {
   const queryKey = useMemo(() => {
     return ["reading", fileId];
   }, [fileId]);
