@@ -1,70 +1,74 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 
 export const VirtualScroller = ({
-  items = Array.from({ length: 2000 }, (_, i) => ({ ayat: `Item${i}` })),
-  renderItem = (item, index) => `${item.ayat} `,
-  height = "400px",
-  buffer = 10,
+  items = [],
+  renderItem = (item) => item.ayat,
   direction = "rtl",
-  estimatedItemCharLength = 40, // average char length per ayat
-  estimatedCharWidth = 10,
-  estimatedLineHeight = 24,
-  fontSize = "10px",
+  fontSize = "30px",
+  chunkSize = 100,
+  buffer = 2,
 }) => {
   const containerRef = useRef(null);
-  const [visibleCount, setVisibleCount] = useState(100);
+  const [renderedChunks, setRenderedChunks] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  // Estimate number of items that fit in view
+  const observerRef = useRef();
+
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const observerEl = observerRef.current;
+    if (!observerEl) return;
 
-    const handleScroll = () => {
-      const { scrollTop, clientHeight, clientWidth } = container;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLoading(true);
+          setTimeout(() => {
+            setRenderedChunks((prev) => prev + 1);
+            setLoading(false);
+          }, 300); // simulate async loading (adjust if needed)
+        }
+      },
+      {
+        root: containerRef.current,
+        threshold: 0.1,
+      },
+    );
 
-      const charsPerLine = Math.floor(clientWidth / estimatedCharWidth);
-      const linesVisible = Math.ceil(clientHeight / estimatedLineHeight);
+    observer.observe(observerEl);
+    return () => observer.disconnect();
+  }, []);
 
-      const visibleChars = charsPerLine * linesVisible;
-      const scrollOffsetChars =
-        Math.floor(scrollTop / estimatedLineHeight) * charsPerLine;
-
-      const totalVisibleChars = visibleChars + scrollOffsetChars;
-      const estimatedVisibleItems = Math.ceil(
-        totalVisibleChars / estimatedItemCharLength,
-      );
-
-      setVisibleCount(estimatedVisibleItems + buffer);
-    };
-
-    handleScroll();
-    container.addEventListener("scroll", handleScroll);
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [
-    buffer,
-    estimatedCharWidth,
-    estimatedLineHeight,
-    estimatedItemCharLength,
-  ]);
-
-  const visibleItems = items.slice(0, visibleCount);
+  const visibleItems = items.slice(0, renderedChunks * chunkSize);
 
   return (
     <Box
       ref={containerRef}
-      height={height}
+      height="80vh"
       overflowY="auto"
-      border="1px solid gray"
-      p={2}
       fontFamily="ArabicFont, serif"
       fontSize={fontSize}
       whiteSpace="pre-wrap"
       wordBreak="break-word"
       dir={direction}
       textAlign={direction === "rtl" ? "right" : "left"}
+      px={2}
     >
-      {visibleItems.map(renderItem)}
+      {visibleItems.map((item, i) => (
+        <Box as="span" key={item._id || i} display="inline">
+          {renderItem(item, i)}{" "}
+        </Box>
+      ))}
+
+      {/* Inline Loading Spinner */}
+      {loading && (
+        <Box as="span" display="inline-block" mx={2} verticalAlign="middle">
+          <Spinner size="sm" color="gray.500" />
+        </Box>
+      )}
+
+      {/* Trigger next chunk load */}
+      <Box ref={observerRef} height="1px" />
     </Box>
   );
 };
