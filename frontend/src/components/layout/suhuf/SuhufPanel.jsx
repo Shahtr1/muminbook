@@ -8,8 +8,7 @@ import { DefaultPanel } from "@/components/layout/suhuf/DefaultPanel.jsx";
 import Split from "react-split";
 
 export const SuhufPanel = ({ suhuf }) => {
-  const suhufId = suhuf._id;
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false }) || false;
 
@@ -52,7 +51,7 @@ export const SuhufPanel = ({ suhuf }) => {
       case "user":
         return <EditorPanel />;
       default:
-        return <DefaultPanel suhufId={suhufId} />;
+        return <DefaultPanel suhuf={suhuf} />;
     }
   };
 
@@ -81,7 +80,7 @@ export const SuhufPanel = ({ suhuf }) => {
     }
 
     return elements;
-  }, [panels, isSecondPanelOpen, activePanelIndex, suhufId]);
+  }, [isSecondPanelOpen, activePanelIndex]);
 
   const isSplitReady =
     !isSecondPanelOpen ||

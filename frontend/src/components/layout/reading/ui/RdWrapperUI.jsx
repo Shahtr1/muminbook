@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { RdWrapperSidebar } from "@/components/layout/reading/ui/wrapper/RdWrapperSidebar.jsx";
 import { RdWrapperToolbar } from "@/components/layout/reading/ui/wrapper/RdWrapperToolbar.jsx";
-import { useReadings } from "@/hooks/reading/useReadings.js";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { RiCloseCircleFill, RiInformationFill } from "react-icons/ri";
 import { useParams } from "react-router-dom";
@@ -26,7 +25,7 @@ export const RdWrapperUI = forwardRef(({ fileId, children }, ref) => {
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
   const panelNavHeight = "22px";
 
-  const { readings } = useReadings();
+  const readings = queryClient.getQueryData(["readings"]);
   const reading = readings.find((r) => r.uuid === fileId);
 
   const { id: suhufId } = useParams();

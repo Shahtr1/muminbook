@@ -14,7 +14,7 @@ export const SuhufLayout = ({ readings, suhuf }) => {
 
   return (
     <Flex h="100%" w="100%" pos="relative" zIndex={1}>
-      <SuhufLeftSidebar />
+      <SuhufLeftSidebar suhuf={suhuf} />
 
       {/* Main Content Area */}
       <Flex flex="1" display="flex" flexDirection="column" overflow="auto">

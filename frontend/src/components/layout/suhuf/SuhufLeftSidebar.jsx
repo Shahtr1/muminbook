@@ -6,16 +6,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { useQueryClient } from "@tanstack/react-query";
 
-export const SuhufLeftSidebar = () => {
-  const queryClient = useQueryClient();
-  const { id: suhufId } = useParams();
-  const suhuf = queryClient.getQueryData(["suhuf", suhufId]);
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+export const SuhufLeftSidebar = ({ suhuf }) => {
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
   const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
   const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
