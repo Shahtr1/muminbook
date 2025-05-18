@@ -1,10 +1,13 @@
 import { SVG } from "@/components/svgs/SVG.jsx";
+import { useColorModeValue, useToken } from "@chakra-ui/react";
 
 export const SplitVerticalSVG = ({
   active,
   activeColor,
   dimensions = "20px",
 }) => {
+  const [lightBg, darkBg] = useToken("colors", ["wn.bg.light", "wn.bg.dark"]);
+  const bgColor = useColorModeValue(lightBg, darkBg);
   return (
     <SVG
       dimensions={dimensions}
@@ -15,40 +18,34 @@ export const SplitVerticalSVG = ({
       {/* Outer container */}
       <rect
         x="2"
-        y="2"
+        y="2.5"
         width="20"
         height="20"
         rx="2"
         ry="2"
-        stroke={activeColor}
-        strokeWidth="1"
-        fill="none"
+        fill={active ? bgColor : activeColor}
       />
 
       {/* Top panel with padding */}
       <rect
-        x="4"
-        y="4"
-        width="16"
-        height="6"
+        x="3.5"
+        y="4.5"
+        width="17"
+        height="7.5"
         rx="1"
         ry="1"
-        fill={active ? activeColor : "none"}
-        stroke={activeColor}
-        strokeWidth="1"
+        fill={active ? activeColor : bgColor}
       />
 
       {/* Bottom panel with padding */}
       <rect
-        x="4"
-        y="14"
-        width="16"
-        height="6"
+        x="3.5"
+        y="13.5"
+        width="17"
+        height="7.5"
         rx="1"
         ry="1"
-        fill={active ? activeColor : "none"}
-        stroke={activeColor}
-        strokeWidth="1"
+        fill={active ? activeColor : bgColor}
       />
     </SVG>
   );
