@@ -2,15 +2,11 @@ import { Flex, useColorMode } from "@chakra-ui/react";
 import Split from "react-split";
 import { SuhufPanel } from "./SuhufPanel.jsx";
 import { SuhufLeftSidebar } from "@/components/layout/suhuf/SuhufLeftSidebar.jsx";
-import { useParams } from "react-router-dom";
-import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { SuhufBottomPanel } from "@/components/layout/suhuf/bottomPanel/SuhufBottomPanel.jsx";
 import { SuhufBottomPanelHeader } from "@/components/layout/suhuf/bottomPanel/SuhufBottomPanelHeader.jsx";
 
-export const SuhufLayout = ({ readings }) => {
+export const SuhufLayout = ({ readings, suhuf }) => {
   const { colorMode } = useColorMode();
-  const { id: suhufId } = useParams();
-  const { data: suhuf } = useSuhuf(suhufId);
   const layout = suhuf?.config?.layout || {};
   const isBottomOpen = layout?.isBottomTabOpen;
 
@@ -20,6 +16,7 @@ export const SuhufLayout = ({ readings }) => {
     <Flex h="100%" w="100%" pos="relative" zIndex={1}>
       <SuhufLeftSidebar />
 
+      {/* Main Content Area */}
       <Flex flex="1" display="flex" flexDirection="column" overflow="auto">
         <Split
           key={`bottom-open-${isBottomOpen}`}
@@ -35,13 +32,20 @@ export const SuhufLayout = ({ readings }) => {
             overflowY: "auto",
           }}
         >
+          {/* Main Panel */}
           <Flex overflowY="auto" position="relative">
             <SuhufPanel />
           </Flex>
 
-          {isBottomOpen ? <SuhufBottomPanel /> : <div />}
+          {isBottomOpen ? (
+            <SuhufBottomPanel readings={readings} suhuf={suhuf} />
+          ) : (
+            <div />
+          )}
         </Split>
-        {!isBottomOpen && <SuhufBottomPanelHeader hasBorder data={readings} />}
+        {!isBottomOpen && (
+          <SuhufBottomPanelHeader readings={readings} suhuf={suhuf} />
+        )}
       </Flex>
     </Flex>
   );

@@ -36,7 +36,7 @@ export const Suhuf = () => {
     data: suhuf,
     isPending: isSuhufLoading,
     isError: isSuhufError,
-    isSuccess: isSuhufReady,
+    isSuccess: isSuhufSuccess,
   } = useSuhuf(suhufId);
   const {
     readings,
@@ -158,7 +158,7 @@ export const Suhuf = () => {
     >
       {(isSuhufLoading || isReadingsLoading) && <Loader />}
       {(isSuhufError || isReadingsError) && <SomethingWentWrong />}
-      {isSuhufReady && <SuhufLayout readings={readings} />}
+      {isSuhufSuccess && <SuhufLayout readings={readings} suhuf={suhuf} />}
     </Flex>
   );
 };

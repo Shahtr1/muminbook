@@ -1,5 +1,3 @@
-import { useParams } from "react-router-dom";
-import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -7,10 +5,9 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 export const SuhufBottomPanelHeader = ({
   hasBorder = false,
   readings = [],
+  suhuf,
 }) => {
-  const { id: suhufId } = useParams();
-  const { data: suhuf } = useSuhuf(suhufId);
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
   const layout = suhuf?.config?.layout || {};
   const isOpen = layout?.isBottomTabOpen || false;
