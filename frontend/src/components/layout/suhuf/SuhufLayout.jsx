@@ -34,7 +34,7 @@ export const SuhufLayout = ({ readings, suhuf }) => {
         >
           {/* Main Panel */}
           <Flex overflowY="auto" position="relative">
-            <SuhufPanel />
+            <SuhufPanel suhuf={suhuf} />
           </Flex>
 
           {isBottomOpen ? (
