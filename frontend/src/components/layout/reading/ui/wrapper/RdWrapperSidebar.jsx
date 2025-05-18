@@ -1,6 +1,5 @@
 import { Flex, Icon, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { FaComments, FaList } from "react-icons/fa";
 import { BsHighlights } from "react-icons/bs";
@@ -10,6 +9,7 @@ import { CommentsList } from "@/components/layout/reading/ui/wrapper/list/Commen
 import { HighlightsList } from "@/components/layout/reading/ui/wrapper/list/HighlightsList.jsx";
 import { VscFilterFilled } from "react-icons/vsc";
 import { FilterAyatList } from "@/components/layout/reading/ui/wrapper/list/FilterAyatList.jsx";
+import { useQueryClient } from "@tanstack/react-query";
 
 const readingSidebarData = [
   { label: "List", id: "list", icon: FaList },
@@ -19,8 +19,9 @@ const readingSidebarData = [
 ];
 
 export const RdWrapperSidebar = ({ fileId }) => {
+  const queryClient = useQueryClient();
   const { id: suhufId } = useParams();
-  const { data: suhuf } = useSuhuf(suhufId);
+  const suhuf = queryClient.getQueryData(["suhuf", suhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const layout = suhuf?.config?.layout || {};

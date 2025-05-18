@@ -16,11 +16,12 @@ import { useReadings } from "@/hooks/reading/useReadings.js";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { RiCloseCircleFill, RiInformationFill } from "react-icons/ri";
 import { useParams } from "react-router-dom";
-import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { forwardRef } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const RdWrapperUI = forwardRef(({ fileId, children }, ref) => {
+  const queryClient = useQueryClient();
   const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
   const panelNavHeight = "22px";
@@ -29,7 +30,7 @@ export const RdWrapperUI = forwardRef(({ fileId, children }, ref) => {
   const reading = readings.find((r) => r.uuid === fileId);
 
   const { id: suhufId } = useParams();
-  const { data: suhuf } = useSuhuf(suhufId);
+  const suhuf = queryClient.getQueryData(["suhuf", suhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const panels = suhuf?.config?.panels || [];

@@ -7,11 +7,12 @@ import {
 } from "@chakra-ui/react";
 import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
 import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
-import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const DefaultPanel = ({ suhufId }) => {
-  const { data: suhuf } = useSuhuf(suhufId);
+  const queryClient = useQueryClient();
+  const suhuf = queryClient.getQueryData(["suhuf", suhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const secondaryColor = useColorModeValue("wn.gutter.light", "wn.gutter.dark");

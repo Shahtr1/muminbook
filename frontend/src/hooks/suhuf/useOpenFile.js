@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { useOpenSuhuf } from "@/hooks/suhuf/useOpenSuhuf.js";
-import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
+import { useQueryClient } from "@tanstack/react-query";
 
 const deepEqual = (a, b) => {
   return JSON.stringify(a) === JSON.stringify(b);
 };
 
 export const useOpenFile = (fileId, isReading = false) => {
+  const queryClient = useQueryClient();
   const [createdSuhufId, setCreatedSuhufId] = useState(null);
 
   const openSuhuf = useOpenSuhuf((suhufId) => {
     setCreatedSuhufId(suhufId);
   });
 
-  const { data: suhuf } = useSuhuf(createdSuhufId);
+  const suhuf = queryClient.getQueryData(["suhuf", createdSuhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(createdSuhufId);
 
   useEffect(() => {

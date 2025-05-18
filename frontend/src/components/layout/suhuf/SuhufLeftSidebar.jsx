@@ -8,12 +8,13 @@ import {
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
-import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const SuhufLeftSidebar = () => {
+  const queryClient = useQueryClient();
   const { id: suhufId } = useParams();
-  const { data: suhuf } = useSuhuf(suhufId);
+  const suhuf = queryClient.getQueryData(["suhuf", suhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
