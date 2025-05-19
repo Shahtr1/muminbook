@@ -11,11 +11,11 @@ import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
 
 export const SurahHeader = ({ rtl = false, surah, juz }) => {
   const frameColor = useColorModeValue("text.primary", "whiteAlpha.900");
-  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const surahName = rtl ? surah.name : surah.transliteration;
   const surahNumber = rtl ? toArabicNumeral(surah.uuid) : surah.uuid;
   const juzName = rtl ? juz.name : juz.transliteration;
   const juzNumber = rtl ? toArabicNumeral(juz.uuid) : juz.uuid;
+  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
 
   return (
     <Flex

@@ -1,14 +1,23 @@
 import { Box, Text, useColorModeValue } from "@chakra-ui/react";
 import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
 import React from "react";
+import { SurahHeader } from "@/components/layout/reading/ui/SurahHeader.jsx";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const AyatWithMarker = ({ item }) => {
+  const queryClient = useQueryClient();
+  const surahs = queryClient.getQueryData(["surahs"]);
+  const juzList = queryClient.getQueryData(["juzList"]);
+  const surah = surahs.find((s) => s._id === item.surahId);
+  const juz = juzList.find((j) => j._id === item.juzId);
   const svgImage = useColorModeValue(
     "/images/frames/ayat-dark.svg",
     "/images/frames/ayat-light.svg",
   );
+
   return (
     <Box as="span" key={item._id}>
+      {item.surahStart && <SurahHeader surah={surah} juz={juz} rtl />}
       {item.ayat}
       <Box as="span" position="relative" pr={10}>
         <Text
