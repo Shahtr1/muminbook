@@ -9,6 +9,7 @@ import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { InfiniteScroller } from "@/components/layout/custom/InfiniteScroller.jsx";
 import { AyatWithMarker } from "@/components/layout/reading/AyatWithMarker.jsx";
+import { UiHeaderInfo } from "@/components/layout/reading/ui/UiHeaderInfo.jsx";
 
 export const QuranUI = ({ fileId }) => {
   const {
@@ -43,14 +44,14 @@ export const QuranUI = ({ fileId }) => {
   return (
     <RdWrapperUI fileId={fileId}>
       <Flex gap={1} direction="column" position="relative">
-        <Flex flex={1} px={marginX} py={1} direction="column">
+        <Flex flex={1} px={marginX} direction="column">
           <Box
             fontFamily="ArabicFont"
             whiteSpace="normal"
             wordBreak="break-word"
             textAlign="right"
-            dir="rtl"
           >
+            <UiHeaderInfo direction="rtl" />
             <InfiniteScroller
               items={data?.pages.flat() || []}
               renderItem={(item) => <AyatWithMarker item={item} />}

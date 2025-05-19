@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Spinner, useColorModeValue } from "@chakra-ui/react";
+import { useTrackVisibleAyat } from "@/hooks/quran/useTrackVisibleAyat.js";
 
 export const InfiniteScroller = ({
   items = [],
@@ -58,6 +59,7 @@ export const InfiniteScroller = ({
   ]);
 
   const visibleItems = items.slice(0, renderedChunks * chunkSize);
+  useTrackVisibleAyat(visibleItems, containerRef);
 
   return (
     <Box
@@ -73,7 +75,7 @@ export const InfiniteScroller = ({
       px={2}
     >
       {visibleItems.map((item, i) => (
-        <Box as="span" key={item._id || i} display="inline">
+        <Box as="span" key={item._id || i} display="inline" data-idx={i}>
           {renderItem(item, i)}{" "}
         </Box>
       ))}
