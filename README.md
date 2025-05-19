@@ -11,6 +11,11 @@ live study rooms.
 Access the live task list here:  
 [Muminbook Tasks on Notion](https://www.notion.so/1f87449dbc4780c088e9d60174e52db2?v=1f87449dbc4780a78a05000c04e67009&pvs=4)
 
+## 🎨 Figma Link
+
+Access the Figma link here:  
+[Muminbook Figma](https://www.figma.com/design/SYiIw3zJ5Qr3mrUcMGBysb/muminbook?node-id=0-1&t=8g78x9ge92aUWwK0-1)
+
 ## 🛠️ Tech Stack
 
 | Tech            | Purpose                      |
