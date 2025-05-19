@@ -51,7 +51,7 @@ export const QuranUI = ({ fileId }) => {
             wordBreak="break-word"
             textAlign="right"
           >
-            <UiHeaderInfo direction="rtl" />
+            <UiHeaderInfo />
             <InfiniteScroller
               items={data?.pages.flat() || []}
               renderItem={(item) => <AyatWithMarker item={item} />}

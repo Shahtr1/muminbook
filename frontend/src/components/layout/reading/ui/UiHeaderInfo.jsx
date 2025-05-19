@@ -1,7 +1,7 @@
 import { Flex, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const UiHeaderInfo = ({ direction = "ltr" }) => {
+export const UiHeaderInfo = () => {
   const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
   const textColor = useColorModeValue("#000", "whiteAlpha.900");
   const queryClient = useQueryClient();
@@ -30,7 +30,6 @@ export const UiHeaderInfo = ({ direction = "ltr" }) => {
       borderBottom="1px solid"
       borderColor={borderColor}
       h="25px"
-      dir={direction}
       fontFamily="Nunito Sans, sans-serif"
       mb={1}
       align="center"
