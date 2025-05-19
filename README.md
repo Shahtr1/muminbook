@@ -6,10 +6,15 @@ Muminbook is a modern MERN-stack web application designed to serve as a communit
 to share knowledge, engage in collaborative Quran and Hadith studies, and connect with teachers and students through
 live study rooms.
 
+## ✅ Task Board Link
+
+Access the live task list here:  
+[Muminbook Tasks on Notion](https://www.notion.so/1f87449dbc4780c088e9d60174e52db2?v=1f87449dbc4780a78a05000c04e67009&pvs=4)
+
 ## 🛠️ Tech Stack
 
 | Tech            | Purpose                      |
-|-----------------|------------------------------|
+| --------------- | ---------------------------- |
 | **MongoDB**     | Database                     |
 | **Express.js**  | Backend framework            |
 | **React.js**    | Frontend library             |
