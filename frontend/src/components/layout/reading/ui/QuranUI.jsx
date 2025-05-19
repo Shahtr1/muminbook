@@ -7,7 +7,7 @@ import { RdWrapperUI } from "@/components/layout/reading/ui/RdWrapperUI.jsx";
 import { useReadingInfinite } from "@/hooks/reading/useReadings.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { VirtualScroller } from "@/components/layout/custom/VirtualScroller.jsx";
+import { InfiniteScroller } from "@/components/layout/custom/InfiniteScroller.jsx";
 import { AyatWithMarker } from "@/components/layout/reading/AyatWithMarker.jsx";
 
 export const QuranUI = ({ fileId }) => {
@@ -51,8 +51,8 @@ export const QuranUI = ({ fileId }) => {
             textAlign="right"
             dir="rtl"
           >
-            {/*<SurahHeader>hi</SurahHeader>*/}
-            <VirtualScroller
+            {/*<SurahHeader />*/}
+            <InfiniteScroller
               items={data?.pages.flat() || []}
               renderItem={(item) => <AyatWithMarker item={item} />}
               direction="rtl"

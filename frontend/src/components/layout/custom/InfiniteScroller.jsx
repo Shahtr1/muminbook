@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Spinner, useColorModeValue } from "@chakra-ui/react";
 
-export const VirtualScroller = ({
+export const InfiniteScroller = ({
   items = [],
   renderItem = (item) => item.ayat,
   direction = "rtl",
