@@ -1,13 +1,8 @@
-import {
-  Box,
-  Flex,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { SurahSVG } from "@/components/svgs/frames/SurahSVG.jsx";
 import { AyatSVG } from "@/components/svgs/frames/AyatSVG.jsx";
 import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
+import { useParentWidth } from "@/hooks/useParentWidth.js";
 
 export const SurahHeader = ({ rtl = false, surah, juz }) => {
   const frameColor = useColorModeValue("text.primary", "whiteAlpha.900");
@@ -15,10 +10,14 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
   const surahNumber = rtl ? toArabicNumeral(surah.uuid) : surah.uuid;
   const juzName = rtl ? juz.name : juz.transliteration;
   const juzNumber = rtl ? toArabicNumeral(juz.uuid) : juz.uuid;
-  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+
+  const sm = 480;
+  const [containerRef, width] = useParentWidth();
+  const isSmallScreen = width < sm;
 
   return (
     <Flex
+      ref={containerRef}
       w="100%"
       justify="center"
       align="center"
