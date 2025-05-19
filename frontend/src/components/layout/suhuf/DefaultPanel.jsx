@@ -10,7 +10,7 @@ import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 
 export const DefaultPanel = ({ suhuf }) => {
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
   const secondaryColor = useColorModeValue("wn.gutter.light", "wn.gutter.dark");
   const suhufLogoSize = useBreakpointValue({ base: "90px", sm: "130px" });
