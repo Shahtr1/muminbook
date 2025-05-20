@@ -18,6 +18,7 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
   return (
     <Flex
       ref={containerRef}
+      data-idx={`surah-header-${surah.uuid}`}
       w="100%"
       justify="center"
       align="center"

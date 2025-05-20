@@ -1,6 +1,5 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getReadings } from "@/services/index.js";
-import API from "@/config/apiClient.js";
+import { getReading, getReadings } from "@/services/index.js";
 import { useMemo } from "react";
 
 export const useReadings = () => {
@@ -16,23 +15,34 @@ export const useReadings = () => {
   return { readings: data, ...rest };
 };
 
-export const useReadingInfinite = ({ fileId, limit = 100 }, options = {}) => {
+export const useReadingInfinite = (
+  { fileId, startType = "surah", startValue, limit = 20 },
+  options = {},
+) => {
   const queryKey = useMemo(() => {
-    return ["reading", fileId];
-  }, [fileId]);
+    return ["reading", fileId, startType, startValue];
+  }, [fileId, startType, startValue]);
 
   return useInfiniteQuery({
     queryKey,
-    queryFn: async ({ pageParam = 0 }) => {
-      const params = new URLSearchParams({
-        skip: pageParam.toString(),
-        limit: limit.toString(),
-      });
+    queryFn: async ({ pageParam }) => {
+      const params = {
+        startType,
+        startValue,
+        limit,
+        ...pageParam, // either { after: uuid } or { before: uuid }
+      };
 
-      return API.get(`/readings/${fileId}?${params}`);
+      return await getReading(fileId, params);
     },
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length > 0 ? allPages.length * limit : undefined,
+    initialPageParam: {},
+
+    getNextPageParam: (lastPage) =>
+      lastPage?.nextCursor ? { after: lastPage.nextCursor } : undefined,
+
+    getPreviousPageParam: (lastPage) =>
+      lastPage?.prevCursor ? { before: lastPage.prevCursor } : undefined,
+
     staleTime: Infinity,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,

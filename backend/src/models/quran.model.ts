@@ -34,7 +34,6 @@ const quranDocument = new Schema<QuranDocument>(
       type: Schema.Types.ObjectId,
       ref: "Surah",
       required: true,
-      index: true,
     },
     ayat: {
       type: String,
@@ -48,7 +47,6 @@ const quranDocument = new Schema<QuranDocument>(
       type: Schema.Types.ObjectId,
       ref: "Juz",
       required: true,
-      index: true,
     },
     surahStart: {
       type: Boolean,

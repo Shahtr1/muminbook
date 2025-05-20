@@ -24,14 +24,26 @@ export const QuranUI = ({ fileId }) => {
     isError: isJuzListError,
   } = useCachedQuery(["juzList"], useJuz);
 
+  const startValue = 16;
+
   const {
     data,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
     isPending: isReadingPending,
     isError: isReadingError,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useReadingInfinite({ fileId }, { enabled: true });
+  } = useReadingInfinite({
+    fileId: "quran",
+    startType: "surah",
+    startValue: startValue,
+    limit: 500,
+  });
+
+  const flatData = data?.pages.flatMap((page) => page.data);
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const marginX = isSmallScreen ? 1 : 2;
@@ -53,17 +65,25 @@ export const QuranUI = ({ fileId }) => {
           >
             <UiHeaderInfo />
             <InfiniteScroller
-              items={data?.pages.flat() || []}
+              items={flatData || []}
               renderItem={(item) => <AyatWithMarker item={item} />}
               direction="rtl"
               fontSize="30px"
-              onLoadMore={() => {
+              onLoadNext={() => {
                 if (hasNextPage && !isFetchingNextPage) {
                   fetchNextPage();
                 }
               }}
-              isFetching={isFetchingNextPage}
-              hasMore={hasNextPage}
+              onLoadPrevious={() => {
+                if (hasPreviousPage && !isFetchingPreviousPage) {
+                  fetchPreviousPage();
+                }
+              }}
+              isFetchingNext={isFetchingNextPage}
+              isFetchingPrevious={isFetchingPreviousPage}
+              hasNext={hasNextPage}
+              hasPrevious={hasPreviousPage}
+              anchor={"surah-" + startValue}
             />
           </Box>
         </Flex>

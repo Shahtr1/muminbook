@@ -1,68 +1,75 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Box, Spinner, useColorModeValue } from "@chakra-ui/react";
+import React, { useEffect, useRef } from "react";
+import { Box, Flex, Spinner, useColorModeValue } from "@chakra-ui/react";
 import { useTrackVisibleAyat } from "@/hooks/quran/useTrackVisibleAyat.js";
+import { usePreserveScrollOnPrepend } from "@/hooks/reading/usePreserveScrollOnPrepend.js";
 
 export const InfiniteScroller = ({
   items = [],
   renderItem = (item) => item.ayat,
   direction = "rtl",
   fontSize = "30px",
-  chunkSize = 100,
-  onLoadMore,
-  isFetching,
-  hasMore,
+  onLoadNext,
+  onLoadPrevious,
+  isFetchingNext,
+  hasNext,
+  hasPrevious,
+  isFetchingPrevious,
 }) => {
   const containerRef = useRef(null);
-  const observerRef = useRef();
-  const [renderedChunks, setRenderedChunks] = useState(1);
-  const prevItemsLengthRef = useRef(items.length);
+  const topObserverRef = useRef();
+  const bottomObserverRef = useRef();
   const textColor = useColorModeValue("#000", "whiteAlpha.900");
 
-  // Automatically increase renderedChunks when new items arrive
-  useEffect(() => {
-    if (items.length > prevItemsLengthRef.current) {
-      prevItemsLengthRef.current = items.length;
-      setRenderedChunks((prev) => prev + 1);
-    }
-  }, [items.length]);
+  const { recordScrollPosition } = usePreserveScrollOnPrepend({
+    containerRef,
+    items,
+    isFetchingPrevious,
+    offset: 8,
+  });
 
-  // Load more when reaching bottom
+  // Top observer
   useEffect(() => {
-    const el = observerRef.current;
-    if (!el || !hasMore) return;
+    const el = topObserverRef.current;
+    const container = containerRef.current;
+    if (!el || !hasPrevious || !container) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isFetching) {
-          if (renderedChunks * chunkSize >= items.length) {
-            onLoadMore?.();
-          } else {
-            setRenderedChunks((prev) => prev + 1);
-          }
+        if (entry.isIntersecting && hasPrevious && !isFetchingPrevious) {
+          recordScrollPosition();
+          onLoadPrevious?.();
         }
       },
-      {
-        root: containerRef.current,
-        threshold: 0.1,
-      },
+      { threshold: 0.1 },
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [
-    hasMore,
-    isFetching,
-    items.length,
-    renderedChunks,
-    chunkSize,
-    onLoadMore,
-  ]);
+  }, [hasPrevious, isFetchingPrevious, onLoadPrevious]);
 
-  const visibleItems = items.slice(0, renderedChunks * chunkSize);
-  useTrackVisibleAyat(visibleItems, containerRef);
+  // Bottom observer
+  useEffect(() => {
+    const el = bottomObserverRef.current;
+    if (!el || !hasNext) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNext && !isFetchingNext) {
+          onLoadNext?.();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasNext, isFetchingNext, onLoadNext]);
+
+  useTrackVisibleAyat(items, containerRef);
 
   return (
     <Box
+      position="relative"
       ref={containerRef}
       height="80vh"
       overflowY="auto"
@@ -74,19 +81,27 @@ export const InfiniteScroller = ({
       textAlign={direction === "rtl" ? "right" : "left"}
       px={2}
     >
-      {visibleItems.map((item, i) => (
+      <Box as="span" ref={topObserverRef} height="1px" />
+
+      {isFetchingPrevious && (
+        <Flex mx={2} w="100%" justifyContent="center">
+          <Spinner size="sm" color={textColor} />
+        </Flex>
+      )}
+
+      {items.map((item, i) => (
         <Box as="span" key={item._id || i} display="inline" data-idx={i}>
           {renderItem(item, i)}{" "}
         </Box>
       ))}
 
-      {isFetching && (
-        <Box as="span" display="inline-block" mx={2} verticalAlign="middle">
+      {isFetchingNext && (
+        <Box as="span" mx={2} verticalAlign="middle">
           <Spinner size="sm" color={textColor} />
         </Box>
       )}
 
-      <Box ref={observerRef} height="1px" />
+      <Box as="span" ref={bottomObserverRef} height="1px" />
     </Box>
   );
 };
