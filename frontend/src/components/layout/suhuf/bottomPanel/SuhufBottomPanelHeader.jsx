@@ -1,13 +1,21 @@
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useParams } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const SuhufBottomPanelHeader = ({
   hasBorder = false,
   readings = [],
-  suhuf,
 }) => {
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
+  const { id: suhufId } = useParams();
+  const queryClient = useQueryClient();
+  const { data: suhuf } = useQuery({
+    queryKey: ["suhuf", suhufId],
+    queryFn: () => queryClient.getQueryData(["suhuf", suhufId]),
+    staleTime: 0,
+  });
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const layout = suhuf?.config?.layout || {};
   const isOpen = layout?.isBottomTabOpen || false;

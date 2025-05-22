@@ -158,7 +158,7 @@ export const Suhuf = () => {
     >
       {(isSuhufLoading || isReadingsLoading) && <Loader />}
       {(isSuhufError || isReadingsError) && <SomethingWentWrong />}
-      {isSuhufSuccess && <SuhufLayout readings={readings} suhuf={suhuf} />}
+      {isSuhufSuccess && <SuhufLayout readings={readings} />}
     </Flex>
   );
 };

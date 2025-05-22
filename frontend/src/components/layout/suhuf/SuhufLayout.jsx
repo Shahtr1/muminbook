@@ -1,12 +1,22 @@
-import { Flex, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import { Flex, useColorMode } from "@chakra-ui/react";
 import Split from "react-split";
 import { SuhufPanel } from "./SuhufPanel.jsx";
 import { SuhufLeftSidebar } from "@/components/layout/suhuf/SuhufLeftSidebar.jsx";
 import { SuhufBottomPanel } from "@/components/layout/suhuf/bottomPanel/SuhufBottomPanel.jsx";
 import { SuhufBottomPanelHeader } from "@/components/layout/suhuf/bottomPanel/SuhufBottomPanelHeader.jsx";
+import { useParams } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const SuhufLayout = ({ readings, suhuf }) => {
+export const SuhufLayout = ({ readings }) => {
   const { colorMode } = useColorMode();
+  const { id: suhufId } = useParams();
+  const queryClient = useQueryClient();
+  const { data: suhuf } = useQuery({
+    queryKey: ["suhuf", suhufId],
+    queryFn: () => queryClient.getQueryData(["suhuf", suhufId]),
+    staleTime: 0,
+  });
+
   const layout = suhuf?.config?.layout || {};
   const isBottomOpen = layout?.isBottomTabOpen;
 
@@ -14,7 +24,7 @@ export const SuhufLayout = ({ readings, suhuf }) => {
 
   return (
     <Flex h="100%" w="100%" pos="relative" zIndex={1}>
-      <SuhufLeftSidebar suhuf={suhuf} />
+      <SuhufLeftSidebar />
 
       {/* Main Content Area */}
       <Flex flex="1" display="flex" flexDirection="column" overflow="auto">
@@ -34,18 +44,12 @@ export const SuhufLayout = ({ readings, suhuf }) => {
         >
           {/* Main Panel */}
           <Flex overflowY="auto" position="relative">
-            <SuhufPanel suhuf={suhuf} />
+            <SuhufPanel />
           </Flex>
 
-          {isBottomOpen ? (
-            <SuhufBottomPanel readings={readings} suhuf={suhuf} />
-          ) : (
-            <div />
-          )}
+          {isBottomOpen ? <SuhufBottomPanel readings={readings} /> : <div />}
         </Split>
-        {!isBottomOpen && (
-          <SuhufBottomPanelHeader readings={readings} suhuf={suhuf} />
-        )}
+        {!isBottomOpen && <SuhufBottomPanelHeader readings={readings} />}
       </Flex>
     </Flex>
   );

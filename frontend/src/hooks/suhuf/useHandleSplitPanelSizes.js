@@ -36,6 +36,7 @@ export const useHandleSplitPanelSizes = ({
   const handleResize = (newSizes) => {
     setSizes(newSizes);
     if (isSecondPanelOpen && typeof onUpdateLayout === "function") {
+      // TODO: Fix this as it has old data, which doesnt save left suhuf sidebar config correctly
       onUpdateLayout({
         layout: {
           ...layout,
