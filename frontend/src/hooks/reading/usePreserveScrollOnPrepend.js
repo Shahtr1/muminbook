@@ -1,34 +1,42 @@
-// hooks/ui/usePreserveScrollOnPrepend.js
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export const usePreserveScrollOnPrepend = ({
   containerRef,
   items,
   isFetchingPrevious,
-  offset = 40, // scroll up by 40px after prepend
+  offset = 40,
 }) => {
-  const prevScrollHeight = useRef(0);
+  const prevItemsLength = useRef(items.length);
   const prevScrollTop = useRef(0);
+  const prevScrollHeight = useRef(0);
+  const shouldRestore = useRef(false);
 
   const recordScrollPosition = () => {
     const container = containerRef.current;
     if (!container) return;
-    prevScrollHeight.current = container.scrollHeight;
     prevScrollTop.current = container.scrollTop;
+    prevScrollHeight.current = container.scrollHeight;
+    shouldRestore.current = true;
+    prevItemsLength.current = items.length;
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const container = containerRef.current;
-    if (!container || !isFetchingPrevious) return;
+    if (!container) return;
 
-    const timeout = setTimeout(() => {
-      const newScrollHeight = container.scrollHeight;
-      const diff = newScrollHeight - prevScrollHeight.current;
-      container.scrollTop = prevScrollTop.current + diff - offset; // subtract to move up
-    }, 0);
-
-    return () => clearTimeout(timeout);
-  }, [isFetchingPrevious, items, offset]);
+    if (
+      shouldRestore.current &&
+      items.length > prevItemsLength.current &&
+      !isFetchingPrevious
+    ) {
+      requestAnimationFrame(() => {
+        const newScrollHeight = container.scrollHeight;
+        const scrollDiff = newScrollHeight - prevScrollHeight.current;
+        container.scrollTop = prevScrollTop.current + scrollDiff - offset;
+        shouldRestore.current = false;
+      });
+    }
+  }, [items, isFetchingPrevious]);
 
   return { recordScrollPosition };
 };

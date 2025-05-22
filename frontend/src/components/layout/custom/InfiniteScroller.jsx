@@ -27,6 +27,8 @@ export const InfiniteScroller = ({
     offset: 8,
   });
 
+  useTrackVisibleAyat(items, containerRef);
+
   // Top observer
   useEffect(() => {
     const el = topObserverRef.current;
@@ -64,8 +66,6 @@ export const InfiniteScroller = ({
     observer.observe(el);
     return () => observer.disconnect();
   }, [hasNext, isFetchingNext, onLoadNext]);
-
-  useTrackVisibleAyat(items, containerRef);
 
   return (
     <Box

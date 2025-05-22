@@ -30,7 +30,7 @@ export const useReadingInfinite = (
         startType,
         startValue,
         limit,
-        ...pageParam, // either { after: uuid } or { before: uuid }
+        ...pageParam,
       };
 
       return await getReading(fileId, params);
@@ -38,10 +38,14 @@ export const useReadingInfinite = (
     initialPageParam: {},
 
     getNextPageParam: (lastPage) =>
-      lastPage?.nextCursor ? { after: lastPage.nextCursor } : undefined,
+      lastPage?.nextCursor !== null
+        ? { after: lastPage.nextCursor }
+        : undefined,
 
-    getPreviousPageParam: (lastPage) =>
-      lastPage?.prevCursor ? { before: lastPage.prevCursor } : undefined,
+    getPreviousPageParam: (firstPage) =>
+      firstPage?.prevCursor !== null
+        ? { before: firstPage.prevCursor }
+        : undefined,
 
     staleTime: Infinity,
     refetchOnReconnect: false,

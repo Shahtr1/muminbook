@@ -95,10 +95,27 @@ export const getReading = async (id: string, query: any = {}) => {
     .lean();
 
   const data = before ? results.reverse() : results;
+  let nextCursor = null;
+  if (data.length) {
+    const nextExists = await QuranModel.exists({
+      uuid: { $gt: data[data.length - 1].uuid },
+    });
+    if (nextExists) {
+      nextCursor = data[data.length - 1].uuid;
+    }
+  }
+
+  let prevCursor = null;
+  if (data.length) {
+    const prevExists = await QuranModel.exists({ uuid: { $lt: data[0].uuid } });
+    if (prevExists) {
+      prevCursor = data[0].uuid;
+    }
+  }
 
   return {
     data,
-    nextCursor: data.length ? data[data.length - 1].uuid : null,
-    prevCursor: data.length ? data[0].uuid : null,
+    nextCursor,
+    prevCursor,
   };
 };
