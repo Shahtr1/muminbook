@@ -31,26 +31,57 @@ export const getReading = async (id: string, query: any = {}) => {
   if (startType && startValue) {
     const numericStartValue = parseInt(startValue);
 
-    if (startType === "surah") {
-      const surah = await SurahModel.findOne({ uuid: numericStartValue });
-      appAssert(surah, NOT_FOUND, `Surah with uuid ${startValue} not found`);
-      mongoQuery.surahId = surah._id;
-    } else if (startType === "juz") {
-      const juz = await JuzModel.findOne({ uuid: numericStartValue });
-      appAssert(juz, NOT_FOUND, `Juz with uuid ${startValue} not found`);
-      mongoQuery.juzId = juz._id;
-    } else if (["manzil", "ruku", "hizbQuarter"].includes(startType)) {
-      mongoQuery[startType] = numericStartValue;
+    if (after) {
+      mongoQuery.uuid = { $gt: parseInt(after) };
+    } else if (before) {
+      mongoQuery.uuid = { $lt: parseInt(before) };
     } else {
-      appAssert(false, BAD_REQUEST, `Unsupported startType: ${startType}`);
-    }
-  }
+      if (startType === "surah") {
+        const surah = await SurahModel.findOne({ uuid: numericStartValue });
+        appAssert(surah, NOT_FOUND, `Surah with uuid ${startValue} not found`);
 
-  if (after) {
-    mongoQuery.uuid = { $gt: parseInt(after) };
-  } else if (before) {
-    delete mongoQuery.surahId;
-    mongoQuery.uuid = { $lt: parseInt(before) };
+        const firstAyah = await QuranModel.findOne({ surahId: surah._id })
+          .sort({ uuid: 1 })
+          .select({ uuid: 1 })
+          .lean();
+        appAssert(
+          firstAyah,
+          NOT_FOUND,
+          `No ayah found for surah ${startValue}`,
+        );
+
+        mongoQuery.uuid = { $gte: firstAyah.uuid };
+      } else if (startType === "juz") {
+        const juz = await JuzModel.findOne({ uuid: numericStartValue });
+        appAssert(juz, NOT_FOUND, `Juz with uuid ${startValue} not found`);
+
+        const firstAyah = await QuranModel.findOne({ juzId: juz._id })
+          .sort({ uuid: 1 })
+          .select({ uuid: 1 })
+          .lean();
+        appAssert(firstAyah, NOT_FOUND, `No ayah found for juz ${startValue}`);
+
+        mongoQuery.uuid = { $gte: firstAyah.uuid };
+      } else if (["manzil", "ruku", "hizbQuarter"].includes(startType)) {
+        mongoQuery[startType] = numericStartValue;
+
+        const firstAyah = await QuranModel.findOne({
+          [startType]: numericStartValue,
+        })
+          .sort({ uuid: 1 })
+          .select({ uuid: 1 })
+          .lean();
+        appAssert(
+          firstAyah,
+          NOT_FOUND,
+          `No ayah found for ${startType} ${startValue}`,
+        );
+
+        mongoQuery.uuid = { $gte: firstAyah.uuid };
+      } else {
+        appAssert(false, BAD_REQUEST, `Unsupported startType: ${startType}`);
+      }
+    }
   }
 
   const sortOrder = before ? -1 : 1;

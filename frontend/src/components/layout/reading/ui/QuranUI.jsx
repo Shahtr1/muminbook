@@ -24,7 +24,7 @@ export const QuranUI = ({ fileId }) => {
     isError: isJuzListError,
   } = useCachedQuery(["juzList"], useJuz);
 
-  const startValue = 16;
+  const startValue = 83;
 
   const {
     data,
