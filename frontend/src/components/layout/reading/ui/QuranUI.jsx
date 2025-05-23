@@ -40,7 +40,7 @@ export const QuranUI = ({ fileId }) => {
     fileId: "quran",
     startType: "surah",
     startValue: startValue,
-    limit: 100,
+    limit: 200,
   });
 
   const flatData = data?.pages.flatMap((page) => page.data);
