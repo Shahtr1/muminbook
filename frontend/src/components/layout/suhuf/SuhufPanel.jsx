@@ -1,4 +1,4 @@
-import { Box, useBreakpointValue } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
 import { useEffect, useMemo, useState } from "react";
 import { useHandleSplitPanelSizes } from "@/hooks/suhuf/useHandleSplitPanelSizes.js";
@@ -9,6 +9,7 @@ import Split from "react-split";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSafeBreakpointValue } from "@/hooks/useSafeBreakpointValue.js";
 
 export const SuhufPanel = () => {
   const { id: suhufId } = useParams();
@@ -20,7 +21,8 @@ export const SuhufPanel = () => {
   });
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
-  const isSmallScreen = useBreakpointValue({ base: true, sm: false }) || false;
+  const isSmallScreen =
+    useSafeBreakpointValue({ base: true, sm: false }) || false;
 
   const layout = suhuf?.config?.layout || {};
   const panels = suhuf?.config?.panels || [];
