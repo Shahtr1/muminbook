@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
 import { useOpenSuhuf } from "@/hooks/suhuf/useOpenSuhuf.js";
 import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { getSuhuf } from "@/services/suhuf.service"; // replace with actual service
 
-const deepEqual = (a, b) => {
-  return JSON.stringify(a) === JSON.stringify(b);
-};
+const deepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 export const useOpenFile = (fileId, isReading = false) => {
-  const queryClient = useQueryClient();
   const [createdSuhufId, setCreatedSuhufId] = useState(null);
 
-  const openSuhuf = useOpenSuhuf((suhufId) => {
-    setCreatedSuhufId(suhufId);
-  });
-
-  const suhuf = queryClient.getQueryData(["suhuf", createdSuhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(createdSuhufId);
+
+  const { data: suhuf } = useQuery({
+    queryKey: ["suhuf", createdSuhufId],
+    queryFn: () => getSuhuf(createdSuhufId),
+    enabled: !!createdSuhufId,
+  });
 
   useEffect(() => {
     if (!suhuf || !createdSuhufId) return;
@@ -39,6 +38,10 @@ export const useOpenFile = (fileId, isReading = false) => {
       updateConfig({ panels: updatedPanels });
     }
   }, [suhuf, createdSuhufId, fileId, isReading, updateConfig]);
+
+  const openSuhuf = useOpenSuhuf((suhufId) => {
+    setCreatedSuhufId(suhufId);
+  });
 
   return openSuhuf;
 };
