@@ -1,7 +1,5 @@
 import { Box, Text, useColorModeValue } from "@chakra-ui/react";
-import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
 import React from "react";
-import { SurahHeader } from "@/components/layout/reading/ui/SurahHeader.jsx";
 import { useQueryClient } from "@tanstack/react-query";
 
 export const AyatWithMarker = ({ item }) => {
@@ -17,7 +15,7 @@ export const AyatWithMarker = ({ item }) => {
 
   return (
     <Box as="span" key={item._id}>
-      {item.surahStart && <SurahHeader surah={surah} juz={juz} rtl />}
+      {/*{item.surahStart && <SurahHeader surah={surah} juz={juz} rtl />}*/}
       {item.ayat}
       <Box as="span" position="relative" pr={10}>
         <Text
@@ -35,18 +33,18 @@ export const AyatWithMarker = ({ item }) => {
             transform: "translate(-50%, -50%)",
           }}
         />
-        <Text
-          whiteSpace="nowrap"
-          style={{
-            position: "absolute",
-            top: "55%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-          fontSize="17px"
-        >
-          {toArabicNumeral(item.sno)}
-        </Text>
+        {/*<Text*/}
+        {/*  whiteSpace="nowrap"*/}
+        {/*  style={{*/}
+        {/*    position: "absolute",*/}
+        {/*    top: "55%",*/}
+        {/*    left: "50%",*/}
+        {/*    transform: "translate(-50%, -50%)",*/}
+        {/*  }}*/}
+        {/*  fontSize="17px"*/}
+        {/*>*/}
+        {/*  {toArabicNumeral(item.sno)}*/}
+        {/*</Text>*/}
       </Box>
     </Box>
   );
