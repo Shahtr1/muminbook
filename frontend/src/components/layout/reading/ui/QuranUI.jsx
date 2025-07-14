@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useSurahs } from "@/hooks/quran/useSurahs.js";
 import { useCachedQuery } from "@/hooks/useCachedQuery.js";
 import { useJuz } from "@/hooks/quran/useJuz.js";
@@ -7,7 +7,7 @@ import { RdWrapperUI } from "@/components/layout/reading/ui/RdWrapperUI.jsx";
 import { useReadingInfinite } from "@/hooks/reading/useReadings.js";
 import { Loader } from "@/components/layout/Loader.jsx";
 import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { UiHeaderInfo } from "@/components/layout/reading/ui/UiHeaderInfo.jsx";
+import { QuranReader } from "@/components/layout/reading/ui/QuranReader.jsx";
 
 export const QuranUI = ({ fileId }) => {
   const {
@@ -53,16 +53,13 @@ export const QuranUI = ({ fileId }) => {
 
   return (
     <RdWrapperUI fileId={fileId}>
-      <Flex gap={1} direction="column" position="relative">
+      <Flex flex={1} gap={1} direction="column" position="relative">
         <Flex flex={1} px={marginX} direction="column">
-          <Box
-            fontFamily="ArabicFont"
-            whiteSpace="normal"
-            wordBreak="break-word"
-            textAlign="right"
-          >
-            <UiHeaderInfo />
-          </Box>
+          <QuranReader
+            chunks={flatData}
+            fetchNextChunk={fetchNextPage}
+            fetchPreviousChunk={fetchPreviousPage}
+          />
         </Flex>
       </Flex>
     </RdWrapperUI>
