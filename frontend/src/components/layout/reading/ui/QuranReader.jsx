@@ -106,7 +106,6 @@ export const QuranReader = ({ chunks, fetchNextChunk }) => {
         direction: "rtl",
         textAlign: "justify",
         fontSize: "30px",
-        padding: "24px",
       }}
     >
       {/* Spacer for removed top chunks */}
