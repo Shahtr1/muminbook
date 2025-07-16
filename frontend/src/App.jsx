@@ -30,6 +30,7 @@ import { RemoveTrailingSlash } from "@/utils/RemoveTrailingSlash.jsx";
 import { ReadingLayout } from "@/pages/reading/ReadingLayout.jsx";
 import { setNavigate } from "@/services/index.js";
 import { Suhuf } from "@/pages/Suhuf.jsx";
+import { QuranUITest } from "@/components/layout/reading/ui/test/QuranUITest.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -53,6 +54,12 @@ function App() {
       <RemoveTrailingSlash />
 
       <Routes>
+        {/*/////////////////////////////////////////*/}
+        {/* TEST ROUTES */}
+        {/*/////////////////////////////////////////*/}
+
+        <Route path="quran/:id" element={<QuranUITest />} />
+
         <Route path="/" element={<AppContainer />}>
           {/*/////////////////////////////////////////*/}
           {/* USER ROUTES */}

@@ -10,7 +10,7 @@ export const QuranReader = ({ chunks, fetchNextChunk }) => {
   const containerRef = useRef(null);
   const bottomSentinelRef = useRef(null);
 
-  const CHUNK_SIZE = 150;
+  const CHUNK_SIZE = 50;
   const MAX_VISIBLE_CHUNKS = 3;
 
   const [startChunkIndex, setStartChunkIndex] = useState(0);
