@@ -1,100 +1,113 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import { Chunk } from "@/components/layout/reading/ui/Chunk.jsx";
 
-/**
- * QuranReader
- * Infinite-scroll Quran reader with virtualized rendering
- * and dynamic chunk height calculation.
- */
+const CHUNK_SIZE = 50;
+const MAX_VISIBLE_CHUNKS = 3;
+
 export const QuranReader = ({ chunks, fetchNextChunk }) => {
   const containerRef = useRef(null);
   const bottomSentinelRef = useRef(null);
+  const chunkHeights = useRef({});
+  const [startChunk, setStartChunk] = useState(0); // index of first visible chunk
+  const [endChunk, setEndChunk] = useState(1); // index after last visible chunk
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const prevStartChunkRef = useRef(startChunk);
 
-  const CHUNK_SIZE = 50;
-  const MAX_VISIBLE_CHUNKS = 3;
+  // Calculate top spacer height for virtualization
+  const topSpacerHeight = Object.entries(chunkHeights.current)
+    .filter(([idx]) => Number(idx) < startChunk)
+    .reduce((acc, [, h]) => acc + h, 0);
 
-  const [startChunkIndex, setStartChunkIndex] = useState(0);
-  const [renderedChunkIndex, setRenderedChunkIndex] = useState(1);
-
-  const chunkHeightsRef = useRef({}); // { index: height }
-  const isFetchingRef = useRef(false);
-
-  // Spacer for removed chunks above
-  const topSpacerHeight = Object.entries(chunkHeightsRef.current)
-    .filter(([index]) => Number(index) < startChunkIndex)
-    .reduce((acc, [, height]) => acc + height, 0);
-
-  // Increase rendered chunk index when new data is available
+  // When new chunks are fetched, extend visible window only if new data was added
   useEffect(() => {
-    const expectedEnd = renderedChunkIndex * CHUNK_SIZE;
-    if (chunks.length >= expectedEnd) {
-      setRenderedChunkIndex((prev) => prev + 1);
+    if (!hasMore) return;
+    const totalChunks = Math.ceil(chunks.length / CHUNK_SIZE);
+    if (endChunk < totalChunks) {
+      setEndChunk(endChunk + 1);
     }
-  }, [chunks]);
+  }, [chunks, hasMore, endChunk]);
 
-  // Virtualization: drop top chunk if more than MAX_VISIBLE_CHUNKS
-  useEffect(() => {
-    if (renderedChunkIndex - startChunkIndex > MAX_VISIBLE_CHUNKS) {
+  // Virtualization: remove top chunk if too many are visible
+  useLayoutEffect(() => {
+    if (endChunk - startChunk > MAX_VISIBLE_CHUNKS) {
       const container = containerRef.current;
-      const prevScrollTop = container.scrollTop;
-      const prevScrollHeight = container.scrollHeight;
-      const heightRemoved = chunkHeightsRef.current[startChunkIndex] || 0;
-
-      setStartChunkIndex((prev) => prev + 1);
-
-      requestAnimationFrame(() => {
-        const newScrollHeight = container.scrollHeight;
-        const heightDiff = newScrollHeight - prevScrollHeight;
-        container.scrollTop = prevScrollTop - heightDiff + heightRemoved;
-      });
-    }
-  }, [renderedChunkIndex]);
-
-  // Intersection observer to fetch next chunk
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (
-            entry.isIntersecting &&
-            entry.target === bottomSentinelRef.current &&
-            !isFetchingRef.current
-          ) {
-            const nextChunkStart = renderedChunkIndex * CHUNK_SIZE;
-
-            if (chunks.length <= nextChunkStart) {
-              isFetchingRef.current = true;
-              fetchNextChunk().finally(() => {
-                isFetchingRef.current = false;
-              });
-            }
-          }
-        }
-      },
-      {
-        root: container,
-        threshold: 0.1,
-      },
-    );
-
-    const timeout = setTimeout(() => {
-      if (bottomSentinelRef.current) {
-        observer.observe(bottomSentinelRef.current);
+      const heightRemoved = chunkHeights.current[startChunk] || 0;
+      setStartChunk(startChunk + 1);
+      // Adjust scroll position so user doesn't see a jump
+      if (container && heightRemoved) {
+        container.scrollTop -= heightRemoved;
       }
-    }, 100);
+    }
+    prevStartChunkRef.current = startChunk;
+  }, [endChunk, startChunk]);
 
-    return () => {
-      clearTimeout(timeout);
-      observer.disconnect();
-    };
-  }, [chunks, fetchNextChunk, renderedChunkIndex]);
+  // Infinite scroll: fetch more when near bottom
+  const handleIntersection = useCallback(
+    (entries) => {
+      const entry = entries[0];
+      if (!entry.isIntersecting || loading || !hasMore) return;
+      // Only fetch if we don't already have enough content to fill viewport
+      const container = containerRef.current;
+      const isScrollable = container.scrollHeight > container.clientHeight;
+      const nearBottom =
+        container.scrollHeight - container.scrollTop - container.clientHeight <
+        1000;
+      if (!isScrollable || nearBottom) {
+        setLoading(true);
+        const prevChunkCount = chunks.length;
+        fetchNextChunk()
+          .then((newChunks) => {
+            if (!newChunks || newChunks.length === 0) {
+              setHasMore(false);
+            } else {
+              // Only increment endChunk if new data was added
+              if (chunks.length + newChunks.length > prevChunkCount) {
+                const totalChunks = Math.ceil(
+                  (chunks.length + newChunks.length) / CHUNK_SIZE
+                );
+                if (endChunk < totalChunks) {
+                  setEndChunk(endChunk + 1);
+                }
+              }
+            }
+          })
+          .catch(() => setHasMore(false))
+          .finally(() => setLoading(false));
+      }
+    },
+    [loading, hasMore, fetchNextChunk, chunks.length, endChunk]
+  );
 
-  const start = startChunkIndex * CHUNK_SIZE;
-  const end = renderedChunkIndex * CHUNK_SIZE;
+  useEffect(() => {
+    if (!hasMore) return; // Don't observe if no more data
+    const observer = new window.IntersectionObserver(handleIntersection, {
+      root: containerRef.current,
+      threshold: 0.1,
+      rootMargin: "100px",
+    });
+    if (bottomSentinelRef.current) {
+      observer.observe(bottomSentinelRef.current);
+    }
+    return () => observer.disconnect();
+  }, [handleIntersection, chunks, hasMore]);
+
+  // Rendered chunks
+  const start = startChunk * CHUNK_SIZE;
+  const end = endChunk * CHUNK_SIZE;
   const visibleChunks = chunks.slice(start, end);
+
+  // If no more data and content can't fill viewport, show 'No more verses'
+  const showNoMoreVerses =
+    !hasMore &&
+    containerRef.current &&
+    containerRef.current.scrollHeight <= containerRef.current.clientHeight;
 
   return (
     <div
@@ -106,36 +119,35 @@ export const QuranReader = ({ chunks, fetchNextChunk }) => {
         direction: "rtl",
         textAlign: "justify",
         fontSize: "30px",
-      }}
-    >
-      {/* Spacer for removed top chunks */}
+        padding: "24px",
+      }}>
       <div style={{ height: topSpacerHeight }} />
-
-      {/* Render visible ayahs */}
       {visibleChunks.map((chunk, i) => {
-        const globalIndex = startChunkIndex + i;
+        const globalIdx = startChunk + i;
         return (
           <Chunk
             key={chunk.uuid}
             chunk={chunk}
-            index={globalIndex}
-            onMeasure={(index, height) => {
-              chunkHeightsRef.current[index] = height;
+            index={globalIdx}
+            onMeasure={(idx, height) => {
+              if (chunkHeights.current[idx] !== height) {
+                chunkHeights.current[idx] = height;
+              }
             }}
           />
         );
       })}
-
-      {/* Scroll sentinel to load more */}
-      <div
-        ref={bottomSentinelRef}
-        style={{
-          height: "1px",
-          marginTop: "100px",
-          display: "block",
-          background: "transparent",
-        }}
-      />
+      <div ref={bottomSentinelRef} style={{ height: 10, background: "blue" }} />
+      {loading && (
+        <div style={{ textAlign: "center", padding: 20 }}>
+          Loading more verses...
+        </div>
+      )}
+      {(showNoMoreVerses || !hasMore) && (
+        <div style={{ textAlign: "center", padding: 20 }}>
+          No more verses to load
+        </div>
+      )}
     </div>
   );
 };

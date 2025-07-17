@@ -1,20 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 export const Chunk = ({ chunk, index, onMeasure }) => {
   const ref = useRef(null);
 
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const observer = new ResizeObserver(([entry]) => {
-      if (entry?.contentRect?.height) {
-        onMeasure(index, entry.contentRect.height);
-      }
-    });
-
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [index, onMeasure]);
+  useLayoutEffect(() => {
+    if (ref.current) {
+      const height = ref.current.getBoundingClientRect().height;
+      onMeasure(index, height);
+    }
+  }, [chunk, index, onMeasure]);
 
   return (
     <span ref={ref}>
