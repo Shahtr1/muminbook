@@ -37,13 +37,7 @@ export const QuranReader = ({ data, fetchNextChunk }) => {
   // Virtualization: remove top chunk if too many are visible
   useLayoutEffect(() => {
     if (endChunk - startChunk > MAX_VISIBLE_CHUNKS) {
-      const container = containerRef.current;
-      const heightRemoved = chunkHeights.current[startChunk] || 0;
       setStartChunk(startChunk + 1);
-      // Adjust scroll position so user doesn't see a jump
-      if (container && heightRemoved) {
-        container.scrollTop -= heightRemoved;
-      }
     }
     prevStartChunkRef.current = startChunk;
   }, [endChunk, startChunk]);
