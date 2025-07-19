@@ -31,7 +31,7 @@ export const QuranUITest = () => {
 
   return (
     <QuranReader
-      chunks={flatData}
+      data={flatData}
       fetchNextChunk={fetchNextPage}
       fetchPreviousChunk={fetchPreviousPage}
     />

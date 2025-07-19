@@ -5,15 +5,16 @@ import {
   useCallback,
   useLayoutEffect,
 } from "react";
-import { Chunk } from "@/components/layout/reading/ui/Chunk.jsx";
+import { Ayat } from "@/components/layout/reading/ui/Ayat.jsx";
 
 const CHUNK_SIZE = 50;
 const MAX_VISIBLE_CHUNKS = 3;
 
-export const QuranReader = ({ chunks, fetchNextChunk }) => {
+export const QuranReader = ({ data, fetchNextChunk }) => {
   const containerRef = useRef(null);
   const bottomSentinelRef = useRef(null);
   const chunkHeights = useRef({});
+  const measuredCombinations = useRef(new Set()); // Track unique height+top combinations
   const [startChunk, setStartChunk] = useState(0); // index of first visible chunk
   const [endChunk, setEndChunk] = useState(1); // index after last visible chunk
   const [hasMore, setHasMore] = useState(true);
@@ -28,11 +29,11 @@ export const QuranReader = ({ chunks, fetchNextChunk }) => {
   // When new chunks are fetched, extend visible window only if new data was added
   useEffect(() => {
     if (!hasMore) return;
-    const totalChunks = Math.ceil(chunks.length / CHUNK_SIZE);
+    const totalChunks = Math.ceil(data.length / CHUNK_SIZE);
     if (endChunk < totalChunks) {
       setEndChunk(endChunk + 1);
     }
-  }, [chunks, hasMore, endChunk]);
+  }, [data, hasMore, endChunk]);
 
   // Virtualization: remove top chunk if too many are visible
   useLayoutEffect(() => {
@@ -61,16 +62,16 @@ export const QuranReader = ({ chunks, fetchNextChunk }) => {
         1000;
       if (!isScrollable || nearBottom) {
         setLoading(true);
-        const prevChunkCount = chunks.length;
+        const prevChunkCount = data.length;
         fetchNextChunk()
           .then((newChunks) => {
             if (!newChunks || newChunks.length === 0) {
               setHasMore(false);
             } else {
               // Only increment endChunk if new data was added
-              if (chunks.length + newChunks.length > prevChunkCount) {
+              if (data.length + newChunks.length > prevChunkCount) {
                 const totalChunks = Math.ceil(
-                  (chunks.length + newChunks.length) / CHUNK_SIZE
+                  (data.length + newChunks.length) / CHUNK_SIZE
                 );
                 if (endChunk < totalChunks) {
                   setEndChunk(endChunk + 1);
@@ -82,7 +83,7 @@ export const QuranReader = ({ chunks, fetchNextChunk }) => {
           .finally(() => setLoading(false));
       }
     },
-    [loading, hasMore, fetchNextChunk, chunks.length, endChunk]
+    [loading, hasMore, fetchNextChunk, data.length, endChunk]
   );
 
   useEffect(() => {
@@ -96,12 +97,56 @@ export const QuranReader = ({ chunks, fetchNextChunk }) => {
       observer.observe(bottomSentinelRef.current);
     }
     return () => observer.disconnect();
-  }, [handleIntersection, chunks, hasMore]);
+  }, [handleIntersection, data, hasMore]);
+
+  const spanRefs = useRef([]);
+
+  const setSpanRef = (el, index) => {
+    spanRefs.current[index] = el;
+  };
 
   // Rendered chunks
   const start = startChunk * CHUNK_SIZE;
   const end = endChunk * CHUNK_SIZE;
-  const visibleChunks = chunks.slice(start, end);
+  const visibleData = data.slice(start, end);
+
+  // Calculate chunk heights using span refs
+  useEffect(() => {
+    if (spanRefs.current.length === 0) return;
+
+    const validSpans = spanRefs.current.filter(Boolean);
+    if (validSpans.length === 0) return;
+
+    // Calculate height for each visible chunk
+    for (let chunkIndex = startChunk; chunkIndex < endChunk; chunkIndex++) {
+      const chunkStart = chunkIndex * CHUNK_SIZE;
+      const chunkEnd = Math.min((chunkIndex + 1) * CHUNK_SIZE, data.length);
+
+      // Get spans for this specific chunk
+      const chunkSpanStart = Math.max(0, chunkStart - start);
+      const chunkSpanEnd = Math.min(validSpans.length, chunkEnd - start);
+
+      if (chunkSpanStart < chunkSpanEnd && chunkSpanStart < validSpans.length) {
+        const chunkSpans = validSpans.slice(chunkSpanStart, chunkSpanEnd);
+
+        if (chunkSpans.length > 0) {
+          const range = document.createRange();
+          range.setStartBefore(chunkSpans[0]);
+          range.setEndAfter(chunkSpans[chunkSpans.length - 1]);
+
+          const chunkHeight = range.getBoundingClientRect().height;
+          chunkHeights.current[chunkIndex] = chunkHeight;
+
+          console.log(
+            `Chunk ${chunkIndex} height:`,
+            chunkHeight,
+            `spans:`,
+            chunkSpans.length
+          );
+        }
+      }
+    }
+  }, [visibleData, startChunk, endChunk, start, data.length]);
 
   // If no more data and content can't fill viewport, show 'No more verses'
   const showNoMoreVerses =
@@ -122,19 +167,9 @@ export const QuranReader = ({ chunks, fetchNextChunk }) => {
         padding: "24px",
       }}>
       <div style={{ height: topSpacerHeight }} />
-      {visibleChunks.map((chunk, i) => {
-        const globalIdx = startChunk + i;
+      {visibleData.map((data, i) => {
         return (
-          <Chunk
-            key={chunk.uuid}
-            chunk={chunk}
-            index={globalIdx}
-            onMeasure={(idx, height) => {
-              if (chunkHeights.current[idx] !== height) {
-                chunkHeights.current[idx] = height;
-              }
-            }}
-          />
+          <Ayat key={data.uuid} data={data} index={i} setSpanRef={setSpanRef} />
         );
       })}
       <div ref={bottomSentinelRef} style={{ height: 10, background: "blue" }} />
