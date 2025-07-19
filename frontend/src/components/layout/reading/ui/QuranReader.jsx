@@ -14,7 +14,6 @@ export const QuranReader = ({ data, fetchNextChunk }) => {
   const containerRef = useRef(null);
   const bottomSentinelRef = useRef(null);
   const chunkHeights = useRef({});
-  const measuredCombinations = useRef(new Set()); // Track unique height+top combinations
   const [startChunk, setStartChunk] = useState(0); // index of first visible chunk
   const [endChunk, setEndChunk] = useState(1); // index after last visible chunk
   const [hasMore, setHasMore] = useState(true);
