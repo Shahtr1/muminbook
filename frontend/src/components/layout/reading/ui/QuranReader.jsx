@@ -25,6 +25,11 @@ export const QuranReader = ({ data, fetchNextChunk }) => {
     .filter(([idx]) => Number(idx) < startChunk)
     .reduce((acc, [, h]) => acc + h, 0);
 
+  // Calculate bottom spacer height for virtualization
+  const bottomSpacerHeight = Object.entries(chunkHeights.current)
+    .filter(([idx]) => Number(idx) >= endChunk)
+    .reduce((acc, [, h]) => acc + h, 0);
+
   // When new chunks are fetched, extend visible window only if new data was added
   useEffect(() => {
     if (!hasMore) return;
@@ -47,33 +52,43 @@ export const QuranReader = ({ data, fetchNextChunk }) => {
     (entries) => {
       const entry = entries[0];
       if (!entry.isIntersecting || loading || !hasMore) return;
-      // Only fetch if we don't already have enough content to fill viewport
+
       const container = containerRef.current;
       const isScrollable = container.scrollHeight > container.clientHeight;
       const nearBottom =
         container.scrollHeight - container.scrollTop - container.clientHeight <
         1000;
+
       if (!isScrollable || nearBottom) {
-        setLoading(true);
-        const prevChunkCount = data.length;
-        fetchNextChunk()
-          .then((newChunks) => {
-            if (!newChunks || newChunks.length === 0) {
-              setHasMore(false);
-            } else {
-              // Only increment endChunk if new data was added
-              if (data.length + newChunks.length > prevChunkCount) {
-                const totalChunks = Math.ceil(
-                  (data.length + newChunks.length) / CHUNK_SIZE
-                );
-                if (endChunk < totalChunks) {
-                  setEndChunk(endChunk + 1);
+        // Check if we have more chunks in memory that we can show
+        const totalChunks = Math.ceil(data.length / CHUNK_SIZE);
+
+        if (endChunk < totalChunks) {
+          // We have more chunks in memory, just extend the visible window
+          setEndChunk(endChunk + 1);
+        } else {
+          // No more chunks in memory, fetch from API
+          setLoading(true);
+          const prevChunkCount = data.length;
+          fetchNextChunk()
+            .then((newChunks) => {
+              if (!newChunks || newChunks.length === 0) {
+                setHasMore(false);
+              } else {
+                // Only increment endChunk if new data was added
+                if (data.length + newChunks.length > prevChunkCount) {
+                  const totalChunks = Math.ceil(
+                    (data.length + newChunks.length) / CHUNK_SIZE
+                  );
+                  if (endChunk < totalChunks) {
+                    setEndChunk(endChunk + 1);
+                  }
                 }
               }
-            }
-          })
-          .catch(() => setHasMore(false))
-          .finally(() => setLoading(false));
+            })
+            .catch(() => setHasMore(false))
+            .finally(() => setLoading(false));
+        }
       }
     },
     [loading, hasMore, fetchNextChunk, data.length, endChunk]
@@ -166,6 +181,7 @@ export const QuranReader = ({ data, fetchNextChunk }) => {
         );
       })}
       <div ref={bottomSentinelRef} style={{ height: 10, background: "blue" }} />
+      <div style={{ height: bottomSpacerHeight }} />
       {loading && (
         <div style={{ textAlign: "center", padding: 20 }}>
           Loading more verses...
