@@ -17,6 +17,7 @@ export const QuranReader = ({
   isFetchingNextChunk,
 }) => {
   const containerRef = useRef(null);
+  const topSentinelRef = useRef(null);
   const bottomSentinelRef = useRef(null);
   const chunkHeights = useRef({});
   const [startChunk, setStartChunk] = useState(0); // index of first visible chunk
@@ -150,6 +151,9 @@ export const QuranReader = ({
         padding: "24px",
       }}>
       <div style={{ height: topSpacerHeight }} />
+      {startChunk > 0 && (
+        <div ref={topSentinelRef} style={{ height: 10, background: "red" }} />
+      )}
       {visibleData.map((data, i) => {
         return (
           <Ayat key={data.uuid} data={data} index={i} setSpanRef={setSpanRef} />
