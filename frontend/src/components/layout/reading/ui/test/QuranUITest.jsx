@@ -34,6 +34,8 @@ export const QuranUITest = () => {
       data={flatData}
       fetchNextChunk={fetchNextPage}
       fetchPreviousChunk={fetchPreviousPage}
+      hasNextChunk={hasNextPage}
+      hasPreviousChunk={hasPreviousPage}
     />
   );
 };

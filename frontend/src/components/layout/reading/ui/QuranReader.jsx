@@ -10,8 +10,15 @@ import { Ayat } from "@/components/layout/reading/ui/Ayat.jsx";
 const CHUNK_SIZE = 50;
 const MAX_VISIBLE_CHUNKS = 3;
 
-export const QuranReader = ({ data, fetchNextChunk }) => {
+export const QuranReader = ({
+  data,
+  fetchNextChunk,
+  fetchPreviousChunk,
+  hasNextChunk,
+  hasPreviousChunk,
+}) => {
   const containerRef = useRef(null);
+  const topSentinelRef = useRef(null);
   const bottomSentinelRef = useRef(null);
   const chunkHeights = useRef({});
   const [startChunk, setStartChunk] = useState(0); // index of first visible chunk
@@ -175,12 +182,20 @@ export const QuranReader = ({ data, fetchNextChunk }) => {
         padding: "24px",
       }}>
       <div style={{ height: topSpacerHeight }} />
+      {(hasPreviousChunk || startChunk > 0) && (
+        <div ref={topSentinelRef} style={{ height: 10, background: "red" }} />
+      )}
       {visibleData.map((data, i) => {
         return (
           <Ayat key={data.uuid} data={data} index={i} setSpanRef={setSpanRef} />
         );
       })}
-      <div ref={bottomSentinelRef} style={{ height: 10, background: "blue" }} />
+      {(hasNextChunk || endChunk < data.length) && (
+        <div
+          ref={bottomSentinelRef}
+          style={{ height: 10, background: "blue" }}
+        />
+      )}
       <div style={{ height: bottomSpacerHeight }} />
       {loading && (
         <div style={{ textAlign: "center", padding: 20 }}>
