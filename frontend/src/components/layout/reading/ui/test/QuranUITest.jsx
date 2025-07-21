@@ -36,6 +36,8 @@ export const QuranUITest = () => {
       fetchPreviousChunk={fetchPreviousPage}
       hasNextChunk={hasNextPage}
       hasPreviousChunk={hasPreviousPage}
+      isFetchingNextChunk={isFetchingNextPage}
+      isFetchingPreviousChunk={isFetchingPreviousPage}
     />
   );
 };

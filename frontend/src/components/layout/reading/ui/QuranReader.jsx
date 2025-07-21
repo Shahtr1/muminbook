@@ -16,6 +16,8 @@ export const QuranReader = ({
   fetchPreviousChunk,
   hasNextChunk,
   hasPreviousChunk,
+  isFetchingNextChunk,
+  isFetchingPreviousChunk,
 }) => {
   const containerRef = useRef(null);
   const topSentinelRef = useRef(null);
@@ -23,8 +25,7 @@ export const QuranReader = ({
   const chunkHeights = useRef({});
   const [startChunk, setStartChunk] = useState(0); // index of first visible chunk
   const [endChunk, setEndChunk] = useState(1); // index after last visible chunk
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
+
   const prevStartChunkRef = useRef(startChunk);
 
   // Calculate top spacer height for virtualization
@@ -39,12 +40,12 @@ export const QuranReader = ({
 
   // When new chunks are fetched, extend visible window only if new data was added
   useEffect(() => {
-    if (!hasMore) return;
+    if (!hasNextChunk) return;
     const totalChunks = Math.ceil(data.length / CHUNK_SIZE);
     if (endChunk < totalChunks) {
       setEndChunk(endChunk + 1);
     }
-  }, [data, hasMore, endChunk]);
+  }, [data, hasNextChunk, endChunk]);
 
   // Virtualization: remove top chunk if too many are visible
   useLayoutEffect(() => {
@@ -58,7 +59,7 @@ export const QuranReader = ({
   const handleIntersection = useCallback(
     (entries) => {
       const entry = entries[0];
-      if (!entry.isIntersecting || loading || !hasMore) return;
+      if (!entry.isIntersecting || isFetchingNextChunk || !hasNextChunk) return;
 
       const container = containerRef.current;
       const isScrollable = container.scrollHeight > container.clientHeight;
@@ -74,35 +75,26 @@ export const QuranReader = ({
           // We have more chunks in memory, just extend the visible window
           setEndChunk(endChunk + 1);
         } else {
-          // No more chunks in memory, fetch from API
-          setLoading(true);
           const prevChunkCount = data.length;
-          fetchNextChunk()
-            .then((newChunks) => {
-              if (!newChunks || newChunks.length === 0) {
-                setHasMore(false);
-              } else {
-                // Only increment endChunk if new data was added
-                if (data.length + newChunks.length > prevChunkCount) {
-                  const totalChunks = Math.ceil(
-                    (data.length + newChunks.length) / CHUNK_SIZE
-                  );
-                  if (endChunk < totalChunks) {
-                    setEndChunk(endChunk + 1);
-                  }
-                }
+          fetchNextChunk().then((newChunks) => {
+            // Only increment endChunk if new data was added
+            if (data.length + newChunks.length > prevChunkCount) {
+              const totalChunks = Math.ceil(
+                (data.length + newChunks.length) / CHUNK_SIZE
+              );
+              if (endChunk < totalChunks) {
+                setEndChunk(endChunk + 1);
               }
-            })
-            .catch(() => setHasMore(false))
-            .finally(() => setLoading(false));
+            }
+          });
         }
       }
     },
-    [loading, hasMore, fetchNextChunk, data.length, endChunk]
+    [isFetchingNextChunk, hasNextChunk, fetchNextChunk, data.length, endChunk]
   );
 
   useEffect(() => {
-    if (!hasMore) return; // Don't observe if no more data
+    if (!hasNextChunk) return; // Don't observe if no more data
     const observer = new window.IntersectionObserver(handleIntersection, {
       root: containerRef.current,
       threshold: 0.1,
@@ -112,7 +104,7 @@ export const QuranReader = ({
       observer.observe(bottomSentinelRef.current);
     }
     return () => observer.disconnect();
-  }, [handleIntersection, data, hasMore]);
+  }, [handleIntersection, data, hasNextChunk]);
 
   const spanRefs = useRef([]);
 
@@ -165,7 +157,7 @@ export const QuranReader = ({
 
   // If no more data and content can't fill viewport, show 'No more verses'
   const showNoMoreVerses =
-    !hasMore &&
+    !hasNextChunk &&
     containerRef.current &&
     containerRef.current.scrollHeight <= containerRef.current.clientHeight;
 
@@ -197,12 +189,12 @@ export const QuranReader = ({
         />
       )}
       <div style={{ height: bottomSpacerHeight }} />
-      {loading && (
+      {isFetchingNextChunk && (
         <div style={{ textAlign: "center", padding: 20 }}>
           Loading more verses...
         </div>
       )}
-      {(showNoMoreVerses || !hasMore) && (
+      {(showNoMoreVerses || !hasNextChunk) && (
         <div style={{ textAlign: "center", padding: 20 }}>
           No more verses to load
         </div>
