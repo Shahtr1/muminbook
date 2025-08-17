@@ -5,7 +5,7 @@ import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { QuranReader } from "@/components/layout/reading/ui/QuranReader.jsx";
 
 export const QuranUITest = () => {
-  const startValue = 1;
+  const startValue = 30;
 
   const {
     data,
@@ -24,7 +24,7 @@ export const QuranUITest = () => {
     limit: 50,
   });
 
-  const flatData = data?.pages.flatMap((page) => page.data);
+  const flatData = data?.pages.flatMap((page) => page.data) ?? [];
 
   if (isReadingPending) return <Loader />;
   if (isReadingError) return <SomethingWentWrong />;
