@@ -33,7 +33,7 @@ export const useReadingInfinite = (
         ...pageParam,
       };
 
-      return await getReading(fileId, params);
+      return getReading(fileId, params);
     },
     initialPageParam: {},
 

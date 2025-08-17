@@ -19,23 +19,25 @@ export const QuranReader = ({
   isFetchingNextChunk,
   isFetchingPreviousChunk,
 }) => {
+  // Main scrollable container
   const containerRef = useRef(null);
+
+  // Sentinels for infinite scroll detection
   const topSentinelRef = useRef(null);
   const bottomSentinelRef = useRef(null);
 
-  // Map chunkIndex -> measured height in px
+  // Stores measured heights for each chunk
   const chunkHeights = useRef({});
 
-  // Visible window: [startChunk, endChunk)
+  // Indices for a visible chunk window
   const [startChunk, setStartChunk] = useState(0);
   const [endChunk, setEndChunk] = useState(1);
 
-  // Track which direction we last grew: 'up' | 'down' | null
+  // Tracks last direction of data growth
   const lastGrowthRef = useRef(null);
 
-  // -----------------------------
-  // Detect data growth direction
-  // -----------------------------
+  // --- Data change detection ---
+  // Used to detect if data was prepended/appended
   const prevFirstIdRef = useRef(null);
   const prevLastIdRef = useRef(null);
   const prevLenRef = useRef(0);
@@ -44,7 +46,7 @@ export const QuranReader = ({
     const len = data.length;
 
     if (len === 0) {
-      // Hard reset
+      // Reset everything if no data
       prevFirstIdRef.current = null;
       prevLastIdRef.current = null;
       prevLenRef.current = 0;
@@ -54,6 +56,7 @@ export const QuranReader = ({
       return;
     }
 
+    // Get first and last verse IDs
     const firstId = data[0]?.uuid;
     const lastId = data[len - 1]?.uuid;
 
@@ -61,57 +64,57 @@ export const QuranReader = ({
     const prevFirst = prevFirstIdRef.current;
     const prevLast = prevLastIdRef.current;
 
-    // First load or switch to a new dataset
+    // Initial load or dataset switch
     const isInitialLoad = prevLen === 0;
     const switchedDataset =
       prevFirst && prevLast && firstId !== prevFirst && lastId !== prevLast;
 
     if (isInitialLoad || switchedDataset) {
+      // Reset the visible window
       const totalChunks = Math.ceil(len / CHUNK_SIZE);
       setStartChunk(0);
       setEndChunk(Math.min(1, totalChunks));
       lastGrowthRef.current = null;
     } else if (len > prevLen) {
-      // Data grew: figure out where
+      // Data grew: check a direction
       const totalChunks = Math.ceil(len / CHUNK_SIZE);
 
       if (firstId !== prevFirst) {
-        // PREPEND happened
+        // Data was prepended
         setStartChunk((s) => s + 1);
         setEndChunk((e) => Math.min(e + 1, totalChunks));
         lastGrowthRef.current = "up";
       } else if (lastId !== prevLast) {
-        // APPEND happened
+        // Data was appended
         setEndChunk((e) => Math.min(e + 1, totalChunks));
         lastGrowthRef.current = "down";
       }
     }
 
+    // Save current state for next effect run
     prevFirstIdRef.current = firstId;
     prevLastIdRef.current = lastId;
     prevLenRef.current = len;
   }, [data]);
 
-  // -----------------------------
-  // Direction-aware virtualization trim
-  // -----------------------------
+  // --- Virtualization window trimming ---
   useLayoutEffect(() => {
     const visible = endChunk - startChunk;
     if (visible > MAX_VISIBLE_CHUNKS) {
       if (lastGrowthRef.current === "down") {
-        // We grew downward → trim from top
+        // Remove chunk from top if growing down
         setStartChunk((s) => s + 1);
       } else if (lastGrowthRef.current === "up") {
-        // We grew upward → trim from bottom
+        // Remove chunk from the bottom if growing up
         setEndChunk((e) => Math.max(e - 1, startChunk + 1));
       } else {
-        // Fallback: trim from top
+        // Default: trim from the top
         setStartChunk((s) => s + 1);
       }
     }
   }, [endChunk, startChunk]);
 
-  // --- Spacer heights ---
+  // --- Calculate spacer heights for virtualization ---
   const topSpacerHeight = Object.entries(chunkHeights.current)
     .filter(([idx]) => Number(idx) < startChunk)
     .reduce((acc, [, h]) => acc + h, 0);
@@ -120,13 +123,13 @@ export const QuranReader = ({
     .filter(([idx]) => Number(idx) >= endChunk)
     .reduce((acc, [, h]) => acc + h, 0);
 
-  // --- Visible range / data slice ---
+  // --- Slice data for visible window ---
   const totalChunks = Math.ceil(data.length / CHUNK_SIZE);
   const start = startChunk * CHUNK_SIZE;
   const end = Math.min(endChunk * CHUNK_SIZE, data.length);
   const visibleData = data.slice(start, end);
 
-  // --- Measuring visible chunks ---
+  // --- Measure heights of visible chunks ---
   const spanRefs = useRef([]);
   const setSpanRef = (el, index) => {
     spanRefs.current[index] = el;
@@ -147,26 +150,28 @@ export const QuranReader = ({
       if (chunkSpanStart < chunkSpanEnd && chunkSpanStart < validSpans.length) {
         const chunkSpans = validSpans.slice(chunkSpanStart, chunkSpanEnd);
         if (chunkSpans.length > 0) {
+          // Measure height of chunk using DOM Range
           const range = document.createRange();
           range.setStartBefore(chunkSpans[0]);
           range.setEndAfter(chunkSpans[chunkSpans.length - 1]);
           const rect = range.getBoundingClientRect();
-          const height = rect.height;
-          chunkHeights.current[chunkIndex] = height;
+          chunkHeights.current[chunkIndex] = rect.height;
         }
       }
     }
   }, [visibleData, startChunk, endChunk, start, data.length]);
 
-  // --- Stable scroll helper when prepending content ---
+  // --- Scroll adjustment for prepending ---
   const pendingScrollAdjust = useRef(null);
 
+  // Save scroll position before prepending
   const anchorBeforePrepend = () => {
     const c = containerRef.current;
     if (!c) return null;
     return { prevScrollHeight: c.scrollHeight, prevScrollTop: c.scrollTop };
   };
 
+  // Restore the scroll position after prepending
   const adjustAfterPrepend = (anchor) => {
     const c = containerRef.current;
     if (!c || !anchor) return;
@@ -174,7 +179,7 @@ export const QuranReader = ({
     c.scrollTop = anchor.prevScrollTop + delta;
   };
 
-  // Apply the pending scroll adjustment *after* renders that changed content above
+  // Apply scroll adjustment after layout
   useLayoutEffect(() => {
     if (pendingScrollAdjust.current) {
       adjustAfterPrepend(pendingScrollAdjust.current);
@@ -190,16 +195,15 @@ export const QuranReader = ({
       const entry = entries[0];
       if (!entry.isIntersecting || isFetchingNextChunk) return;
 
-      // Entry-based "near bottom" (distance from root bottom to sentinel's bottom)
-      // Avoid scrollTop math which is skewed by the bottom spacer.
-      let nearBottom = true; // default true if rootBounds missing (Safari quirk)
+      // Check if near bottom of container
+      let nearBottom = true;
       if (entry.rootBounds) {
         const distanceFromBottom =
           entry.rootBounds.bottom - entry.boundingClientRect.bottom;
-        nearBottom = distanceFromBottom <= 40; // px
+        nearBottom = distanceFromBottom <= 40;
       }
 
-      // Apply a short cooldown to prevent rapid refires during layout changes
+      // Cooldown to prevent rapid firing
       if (fetchNextCooldownRef.current) return;
       fetchNextCooldownRef.current = true;
       setTimeout(() => {
@@ -208,19 +212,19 @@ export const QuranReader = ({
 
       const totalChunksNow = Math.ceil(data.length / CHUNK_SIZE);
 
-      // If we still have undisplayed local chunks (virtualization), extend window
+      // If there are more local chunks, show them
       if (endChunk < totalChunksNow) {
         lastGrowthRef.current = "down";
         setEndChunk((e) => Math.min(e + 1, totalChunksNow));
         return;
       }
 
-      // Otherwise fetch more from API when we're actually close to the bottom
+      // Otherwise, fetch more data from API
       if (nearBottom && hasNextChunk) {
         const maybePromise = fetchNextChunk();
         if (maybePromise && typeof maybePromise.then === "function") {
           maybePromise.then(() => {
-            // data growth detection effect will set lastGrowthRef to "down" and extend
+            // Data growth effect will handle window extension
           });
         }
       }
@@ -228,12 +232,13 @@ export const QuranReader = ({
     [isFetchingNextChunk, hasNextChunk, fetchNextChunk, data.length, endChunk],
   );
 
+  // Set up the bottom sentinel observer
   useEffect(() => {
     if (!bottomSentinelRef.current || !containerRef.current) return;
     const observer = new window.IntersectionObserver(handleBottomIntersection, {
       root: containerRef.current,
-      threshold: 0.05, // a sliver is enough
-      rootMargin: "0px 0px 200px 0px", // start a bit before the real bottom
+      threshold: 0.05,
+      rootMargin: "0px 0px 200px 0px",
     });
     observer.observe(bottomSentinelRef.current);
     return () => observer.disconnect();
@@ -247,16 +252,16 @@ export const QuranReader = ({
       const entry = entries[0];
       if (!entry.isIntersecting || isFetchingPreviousChunk) return;
 
-      // Near-top check based on sentinel’s position within the root viewport
-      let nearTop = true; // default true if rootBounds missing
+      // Check if near top of container
+      let nearTop = true;
       if (entry.rootBounds) {
         const distanceFromTop =
           entry.boundingClientRect.top - entry.rootBounds.top;
-        nearTop = distanceFromTop <= 40; // px
+        nearTop = distanceFromTop <= 40;
       }
       if (!nearTop) return;
 
-      // Cooldown to avoid rapid refires during layout/scroll adjustment
+      // Cooldown to prevent rapid firing
       if (fetchPrevCooldownRef.current) return;
       fetchPrevCooldownRef.current = true;
       setTimeout(() => {
@@ -264,9 +269,9 @@ export const QuranReader = ({
       }, 300);
 
       if (startChunk > 0) {
+        // Show previous chunk if available locally
         const anchor = anchorBeforePrepend();
 
-        // Grow upward and trim bottom if needed (direction-aware)
         setStartChunk((prevStart) => {
           const nextStart = Math.max(0, prevStart - 1);
           lastGrowthRef.current = "up";
@@ -279,7 +284,7 @@ export const QuranReader = ({
 
         pendingScrollAdjust.current = anchor;
       } else if (hasPreviousChunk) {
-        // Fetch earlier data from API; after it prepends, keep the viewport anchored
+        // Fetch previous chunk from API
         const anchor = anchorBeforePrepend();
         const maybePromise = fetchPreviousChunk();
         if (maybePromise && typeof maybePromise.then === "function") {
@@ -296,22 +301,23 @@ export const QuranReader = ({
     [isFetchingPreviousChunk, hasPreviousChunk, fetchPreviousChunk, startChunk],
   );
 
+  // Set up a top sentinel observer
   useEffect(() => {
     if (!topSentinelRef.current || !containerRef.current) return;
     const observer = new window.IntersectionObserver(handleTopIntersection, {
       root: containerRef.current,
-      threshold: 0.05, // a sliver is enough
-      rootMargin: "200px 0px 0px 0px", // start slightly before the top
+      threshold: 0.05,
+      rootMargin: "200px 0px 0px 0px",
     });
     observer.observe(topSentinelRef.current);
     return () => observer.disconnect();
   }, [handleTopIntersection]);
 
-  // --- Sentinels visibility ---
+  // --- Sentinel visibility logic ---
   const showTopSentinel = hasPreviousChunk || startChunk > 0;
   const showBottomSentinel = hasNextChunk || endChunk < totalChunks;
 
-  // If no more data either way and viewport can’t fill, show message
+  // Show "no more verses" message if nothing left to load
   const showNoMoreVerses =
     !hasNextChunk &&
     containerRef.current &&
@@ -330,10 +336,10 @@ export const QuranReader = ({
         padding: "24px",
       }}
     >
-      {/* TOP spacer */}
+      {/* Spacer for top virtualization */}
       <div style={{ height: topSpacerHeight }} />
 
-      {/* TOP sentinel (only if more above) */}
+      {/* Top sentinel for infinite scroll up */}
       {showTopSentinel && (
         <div
           ref={topSentinelRef}
@@ -341,12 +347,12 @@ export const QuranReader = ({
         />
       )}
 
-      {/* Visible verses */}
+      {/* Render visible verses */}
       {visibleData.map((row, i) => (
         <Ayat key={row.uuid} data={row} index={i} setSpanRef={setSpanRef} />
       ))}
 
-      {/* BOTTOM sentinel (only if more below) */}
+      {/* Bottom sentinel for infinite scroll down */}
       {showBottomSentinel && (
         <div
           ref={bottomSentinelRef}
@@ -354,16 +360,17 @@ export const QuranReader = ({
         />
       )}
 
-      {/* BOTTOM spacer */}
+      {/* Spacer for bottom virtualization */}
       <div style={{ height: bottomSpacerHeight }} />
 
-      {/* Loading indicators */}
+      {/* Loading indicator */}
       {(isFetchingNextChunk || isFetchingPreviousChunk) && (
         <div style={{ textAlign: "center", padding: 20 }}>
           Loading more verses...
         </div>
       )}
 
+      {/* No more verses message */}
       {(showNoMoreVerses || (!hasNextChunk && !hasPreviousChunk)) && (
         <div style={{ textAlign: "center", padding: 20 }}>
           No more verses to load
