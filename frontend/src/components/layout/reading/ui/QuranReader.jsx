@@ -1,11 +1,9 @@
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Ayat } from "@/components/layout/reading/ui/Ayat.jsx";
+import { useSyncWindowWithData } from "@/hooks/reading/reader/useSyncWindowWithData.js";
+import { useMeasureVisibleChunks } from "@/hooks/reading/reader/useMeasureVisibleChunks.js";
+import { useTopIntersectionHandler } from "@/hooks/reading/reader/useTopIntersectionHandler.js";
+import { useBottomIntersectionHandler } from "@/hooks/reading/reader/useBottomIntersectionHandler.js";
 
 const CHUNK_SIZE = 50;
 const MAX_VISIBLE_CHUNKS = 3;
@@ -38,64 +36,13 @@ export const QuranReader = ({
 
   // --- Data change detection ---
   // Used to detect if data was prepended/appended
-  const prevFirstIdRef = useRef(null);
-  const prevLastIdRef = useRef(null);
-  const prevLenRef = useRef(0);
-
-  useEffect(() => {
-    const len = data.length;
-
-    if (len === 0) {
-      // Reset everything if no data
-      prevFirstIdRef.current = null;
-      prevLastIdRef.current = null;
-      prevLenRef.current = 0;
-      setStartChunk(0);
-      setEndChunk(1);
-      lastGrowthRef.current = null;
-      return;
-    }
-
-    // Get first and last verse IDs
-    const firstId = data[0]?.uuid;
-    const lastId = data[len - 1]?.uuid;
-
-    const prevLen = prevLenRef.current;
-    const prevFirst = prevFirstIdRef.current;
-    const prevLast = prevLastIdRef.current;
-
-    // Initial load or dataset switch
-    const isInitialLoad = prevLen === 0;
-    const switchedDataset =
-      prevFirst && prevLast && firstId !== prevFirst && lastId !== prevLast;
-
-    if (isInitialLoad || switchedDataset) {
-      // Reset the visible window
-      const totalChunks = Math.ceil(len / CHUNK_SIZE);
-      setStartChunk(0);
-      setEndChunk(Math.min(1, totalChunks));
-      lastGrowthRef.current = null;
-    } else if (len > prevLen) {
-      // Data grew: check a direction
-      const totalChunks = Math.ceil(len / CHUNK_SIZE);
-
-      if (firstId !== prevFirst) {
-        // Data was prepended
-        setStartChunk((s) => s + 1);
-        setEndChunk((e) => Math.min(e + 1, totalChunks));
-        lastGrowthRef.current = "up";
-      } else if (lastId !== prevLast) {
-        // Data was appended
-        setEndChunk((e) => Math.min(e + 1, totalChunks));
-        lastGrowthRef.current = "down";
-      }
-    }
-
-    // Save current state for next effect run
-    prevFirstIdRef.current = firstId;
-    prevLastIdRef.current = lastId;
-    prevLenRef.current = len;
-  }, [data]);
+  useSyncWindowWithData({
+    data,
+    chunkSize: CHUNK_SIZE,
+    setStartChunk,
+    setEndChunk,
+    lastGrowthRef,
+  });
 
   // --- Virtualization window trimming ---
   useLayoutEffect(() => {
@@ -135,31 +82,16 @@ export const QuranReader = ({
     spanRefs.current[index] = el;
   };
 
-  useEffect(() => {
-    if (spanRefs.current.length === 0) return;
-    const validSpans = spanRefs.current.filter(Boolean);
-    if (validSpans.length === 0) return;
-
-    for (let chunkIndex = startChunk; chunkIndex < endChunk; chunkIndex++) {
-      const chunkStart = chunkIndex * CHUNK_SIZE;
-      const chunkEnd = Math.min((chunkIndex + 1) * CHUNK_SIZE, data.length);
-
-      const chunkSpanStart = Math.max(0, chunkStart - start);
-      const chunkSpanEnd = Math.min(validSpans.length, chunkEnd - start);
-
-      if (chunkSpanStart < chunkSpanEnd && chunkSpanStart < validSpans.length) {
-        const chunkSpans = validSpans.slice(chunkSpanStart, chunkSpanEnd);
-        if (chunkSpans.length > 0) {
-          // Measure height of chunk using DOM Range
-          const range = document.createRange();
-          range.setStartBefore(chunkSpans[0]);
-          range.setEndAfter(chunkSpans[chunkSpans.length - 1]);
-          const rect = range.getBoundingClientRect();
-          chunkHeights.current[chunkIndex] = rect.height;
-        }
-      }
-    }
-  }, [visibleData, startChunk, endChunk, start, data.length]);
+  useMeasureVisibleChunks({
+    spanRefs,
+    chunkHeights,
+    startChunk,
+    endChunk,
+    startIndex: start,
+    dataLength: data.length,
+    chunkSize: CHUNK_SIZE,
+    visibleData,
+  });
 
   // --- Scroll adjustment for prepending ---
   const pendingScrollAdjust = useRef(null);
@@ -187,131 +119,56 @@ export const QuranReader = ({
     }
   });
 
-  // --- Infinite scroll DOWN (bottom sentinel) ---
-  const fetchNextCooldownRef = useRef(false);
-
-  const handleBottomIntersection = useCallback(
-    (entries) => {
-      const entry = entries[0];
-      if (!entry.isIntersecting || isFetchingNextChunk) return;
-
-      // Check if near bottom of container
-      let nearBottom = true;
-      if (entry.rootBounds) {
-        const distanceFromBottom =
-          entry.rootBounds.bottom - entry.boundingClientRect.bottom;
-        nearBottom = distanceFromBottom <= 40;
-      }
-
-      // Cooldown to prevent rapid firing
-      if (fetchNextCooldownRef.current) return;
-      fetchNextCooldownRef.current = true;
-      setTimeout(() => {
-        fetchNextCooldownRef.current = false;
-      }, 300);
-
-      const totalChunksNow = Math.ceil(data.length / CHUNK_SIZE);
-
-      // If there are more local chunks, show them
-      if (endChunk < totalChunksNow) {
-        lastGrowthRef.current = "down";
-        setEndChunk((e) => Math.min(e + 1, totalChunksNow));
-        return;
-      }
-
-      // Otherwise, fetch more data from API
-      if (nearBottom && hasNextChunk) {
-        const maybePromise = fetchNextChunk();
-        if (maybePromise && typeof maybePromise.then === "function") {
-          maybePromise.then(() => {
-            // Data growth effect will handle window extension
-          });
-        }
-      }
-    },
-    [isFetchingNextChunk, hasNextChunk, fetchNextChunk, data.length, endChunk],
-  );
+  const bottomHandler = useBottomIntersectionHandler({
+    dataLength: data.length,
+    endChunk,
+    setEndChunk,
+    lastGrowthRef,
+    chunkSize: CHUNK_SIZE,
+    hasNextChunk,
+    isFetchingNextChunk,
+    fetchNextChunk,
+  });
 
   // Set up the bottom sentinel observer
   useEffect(() => {
     if (!bottomSentinelRef.current || !containerRef.current) return;
-    const observer = new window.IntersectionObserver(handleBottomIntersection, {
+    const observer = new window.IntersectionObserver(bottomHandler, {
       root: containerRef.current,
       threshold: 0.05,
       rootMargin: "0px 0px 200px 0px",
     });
     observer.observe(bottomSentinelRef.current);
     return () => observer.disconnect();
-  }, [handleBottomIntersection]);
+  }, [bottomHandler]);
 
   // --- Infinite scroll UP (top sentinel) ---
   const fetchPrevCooldownRef = useRef(false);
 
-  const handleTopIntersection = useCallback(
-    (entries) => {
-      const entry = entries[0];
-      if (!entry.isIntersecting || isFetchingPreviousChunk) return;
-
-      // Check if near top of container
-      let nearTop = true;
-      if (entry.rootBounds) {
-        const distanceFromTop =
-          entry.boundingClientRect.top - entry.rootBounds.top;
-        nearTop = distanceFromTop <= 40;
-      }
-      if (!nearTop) return;
-
-      // Cooldown to prevent rapid firing
-      if (fetchPrevCooldownRef.current) return;
-      fetchPrevCooldownRef.current = true;
-      setTimeout(() => {
-        fetchPrevCooldownRef.current = false;
-      }, 300);
-
-      if (startChunk > 0) {
-        // Show previous chunk if available locally
-        const anchor = anchorBeforePrepend();
-
-        setStartChunk((prevStart) => {
-          const nextStart = Math.max(0, prevStart - 1);
-          lastGrowthRef.current = "up";
-          setEndChunk((prevEnd) => {
-            const visible = prevEnd - nextStart;
-            return visible > MAX_VISIBLE_CHUNKS ? prevEnd - 1 : prevEnd;
-          });
-          return nextStart;
-        });
-
-        pendingScrollAdjust.current = anchor;
-      } else if (hasPreviousChunk) {
-        // Fetch previous chunk from API
-        const anchor = anchorBeforePrepend();
-        const maybePromise = fetchPreviousChunk();
-        if (maybePromise && typeof maybePromise.then === "function") {
-          maybePromise.then(() => {
-            pendingScrollAdjust.current = anchor;
-            lastGrowthRef.current = "up";
-          });
-        } else {
-          pendingScrollAdjust.current = anchor;
-          lastGrowthRef.current = "up";
-        }
-      }
-    },
-    [isFetchingPreviousChunk, hasPreviousChunk, fetchPreviousChunk, startChunk],
-  );
+  const topHandler = useTopIntersectionHandler({
+    startChunk,
+    setStartChunk,
+    setEndChunk,
+    lastGrowthRef,
+    hasPreviousChunk,
+    isFetchingPreviousChunk,
+    fetchPreviousChunk,
+    anchorBeforePrepend,
+    pendingScrollAdjustRef: pendingScrollAdjust,
+    maxVisibleChunks: MAX_VISIBLE_CHUNKS,
+  });
 
   // Set up a top sentinel observer
   useEffect(() => {
     if (!topSentinelRef.current || !containerRef.current) return;
-    const observer = new window.IntersectionObserver(handleTopIntersection, {
+    const observer = new window.IntersectionObserver(topHandler, {
       root: containerRef.current,
       threshold: 0.05,
       rootMargin: "200px 0px 0px 0px",
     });
     observer.observe(topSentinelRef.current);
     return () => observer.disconnect();
-  }, [handleTopIntersection]);
+  }, [topHandler]);
 
   // --- Sentinel visibility logic ---
   const showTopSentinel = hasPreviousChunk || startChunk > 0;
