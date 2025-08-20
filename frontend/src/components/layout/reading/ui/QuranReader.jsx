@@ -142,9 +142,6 @@ export const QuranReader = ({
     return () => observer.disconnect();
   }, [bottomHandler]);
 
-  // --- Infinite scroll UP (top sentinel) ---
-  const fetchPrevCooldownRef = useRef(false);
-
   const topHandler = useTopIntersectionHandler({
     startChunk,
     setStartChunk,
