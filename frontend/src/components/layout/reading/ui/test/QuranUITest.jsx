@@ -5,7 +5,7 @@ import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
 import { QuranReader } from "@/components/layout/reading/ui/QuranReader.jsx";
 
 export const QuranUITest = () => {
-  const startValue = 1;
+  const startValue = 4;
 
   const {
     data,

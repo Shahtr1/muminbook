@@ -39,9 +39,7 @@ export function useTopIntersectionHandler({
       }, 300);
 
       if (startChunk > 0) {
-        // We already have previous chunks locally. Reveal one.
-        const anchor = anchorBeforePrepend?.();
-
+        // We already have previous chunks locally. Reveal one (no anchor adjust).
         setStartChunk((prevStart) => {
           const nextStart = Math.max(0, prevStart - 1);
           if (lastGrowthRef) lastGrowthRef.current = "up";
@@ -51,10 +49,8 @@ export function useTopIntersectionHandler({
           });
           return nextStart;
         });
-
-        if (pendingScrollAdjustRef) pendingScrollAdjustRef.current = anchor;
       } else if (hasPreviousChunk) {
-        // Need to fetch more from server
+        // Need to fetch more from server (keep viewport stable via anchor)
         const anchor = anchorBeforePrepend?.();
         const maybe = fetchPreviousChunk?.();
         if (maybe && typeof maybe.then === "function") {
