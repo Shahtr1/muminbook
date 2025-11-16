@@ -1,0 +1,338 @@
+[
+  {
+    "uuid": 6059,
+    "sno": 1,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ وَٱلَّيْلِ إِذَا يَغْشَىٰ",
+    "audioUrl": "092001",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6060,
+    "sno": 2,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَٱلنَّهَارِ إِذَا تَجَلَّىٰ",
+    "audioUrl": "092002",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6061,
+    "sno": 3,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَمَا خَلَقَ ٱلذَّكَرَ وَٱلْأُنثَىٰٓ",
+    "audioUrl": "092003",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6062,
+    "sno": 4,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "إِنَّ سَعْيَكُمْ لَشَتَّىٰ",
+    "audioUrl": "092004",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6063,
+    "sno": 5,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "فَأَمَّا مَنْ أَعْطَىٰ وَٱتَّقَىٰ",
+    "audioUrl": "092005",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6064,
+    "sno": 6,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَصَدَّقَ بِٱلْحُسْنَىٰ",
+    "audioUrl": "092006",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6065,
+    "sno": 7,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "فَسَنُيَسِّرُهُۥ لِلْيُسْرَىٰ",
+    "audioUrl": "092007",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6066,
+    "sno": 8,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَأَمَّا مَنۢ بَخِلَ وَٱسْتَغْنَىٰ",
+    "audioUrl": "092008",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6067,
+    "sno": 9,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَكَذَّبَ بِٱلْحُسْنَىٰ",
+    "audioUrl": "092009",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6068,
+    "sno": 10,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "فَسَنُيَسِّرُهُۥ لِلْعُسْرَىٰ",
+    "audioUrl": "092010",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6069,
+    "sno": 11,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَمَا يُغْنِى عَنْهُ مَالُهُۥٓ إِذَا تَرَدَّىٰٓ",
+    "audioUrl": "092011",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6070,
+    "sno": 12,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "إِنَّ عَلَيْنَا لَلْهُدَىٰ",
+    "audioUrl": "092012",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6071,
+    "sno": 13,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَإِنَّ لَنَا لَلْءَاخِرَةَ وَٱلْأُولَىٰ",
+    "audioUrl": "092013",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6072,
+    "sno": 14,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "فَأَنذَرْتُكُمْ نَارًۭا تَلَظَّىٰ",
+    "audioUrl": "092014",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6073,
+    "sno": 15,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "لَا يَصْلَىٰهَآ إِلَّا ٱلْأَشْقَى",
+    "audioUrl": "092015",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6074,
+    "sno": 16,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "ٱلَّذِى كَذَّبَ وَتَوَلَّىٰ",
+    "audioUrl": "092016",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6075,
+    "sno": 17,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَسَيُجَنَّبُهَا ٱلْأَتْقَى",
+    "audioUrl": "092017",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6076,
+    "sno": 18,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "ٱلَّذِى يُؤْتِى مَالَهُۥ يَتَزَكَّىٰ",
+    "audioUrl": "092018",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6077,
+    "sno": 19,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَمَا لِأَحَدٍ عِندَهُۥ مِن نِّعْمَةٍۢ تُجْزَىٰٓ",
+    "audioUrl": "092019",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6078,
+    "sno": 20,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "إِلَّا ٱبْتِغَآءَ وَجْهِ رَبِّهِ ٱلْأَعْلَىٰ",
+    "audioUrl": "092020",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6079,
+    "sno": 21,
+    "surahId": 92,
+    "juzId": 30,
+    "ayat": "وَلَسَوْفَ يَرْضَىٰ",
+    "audioUrl": "092021",
+    "manzil": 7,
+    "ruku": 534,
+    "hizbQuarter": 238,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

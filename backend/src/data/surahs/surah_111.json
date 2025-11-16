@@ -1,0 +1,82 @@
+[
+  {
+    "uuid": 6217,
+    "sno": 1,
+    "surahId": 111,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ تَبَّتْ يَدَآ أَبِى لَهَبٍۢ وَتَبَّ",
+    "audioUrl": "111001",
+    "manzil": 7,
+    "ruku": 553,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6218,
+    "sno": 2,
+    "surahId": 111,
+    "juzId": 30,
+    "ayat": "مَآ أَغْنَىٰ عَنْهُ مَالُهُۥ وَمَا كَسَبَ",
+    "audioUrl": "111002",
+    "manzil": 7,
+    "ruku": 553,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6219,
+    "sno": 3,
+    "surahId": 111,
+    "juzId": 30,
+    "ayat": "سَيَصْلَىٰ نَارًۭا ذَاتَ لَهَبٍۢ",
+    "audioUrl": "111003",
+    "manzil": 7,
+    "ruku": 553,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6220,
+    "sno": 4,
+    "surahId": 111,
+    "juzId": 30,
+    "ayat": "وَٱمْرَأَتُهُۥ حَمَّالَةَ ٱلْحَطَبِ",
+    "audioUrl": "111004",
+    "manzil": 7,
+    "ruku": 553,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6221,
+    "sno": 5,
+    "surahId": 111,
+    "juzId": 30,
+    "ayat": "فِى جِيدِهَا حَبْلٌۭ مِّن مَّسَدٍۭ",
+    "audioUrl": "111005",
+    "manzil": 7,
+    "ruku": 553,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

@@ -1,0 +1,37 @@
+import { JuzDocument } from "../models/juz.model";
+
+export const juzListApi: Pick<
+  JuzDocument,
+  "uuid" | "name" | "transliteration"
+>[] = [
+  { uuid: 1, name: "الم", transliteration: "Alif Lām Mīm" },
+  { uuid: 2, name: "سيقول", transliteration: "Sayaqūl" },
+  { uuid: 3, name: "تلك الرسل", transliteration: "Tilka r-Rusul" },
+  { uuid: 4, name: "لن تنالوا", transliteration: "Lan Tanāl" },
+  { uuid: 5, name: "والمحصنات", transliteration: "Wal-Muḥṣanāt" },
+  { uuid: 6, name: "لا يحب الله", transliteration: "Lā Yuḥibbullāh" },
+  { uuid: 7, name: "وإذا سمعوا", transliteration: "Wa Iḏā Samiʿū" },
+  { uuid: 8, name: "ولو أننا", transliteration: "Wa Law Annanā" },
+  { uuid: 9, name: "قال الملأ", transliteration: "Qāl al-Malāʾ" },
+  { uuid: 10, name: "واعلموا", transliteration: "Wa Aʿlamū" },
+  { uuid: 11, name: "يتذكرون", transliteration: "Yatadhakkarūn" },
+  { uuid: 12, name: "وما من دابة", transliteration: "Wa Mā Min Dābbah" },
+  { uuid: 13, name: "وما أبرئ", transliteration: "Wa Mā Ubriʾu" },
+  { uuid: 14, name: "ربما", transliteration: "Rubamā" },
+  { uuid: 15, name: "سبحان الذي", transliteration: "Subḥān alladhī" },
+  { uuid: 16, name: "قال ألم", transliteration: "Qāl alām" },
+  { uuid: 17, name: "اقترب", transliteration: "Iqtarabat" },
+  { uuid: 18, name: "قد أفلح", transliteration: "Qadd Aflaḥa" },
+  { uuid: 19, name: "وقال الذين", transliteration: "Wa Qāl alladhīna" },
+  { uuid: 20, name: "أمن خلق", transliteration: "Amman Khalaq" },
+  { uuid: 21, name: "اتل ما أوحي", transliteration: "Utlu Mā Ūḥiya" },
+  { uuid: 22, name: "ومن يقنت", transliteration: "Wa Man Yaqud" },
+  { uuid: 23, name: "وما لي", transliteration: "Wa Mā Liya" },
+  { uuid: 24, name: "فمن أظلم", transliteration: "Faman Aẓlam" },
+  { uuid: 25, name: "إليه يرد", transliteration: "Ilayhi Yuraddu" },
+  { uuid: 26, name: "حم", transliteration: "Ḥāʾ Mīm" },
+  { uuid: 27, name: "قال فما خطبكم", transliteration: "Qāla Famā Khaṭbukum" },
+  { uuid: 28, name: "قد سمع الله", transliteration: "Qad Samiʿa Allāh" },
+  { uuid: 29, name: "تبارك الذي", transliteration: "Tabārak alladhī" },
+  { uuid: 30, name: "عم يتساءلون", transliteration: "ʿAmma Yatasāʾalūn" },
+];

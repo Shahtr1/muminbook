@@ -1,0 +1,66 @@
+[
+  {
+    "uuid": 6222,
+    "sno": 1,
+    "surahId": 112,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ قُلْ هُوَ ٱللَّهُ أَحَدٌ",
+    "audioUrl": "112001",
+    "manzil": 7,
+    "ruku": 554,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6223,
+    "sno": 2,
+    "surahId": 112,
+    "juzId": 30,
+    "ayat": "ٱللَّهُ ٱلصَّمَدُ",
+    "audioUrl": "112002",
+    "manzil": 7,
+    "ruku": 554,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6224,
+    "sno": 3,
+    "surahId": 112,
+    "juzId": 30,
+    "ayat": "لَمْ يَلِدْ وَلَمْ يُولَدْ",
+    "audioUrl": "112003",
+    "manzil": 7,
+    "ruku": 554,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6225,
+    "sno": 4,
+    "surahId": 112,
+    "juzId": 30,
+    "ayat": "وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ",
+    "audioUrl": "112004",
+    "manzil": 7,
+    "ruku": 554,
+    "hizbQuarter": 240,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

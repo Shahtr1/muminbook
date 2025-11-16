@@ -1,0 +1,130 @@
+[
+  {
+    "uuid": 6131,
+    "sno": 1,
+    "surahId": 98,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ لَمْ يَكُنِ ٱلَّذِينَ كَفَرُوا۟ مِنْ أَهْلِ ٱلْكِتَٰبِ وَٱلْمُشْرِكِينَ مُنفَكِّينَ حَتَّىٰ تَأْتِيَهُمُ ٱلْبَيِّنَةُ",
+    "audioUrl": "098001",
+    "manzil": 7,
+    "ruku": 540,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6132,
+    "sno": 2,
+    "surahId": 98,
+    "juzId": 30,
+    "ayat": "رَسُولٌۭ مِّنَ ٱللَّهِ يَتْلُوا۟ صُحُفًۭا مُّطَهَّرَةًۭ",
+    "audioUrl": "098002",
+    "manzil": 7,
+    "ruku": 540,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6133,
+    "sno": 3,
+    "surahId": 98,
+    "juzId": 30,
+    "ayat": "فِيهَا كُتُبٌۭ قَيِّمَةٌۭ",
+    "audioUrl": "098003",
+    "manzil": 7,
+    "ruku": 540,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6134,
+    "sno": 4,
+    "surahId": 98,
+    "juzId": 30,
+    "ayat": "وَمَا تَفَرَّقَ ٱلَّذِينَ أُوتُوا۟ ٱلْكِتَٰبَ إِلَّا مِنۢ بَعْدِ مَا جَآءَتْهُمُ ٱلْبَيِّنَةُ",
+    "audioUrl": "098004",
+    "manzil": 7,
+    "ruku": 540,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6135,
+    "sno": 5,
+    "surahId": 98,
+    "juzId": 30,
+    "ayat": "وَمَآ أُمِرُوٓا۟ إِلَّا لِيَعْبُدُوا۟ ٱللَّهَ مُخْلِصِينَ لَهُ ٱلدِّينَ حُنَفَآءَ وَيُقِيمُوا۟ ٱلصَّلَوٰةَ وَيُؤْتُوا۟ ٱلزَّكَوٰةَ ۚ وَذَٰلِكَ دِينُ ٱلْقَيِّمَةِ",
+    "audioUrl": "098005",
+    "manzil": 7,
+    "ruku": 540,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6136,
+    "sno": 6,
+    "surahId": 98,
+    "juzId": 30,
+    "ayat": "إِنَّ ٱلَّذِينَ كَفَرُوا۟ مِنْ أَهْلِ ٱلْكِتَٰبِ وَٱلْمُشْرِكِينَ فِى نَارِ جَهَنَّمَ خَٰلِدِينَ فِيهَآ ۚ أُو۟لَٰٓئِكَ هُمْ شَرُّ ٱلْبَرِيَّةِ",
+    "audioUrl": "098006",
+    "manzil": 7,
+    "ruku": 540,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6137,
+    "sno": 7,
+    "surahId": 98,
+    "juzId": 30,
+    "ayat": "إِنَّ ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ أُو۟لَٰٓئِكَ هُمْ خَيْرُ ٱلْبَرِيَّةِ",
+    "audioUrl": "098007",
+    "manzil": 7,
+    "ruku": 540,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6138,
+    "sno": 8,
+    "surahId": 98,
+    "juzId": 30,
+    "ayat": "جَزَآؤُهُمْ عِندَ رَبِّهِمْ جَنَّٰتُ عَدْنٍۢ تَجْرِى مِن تَحْتِهَا ٱلْأَنْهَٰرُ خَٰلِدِينَ فِيهَآ أَبَدًۭا ۖ رَّضِىَ ٱللَّهُ عَنْهُمْ وَرَضُوا۟ عَنْهُ ۚ ذَٰلِكَ لِمَنْ خَشِىَ رَبَّهُۥ",
+    "audioUrl": "098008",
+    "manzil": 7,
+    "ruku": 540,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  }
+]

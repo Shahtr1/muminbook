@@ -1,0 +1,306 @@
+[
+  {
+    "uuid": 6107,
+    "sno": 1,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ",
+    "audioUrl": "096001",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": true
+  },
+  {
+    "uuid": 6108,
+    "sno": 2,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "خَلَقَ ٱلْإِنسَٰنَ مِنْ عَلَقٍ",
+    "audioUrl": "096002",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6109,
+    "sno": 3,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "ٱقْرَأْ وَرَبُّكَ ٱلْأَكْرَمُ",
+    "audioUrl": "096003",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6110,
+    "sno": 4,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "ٱلَّذِى عَلَّمَ بِٱلْقَلَمِ",
+    "audioUrl": "096004",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6111,
+    "sno": 5,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "عَلَّمَ ٱلْإِنسَٰنَ مَا لَمْ يَعْلَمْ",
+    "audioUrl": "096005",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6112,
+    "sno": 6,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "كَلَّآ إِنَّ ٱلْإِنسَٰنَ لَيَطْغَىٰٓ",
+    "audioUrl": "096006",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6113,
+    "sno": 7,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "أَن رَّءَاهُ ٱسْتَغْنَىٰٓ",
+    "audioUrl": "096007",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6114,
+    "sno": 8,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "إِنَّ إِلَىٰ رَبِّكَ ٱلرُّجْعَىٰٓ",
+    "audioUrl": "096008",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6115,
+    "sno": 9,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "أَرَءَيْتَ ٱلَّذِى يَنْهَىٰ",
+    "audioUrl": "096009",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6116,
+    "sno": 10,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "عَبْدًا إِذَا صَلَّىٰٓ",
+    "audioUrl": "096010",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6117,
+    "sno": 11,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "أَرَءَيْتَ إِن كَانَ عَلَى ٱلْهُدَىٰٓ",
+    "audioUrl": "096011",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6118,
+    "sno": 12,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "أَوْ أَمَرَ بِٱلتَّقْوَىٰٓ",
+    "audioUrl": "096012",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6119,
+    "sno": 13,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "أَرَءَيْتَ إِن كَذَّبَ وَتَوَلَّىٰٓ",
+    "audioUrl": "096013",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6120,
+    "sno": 14,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "أَلَمْ يَعْلَم بِأَنَّ ٱللَّهَ يَرَىٰ",
+    "audioUrl": "096014",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6121,
+    "sno": 15,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "كَلَّا لَئِن لَّمْ يَنتَهِ لَنَسْفَعًۢا بِٱلنَّاصِيَةِ",
+    "audioUrl": "096015",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6122,
+    "sno": 16,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "نَاصِيَةٍۢ كَٰذِبَةٍ خَاطِئَةٍۢ",
+    "audioUrl": "096016",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6123,
+    "sno": 17,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "فَلْيَدْعُ نَادِيَهُۥ",
+    "audioUrl": "096017",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6124,
+    "sno": 18,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "سَنَدْعُ ٱلزَّبَانِيَةَ",
+    "audioUrl": "096018",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": false
+    },
+    "surahStart": false
+  },
+  {
+    "uuid": 6125,
+    "sno": 19,
+    "surahId": 96,
+    "juzId": 30,
+    "ayat": "كَلَّا لَا تُطِعْهُ وَٱسْجُدْ وَٱقْتَرِب ۩",
+    "audioUrl": "096019",
+    "manzil": 7,
+    "ruku": 538,
+    "hizbQuarter": 239,
+    "sajda": {
+      "recommended": false,
+      "obligatory": true
+    },
+    "surahStart": false
+  }
+]
