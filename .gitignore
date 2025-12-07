@@ -1,6 +1,28 @@
+# Dependencies
 /node_modules
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+*/node_modules/
+
+# Environment variables
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env
+*.env
+
+# Build outputs
 dist
+dist-ssr
+build
+backend/dist/
+frontend/dist/
+backend/build/
+frontend/build/
 
 # Logs
 logs
@@ -11,14 +33,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Testing
+coverage
+*.lcov
+.nyc_output
+test-results/
 
-# Editor directories and files
+# IDE and Editor files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 .DS_Store
 *.suo
@@ -26,5 +50,37 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.swp
+*.swo
+*~
 
-package-lock.json
+# OS files
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Debug
+.debug
+
+# Misc
+*.local
+.cache
+.parcel-cache
+.next
+.nuxt
+.vuepress/dist
+
+# TypeScript
+*.tsbuildinfo
+
+# MongoDB
+*.db
+data/
