@@ -28,8 +28,8 @@ RUN npm ci --only=production
 
 # Copy built files from builder
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/copy-file.js ./copy-file.js
-COPY --from=builder /app/index.d.ts ./index.d.ts
+COPY --from=builder /app/*.js ./ 2>/dev/null || true
+COPY --from=builder /app/*.ts ./ 2>/dev/null || true
 
 # Expose port
 EXPOSE 5000

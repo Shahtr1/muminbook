@@ -1,5 +1,15 @@
 version: '3.8'
 
+# Docker Compose configuration for local development
+# 
+# Environment variables can be overridden by creating a .env file in the root directory
+# Example .env file:
+#   MONGO_URI=mongodb://admin:password@mongodb:27017/muminbook?authSource=admin
+#   JWT_SECRET=your-dev-secret
+#   FRONTEND_URL=http://localhost:5173
+#
+# Or use: docker-compose --env-file .env.local up
+
 services:
   # MongoDB Database
   mongodb:
@@ -28,10 +38,10 @@ services:
     environment:
       NODE_ENV: development
       PORT: 5000
-      MONGO_URI: mongodb://admin:password@mongodb:27017/muminbook?authSource=admin
-      JWT_SECRET: dev-jwt-secret-change-in-production
-      JWT_EXPIRES_IN: 7d
-      FRONTEND_URL: http://localhost:5173
+      MONGO_URI: ${MONGO_URI:-mongodb://admin:password@mongodb:27017/muminbook?authSource=admin}
+      JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret-change-in-production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
     ports:
       - "5000:5000"
     volumes:
