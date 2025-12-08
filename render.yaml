@@ -4,9 +4,10 @@ services:
     runtime: docker
     dockerfilePath: ./packages/backend/Dockerfile
     dockerContext: ./packages/backend
-    region: oregon
+    region: singapore
     plan: free
-    branch: master
+    branch: main
+    autoDeploy: true
     healthCheckPath: /
     envVars:
       - key: NODE_ENV
