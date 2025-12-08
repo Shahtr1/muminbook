@@ -2,11 +2,12 @@ import { CookieOptions, Response } from "express";
 import { fifteenMinutesFromNow, thirtyDaysFromNow } from "./date";
 
 const secure = process.env.NODE_ENV !== "development";
+const sameSite = process.env.NODE_ENV === "development" ? "strict" : "none";
 
 const defaults: CookieOptions = {
-  sameSite: "none",
+  sameSite,
   httpOnly: true,
-  secure,
+  secure: sameSite === "none" ? true : secure, // Force secure when sameSite is none
 };
 
 export const getAccessTokenCookieOptions = (): CookieOptions => ({
