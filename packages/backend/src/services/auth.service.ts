@@ -1,40 +1,40 @@
-import UserModel from "../models/user.model";
+import UserModel from '../models/user.model';
 import {
   fiveMinutesAgo,
   ONE_DAY_MS,
   oneHourFromNow,
   oneYearFromNow,
   thirtyDaysFromNow,
-} from "../utils/date";
-import SessionModel from "../models/session.model";
-import appAssert from "../utils/appAssert";
+} from '../utils/date';
+import SessionModel from '../models/session.model';
+import appAssert from '../utils/appAssert';
 import {
   CONFLICT,
   INTERNAL_SERVER_ERROR,
   NOT_FOUND,
   TOO_MANY_REQUESTS,
   UNAUTHORIZED,
-} from "../constants/http";
+} from '../constants/http';
 import {
   RefreshTokenPayload,
   refreshTokenSignOptions,
   signToken,
   verifyToken,
-} from "../utils/jwt";
-import { sendMail } from "../utils/sendMail";
+} from '../utils/jwt';
+import { sendMail } from '../utils/sendMail';
 import {
   getPasswordResetTemplate,
   getVerifyEmailTemplate,
-} from "../utils/emailTemplates";
-import { APP_ORIGIN } from "../constants/env";
-import { hashValue } from "../utils/bcrypt";
-import RoleModel, { RoleDocument } from "../models/role.model";
-import RoleType from "../constants/enums/roleType";
-import UserRoleModel from "../models/user-role.model";
-import VerificationCodeModel from "../models/verification-code.model";
-import VerificationCodeType from "../constants/enums/verificationCodeType";
-import ResourceModel from "../models/resource.model";
-import ResourceType from "../constants/enums/resourceType";
+} from '../utils/emailTemplates';
+import { APP_ORIGIN } from '../constants/env';
+import { hashValue } from '../utils/bcrypt';
+import RoleModel, { RoleDocument } from '../models/role.model';
+import RoleType from '../constants/enums/roleType';
+import UserRoleModel from '../models/user-role.model';
+import VerificationCodeModel from '../models/verification-code.model';
+import VerificationCodeType from '../constants/enums/verificationCodeType';
+import ResourceModel from '../models/resource.model';
+import ResourceType from '../constants/enums/resourceType';
 
 export type CreateAccountParams = {
   firstname: string;
@@ -49,7 +49,7 @@ export type CreateAccountParams = {
 export const createAccount = async (data: CreateAccountParams) => {
   const existingUser = await UserModel.exists({ email: data.email });
 
-  appAssert(!existingUser, CONFLICT, "Email already in use");
+  appAssert(!existingUser, CONFLICT, 'Email already in use');
 
   const user = await UserModel.create({
     firstname: data.firstname,
@@ -64,7 +64,7 @@ export const createAccount = async (data: CreateAccountParams) => {
   if (!userRole) {
     userRole = await RoleModel.create({
       type: RoleType.User,
-      description: "This is the role assigned to user",
+      description: 'This is the role assigned to user',
     });
   }
 
@@ -76,9 +76,9 @@ export const createAccount = async (data: CreateAccountParams) => {
   });
 
   await ResourceModel.create({
-    name: "my-files",
+    name: 'my-files',
     type: ResourceType.Folder,
-    path: "my-files",
+    path: 'my-files',
     pinned: true,
     parent: null,
     userId,
@@ -107,7 +107,7 @@ export const createAccount = async (data: CreateAccountParams) => {
 
   const refreshToken = signToken(
     { sessionId: session._id },
-    refreshTokenSignOptions,
+    refreshTokenSignOptions
   );
 
   const accessToken = signToken({
@@ -131,10 +131,10 @@ export const loginUser = async ({
   userAgent,
 }: LoginParams) => {
   const user = await UserModel.findOne({ email });
-  appAssert(user, UNAUTHORIZED, "Invalid email or password");
+  appAssert(user, UNAUTHORIZED, 'Invalid email or password');
 
   const isValid = await user.comparePassword(password);
-  appAssert(isValid, UNAUTHORIZED, "Invalid email or password");
+  appAssert(isValid, UNAUTHORIZED, 'Invalid email or password');
 
   const userId = user._id;
   const session = await SessionModel.create({ userId, userAgent });
@@ -147,12 +147,12 @@ export const loginUser = async ({
 
   const userRole = await UserRoleModel.findOne({
     userId,
-  }).populate<{ roleId: RoleDocument }>("roleId");
+  }).populate<{ roleId: RoleDocument }>('roleId');
 
   appAssert(
     userRole?.roleId,
     NOT_FOUND,
-    "User is not mapped to a role or role not found",
+    'User is not mapped to a role or role not found'
   );
 
   const role = userRole.roleId;
@@ -170,14 +170,14 @@ export const refreshUserAccessToken = async (refreshToken: string) => {
   const { payload } = verifyToken<RefreshTokenPayload>(refreshToken, {
     secret: refreshTokenSignOptions.secret,
   });
-  appAssert(payload, UNAUTHORIZED, "Invalid refresh token");
+  appAssert(payload, UNAUTHORIZED, 'Invalid refresh token');
 
   const session = await SessionModel.findById(payload.sessionId);
   const now = Date.now();
   appAssert(
     session && session.expiresAt.getTime() > now,
     UNAUTHORIZED,
-    "Session expired",
+    'Session expired'
   );
 
   // refresh session if it expires in the next 24 hours
@@ -195,12 +195,12 @@ export const refreshUserAccessToken = async (refreshToken: string) => {
 
   const userRole = await UserRoleModel.findOne({
     userId,
-  }).populate<{ roleId: RoleDocument }>("roleId");
+  }).populate<{ roleId: RoleDocument }>('roleId');
 
   appAssert(
     userRole?.roleId,
     NOT_FOUND,
-    "User is not mapped to a role or role not found",
+    'User is not mapped to a role or role not found'
   );
 
   const role = userRole.roleId;
@@ -216,7 +216,7 @@ export const refreshUserAccessToken = async (refreshToken: string) => {
 export const sendVerifyEmailLink = async (email: string) => {
   try {
     const user = await UserModel.findOne({ email });
-    appAssert(user, NOT_FOUND, "User not found");
+    appAssert(user, NOT_FOUND, 'User not found');
 
     const userId = user._id;
 
@@ -230,7 +230,7 @@ export const sendVerifyEmailLink = async (email: string) => {
     appAssert(
       count < 1,
       TOO_MANY_REQUESTS,
-      "Too many requests, please try again later",
+      'Too many requests, please try again later'
     );
 
     const verificationCode = await VerificationCodeModel.create({
@@ -249,7 +249,7 @@ export const sendVerifyEmailLink = async (email: string) => {
     // Email error
     if (error) console.log(error);
   } catch (error: any) {
-    console.log("sendVerifyEmailLink: ", error.message);
+    console.log('sendVerifyEmailLink: ', error.message);
     return {};
   }
 };
@@ -261,15 +261,15 @@ export const verifyEmail = async (code: string) => {
     expiresAt: { $gt: new Date() },
   });
 
-  appAssert(validCode, NOT_FOUND, "Invalid or expired verification code");
+  appAssert(validCode, NOT_FOUND, 'Invalid or expired verification code');
 
   const updatedUser = await UserModel.findByIdAndUpdate(
     validCode.userId,
     { verified: true },
-    { new: true },
+    { new: true }
   );
 
-  appAssert(updatedUser, INTERNAL_SERVER_ERROR, "Failed to verify email");
+  appAssert(updatedUser, INTERNAL_SERVER_ERROR, 'Failed to verify email');
 
   await validCode.deleteOne();
 
@@ -281,7 +281,7 @@ export const verifyEmail = async (code: string) => {
 export const sendPasswordResetEmail = async (email: string) => {
   try {
     const user = await UserModel.findOne({ email });
-    appAssert(user, NOT_FOUND, "User not found");
+    appAssert(user, NOT_FOUND, 'User not found');
 
     const fiveMinAgo = fiveMinutesAgo();
     const count = await VerificationCodeModel.countDocuments({
@@ -293,7 +293,7 @@ export const sendPasswordResetEmail = async (email: string) => {
     appAssert(
       count < 1,
       TOO_MANY_REQUESTS,
-      "Too many requests, please try again later",
+      'Too many requests, please try again later'
     );
 
     const expiresAt = oneHourFromNow();
@@ -313,7 +313,7 @@ export const sendPasswordResetEmail = async (email: string) => {
     appAssert(
       data?.id,
       INTERNAL_SERVER_ERROR,
-      `${error?.name} - ${error?.message}`,
+      `${error?.name} - ${error?.message}`
     );
 
     return {
@@ -321,7 +321,7 @@ export const sendPasswordResetEmail = async (email: string) => {
       emailId: data.id,
     };
   } catch (error: any) {
-    console.log("SendPasswordResetError: ", error.message);
+    console.log('SendPasswordResetError: ', error.message);
     return {};
   }
 };
@@ -341,13 +341,13 @@ export const resetPassword = async ({
     expiresAt: { $gt: new Date() },
   });
 
-  appAssert(validCode, NOT_FOUND, "Invalid or expired verification code");
+  appAssert(validCode, NOT_FOUND, 'Invalid or expired verification code');
 
   const updatedUser = await UserModel.findByIdAndUpdate(validCode.userId, {
     password: await hashValue(password),
   });
 
-  appAssert(updatedUser, INTERNAL_SERVER_ERROR, "Failed to reset password");
+  appAssert(updatedUser, INTERNAL_SERVER_ERROR, 'Failed to reset password');
 
   await validCode.deleteOne();
 

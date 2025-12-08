@@ -7,17 +7,17 @@ import {
   useBreakpointValue,
   useColorModeValue,
   useDisclosure,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { RiCheckboxFill, RiCloseCircleFill } from "react-icons/ri";
-import { useWindows } from "@/hooks/resource/useWindows.js";
-import { useDeleteWindow } from "@/hooks/useDeleteWindow.js";
-import { useLocation, useNavigate } from "react-router-dom";
-import { BsPencilFill } from "react-icons/bs";
-import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx";
-import { useRenameSuhuf } from "@/hooks/suhuf/useRenameSuhuf.js";
-import { getPreviousNonWindowPath } from "@/utils/updateNavigationPath.js";
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { RiCheckboxFill, RiCloseCircleFill } from 'react-icons/ri';
+import { useWindows } from '@/hooks/resource/useWindows.js';
+import { useDeleteWindow } from '@/hooks/useDeleteWindow.js';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { BsPencilFill } from 'react-icons/bs';
+import ConfirmationModal from '@/components/layout/modals/ConfirmationModal.jsx';
+import { useRenameSuhuf } from '@/hooks/suhuf/useRenameSuhuf.js';
+import { getPreviousNonWindowPath } from '@/utils/updateNavigationPath.js';
 
 export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
@@ -27,24 +27,24 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
   const location = useLocation();
   const { isOpen, onOpen: openModal, onClose } = useDisclosure();
   const textDisabledColor = useColorModeValue(
-    "text.secondary",
-    "text.disabled",
+    'text.secondary',
+    'text.disabled'
   );
-  const hoverBg = useColorModeValue("brand.400", "brand.600");
+  const hoverBg = useColorModeValue('brand.400', 'brand.600');
   const winModeHoverBg = useColorModeValue(
-    "wn.icon.hover.light",
-    "wn.icon.hover.dark",
+    'wn.icon.hover.light',
+    'wn.icon.hover.dark'
   );
   const activeWindowColor = useColorModeValue(
-    "wn.bg_content.light",
-    "wn.bg_content.dark",
+    'wn.bg_content.light',
+    'wn.bg_content.dark'
   );
-  const inActiveWindowColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
+  const inActiveWindowColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
   const { windows = [] } = useWindows();
 
   const queryClient = useQueryClient();
 
-  const windowMode = queryClient.getQueryData(["windowMode"]) || false;
+  const windowMode = queryClient.getQueryData(['windowMode']) || false;
 
   const [editModes, setEditModes] = useState({});
   const [editedTitles, setEditedTitles] = useState({});
@@ -99,10 +99,10 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
       if (remainingWindows.length > 0) {
         const next = remainingWindows[0];
         navigate(`/suhuf/${next.typeId._id}`);
-      } else navigate("/", { replace: true });
+      } else navigate('/', { replace: true });
     }
 
-    deleteWindow({ id: windowToClose._id, typeId, type: "suhuf" });
+    deleteWindow({ id: windowToClose._id, typeId, type: 'suhuf' });
   };
 
   const openWindow = (id) => {
@@ -134,7 +134,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                   ? isActiveWindow(type._id)
                     ? activeWindowColor
                     : inActiveWindowColor
-                  : "brand.500"
+                  : 'brand.500'
               }
               _hover={{
                 bgColor: windowMode
@@ -149,7 +149,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
               borderTopRadius="md"
               border="1px solid"
               borderBottom="none"
-              borderColor={windowMode ? activeWindowColor : "brand.500"}
+              borderColor={windowMode ? activeWindowColor : 'brand.500'}
               flex="1 1 0"
               minW="120px"
               maxW="145px"
@@ -170,10 +170,10 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                     }
                     onKeyDown={(e) => {
                       e.stopPropagation();
-                      if (e.key === "Enter") {
+                      if (e.key === 'Enter') {
                         confirmEdit(type._id);
                       }
-                      if (e.key === "Escape") {
+                      if (e.key === 'Escape') {
                         cancelEdit(type._id);
                       }
                     }}
@@ -187,7 +187,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                     label="Confirm"
                     hasArrow={!windowMode}
                     placement="top"
-                    variant={windowMode ? "inverted" : undefined}
+                    variant={windowMode ? 'inverted' : undefined}
                   >
                     <Box
                       as="button"
@@ -195,8 +195,8 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                         e.stopPropagation();
                         confirmEdit(type._id);
                       }}
-                      _hover={{ color: "green.600" }}
-                      color={windowMode ? "green.500" : "white"}
+                      _hover={{ color: 'green.600' }}
+                      color={windowMode ? 'green.500' : 'white'}
                     >
                       <RiCheckboxFill size="13px" />
                     </Box>
@@ -206,7 +206,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                     label="Cancel"
                     hasArrow={!windowMode}
                     placement="top"
-                    variant={windowMode ? "inverted" : undefined}
+                    variant={windowMode ? 'inverted' : undefined}
                   >
                     <Box
                       as="button"
@@ -214,7 +214,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                         e.stopPropagation();
                         cancelEdit(type._id);
                       }}
-                      _hover={{ color: "red.500" }}
+                      _hover={{ color: 'red.500' }}
                       color="red.600"
                     >
                       <RiCloseCircleFill size="13px" />
@@ -227,7 +227,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                     label={type.title}
                     hasArrow={!windowMode}
                     placement="top"
-                    variant={windowMode ? "inverted" : undefined}
+                    variant={windowMode ? 'inverted' : undefined}
                   >
                     <Text
                       fontSize="12px"
@@ -238,7 +238,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                       color={
                         windowMode
                           ? isActiveWindow(type._id)
-                            ? "brand.500"
+                            ? 'brand.500'
                             : textDisabledColor
                           : undefined
                       }
@@ -252,7 +252,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                       label="Rename window"
                       hasArrow={!windowMode}
                       placement="top"
-                      variant={windowMode ? "inverted" : undefined}
+                      variant={windowMode ? 'inverted' : undefined}
                     >
                       <Box
                         as="button"
@@ -262,13 +262,13 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                         }}
                         _hover={{
                           color: isActiveWindow(type?._id)
-                            ? "brand.600"
-                            : "gray.500",
+                            ? 'brand.600'
+                            : 'gray.500',
                         }}
                         color={
                           windowMode
                             ? isActiveWindow(type?._id)
-                              ? "brand.500"
+                              ? 'brand.500'
                               : textDisabledColor
                             : undefined
                         }
@@ -281,7 +281,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                         label="Delete window"
                         hasArrow={!windowMode}
                         placement="top"
-                        variant={windowMode ? "inverted" : undefined}
+                        variant={windowMode ? 'inverted' : undefined}
                       >
                         <Box
                           as="button"
@@ -290,7 +290,7 @@ export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
                             setPendingCloseId(type._id);
                             openModal();
                           }}
-                          _hover={{ color: "red.600" }}
+                          _hover={{ color: 'red.600' }}
                           color={
                             windowMode
                               ? isActiveWindow(type?._id)

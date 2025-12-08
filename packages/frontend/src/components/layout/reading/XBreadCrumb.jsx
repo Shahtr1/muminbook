@@ -6,21 +6,21 @@ import {
   Icon,
   Text,
   useTheme,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import {
   ArrowBackIcon,
   ArrowForwardIcon,
   ArrowUpIcon,
   ChevronRightIcon,
-} from "@chakra-ui/icons";
-import { useLocation, useNavigate } from "react-router-dom";
-import { GoListUnordered } from "react-icons/go";
-import { useEffect, useRef, useState } from "react";
+} from '@chakra-ui/icons';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { GoListUnordered } from 'react-icons/go';
+import { useEffect, useRef, useState } from 'react';
 
 const labelMap = {
-  reading: { label: "Reading", icon: GoListUnordered },
-  "my-files": { label: "My Files" },
-  trash: { label: "Trash" },
+  reading: { label: 'Reading', icon: GoListUnordered },
+  'my-files': { label: 'My Files' },
+  trash: { label: 'Trash' },
 };
 
 export const XBreadCrumb = () => {
@@ -29,12 +29,12 @@ export const XBreadCrumb = () => {
   const theme = useTheme();
   const originalPath = location.state?.originalPath;
 
-  const isTrashView = location.pathname.includes("/reading/trash");
+  const isTrashView = location.pathname.includes('/reading/trash');
 
   const isFolderView =
-    location.pathname.includes("/reading/my-files") || isTrashView;
+    location.pathname.includes('/reading/my-files') || isTrashView;
 
-  const segments = location.pathname.split("/").filter(Boolean);
+  const segments = location.pathname.split('/').filter(Boolean);
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
   const forwardRef = useRef([]);
@@ -62,9 +62,9 @@ export const XBreadCrumb = () => {
   const goUp = () => {
     if (segments.length > 1) {
       const newSegments = segments.slice(0, -1);
-      navigate(`/${newSegments.join("/")}`);
+      navigate(`/${newSegments.join('/')}`);
     } else {
-      navigate("/reading");
+      navigate('/reading');
     }
   };
 
@@ -73,15 +73,15 @@ export const XBreadCrumb = () => {
   // Create breadcrumb items
   const breadcrumbItems = segments.map((segment, index) => {
     const pathSegments = segments.slice(0, index + 1);
-    const basePath = `/${pathSegments.join("/")}`;
+    const basePath = `/${pathSegments.join('/')}`;
 
     let partialOriginalPath;
     if (isTrashView && originalPath && index > 1) {
-      const originalPathSegments = originalPath.split("/");
+      const originalPathSegments = originalPath.split('/');
       const depthAfterTrash = index - 1;
       partialOriginalPath = originalPathSegments
         .slice(0, depthAfterTrash + 1)
-        .join("/");
+        .join('/');
     }
 
     const label = labelMap[segment]?.label || decodeURIComponent(segment);
@@ -108,7 +108,7 @@ export const XBreadCrumb = () => {
             as={ArrowBackIcon}
             boxSize={4}
             color="brand.500"
-            cursor={canGoBack ? "pointer" : "not-allowed"}
+            cursor={canGoBack ? 'pointer' : 'not-allowed'}
             opacity={canGoBack ? 1 : 0.4}
             onClick={canGoBack ? handleBack : undefined}
           />
@@ -116,7 +116,7 @@ export const XBreadCrumb = () => {
             as={ArrowForwardIcon}
             boxSize={4}
             color="brand.500"
-            cursor={canGoForward ? "pointer" : "not-allowed"}
+            cursor={canGoForward ? 'pointer' : 'not-allowed'}
             opacity={canGoForward ? 1 : 0.4}
             onClick={canGoForward ? handleForward : undefined}
           />
@@ -124,7 +124,7 @@ export const XBreadCrumb = () => {
             as={ArrowUpIcon}
             boxSize={4}
             color="brand.500"
-            cursor={canGoUp ? "pointer" : "not-allowed"}
+            cursor={canGoUp ? 'pointer' : 'not-allowed'}
             opacity={canGoUp ? 1 : 0.4}
             onClick={canGoUp ? goUp : undefined}
           />
@@ -137,13 +137,13 @@ export const XBreadCrumb = () => {
         spacing="5px"
         separator={<ChevronRightIcon color="brand.500" />}
         fontWeight="medium"
-        fontSize={{ base: "12px", sm: "13px" }}
+        fontSize={{ base: '12px', sm: '13px' }}
         overflowX="auto"
         pr={2}
         css={{
-          "&::-webkit-scrollbar": { display: "none" },
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
+          '&::-webkit-scrollbar': { display: 'none' },
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
         }}
       >
         {breadcrumbItems.map(({ path, state, label, Icon, isLast }) => (
@@ -157,7 +157,7 @@ export const XBreadCrumb = () => {
               <Flex align="center" gap={1}>
                 {Icon && (
                   <Icon
-                    color={theme.colors.brand["500"]}
+                    color={theme.colors.brand['500']}
                     style={{ strokeWidth: 1.5 }}
                   />
                 )}

@@ -11,26 +11,26 @@ import {
   Tooltip,
   useBreakpointValue,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { AddIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { useOpenSuhuf } from "@/hooks/suhuf/useOpenSuhuf.js";
-import { useState } from "react";
-import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
-import { BsPencilFill } from "react-icons/bs";
-import { useRenameSuhuf } from "@/hooks/suhuf/useRenameSuhuf.js";
-import { IoCheckmarkOutline, IoCloseOutline } from "react-icons/io5";
+} from '@chakra-ui/react';
+import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { useOpenSuhuf } from '@/hooks/suhuf/useOpenSuhuf.js';
+import { useState } from 'react';
+import { SuhufSVG } from '@/components/svgs/SuhufSVG.jsx';
+import { BsPencilFill } from 'react-icons/bs';
+import { useRenameSuhuf } from '@/hooks/suhuf/useRenameSuhuf.js';
+import { IoCheckmarkOutline, IoCloseOutline } from 'react-icons/io5';
 
 export const SuhufMenu = ({ suhuf }) => {
   const openSuhuf = useOpenSuhuf();
   const { mutate: renameSuhuf } = useRenameSuhuf();
-  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
-  const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
-  const addButtonColor = useColorModeValue("white", "text.primary");
+  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
+  const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
+  const addButtonColor = useColorModeValue('white', 'text.primary');
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(suhuf?.title || "");
+  const [editedTitle, setEditedTitle] = useState(suhuf?.title || '');
 
   const handleAddSuhuf = () => {
     openSuhuf();
@@ -39,12 +39,12 @@ export const SuhufMenu = ({ suhuf }) => {
   };
 
   const startEdit = () => {
-    setEditedTitle(suhuf?.title || "");
+    setEditedTitle(suhuf?.title || '');
     setIsEditing(true);
   };
 
   const cancelEdit = () => {
-    setEditedTitle(suhuf?.title || "");
+    setEditedTitle(suhuf?.title || '');
     setIsEditing(false);
   };
 
@@ -70,8 +70,8 @@ export const SuhufMenu = ({ suhuf }) => {
         cursor="pointer"
         height="100%"
         sx={{
-          "> span": {
-            height: "100%",
+          '> span': {
+            height: '100%',
           },
         }}
       >
@@ -80,10 +80,10 @@ export const SuhufMenu = ({ suhuf }) => {
           cursor="pointer"
           align="center"
           justify="center"
-          w={isSmallScreen ? "24px" : "auto"}
-          h={isSmallScreen ? "24px" : "auto"}
+          w={isSmallScreen ? '24px' : 'auto'}
+          h={isSmallScreen ? '24px' : 'auto'}
           mr={1}
-          p={isSmallScreen ? "0" : "1px"}
+          p={isSmallScreen ? '0' : '1px'}
         >
           <SuhufSVG dimensions="20px" activeColor="brand.500" />
           {!isSmallScreen && (
@@ -98,8 +98,8 @@ export const SuhufMenu = ({ suhuf }) => {
         maxW="230px"
         sx={{
           button: {
-            height: "auto",
-            padding: "0",
+            height: 'auto',
+            padding: '0',
           },
         }}
         bg={bgColor}
@@ -108,7 +108,7 @@ export const SuhufMenu = ({ suhuf }) => {
           {!isEditing ? (
             <Flex w="100%" justify="space-between" align="center">
               <Tooltip
-                label={suhuf?.title || "Loading..."}
+                label={suhuf?.title || 'Loading...'}
                 placement="left"
                 variant="inverted"
               >
@@ -119,7 +119,7 @@ export const SuhufMenu = ({ suhuf }) => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-                  {suhuf?.title || "Loading..."}
+                  {suhuf?.title || 'Loading...'}
                 </Text>
               </Tooltip>
 
@@ -147,10 +147,10 @@ export const SuhufMenu = ({ suhuf }) => {
                 onChange={(e) => setEditedTitle(e.target.value)}
                 onKeyDown={(e) => {
                   e.stopPropagation();
-                  if (e.key === "Enter") {
+                  if (e.key === 'Enter') {
                     confirmEdit(suhuf._id);
                   }
-                  if (e.key === "Escape") {
+                  if (e.key === 'Escape') {
                     cancelEdit();
                   }
                 }}
@@ -196,19 +196,19 @@ export const SuhufMenu = ({ suhuf }) => {
             <Text fontSize="xs">
               {suhuf?.createdAt
                 ? new Date(suhuf?.createdAt).toLocaleDateString()
-                : "Unknown"}
+                : 'Unknown'}
             </Text>
           </Flex>
 
           {/* Add New Suhuf */}
-          <Button size={{ base: "sm", md: "md" }} onClick={handleAddSuhuf}>
+          <Button size={{ base: 'sm', md: 'md' }} onClick={handleAddSuhuf}>
             <Flex p={1} justify="center" align="center" w="100%" gap={3}>
               <Text fontSize="xs" color={addButtonColor}>
                 Add new Suhuf
               </Text>
               <AddIcon
                 color={addButtonColor}
-                fontSize={{ base: "8px", sm: "9px" }}
+                fontSize={{ base: '8px', sm: '9px' }}
               />
             </Flex>
           </Button>

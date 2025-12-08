@@ -1,5 +1,5 @@
-import { useToast } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useToast } from '@chakra-ui/react';
+import { useRef } from 'react';
 
 export const useXToast = () => {
   const toast = useToast();
@@ -9,15 +9,15 @@ export const useXToast = () => {
     stopLoading();
     toast({
       title: message,
-      status: "success",
-      position: "bottom",
+      status: 'success',
+      position: 'bottom',
       duration: 3000,
       isClosable: true,
     });
   };
 
   const error = (err) => {
-    let message = "Something went wrong!";
+    let message = 'Something went wrong!';
     if (err?.message) {
       message = err.message;
     }
@@ -27,19 +27,19 @@ export const useXToast = () => {
     stopLoading();
     toast({
       title: message,
-      status: "error",
-      position: "bottom",
+      status: 'error',
+      position: 'bottom',
       duration: 3000,
       isClosable: true,
     });
   };
 
-  const startLoading = (message = "Processing...") => {
+  const startLoading = (message = 'Processing...') => {
     if (!toastIdRef.current) {
       toastIdRef.current = toast({
         title: message,
-        status: "loading",
-        position: "bottom",
+        status: 'loading',
+        position: 'bottom',
         isClosable: false,
         duration: null,
       });
@@ -53,7 +53,7 @@ export const useXToast = () => {
     }
   };
 
-  const notify = (isPending, isSuccess, isError, message = "Processing...") => {
+  const notify = (isPending, isSuccess, isError, message = 'Processing...') => {
     if (isPending) startLoading(message);
     if (isSuccess || isError) stopLoading();
   };

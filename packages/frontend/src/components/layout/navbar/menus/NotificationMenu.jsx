@@ -5,9 +5,9 @@ import {
   MenuItem,
   MenuList,
   Text,
-} from "@chakra-ui/react";
-import { XDivider } from "@/components/layout/xcomp/XDivider.jsx";
-import { notificationsData } from "@/data/notificationsData.js";
+} from '@chakra-ui/react';
+import { XDivider } from '@/components/layout/xcomp/XDivider.jsx';
+import { notificationsData } from '@/data/notificationsData.js';
 
 export const NotificationMenu = ({
   children,
@@ -24,8 +24,8 @@ export const NotificationMenu = ({
         cursor="pointer"
         height="100%"
         sx={{
-          "> span": {
-            height: "100%",
+          '> span': {
+            height: '100%',
           },
         }}
         onMouseEnter={onMouseEnter}

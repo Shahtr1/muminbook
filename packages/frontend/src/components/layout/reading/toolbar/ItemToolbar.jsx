@@ -1,5 +1,5 @@
-import { StarIcon } from "@chakra-ui/icons";
-import { HiDotsVertical } from "react-icons/hi";
+import { StarIcon } from '@chakra-ui/icons';
+import { HiDotsVertical } from 'react-icons/hi';
 import {
   Box,
   Flex,
@@ -7,37 +7,37 @@ import {
   MenuButton,
   MenuList,
   useBreakpointValue,
-} from "@chakra-ui/react";
-import { useLocation } from "react-router-dom";
+} from '@chakra-ui/react';
+import { useLocation } from 'react-router-dom';
 
 export const ItemToolbar = ({
   zIndex,
   isFavourite = false,
   children,
-  right = "5px",
+  right = '5px',
 }) => {
   const location = useLocation();
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const isFolderView =
-    location.pathname.includes("/reading/my-files") ||
-    location.pathname.includes("/reading/trash");
+    location.pathname.includes('/reading/my-files') ||
+    location.pathname.includes('/reading/trash');
 
   return (
     <Flex
       position="absolute"
-      top={isFolderView ? "0" : "8px"}
+      top={isFolderView ? '0' : '8px'}
       right={right}
       gap={isFolderView ? 1 : 2}
-      zIndex={zIndex ?? "auto"}
+      zIndex={zIndex ?? 'auto'}
       align="center"
     >
       {!isFolderView && (
         <StarIcon
-          fontSize={isSmallScreen || isFolderView ? "11px" : "15px"}
+          fontSize={isSmallScreen || isFolderView ? '11px' : '15px'}
           onClick={() => {
-            console.log("favourite clicked");
+            console.log('favourite clicked');
           }}
-          color={isFavourite ? "brand.600" : "gray.500"}
+          color={isFavourite ? 'brand.600' : 'gray.500'}
         />
       )}
 
@@ -48,14 +48,14 @@ export const ItemToolbar = ({
           cursor="pointer"
           height="100%"
           sx={{
-            "> span": {
-              height: "100%",
+            '> span': {
+              height: '100%',
             },
           }}
         >
-          <Box p={isSmallScreen ? "0px 2px" : 1}>
+          <Box p={isSmallScreen ? '0px 2px' : 1}>
             <HiDotsVertical
-              fontSize={isSmallScreen || isFolderView ? "11px" : "15px"}
+              fontSize={isSmallScreen || isFolderView ? '11px' : '15px'}
             />
           </Box>
         </MenuButton>

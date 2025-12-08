@@ -7,9 +7,9 @@ import {
   MenuItem,
   MenuList,
   Text,
-} from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { featureData } from "@/data/featureData.js";
+} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { featureData } from '@/data/featureData.js';
 
 export const FeaturesMenu = ({
   children,
@@ -31,8 +31,8 @@ export const FeaturesMenu = ({
         cursor="pointer"
         height="100%"
         sx={{
-          "> span": {
-            height: "100%",
+          '> span': {
+            height: '100%',
           },
         }}
         onMouseEnter={onMouseEnter}
@@ -48,13 +48,13 @@ export const FeaturesMenu = ({
         width="fit-content"
         sx={{
           button: {
-            height: "auto",
-            padding: "0",
+            height: 'auto',
+            padding: '0',
           },
         }}
       >
         <Grid
-          templateColumns={{ base: "repeat(2, 1fr)", sm: "repeat(3, 1fr)" }}
+          templateColumns={{ base: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)' }}
           gap={{ base: 2, sm: 5 }}
         >
           {featureData().map((item) => (

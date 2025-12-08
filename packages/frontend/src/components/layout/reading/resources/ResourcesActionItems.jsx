@@ -1,14 +1,14 @@
-import { Text, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
-import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
-import RenameResourceModal from "@/components/layout/modals/RenameResourceModal.jsx";
-import TransferResourceModal from "@/components/layout/modals/TransferResourceModal.jsx";
-import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx";
-import { useMoveToTrashResource } from "@/hooks/resource/trash/useMoveToTrashResource.js";
-import { useRestoreFromTrashResource } from "@/hooks/resource/trash/useRestoreFromTrashResource.js";
-import { useDeleteResource } from "@/hooks/resource/trash/useDeleteResource.js";
-import { useTogglePinResource } from "@/hooks/resource/useTogglePinResource.js";
-import { useCachedResource } from "@/hooks/resource/useCachedResource.js";
+import { Text, useDisclosure } from '@chakra-ui/react';
+import { useState } from 'react';
+import { ActionItems } from '@/components/layout/reading/ActionItems.jsx';
+import RenameResourceModal from '@/components/layout/modals/RenameResourceModal.jsx';
+import TransferResourceModal from '@/components/layout/modals/TransferResourceModal.jsx';
+import ConfirmationModal from '@/components/layout/modals/ConfirmationModal.jsx';
+import { useMoveToTrashResource } from '@/hooks/resource/trash/useMoveToTrashResource.js';
+import { useRestoreFromTrashResource } from '@/hooks/resource/trash/useRestoreFromTrashResource.js';
+import { useDeleteResource } from '@/hooks/resource/trash/useDeleteResource.js';
+import { useTogglePinResource } from '@/hooks/resource/useTogglePinResource.js';
+import { useCachedResource } from '@/hooks/resource/useCachedResource.js';
 
 export const ResourcesActionItems = ({ resource, pathFromUrl }) => {
   const cachedResource = useCachedResource(resource._id, pathFromUrl);

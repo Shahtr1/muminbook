@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import VerificationCodeType from "../constants/enums/verificationCodeType";
-import { PrimaryId } from "../constants/primaryId";
+import mongoose from 'mongoose';
+import VerificationCodeType from '../constants/enums/verificationCodeType';
+import { PrimaryId } from '../constants/primaryId';
 
 export interface VerificationCodeDocument extends mongoose.Document {
   userId: PrimaryId;
@@ -12,7 +12,7 @@ export interface VerificationCodeDocument extends mongoose.Document {
 const verificationCodeSchema = new mongoose.Schema<VerificationCodeDocument>({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
     index: true,
   },
@@ -26,9 +26,9 @@ const verificationCodeSchema = new mongoose.Schema<VerificationCodeDocument>({
 });
 
 const VerificationCodeModel = mongoose.model<VerificationCodeDocument>(
-  "VerificationCode",
+  'VerificationCode',
   verificationCodeSchema,
-  "verification_codes",
+  'verification_codes'
 );
 
 export default VerificationCodeModel;

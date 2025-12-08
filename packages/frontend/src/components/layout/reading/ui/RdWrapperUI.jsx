@@ -9,27 +9,27 @@ import {
   Text,
   Tooltip,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { RdWrapperSidebar } from "@/components/layout/reading/ui/wrapper/RdWrapperSidebar.jsx";
-import { RdWrapperToolbar } from "@/components/layout/reading/ui/wrapper/RdWrapperToolbar.jsx";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { RiCloseCircleFill, RiInformationFill } from "react-icons/ri";
-import { useParams } from "react-router-dom";
-import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { forwardRef } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+} from '@chakra-ui/react';
+import { RdWrapperSidebar } from '@/components/layout/reading/ui/wrapper/RdWrapperSidebar.jsx';
+import { RdWrapperToolbar } from '@/components/layout/reading/ui/wrapper/RdWrapperToolbar.jsx';
+import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import { RiCloseCircleFill, RiInformationFill } from 'react-icons/ri';
+import { useParams } from 'react-router-dom';
+import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
+import { forwardRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const RdWrapperUI = forwardRef(({ fileId, children }, ref) => {
   const queryClient = useQueryClient();
-  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
-  const panelNavHeight = "22px";
+  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.300');
+  const panelNavHeight = '22px';
 
-  const readings = queryClient.getQueryData(["readings"]);
+  const readings = queryClient.getQueryData(['readings']);
   const reading = readings.find((r) => r.uuid === fileId);
 
   const { id: suhufId } = useParams();
-  const suhuf = queryClient.getQueryData(["suhuf", suhufId]);
+  const suhuf = queryClient.getQueryData(['suhuf', suhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const panels = suhuf?.config?.panels || [];
@@ -43,7 +43,7 @@ export const RdWrapperUI = forwardRef(({ fileId, children }, ref) => {
         return {
           ...panel,
           fileId: undefined,
-          fileType: "none",
+          fileType: 'none',
         };
       }
       return panel;
@@ -91,7 +91,7 @@ export const RdWrapperUI = forwardRef(({ fileId, children }, ref) => {
               as="button"
               onClick={closeReading}
               cursor="pointer"
-              _hover={{ color: "red.500" }}
+              _hover={{ color: 'red.500' }}
               color="red.600"
             >
               <RiCloseCircleFill size="12px" />
@@ -113,7 +113,7 @@ export const RdWrapperUI = forwardRef(({ fileId, children }, ref) => {
           {children}
         </Flex>
         <RdWrapperToolbar
-          onToolSelect={(id) => console.log("Tool selected: ", id)}
+          onToolSelect={(id) => console.log('Tool selected: ', id)}
         />
       </Flex>
     </Flex>

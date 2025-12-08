@@ -1,12 +1,12 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
-export const FamilyTreeSVG = ({ active, activeColor, dimensions = "25px" }) => {
+export const FamilyTreeSVG = ({ active, activeColor, dimensions = '25px' }) => {
   return (
     <>
       <SVG
         dimensions={dimensions}
         active={active}
-        style={{ borderRadius: "0" }}
+        style={{ borderRadius: '0' }}
         activeColor={activeColor}
         viewBox="0 0 48 48"
       >

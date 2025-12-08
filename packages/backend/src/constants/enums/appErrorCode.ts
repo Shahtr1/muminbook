@@ -1,6 +1,6 @@
 enum AppErrorCode {
-  InvalidAccessToken = "InvalidAccessToken",
-  ForbiddenAccessToken = "ForbiddenAccessToken",
+  InvalidAccessToken = 'InvalidAccessToken',
+  ForbiddenAccessToken = 'ForbiddenAccessToken',
 }
 
 export default AppErrorCode;

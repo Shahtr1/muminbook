@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo } from "react";
-import { useParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
-import { useWindowNavbar } from "@/context/WindowNavbarContext.jsx";
-import { useSuhuf } from "@/hooks/suhuf/useSuhuf.js";
+import { useCallback, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { useWindowNavbar } from '@/context/WindowNavbarContext.jsx';
+import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
 import {
   Flex,
   Tooltip,
@@ -10,17 +10,17 @@ import {
   useColorModeValue,
   useTheme,
   useToken,
-} from "@chakra-ui/react";
-import { Loader } from "@/components/layout/Loader.jsx";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { SuhufLayout } from "@/components/layout/suhuf/SuhufLayout.jsx";
-import { SidebarLeftSVG } from "@/components/svgs/sidebar/SidebarLeftSVG.jsx";
-import { SidebarBottomSVG } from "@/components/svgs/sidebar/SidebarBottomSVG.jsx";
-import { SuhufMenu } from "@/components/layout/suhuf/SuhufMenu.jsx";
-import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { SplitHorizontalSVG } from "@/components/svgs/sidebar/SplitHorizontalSVG.jsx";
-import { SplitVerticalSVG } from "@/components/svgs/sidebar/SplitVerticalSVG.jsx";
-import { useReadings } from "@/hooks/reading/useReadings.js";
+} from '@chakra-ui/react';
+import { Loader } from '@/components/layout/Loader.jsx';
+import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import { SuhufLayout } from '@/components/layout/suhuf/SuhufLayout.jsx';
+import { SidebarLeftSVG } from '@/components/svgs/sidebar/SidebarLeftSVG.jsx';
+import { SidebarBottomSVG } from '@/components/svgs/sidebar/SidebarBottomSVG.jsx';
+import { SuhufMenu } from '@/components/layout/suhuf/SuhufMenu.jsx';
+import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
+import { SplitHorizontalSVG } from '@/components/svgs/sidebar/SplitHorizontalSVG.jsx';
+import { SplitVerticalSVG } from '@/components/svgs/sidebar/SplitVerticalSVG.jsx';
+import { useReadings } from '@/hooks/reading/useReadings.js';
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
@@ -28,8 +28,8 @@ export const Suhuf = () => {
   const { setNavbarChildren } = useWindowNavbar();
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
 
-  const tokenKey = useColorModeValue("wn.bold.light", "wn.bold.dark");
-  const [iconActiveColor] = useToken("colors", [tokenKey]);
+  const tokenKey = useColorModeValue('wn.bold.light', 'wn.bold.dark');
+  const [iconActiveColor] = useToken('colors', [tokenKey]);
   const theme = useTheme();
 
   const {
@@ -56,7 +56,7 @@ export const Suhuf = () => {
 
       const updatedLayout = { ...layout };
 
-      if (op === "split") {
+      if (op === 'split') {
         const togglingToSplit = !layout.isSplit;
         updatedLayout.isSplit = togglingToSplit;
 
@@ -69,14 +69,14 @@ export const Suhuf = () => {
           updateConfig({ layout: updatedLayout, panels: updatedPanels });
           return;
         }
-      } else if (op === "left")
+      } else if (op === 'left')
         updatedLayout.isLeftTabOpen = !layout.isLeftTabOpen;
-      else if (op === "bottom")
+      else if (op === 'bottom')
         updatedLayout.isBottomTabOpen = !layout.isBottomTabOpen;
 
       updateConfig({ layout: updatedLayout });
     },
-    [updateConfig, suhuf],
+    [updateConfig, suhuf]
   );
 
   const navbarContent = useMemo(
@@ -89,7 +89,7 @@ export const Suhuf = () => {
             placement="bottom"
             variant="inverted"
           >
-            <div onClick={() => handleClick("left")}>
+            <div onClick={() => handleClick('left')}>
               <SidebarLeftSVG
                 activeColor={iconActiveColor}
                 active={leftTabOpen}
@@ -101,7 +101,7 @@ export const Suhuf = () => {
             placement="bottom"
             variant="inverted"
           >
-            <div onClick={() => handleClick("bottom")}>
+            <div onClick={() => handleClick('bottom')}>
               <SidebarBottomSVG
                 activeColor={iconActiveColor}
                 active={bottomTabOpen}
@@ -109,7 +109,7 @@ export const Suhuf = () => {
             </div>
           </Tooltip>
           <Tooltip label="Toggle split" placement="bottom" variant="inverted">
-            <div onClick={() => handleClick("split")}>
+            <div onClick={() => handleClick('split')}>
               {isSmallScreen ? (
                 <SplitVerticalSVG
                   activeColor={iconActiveColor}
@@ -134,25 +134,25 @@ export const Suhuf = () => {
       isSplit,
       isSmallScreen,
       iconActiveColor,
-    ],
+    ]
   );
 
-  queryClient.setQueryData(["windowMode"], true);
+  queryClient.setQueryData(['windowMode'], true);
 
   useEffect(() => {
-    queryClient.setQueryData(["windowMode"], true);
+    queryClient.setQueryData(['windowMode'], true);
     setNavbarChildren(navbarContent);
     return () => {
-      queryClient.setQueryData(["windowMode"], false);
+      queryClient.setQueryData(['windowMode'], false);
       setNavbarChildren(null);
     };
   }, [navbarContent, queryClient, setNavbarChildren]);
 
-  const winNavbarHeight = "30px";
+  const winNavbarHeight = '30px';
 
   return (
     <Flex
-      h={`calc(100dvh - ${theme.sizes["win-manager-height"]} - ${winNavbarHeight})`}
+      h={`calc(100dvh - ${theme.sizes['win-manager-height']} - ${winNavbarHeight})`}
       w="100%"
       overflow="hidden"
     >

@@ -1,10 +1,10 @@
-import { RequestHandler } from "express";
-import appAssert from "../utils/appAssert";
-import { FORBIDDEN, UNAUTHORIZED } from "../constants/http";
-import AppErrorCode from "../constants/enums/appErrorCode";
-import { AccessTokenPayload, verifyToken } from "../utils/jwt";
-import RoleType from "../constants/enums/roleType";
-import { PrimaryId } from "../constants/primaryId";
+import { RequestHandler } from 'express';
+import appAssert from '../utils/appAssert';
+import { FORBIDDEN, UNAUTHORIZED } from '../constants/http';
+import AppErrorCode from '../constants/enums/appErrorCode';
+import { AccessTokenPayload, verifyToken } from '../utils/jwt';
+import RoleType from '../constants/enums/roleType';
+import { PrimaryId } from '../constants/primaryId';
 
 const authenticate = (isAdmin: boolean = false): RequestHandler => {
   return (req, res, next) => {
@@ -12,16 +12,16 @@ const authenticate = (isAdmin: boolean = false): RequestHandler => {
     appAssert(
       accessToken,
       UNAUTHORIZED,
-      "Not authorized",
-      AppErrorCode.InvalidAccessToken,
+      'Not authorized',
+      AppErrorCode.InvalidAccessToken
     );
 
     const { error, payload } = verifyToken<AccessTokenPayload>(accessToken);
     appAssert(
       payload,
       UNAUTHORIZED,
-      error === "jwt expired" ? "Token expired" : "Invalid token",
-      AppErrorCode.InvalidAccessToken,
+      error === 'jwt expired' ? 'Token expired' : 'Invalid token',
+      AppErrorCode.InvalidAccessToken
     );
 
     const hasValidRole =
@@ -31,8 +31,8 @@ const authenticate = (isAdmin: boolean = false): RequestHandler => {
     appAssert(
       hasValidRole,
       FORBIDDEN,
-      "Forbidden",
-      AppErrorCode.ForbiddenAccessToken,
+      'Forbidden',
+      AppErrorCode.ForbiddenAccessToken
     );
 
     req.role = payload.role;

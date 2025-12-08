@@ -1,8 +1,8 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex } from '@chakra-ui/react';
 import {
   CommonTextNode,
   TreeNode,
-} from "@/components/layout/features/nodes/TreeNode.jsx";
+} from '@/components/layout/features/nodes/TreeNode.jsx';
 
 export const CaliphNode = ({ data }) => {
   return (

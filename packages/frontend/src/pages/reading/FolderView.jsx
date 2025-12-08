@@ -5,27 +5,27 @@ import {
   Text,
   Tooltip,
   useBreakpointValue,
-} from "@chakra-ui/react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
-import { File } from "@/components/layout/reading/resources/File.jsx";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { Loader } from "@/components/layout/Loader.jsx";
-import { useResources } from "@/hooks/resource/useResources.js";
-import { useTrashResource } from "@/hooks/resource/trash/useTrashResource.js";
+} from '@chakra-ui/react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Folder } from '@/components/layout/reading/resources/Folder.jsx';
+import { File } from '@/components/layout/reading/resources/File.jsx';
+import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import { Loader } from '@/components/layout/Loader.jsx';
+import { useResources } from '@/hooks/resource/useResources.js';
+import { useTrashResource } from '@/hooks/resource/trash/useTrashResource.js';
 
 export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const itemWidth = useBreakpointValue({ base: "70px", sm: "100px" });
+  const itemWidth = useBreakpointValue({ base: '70px', sm: '100px' });
   const originalPath = location.state?.originalPath;
 
-  const pathSegments = location.pathname.split("/").filter(Boolean);
+  const pathSegments = location.pathname.split('/').filter(Boolean);
 
-  const isTrashView = location.pathname.includes("/reading/trash");
-  const baseSegment = isTrashView ? "trash" : "my-files";
+  const isTrashView = location.pathname.includes('/reading/trash');
+  const baseSegment = isTrashView ? 'trash' : 'my-files';
   const folderPathIndex = pathSegments.indexOf(baseSegment);
-  const folderPath = pathSegments.slice(folderPathIndex).join("/");
+  const folderPath = pathSegments.slice(folderPathIndex).join('/');
 
   const { resources, isPending, isError } = isTrashView
     ? useTrashResource(folderPath, originalPath)
@@ -36,14 +36,14 @@ export const FolderView = () => {
 
   return (
     <Flex
-      flexDir={isTrashView ? "column" : "row"}
+      flexDir={isTrashView ? 'column' : 'row'}
       w="100%"
       height="fit-content"
       overflow="visible"
       css={{
-        "&::-webkit-scrollbar": { display: "none" },
-        scrollbarWidth: "none",
-        msOverflowStyle: "none",
+        '&::-webkit-scrollbar': { display: 'none' },
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
       }}
     >
       {isTrashView && (
@@ -51,8 +51,8 @@ export const FolderView = () => {
           <Alert
             status="info"
             variant="left-accent"
-            fontSize={{ base: "10px", sm: "sm" }}
-            h={{ base: "40px", sm: "50px" }}
+            fontSize={{ base: '10px', sm: 'sm' }}
+            h={{ base: '40px', sm: '50px' }}
           >
             <AlertIcon />
             <Text>
@@ -68,13 +68,13 @@ export const FolderView = () => {
         overflow="visible"
       >
         {resources.map((res) => {
-          const pathWithoutMyFiles = res.path?.replace(/^\/?my-files\//, "");
+          const pathWithoutMyFiles = res.path?.replace(/^\/?my-files\//, '');
 
-          if (res.type === "folder" && res.name === "lost+found" && res.empty) {
+          if (res.type === 'folder' && res.name === 'lost+found' && res.empty) {
             return null;
           }
 
-          if (res.type === "folder") {
+          if (res.type === 'folder') {
             return (
               <Flex
                 flexDir="column"
@@ -88,10 +88,10 @@ export const FolderView = () => {
                       `/reading/${baseSegment}/${[
                         ...pathSegments.slice(folderPathIndex + 1),
                         encodeURIComponent(res.name),
-                      ].join("/")}`,
+                      ].join('/')}`,
                       isTrashView
                         ? { state: { originalPath: res.path } }
-                        : undefined,
+                        : undefined
                     );
                   }}
                   width={itemWidth}
@@ -105,7 +105,7 @@ export const FolderView = () => {
                     placement="bottom"
                   >
                     <Text
-                      fontSize={{ base: "9px", sm: "12px" }}
+                      fontSize={{ base: '9px', sm: '12px' }}
                       maxW={itemWidth}
                       overflowX="auto"
                       whiteSpace="nowrap"
@@ -137,7 +137,7 @@ export const FolderView = () => {
               {isTrashView && (
                 <Tooltip label={pathWithoutMyFiles} hasArrow placement="bottom">
                   <Text
-                    fontSize={{ base: "9px", sm: "12px" }}
+                    fontSize={{ base: '9px', sm: '12px' }}
                     maxW={itemWidth}
                     overflowX="auto"
                     whiteSpace="nowrap"

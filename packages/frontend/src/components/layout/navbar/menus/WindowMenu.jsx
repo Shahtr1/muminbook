@@ -9,24 +9,24 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { userData } from "@/data/userData.js";
-import { notificationsData } from "@/data/notificationsData.js";
-import { featureData } from "@/data/featureData.js";
-import { AUTH } from "@/hooks/useAuth.js";
-import { useQueryClient } from "@tanstack/react-query";
-import { IoChevronForwardOutline, IoMenuOutline } from "react-icons/io5";
-import { navItems } from "@/data/navbarData.js";
+} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { userData } from '@/data/userData.js';
+import { notificationsData } from '@/data/notificationsData.js';
+import { featureData } from '@/data/featureData.js';
+import { AUTH } from '@/hooks/useAuth.js';
+import { useQueryClient } from '@tanstack/react-query';
+import { IoChevronForwardOutline, IoMenuOutline } from 'react-icons/io5';
+import { navItems } from '@/data/navbarData.js';
 
 export const WindowMenu = () => {
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const hoverGray = useColorModeValue(
-    "wn.icon.hover.light",
-    "wn.icon.hover.dark",
+    'wn.icon.hover.light',
+    'wn.icon.hover.dark'
   );
-  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
-  const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
+  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
+  const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
@@ -46,7 +46,7 @@ export const WindowMenu = () => {
 
   const menuList = (list, label, isSubMenu = false) => {
     return (
-      <Menu isLazy placement={isSubMenu ? "right-start" : "bottom-start"}>
+      <Menu isLazy placement={isSubMenu ? 'right-start' : 'bottom-start'}>
         <MenuButton
           as={Flex}
           align="center"
@@ -54,17 +54,17 @@ export const WindowMenu = () => {
           cursor="pointer"
           height="100%"
           sx={{
-            "> span": {
-              height: "100%",
+            '> span': {
+              height: '100%',
             },
           }}
         >
           <Flex
-            _hover={{ bg: "red.600" }}
+            _hover={{ bg: 'red.600' }}
             cursor="pointer"
             align="center"
-            justify={isSubMenu ? "space-between" : "center"}
-            w={label ? "auto" : "28px"}
+            justify={isSubMenu ? 'space-between' : 'center'}
+            w={label ? 'auto' : '28px'}
             role="group"
             onClick={close}
           >
@@ -91,13 +91,13 @@ export const WindowMenu = () => {
         <MenuList
           sx={{
             button: {
-              height: "auto",
-              padding: "0",
+              height: 'auto',
+              padding: '0',
             },
-            padding: "0",
+            padding: '0',
             background: bgColor,
-            border: "none",
-            minW: "120px",
+            border: 'none',
+            minW: '120px',
           }}
         >
           {list.map((it) => {

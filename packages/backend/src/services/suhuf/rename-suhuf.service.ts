@@ -1,15 +1,15 @@
-import { PrimaryId } from "../../constants/primaryId";
-import SuhufModel from "../../models/suhuf.model";
-import appAssert from "../../utils/appAssert";
-import { CONFLICT, NOT_FOUND } from "../../constants/http";
+import { PrimaryId } from '../../constants/primaryId';
+import SuhufModel from '../../models/suhuf.model';
+import appAssert from '../../utils/appAssert';
+import { CONFLICT, NOT_FOUND } from '../../constants/http';
 
 export const renameSuhuf = async (
   suhufId: string,
   userId: PrimaryId,
-  newTitle: string,
+  newTitle: string
 ) => {
   const suhuf = await SuhufModel.findOne({ _id: suhufId, userId });
-  appAssert(suhuf, NOT_FOUND, "Suhuf not found");
+  appAssert(suhuf, NOT_FOUND, 'Suhuf not found');
 
   const conflict = await SuhufModel.findOne({
     title: newTitle,
@@ -22,6 +22,6 @@ export const renameSuhuf = async (
   await suhuf.save();
 
   return {
-    message: "Renamed successfully",
+    message: 'Renamed successfully',
   };
 };

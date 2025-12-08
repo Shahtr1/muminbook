@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Get current branch name
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+# Define valid branch name pattern
+# Format: type/description or type/ticket-description
+# Valid types: feature, fix, hotfix, release, chore, docs, refactor, test
+valid_branch_regex="^(feature|fix|hotfix|release|chore|docs|refactor|test)\/[a-z0-9._-]+$"
+
+# Allow main, master, develop, staging branches
+if [ "$branch" = "main" ] || [ "$branch" = "master" ] || [ "$branch" = "develop" ] || [ "$branch" = "staging" ]; then
+    exit 0
+fi
+
+# Check if branch name matches pattern
+if ! echo "$branch" | grep -qE "$valid_branch_regex"; then
+    echo "❌ ERROR: Invalid branch name: '$branch'"
+    echo ""
+    echo "Branch names must follow this format:"
+    echo "  <type>/<description>"
+    echo ""
+    echo "Valid types:"
+    echo "  - feature/  : New features"
+    echo "  - fix/      : Bug fixes"
+    echo "  - hotfix/   : Urgent production fixes"
+    echo "  - release/  : Release branches"
+    echo "  - chore/    : Maintenance tasks"
+    echo "  - docs/     : Documentation updates"
+    echo "  - refactor/ : Code refactoring"
+    echo "  - test/     : Test additions/updates"
+    echo ""
+    echo "Examples:"
+    echo "  ✅ feature/user-authentication"
+    echo "  ✅ fix/login-bug"
+    echo "  ✅ hotfix/payment-error"
+    echo "  ✅ chore/update-dependencies"
+    echo ""
+    echo "Your branch: ❌ $branch"
+    echo ""
+    echo "To rename your branch:"
+    echo "  git branch -m <type>/<description>"
+    echo ""
+    exit 1
+fi
+
+echo "✅ Branch name is valid: $branch"
+exit 0
+

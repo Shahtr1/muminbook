@@ -4,29 +4,29 @@ import {
   Tooltip,
   useColorModeValue,
   VStack,
-} from "@chakra-ui/react";
-import { useEffect } from "react";
-import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
-import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+} from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { sidebarMenuData } from '@/data/sidebarMenuData.jsx';
+import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
+import { useParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const SuhufLeftSidebar = () => {
   const { id: suhufId } = useParams();
   const queryClient = useQueryClient();
   const { data: suhuf } = useQuery({
-    queryKey: ["suhuf", suhufId],
-    queryFn: () => queryClient.getQueryData(["suhuf", suhufId]),
+    queryKey: ['suhuf', suhufId],
+    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
     staleTime: 0,
   });
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
-  const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
-  const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
-  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
+  const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
+  const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
+  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
 
-  const width = "150px";
+  const width = '150px';
 
   const layout = suhuf?.config?.layout || {};
   const activeTab = layout.leftTab;
@@ -38,7 +38,7 @@ export const SuhufLeftSidebar = () => {
       updateConfig({
         layout: {
           ...layout,
-          leftTab: "explorer",
+          leftTab: 'explorer',
         },
       });
     }
@@ -113,7 +113,7 @@ export const SuhufLeftSidebar = () => {
         borderRight="1px solid"
         borderColor={borderColor}
         transition="margin-left 0.3s ease-in-out"
-        marginLeft={isOpen ? "0" : `-${width}`}
+        marginLeft={isOpen ? '0' : `-${width}`}
         h="100%"
       >
         <VStack spacing={5} align="flex-start" w="100%" pl={2} h="100%">

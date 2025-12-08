@@ -1,37 +1,37 @@
-import { Box, Flex, Icon, Tooltip, useColorModeValue } from "@chakra-ui/react";
-import { useState } from "react";
-import { FaComment, FaHighlighter } from "react-icons/fa";
-import { FaArrowPointer } from "react-icons/fa6";
-import { RiFullscreenExitFill, RiFullscreenFill } from "react-icons/ri";
+import { Box, Flex, Icon, Tooltip, useColorModeValue } from '@chakra-ui/react';
+import { useState } from 'react';
+import { FaComment, FaHighlighter } from 'react-icons/fa';
+import { FaArrowPointer } from 'react-icons/fa6';
+import { RiFullscreenExitFill, RiFullscreenFill } from 'react-icons/ri';
 
 export const RdWrapperToolbar = ({ onToolSelect }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
-  const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
+  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
+  const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
   const iconHoverGray = useColorModeValue(
-    "wn.icon.hover.light",
-    "wn.icon.hover.dark",
+    'wn.icon.hover.light',
+    'wn.icon.hover.dark'
   );
 
   const baseTools = [
-    { label: "Select text", id: "text-select", icon: FaArrowPointer },
-    { label: "Add a comment", id: "comment", icon: FaComment },
-    { label: "Highlight text", id: "highlight", icon: FaHighlighter },
+    { label: 'Select text', id: 'text-select', icon: FaArrowPointer },
+    { label: 'Add a comment', id: 'comment', icon: FaComment },
+    { label: 'Highlight text', id: 'highlight', icon: FaHighlighter },
   ];
 
   const fullScreenTool = isFullscreen
     ? {
-        label: "Exit full Screen",
-        id: "exitFullScreen",
+        label: 'Exit full Screen',
+        id: 'exitFullScreen',
         icon: RiFullscreenExitFill,
       }
-    : { label: "Full screen", id: "fullScreen", icon: RiFullscreenFill };
+    : { label: 'Full screen', id: 'fullScreen', icon: RiFullscreenFill };
 
   const handleClick = (id) => {
-    if (id === "fullScreen") setIsFullscreen(true);
-    if (id === "exitFullScreen") setIsFullscreen(false);
+    if (id === 'fullScreen') setIsFullscreen(true);
+    if (id === 'exitFullScreen') setIsFullscreen(false);
     onToolSelect?.(id);
   };
 

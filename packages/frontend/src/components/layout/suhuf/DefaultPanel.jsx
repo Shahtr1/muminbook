@@ -4,20 +4,20 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { SuhufSVG } from "@/components/svgs/SuhufSVG.jsx";
-import { sidebarMenuData } from "@/data/sidebarMenuData.jsx";
-import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
+} from '@chakra-ui/react';
+import { SuhufSVG } from '@/components/svgs/SuhufSVG.jsx';
+import { sidebarMenuData } from '@/data/sidebarMenuData.jsx';
+import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 
 export const DefaultPanel = ({ suhuf }) => {
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
-  const secondaryColor = useColorModeValue("wn.gutter.light", "wn.gutter.dark");
-  const suhufLogoSize = useBreakpointValue({ base: "90px", sm: "130px" });
-  const primaryColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
+  const secondaryColor = useColorModeValue('wn.gutter.light', 'wn.gutter.dark');
+  const suhufLogoSize = useBreakpointValue({ base: '90px', sm: '130px' });
+  const primaryColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
   const bgColor = useColorModeValue(
-    "wn.bg_content.light",
-    "wn.bg_content.dark",
+    'wn.bg_content.light',
+    'wn.bg_content.dark'
   );
 
   const layout = suhuf?.config?.layout || {};
@@ -48,7 +48,7 @@ export const DefaultPanel = ({ suhuf }) => {
       >
         <SuhufSVG dimensions={suhufLogoSize} activeColor={secondaryColor} />
         <Text
-          fontSize={{ base: "17px", sm: "22px" }}
+          fontSize={{ base: '17px', sm: '22px' }}
           fontWeight="semibold"
           color={secondaryColor}
           overflow="hidden"
@@ -60,10 +60,10 @@ export const DefaultPanel = ({ suhuf }) => {
 
         <Flex w="80%" flexDir="column" gap={2}>
           <Flex flexDir="column">
-            <Text fontSize={{ base: "15px", sm: "18px" }} color={primaryColor}>
+            <Text fontSize={{ base: '15px', sm: '18px' }} color={primaryColor}>
               Built for seekers.
             </Text>
-            <Text fontSize={{ base: "15px", sm: "18px" }} color={primaryColor}>
+            <Text fontSize={{ base: '15px', sm: '18px' }} color={primaryColor}>
               Start
             </Text>
           </Flex>
@@ -84,9 +84,9 @@ export const DefaultPanel = ({ suhuf }) => {
               </Flex>
               <Flex flexDir="column">
                 <Text
-                  fontSize={{ base: "14px", sm: "17px" }}
+                  fontSize={{ base: '14px', sm: '17px' }}
                   color="brand.500"
-                  _groupHover={{ textDecoration: "underline" }}
+                  _groupHover={{ textDecoration: 'underline' }}
                 >
                   {label}
                 </Text>

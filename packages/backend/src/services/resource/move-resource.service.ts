@@ -1,21 +1,21 @@
-import { PrimaryId } from "../../constants/primaryId";
-import ResourceModel from "../../models/resource.model";
-import appAssert from "../../utils/appAssert";
-import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../../constants/http";
-import ResourceType from "../../constants/enums/resourceType";
+import { PrimaryId } from '../../constants/primaryId';
+import ResourceModel from '../../models/resource.model';
+import appAssert from '../../utils/appAssert';
+import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../constants/http';
+import ResourceType from '../../constants/enums/resourceType';
 import {
   assertNotRootFolder,
   getAllDescendants,
-} from "./common-resource.service";
+} from './common-resource.service';
 
 export const moveResource = async (
   resourceId: PrimaryId,
   destinationPath: string,
-  userId: PrimaryId,
+  userId: PrimaryId
 ) => {
   destinationPath = decodeURIComponent(destinationPath);
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
-  appAssert(resource, NOT_FOUND, "Resource not found");
+  appAssert(resource, NOT_FOUND, 'Resource not found');
   assertNotRootFolder(resource);
 
   const destinationFolder = await ResourceModel.findOne({
@@ -25,17 +25,17 @@ export const moveResource = async (
     deleted: false,
   });
 
-  appAssert(destinationFolder, NOT_FOUND, "Destination folder not found");
+  appAssert(destinationFolder, NOT_FOUND, 'Destination folder not found');
 
   // Prevent moving into self or its own children
   appAssert(
     resource.path !== destinationPath &&
       !destinationPath.startsWith(`${resource.path}/`),
     BAD_REQUEST,
-    "Cannot copy a folder into itself or its subfolders.",
+    'Cannot copy a folder into itself or its subfolders.'
   );
 
-  const newPath = `${destinationPath}/${resource.name}`.replace(/\/+/g, "/");
+  const newPath = `${destinationPath}/${resource.name}`.replace(/\/+/g, '/');
 
   const conflict = await ResourceModel.findOne({
     path: newPath,
@@ -44,7 +44,7 @@ export const moveResource = async (
   appAssert(
     !conflict,
     CONFLICT,
-    "A resource with the same name already exists in target folder",
+    'A resource with the same name already exists in target folder'
   );
 
   const updates: any[] = [];
@@ -77,5 +77,5 @@ export const moveResource = async (
 
   await ResourceModel.bulkWrite(updates);
 
-  return { message: "Moved successfully" };
+  return { message: 'Moved successfully' };
 };

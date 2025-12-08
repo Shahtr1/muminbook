@@ -1,5 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-import { PrimaryId } from "../constants/primaryId";
+import mongoose, { Document, Schema } from 'mongoose';
+import { PrimaryId } from '../constants/primaryId';
 
 export interface QuranDocument extends Document {
   uuid: number;
@@ -32,7 +32,7 @@ const quranDocument = new Schema<QuranDocument>(
     },
     surahId: {
       type: Schema.Types.ObjectId,
-      ref: "Surah",
+      ref: 'Surah',
       required: true,
     },
     ayat: {
@@ -45,7 +45,7 @@ const quranDocument = new Schema<QuranDocument>(
     },
     juzId: {
       type: Schema.Types.ObjectId,
-      ref: "Juz",
+      ref: 'Juz',
       required: true,
     },
     surahStart: {
@@ -69,7 +69,7 @@ const quranDocument = new Schema<QuranDocument>(
       obligatory: { type: Boolean, default: false },
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 quranDocument.index({ uuid: 1 }, { unique: true });
@@ -79,9 +79,9 @@ quranDocument.index({ ruku: 1 });
 quranDocument.index({ hizbQuarter: 1 });
 
 const QuranModel = mongoose.model<QuranDocument>(
-  "Quran",
+  'Quran',
   quranDocument,
-  "quran",
+  'quran'
 );
 
 export default QuranModel;

@@ -1,19 +1,19 @@
-import { Flex, useColorMode } from "@chakra-ui/react";
-import Split from "react-split";
-import { SuhufPanel } from "./SuhufPanel.jsx";
-import { SuhufLeftSidebar } from "@/components/layout/suhuf/SuhufLeftSidebar.jsx";
-import { SuhufBottomPanel } from "@/components/layout/suhuf/bottomPanel/SuhufBottomPanel.jsx";
-import { SuhufBottomPanelHeader } from "@/components/layout/suhuf/bottomPanel/SuhufBottomPanelHeader.jsx";
-import { useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Flex, useColorMode } from '@chakra-ui/react';
+import Split from 'react-split';
+import { SuhufPanel } from './SuhufPanel.jsx';
+import { SuhufLeftSidebar } from '@/components/layout/suhuf/SuhufLeftSidebar.jsx';
+import { SuhufBottomPanel } from '@/components/layout/suhuf/bottomPanel/SuhufBottomPanel.jsx';
+import { SuhufBottomPanelHeader } from '@/components/layout/suhuf/bottomPanel/SuhufBottomPanelHeader.jsx';
+import { useParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const SuhufLayout = ({ readings }) => {
   const { colorMode } = useColorMode();
   const { id: suhufId } = useParams();
   const queryClient = useQueryClient();
   const { data: suhuf } = useQuery({
-    queryKey: ["suhuf", suhufId],
-    queryFn: () => queryClient.getQueryData(["suhuf", suhufId]),
+    queryKey: ['suhuf', suhufId],
+    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
     staleTime: 0,
   });
 
@@ -34,12 +34,12 @@ export const SuhufLayout = ({ readings }) => {
           sizes={sizes}
           minSize={isBottomOpen ? [200, 100] : [200]}
           gutterSize={3}
-          className={colorMode === "dark" ? "gutter-dark" : "gutter-light"}
+          className={colorMode === 'dark' ? 'gutter-dark' : 'gutter-light'}
           style={{
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            overflowY: "auto",
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            overflowY: 'auto',
           }}
         >
           {/* Main Panel */}

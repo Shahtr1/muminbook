@@ -1,7 +1,7 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getUser } from "@/services/index.js";
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getUser } from '@/services/index.js';
 
-export const AUTH = "auth";
+export const AUTH = 'auth';
 
 const useAuth = (opts = {}) => {
   const queryClient = useQueryClient();

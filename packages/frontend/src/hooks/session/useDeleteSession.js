@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SESSIONS } from "./useSessions.js";
-import { deleteSession } from "@/services/index.js";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { SESSIONS } from './useSessions.js';
+import { deleteSession } from '@/services/index.js';
 
 const useDeleteSession = (sessionId) => {
   const queryClient = useQueryClient();
@@ -8,7 +8,7 @@ const useDeleteSession = (sessionId) => {
     mutationFn: () => deleteSession(sessionId),
     onSuccess: () => {
       queryClient.setQueryData([SESSIONS], (cache) =>
-        cache.filter((session) => session._id !== sessionId),
+        cache.filter((session) => session._id !== sessionId)
       );
     },
   });

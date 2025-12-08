@@ -1,9 +1,9 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
 export const CardSVG = ({
   active,
   activeColor,
-  dimensions = "25px",
+  dimensions = '25px',
   absolute = false,
   absoluteStyles,
 }) => {

@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import { PrimaryId } from "../constants/primaryId";
-import FileType from "../constants/enums/fileType";
-import Direction from "../constants/enums/direction";
+import mongoose from 'mongoose';
+import { PrimaryId } from '../constants/primaryId';
+import FileType from '../constants/enums/fileType';
+import Direction from '../constants/enums/direction';
 
 type ReadingLayout = {
   id: string;
@@ -40,13 +40,13 @@ const suhufSchema = new mongoose.Schema<SuhufDocument>(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true,
     },
     title: {
       type: String,
-      default: "Untitled Suhuf",
+      default: 'Untitled Suhuf',
     },
     config: {
       type: Object,
@@ -66,9 +66,9 @@ const suhufSchema = new mongoose.Schema<SuhufDocument>(
       },
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-const SuhufModel = mongoose.model<SuhufDocument>("Suhuf", suhufSchema, "Suhuf");
+const SuhufModel = mongoose.model<SuhufDocument>('Suhuf', suhufSchema, 'Suhuf');
 
 export default SuhufModel;

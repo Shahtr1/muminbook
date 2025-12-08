@@ -1,5 +1,5 @@
-import { Box, useColorModeValue } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, useColorModeValue } from '@chakra-ui/react';
+import { useState } from 'react';
 
 export const SVG = ({
   dimensions,
@@ -18,10 +18,10 @@ export const SVG = ({
     width = widthHeight[0];
     height = widthHeight[1];
   }
-  const defaultActiveColor = useColorModeValue("active.light", "active.dark");
+  const defaultActiveColor = useColorModeValue('active.light', 'active.dark');
   const defaultDefaultColor = useColorModeValue(
-    "default.light",
-    "default.dark",
+    'default.light',
+    'default.dark'
   );
 
   const computedActiveColor = activeColor ?? defaultActiveColor;
@@ -30,7 +30,7 @@ export const SVG = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const abStyles = {
-    position: "absolute",
+    position: 'absolute',
     ...absoluteStyles,
   };
 

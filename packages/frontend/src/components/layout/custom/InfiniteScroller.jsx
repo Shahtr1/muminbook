@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from "react";
-import { Box, Flex, Spinner, useColorModeValue } from "@chakra-ui/react";
-import { useTrackVisibleAyat } from "@/hooks/quran/useTrackVisibleAyat.js";
-import { usePreserveScrollOnPrepend } from "@/hooks/reading/usePreserveScrollOnPrepend.js";
+import React, { useEffect, useRef } from 'react';
+import { Box, Flex, Spinner, useColorModeValue } from '@chakra-ui/react';
+import { useTrackVisibleAyat } from '@/hooks/quran/useTrackVisibleAyat.js';
+import { usePreserveScrollOnPrepend } from '@/hooks/reading/usePreserveScrollOnPrepend.js';
 
 export const InfiniteScroller = ({
   items = [],
   renderItem = (item) => item.ayat,
-  direction = "rtl",
-  fontSize = "30px",
+  direction = 'rtl',
+  fontSize = '30px',
   onLoadNext,
   onLoadPrevious,
   isFetchingNext,
@@ -18,7 +18,7 @@ export const InfiniteScroller = ({
   const containerRef = useRef(null);
   const topObserverRef = useRef();
   const bottomObserverRef = useRef();
-  const textColor = useColorModeValue("#000", "whiteAlpha.900");
+  const textColor = useColorModeValue('#000', 'whiteAlpha.900');
 
   const { recordScrollPosition } = usePreserveScrollOnPrepend({
     containerRef,
@@ -42,7 +42,7 @@ export const InfiniteScroller = ({
           onLoadPrevious?.();
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     );
 
     observer.observe(el);
@@ -60,7 +60,7 @@ export const InfiniteScroller = ({
           onLoadNext?.();
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     );
 
     observer.observe(el);
@@ -78,7 +78,7 @@ export const InfiniteScroller = ({
       whiteSpace="pre-wrap"
       wordBreak="break-word"
       dir={direction}
-      textAlign={direction === "rtl" ? "right" : "left"}
+      textAlign={direction === 'rtl' ? 'right' : 'left'}
       px={2}
     >
       <Box as="span" ref={topObserverRef} height="1px" />
@@ -91,7 +91,7 @@ export const InfiniteScroller = ({
 
       {items.map((item, i) => (
         <Box as="span" key={item._id || i} display="inline" data-idx={i}>
-          {renderItem(item, i)}{" "}
+          {renderItem(item, i)}{' '}
         </Box>
       ))}
 

@@ -7,17 +7,17 @@ import {
   Flex,
   Text,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
-import React from "react";
+} from '@chakra-ui/react';
+import { ArrowBackIcon } from '@chakra-ui/icons';
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 export const Forbidden = () => {
   const navigate = useNavigate();
-  const iconColor = useColorModeValue("text.primary", "whiteAlpha.900");
+  const iconColor = useColorModeValue('text.primary', 'whiteAlpha.900');
 
   const handleGoBack = () => {
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -48,17 +48,17 @@ export const Forbidden = () => {
           borderColor={iconColor}
           onClick={handleGoBack}
           _hover={{
-            bg: "transparent",
+            bg: 'transparent',
             color: iconColor,
             borderColor: iconColor,
           }}
           _focus={{
-            bg: "transparent",
+            bg: 'transparent',
             color: iconColor,
             borderColor: iconColor,
           }}
           _active={{
-            bg: "transparent",
+            bg: 'transparent',
             color: iconColor,
             borderColor: iconColor,
           }}

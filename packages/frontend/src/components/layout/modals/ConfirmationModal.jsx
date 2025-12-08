@@ -1,15 +1,15 @@
-import { Button } from "@chakra-ui/react";
-import { XModal } from "@/components/layout/modals/XModal.jsx";
+import { Button } from '@chakra-ui/react';
+import { XModal } from '@/components/layout/modals/XModal.jsx';
 
 const ConfirmationModal = ({
   isOpen,
   onClose,
-  yesLabel = "Submit",
-  noLabel = "Cancel",
+  yesLabel = 'Submit',
+  noLabel = 'Cancel',
   children,
-  title = "Action",
+  title = 'Action',
   onSave,
-  yesVariant = "solid",
+  yesVariant = 'solid',
 }) => {
   const handleSave = () => {
     onSave();
@@ -22,13 +22,13 @@ const ConfirmationModal = ({
         onClick={onClose}
         variant="ghost"
         mr={3}
-        size={{ base: "sm", sm: "md" }}
+        size={{ base: 'sm', sm: 'md' }}
       >
         {noLabel}
       </Button>
       <Button
         onClick={handleSave}
-        size={{ base: "sm", sm: "md" }}
+        size={{ base: 'sm', sm: 'md' }}
         variant={yesVariant}
       >
         {yesLabel}

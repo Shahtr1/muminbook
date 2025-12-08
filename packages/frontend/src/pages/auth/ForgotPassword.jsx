@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import {
   Alert,
   AlertIcon,
@@ -14,14 +14,14 @@ import {
   Stack,
   Text,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
-import { XAlert } from "@/components/layout/xcomp/XAlert.jsx";
-import { sendPasswordResetEmail } from "@/services/index.js";
+} from '@chakra-ui/react';
+import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
+import { XAlert } from '@/components/layout/xcomp/XAlert.jsx';
+import { sendPasswordResetEmail } from '@/services/index.js';
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [unknownError, setUnknownError] = useState(false);
   const {
     mutate: sendPasswordReset,
@@ -33,7 +33,7 @@ const ForgotPassword = () => {
       let hasError = false;
       if (errors && errors.length > 0) {
         errors.forEach((err) => {
-          if (err?.message?.includes("email")) {
+          if (err?.message?.includes('email')) {
             hasError = true;
             setErrorMessage(err.message);
           }
@@ -44,7 +44,7 @@ const ForgotPassword = () => {
   });
 
   const processAndSend = (email) => {
-    setErrorMessage("");
+    setErrorMessage('');
     sendPasswordReset(email);
   };
 
@@ -59,12 +59,12 @@ const ForgotPassword = () => {
             w={{ base: 150, md: 200 }}
             src="/images/logos/logo-text.png"
             alt="Muminbook Logo"
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
             cursor="pointer"
           />
           <Stack
             rounded="sm"
-            bg={useColorModeValue("white", "gray.800")}
+            bg={useColorModeValue('white', 'gray.800')}
             boxShadow="md"
             p={3}
             minW={{ base: 300, sm: 400 }}
@@ -88,12 +88,12 @@ const ForgotPassword = () => {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      setErrorMessage("");
+                      setErrorMessage('');
                     }}
                     placeholder="Email address"
-                    size={{ base: "sm", md: "md" }}
+                    size={{ base: 'sm', md: 'md' }}
                     onKeyDown={(e) =>
-                      e.key === "Enter" && processAndSend(email)
+                      e.key === 'Enter' && processAndSend(email)
                     }
                   />
                   <FormErrorMessage>{errorMessage}</FormErrorMessage>
@@ -101,7 +101,7 @@ const ForgotPassword = () => {
 
                 <Button
                   my={2}
-                  size={{ base: "sm", md: "md" }}
+                  size={{ base: 'sm', md: 'md' }}
                   isLoading={isPending}
                   isDisabled={!email}
                   onClick={() => processAndSend(email)}
@@ -112,7 +112,7 @@ const ForgotPassword = () => {
             )}
 
             <Text align="center" fontSize="sm">
-              Go back to{" "}
+              Go back to{' '}
               <ChakraLink as={Link} to="/login" replace>
                 Sign in
               </ChakraLink>

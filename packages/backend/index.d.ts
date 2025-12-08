@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { PrimaryId } from "./src/constants/primaryId";
+import { PrimaryId } from './src/constants/primaryId';
 
 declare global {
   namespace Express {

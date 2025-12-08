@@ -5,24 +5,24 @@ import {
   Text,
   useColorModeValue,
   useTheme,
-} from "@chakra-ui/react";
-import { XBreadCrumb } from "@/components/layout/reading/XBreadCrumb.jsx";
-import { ChevronDownIcon, ChevronUpIcon, StarIcon } from "@chakra-ui/icons";
-import { XSearch } from "@/components/layout/xcomp/XSearch.jsx";
-import { useEffect, useRef, useState } from "react";
-import { AddMenu } from "@/components/layout/reading/toolbar/AddMenu.jsx";
-import { useCreateResource } from "@/hooks/resource/useCreateResource.js";
+} from '@chakra-ui/react';
+import { XBreadCrumb } from '@/components/layout/reading/XBreadCrumb.jsx';
+import { ChevronDownIcon, ChevronUpIcon, StarIcon } from '@chakra-ui/icons';
+import { XSearch } from '@/components/layout/xcomp/XSearch.jsx';
+import { useEffect, useRef, useState } from 'react';
+import { AddMenu } from '@/components/layout/reading/toolbar/AddMenu.jsx';
+import { useCreateResource } from '@/hooks/resource/useCreateResource.js';
 
 export const ReadingToolbar = () => {
-  const bgColor = useColorModeValue("bg.light", "bg.dark");
+  const bgColor = useColorModeValue('bg.light', 'bg.dark');
   const boxShadowColor = useColorModeValue(
-    "rgba(0, 0, 0, 0.1)",
-    "rgba(255, 255, 255, 0.1)",
+    'rgba(0, 0, 0, 0.1)',
+    'rgba(255, 255, 255, 0.1)'
   );
   const theme = useTheme();
   const headerRef = useRef(null);
 
-  const navbarHeight = parseInt(theme.space["navbar-height"]);
+  const navbarHeight = parseInt(theme.space['navbar-height']);
 
   const [isSticky, setIsSticky] = useState(false);
   const [showExtras, setShowExtras] = useState(false);
@@ -35,23 +35,23 @@ export const ReadingToolbar = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isMyFilesView = location.pathname.includes("/reading/my-files");
-  const isTrashView = location.pathname.includes("/reading/trash");
+  const isMyFilesView = location.pathname.includes('/reading/my-files');
+  const isTrashView = location.pathname.includes('/reading/trash');
 
   const { mutate: createResource } = useCreateResource();
 
   const addNew = ({ type, name }) => {
     let path = location.pathname;
 
-    if (path.startsWith("/reading")) {
-      path = path.replace("/reading/", "");
+    if (path.startsWith('/reading')) {
+      path = path.replace('/reading/', '');
     }
 
-    if (type === "file") name += ".txt";
+    if (type === 'file') name += '.txt';
 
     createResource({ name, type, path });
   };
@@ -59,14 +59,14 @@ export const ReadingToolbar = () => {
   return (
     <Flex
       ref={headerRef}
-      flexDir={{ base: "column", sm: "row" }}
+      flexDir={{ base: 'column', sm: 'row' }}
       justify="space-between"
       bg={bgColor}
       position="sticky"
       top="0"
       zIndex="1099"
       py={2}
-      boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : "none"}
+      boxShadow={isSticky ? `0px 2px 2px -2px ${boxShadowColor}` : 'none'}
       gap={2}
       px={{ base: 2, sm: 8 }}
     >
@@ -84,7 +84,7 @@ export const ReadingToolbar = () => {
           <Icon
             ml={2}
             as={showExtras ? ChevronUpIcon : ChevronDownIcon}
-            display={{ base: "flex", sm: "none" }}
+            display={{ base: 'flex', sm: 'none' }}
             fontSize="18px"
             cursor="pointer"
             onClick={() => setShowExtras(!showExtras)}
@@ -98,7 +98,7 @@ export const ReadingToolbar = () => {
         justify="end"
         align="center"
         gap={3}
-        display={{ base: showExtras ? "flex" : "none", sm: "flex" }}
+        display={{ base: showExtras ? 'flex' : 'none', sm: 'flex' }}
         w="auto"
       >
         {!isMyFilesView && !isTrashView && (

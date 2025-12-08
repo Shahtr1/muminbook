@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface JuzDocument extends Document {
   uuid: number;
@@ -23,11 +23,11 @@ const juzSchema = new Schema<JuzDocument>(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 juzSchema.index({ uuid: 1 }, { unique: true });
 
-const JuzModel = mongoose.model<JuzDocument>("Juz", juzSchema, "juz");
+const JuzModel = mongoose.model<JuzDocument>('Juz', juzSchema, 'juz');
 
 export default JuzModel;

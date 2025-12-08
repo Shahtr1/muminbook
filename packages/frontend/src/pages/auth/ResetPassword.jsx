@@ -8,15 +8,15 @@ import {
   Text,
   useColorModeValue,
   VStack,
-} from "@chakra-ui/react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { ResetPasswordForm } from "../../components/form/ResetPasswordForm.jsx";
-import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
+} from '@chakra-ui/react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { ResetPasswordForm } from '../../components/form/ResetPasswordForm.jsx';
+import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
 
 export const ResetPassword = () => {
   const [searchParams] = useSearchParams();
-  const code = searchParams.get("code");
-  const exp = Number(searchParams.get("exp"));
+  const code = searchParams.get('code');
+  const exp = Number(searchParams.get('exp'));
   const now = Date.now();
   const linkIsValid = code && exp && exp > now;
 
@@ -33,7 +33,7 @@ export const ResetPassword = () => {
             w={{ base: 150, md: 200 }}
             src="/images/logos/logo-text.png"
             alt="Muminbook Logo"
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
           />
           <Alert status="error" w="fit-content">
             <AlertIcon />
@@ -41,7 +41,7 @@ export const ResetPassword = () => {
           </Alert>
           <Stack
             rounded="sm"
-            bg={useColorModeValue("white", "gray.800")}
+            bg={useColorModeValue('white', 'gray.800')}
             boxShadow="md"
             p={3}
             minW={{ base: 300, sm: 400 }}

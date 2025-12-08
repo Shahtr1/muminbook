@@ -1,23 +1,23 @@
-import { Flex, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Flex, Spinner, Text, useColorModeValue } from '@chakra-ui/react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const UiHeaderInfo = () => {
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
-  const textColor = useColorModeValue("#000", "whiteAlpha.900");
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
+  const textColor = useColorModeValue('#000', 'whiteAlpha.900');
   const queryClient = useQueryClient();
 
   const { data: currentSurahId } = useQuery({
-    queryKey: ["currentSurahId"],
+    queryKey: ['currentSurahId'],
     staleTime: Infinity,
   });
 
   const { data: currentJuzId } = useQuery({
-    queryKey: ["currentJuzId"],
+    queryKey: ['currentJuzId'],
     staleTime: Infinity,
   });
 
-  const surahs = queryClient.getQueryData(["surahs"]) || [];
-  const juzList = queryClient.getQueryData(["juzList"]) || [];
+  const surahs = queryClient.getQueryData(['surahs']) || [];
+  const juzList = queryClient.getQueryData(['juzList']) || [];
 
   const currentSurah = surahs.find((s) => s._id === currentSurahId);
   const currentJuz = juzList.find((j) => j._id === currentJuzId);

@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { getJuz } from "@/services/index.js";
+import { useQuery } from '@tanstack/react-query';
+import { getJuz } from '@/services/index.js';
 
 export const useJuz = () => {
   const { data = [], ...rest } = useQuery({
-    queryKey: ["juzList"],
+    queryKey: ['juzList'],
     queryFn: getJuz,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,

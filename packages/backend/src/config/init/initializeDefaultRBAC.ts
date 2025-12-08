@@ -1,6 +1,6 @@
-import RoleModel from "../../models/role.model";
-import RoleType from "../../constants/enums/roleType";
-import UserModel from "../../models/user.model";
+import RoleModel from '../../models/role.model';
+import RoleType from '../../constants/enums/roleType';
+import UserModel from '../../models/user.model';
 import {
   ADMIN_DATE_OF_BIRTH,
   ADMIN_EMAIL,
@@ -8,35 +8,35 @@ import {
   ADMIN_GENDER,
   ADMIN_LASTNAME,
   ADMIN_PASSWORD,
-} from "../../constants/env";
-import UserRoleModel from "../../models/user-role.model";
-import ResourceModel from "../../models/resource.model";
-import ResourceType from "../../constants/enums/resourceType";
+} from '../../constants/env';
+import UserRoleModel from '../../models/user-role.model';
+import ResourceModel from '../../models/resource.model';
+import ResourceType from '../../constants/enums/resourceType';
 
 const initializeDefaultRBAC = async () => {
   try {
-    console.log("🔐 Initializing default RBAC...");
+    console.log('🔐 Initializing default RBAC...');
 
     let userRole = await RoleModel.findOne({ type: RoleType.User });
     if (!userRole) {
       userRole = await RoleModel.create({
         type: RoleType.User,
-        description: "This is the role assigned to user",
+        description: 'This is the role assigned to user',
       });
-      console.log("✅ Created User role");
+      console.log('✅ Created User role');
     } else {
-      console.log("ℹ️  User role already exists");
+      console.log('ℹ️  User role already exists');
     }
 
     let adminRole = await RoleModel.findOne({ type: RoleType.Admin });
     if (!adminRole) {
       adminRole = await RoleModel.create({
         type: RoleType.Admin,
-        description: "This is the role assigned to admin",
+        description: 'This is the role assigned to admin',
       });
-      console.log("✅ Created Admin role");
+      console.log('✅ Created Admin role');
     } else {
-      console.log("ℹ️  Admin role already exists");
+      console.log('ℹ️  Admin role already exists');
     }
 
     let admin = await UserModel.findOne({ email: ADMIN_EMAIL });
@@ -50,9 +50,9 @@ const initializeDefaultRBAC = async () => {
         password: ADMIN_PASSWORD,
         verified: true,
       });
-      console.log("✅ Created admin user");
+      console.log('✅ Created admin user');
     } else {
-      console.log("ℹ️  Admin user already exists");
+      console.log('ℹ️  Admin user already exists');
     }
 
     const adminId = admin._id;
@@ -67,7 +67,7 @@ const initializeDefaultRBAC = async () => {
         userId: adminId,
         roleId: adminRole._id,
       });
-      console.log("✅ Assigned Admin role to admin user");
+      console.log('✅ Assigned Admin role to admin user');
     }
 
     const adminHasUserRole = await UserRoleModel.findOne({
@@ -80,34 +80,34 @@ const initializeDefaultRBAC = async () => {
         userId: adminId,
         roleId: userRole._id,
       });
-      console.log("✅ Also assigned User role to admin user");
+      console.log('✅ Also assigned User role to admin user');
     }
 
     const adminFolder = await ResourceModel.findOne({
       userId: adminId,
-      name: "my-files",
+      name: 'my-files',
       type: ResourceType.Folder,
     });
 
     if (!adminFolder) {
       await ResourceModel.create({
-        name: "my-files",
+        name: 'my-files',
         type: ResourceType.Folder,
-        path: "my-files",
+        path: 'my-files',
         parent: null,
         userId: adminId,
         pinned: true,
       });
-      console.log("✅ Created root resource folder for admin");
+      console.log('✅ Created root resource folder for admin');
     } else {
-      console.log("ℹ️  Resource folder already exists");
+      console.log('ℹ️  Resource folder already exists');
     }
 
-    console.log("🎉 Default RBAC initialized successfully.");
+    console.log('🎉 Default RBAC initialized successfully.');
   } catch (error) {
     console.error(
-      "❌ Error while initializing default RBAC configuration:",
-      error,
+      '❌ Error while initializing default RBAC configuration:',
+      error
     );
     process.exit(1);
   }

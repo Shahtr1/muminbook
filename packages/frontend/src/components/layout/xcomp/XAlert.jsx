@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Alert, AlertIcon, Box, CloseButton } from "@chakra-ui/react";
+import { useEffect, useState } from 'react';
+import { Alert, AlertIcon, Box, CloseButton } from '@chakra-ui/react';
 
 export const XAlert = ({
-  message = "Alert message",
+  message = 'Alert message',
   duration = 10000,
   status,
 }) => {

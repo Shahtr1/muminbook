@@ -1,10 +1,10 @@
-import ResourceModel from "../../../models/resource.model";
-import ResourceType from "../../../constants/enums/resourceType";
-import { PrimaryId } from "../../../constants/primaryId";
-import appAssert from "../../../utils/appAssert";
-import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../../../constants/http";
-import { getOrCreateLostAndFound } from "../helpers/getOrCreateLostAndFound";
-import { getAllDescendants } from "../common-resource.service";
+import ResourceModel from '../../../models/resource.model';
+import ResourceType from '../../../constants/enums/resourceType';
+import { PrimaryId } from '../../../constants/primaryId';
+import appAssert from '../../../utils/appAssert';
+import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../../constants/http';
+import { getOrCreateLostAndFound } from '../helpers/getOrCreateLostAndFound';
+import { getAllDescendants } from '../common-resource.service';
 
 const hasConflict = async (path: string, userId: PrimaryId) => {
   return ResourceModel.findOne({
@@ -16,9 +16,9 @@ const hasConflict = async (path: string, userId: PrimaryId) => {
 
 const shouldRestoreAsLostAndFound = async (
   resource: any,
-  userId: PrimaryId,
+  userId: PrimaryId
 ) => {
-  const parentPath = resource.path.split("/").slice(0, -1).join("/");
+  const parentPath = resource.path.split('/').slice(0, -1).join('/');
 
   const parentFolder = await ResourceModel.findOne({
     path: parentPath,
@@ -49,8 +49,8 @@ const buildRestoreUpdates = async ({
       : [];
 
   for (const desc of descendants) {
-    const relativePath = desc.path.replace(resource.path, "");
-    const newPath = `${newBasePath}${relativePath}`.replace(/\/+/g, "/");
+    const relativePath = desc.path.replace(resource.path, '');
+    const newPath = `${newBasePath}${relativePath}`.replace(/\/+/g, '/');
 
     updates.push({
       updateOne: {
@@ -89,17 +89,17 @@ const buildRestoreUpdates = async ({
 
 export const restoreResource = async (
   resourceId: PrimaryId,
-  userId: PrimaryId,
+  userId: PrimaryId
 ) => {
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
-  appAssert(resource, NOT_FOUND, "Resource not found");
-  appAssert(resource.deleted, BAD_REQUEST, "Resource is not in trash");
+  appAssert(resource, NOT_FOUND, 'Resource not found');
+  appAssert(resource.deleted, BAD_REQUEST, 'Resource is not in trash');
 
   if (await shouldRestoreAsLostAndFound(resource, userId)) {
     const lostAndFound = await getOrCreateLostAndFound(userId);
     const newBasePath = `${lostAndFound.path}/${resource.name}`.replace(
       /\/+/g,
-      "/",
+      '/'
     );
     const updates = await buildRestoreUpdates({
       resource,
@@ -109,7 +109,7 @@ export const restoreResource = async (
     });
 
     await ResourceModel.bulkWrite(updates);
-    return { message: "Restored to lost+found" };
+    return { message: 'Restored to lost+found' };
   }
 
   if (await hasConflict(resource.path, userId)) {
@@ -117,7 +117,7 @@ export const restoreResource = async (
     appAssert(
       !conflict,
       CONFLICT,
-      `A ${conflict?.type === "file" ? "file" : "folder"} with this name already exists in the destination path`,
+      `A ${conflict?.type === 'file' ? 'file' : 'folder'} with this name already exists in the destination path`
     );
   }
 
@@ -129,12 +129,12 @@ export const restoreResource = async (
   });
 
   await ResourceModel.bulkWrite(updates);
-  return { message: "Restored successfully" };
+  return { message: 'Restored successfully' };
 };
 
 export const restoreAllResources = async (userId: PrimaryId) => {
   const resources = await ResourceModel.find({ userId, deleted: true });
-  appAssert(resources.length > 0, NOT_FOUND, "No trashed resources found");
+  appAssert(resources.length > 0, NOT_FOUND, 'No trashed resources found');
 
   for (const resource of resources) {
     const isLostAndFound = await shouldRestoreAsLostAndFound(resource, userId);
@@ -148,7 +148,7 @@ export const restoreAllResources = async (userId: PrimaryId) => {
       : null;
 
     const newBasePath = isLostAndFound
-      ? `${lostAndFound!.path}/${resource.name}`.replace(/\/+/g, "/")
+      ? `${lostAndFound!.path}/${resource.name}`.replace(/\/+/g, '/')
       : resource.path;
 
     const newParentId = (
@@ -165,5 +165,5 @@ export const restoreAllResources = async (userId: PrimaryId) => {
     await ResourceModel.bulkWrite(updates);
   }
 
-  return { message: "All possible resources restored from trash" };
+  return { message: 'All possible resources restored from trash' };
 };

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import RoleType from "../constants/enums/roleType";
+import mongoose from 'mongoose';
+import RoleType from '../constants/enums/roleType';
 
 export interface RoleDocument extends mongoose.Document {
   type: RoleType;
@@ -17,9 +17,9 @@ const roleSchema = new mongoose.Schema<RoleDocument>(
     },
     description: { type: String },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-const roleModel = mongoose.model<RoleDocument>("Role", roleSchema);
+const roleModel = mongoose.model<RoleDocument>('Role', roleSchema);
 
 export default roleModel;

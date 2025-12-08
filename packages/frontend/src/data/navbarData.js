@@ -1,39 +1,39 @@
-import { DashboardSVG } from "@/components/svgs/DashboardSVG.jsx";
-import { ReadingSVG } from "@/components/svgs/ReadingSVG.jsx";
-import { FeaturesSVG } from "@/components/svgs/FeaturesSVG.jsx";
-import { BellSVG } from "@/components/svgs/BellSVG.jsx";
-import { FemaleSVG } from "@/components/svgs/FemaleSVG.jsx";
-import { MaleSVG } from "@/components/svgs/MaleSVG.jsx";
+import { DashboardSVG } from '@/components/svgs/DashboardSVG.jsx';
+import { ReadingSVG } from '@/components/svgs/ReadingSVG.jsx';
+import { FeaturesSVG } from '@/components/svgs/FeaturesSVG.jsx';
+import { BellSVG } from '@/components/svgs/BellSVG.jsx';
+import { FemaleSVG } from '@/components/svgs/FemaleSVG.jsx';
+import { MaleSVG } from '@/components/svgs/MaleSVG.jsx';
 
 export const navItems = (user) => [
   {
-    id: "dashboard",
-    label: "Dashboard",
+    id: 'dashboard',
+    label: 'Dashboard',
     icon: DashboardSVG,
-    link: "/dashboard",
+    link: '/dashboard',
   },
   {
-    id: "reading",
-    label: "Reading",
+    id: 'reading',
+    label: 'Reading',
     icon: ReadingSVG,
-    link: "/reading",
+    link: '/reading',
   },
   {
-    id: "features",
-    label: "Features",
+    id: 'features',
+    label: 'Features',
     icon: FeaturesSVG,
-    link: "/features",
+    link: '/features',
   },
   {
-    id: "notifications",
-    label: "Notifications",
+    id: 'notifications',
+    label: 'Notifications',
     icon: BellSVG,
-    link: "notifications",
+    link: 'notifications',
   },
   {
-    id: "user",
-    label: "Me",
-    icon: user?.gender === "female" ? FemaleSVG : MaleSVG,
-    link: "account",
+    id: 'user',
+    label: 'Me',
+    icon: user?.gender === 'female' ? FemaleSVG : MaleSVG,
+    link: 'account',
   },
 ];

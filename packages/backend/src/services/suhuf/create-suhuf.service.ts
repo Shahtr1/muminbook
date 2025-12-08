@@ -1,9 +1,9 @@
-import { PrimaryId } from "../../constants/primaryId";
-import SuhufModel from "../../models/suhuf.model";
-import WindowModel from "../../models/window.model";
-import WindowType from "../../constants/enums/windowType";
-import appAssert from "../../utils/appAssert";
-import { INTERNAL_SERVER_ERROR } from "../../constants/http";
+import { PrimaryId } from '../../constants/primaryId';
+import SuhufModel from '../../models/suhuf.model';
+import WindowModel from '../../models/window.model';
+import WindowType from '../../constants/enums/windowType';
+import appAssert from '../../utils/appAssert';
+import { INTERNAL_SERVER_ERROR } from '../../constants/http';
 
 type CreateSuhufInput = {
   userId: PrimaryId;
@@ -12,7 +12,7 @@ type CreateSuhufInput = {
 
 export const createSuhuf = async ({
   userId,
-  title = "Untitled Suhuf",
+  title = 'Untitled Suhuf',
 }: CreateSuhufInput) => {
   const suhuf = await SuhufModel.create({
     userId,
@@ -30,11 +30,11 @@ export const createSuhuf = async ({
     appAssert(
       false,
       INTERNAL_SERVER_ERROR,
-      "Failed to create window for Suhuf",
+      'Failed to create window for Suhuf'
     );
   });
 
-  appAssert(window, INTERNAL_SERVER_ERROR, "Window creation failed");
+  appAssert(window, INTERNAL_SERVER_ERROR, 'Window creation failed');
 
   return { suhuf, window };
 };

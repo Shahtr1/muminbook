@@ -1,4 +1,4 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
 export const SurahSVG = ({ active, activeColor, isSmall = false }) => {
   const widthHeight = isSmall ? [83, 25] : [125, 51];

@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { Box, Button, Text } from '@chakra-ui/react';
 
 // Simple Counter Component for testing
 const Counter = ({ initialCount = 0, onCountChange }) => {
@@ -31,42 +31,42 @@ const Counter = ({ initialCount = 0, onCountChange }) => {
   );
 };
 
-describe("Counter Component Example", () => {
-  it("should render with initial count", () => {
+describe('Counter Component Example', () => {
+  it('should render with initial count', () => {
     render(<Counter initialCount={5} />);
 
-    const countDisplay = screen.getByTestId("count-display");
-    expect(countDisplay).toHaveTextContent("Count: 5");
+    const countDisplay = screen.getByTestId('count-display');
+    expect(countDisplay).toHaveTextContent('Count: 5');
   });
 
-  it("should increment count when button clicked", () => {
+  it('should increment count when button clicked', () => {
     render(<Counter initialCount={0} />);
 
-    const incrementBtn = screen.getByTestId("increment-btn");
-    const countDisplay = screen.getByTestId("count-display");
+    const incrementBtn = screen.getByTestId('increment-btn');
+    const countDisplay = screen.getByTestId('count-display');
 
     fireEvent.click(incrementBtn);
-    expect(countDisplay).toHaveTextContent("Count: 1");
+    expect(countDisplay).toHaveTextContent('Count: 1');
 
     fireEvent.click(incrementBtn);
-    expect(countDisplay).toHaveTextContent("Count: 2");
+    expect(countDisplay).toHaveTextContent('Count: 2');
   });
 
-  it("should decrement count when button clicked", () => {
+  it('should decrement count when button clicked', () => {
     render(<Counter initialCount={5} />);
 
-    const decrementBtn = screen.getByTestId("decrement-btn");
-    const countDisplay = screen.getByTestId("count-display");
+    const decrementBtn = screen.getByTestId('decrement-btn');
+    const countDisplay = screen.getByTestId('count-display');
 
     fireEvent.click(decrementBtn);
-    expect(countDisplay).toHaveTextContent("Count: 4");
+    expect(countDisplay).toHaveTextContent('Count: 4');
   });
 
-  it("should call onCountChange callback", () => {
+  it('should call onCountChange callback', () => {
     const handleCountChange = vi.fn();
     render(<Counter initialCount={0} onCountChange={handleCountChange} />);
 
-    const incrementBtn = screen.getByTestId("increment-btn");
+    const incrementBtn = screen.getByTestId('increment-btn');
 
     fireEvent.click(incrementBtn);
 

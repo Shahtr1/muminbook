@@ -6,13 +6,13 @@ import {
   Input,
   Text,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { XModal } from "@/components/layout/modals/XModal.jsx";
-import { useCopyResource } from "@/hooks/resource/useCopyResource.js";
-import { useMoveResource } from "@/hooks/resource/useMoveResource.js";
-import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
-import { useLocation } from "react-router-dom";
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { XModal } from '@/components/layout/modals/XModal.jsx';
+import { useCopyResource } from '@/hooks/resource/useCopyResource.js';
+import { useMoveResource } from '@/hooks/resource/useMoveResource.js';
+import { ResourcesTree } from '@/components/layout/reading/resources/ResourcesTree.jsx';
+import { useLocation } from 'react-router-dom';
 
 const TransferResourceModal = ({
   isOpen,
@@ -21,12 +21,12 @@ const TransferResourceModal = ({
   id,
   path,
 }) => {
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.300');
   const location = useLocation();
   const currentPath =
-    location.pathname.replace(/^\/reading\//, "") || "my-files";
+    location.pathname.replace(/^\/reading\//, '') || 'my-files';
 
-  const [destinationPath, setDestinationPath] = useState(path || "");
+  const [destinationPath, setDestinationPath] = useState(path || '');
   const [errors, setErrors] = useState({});
 
   const { mutate: copyResource } = useCopyResource();
@@ -41,11 +41,11 @@ const TransferResourceModal = ({
 
   const handleSave = () => {
     if (!destinationPath.trim()) {
-      setErrors({ destinationPath: "Path is required." });
+      setErrors({ destinationPath: 'Path is required.' });
       return;
     }
 
-    const cleanedPath = destinationPath.endsWith("/")
+    const cleanedPath = destinationPath.endsWith('/')
       ? destinationPath.slice(0, -1)
       : destinationPath;
 
@@ -70,16 +70,16 @@ const TransferResourceModal = ({
         onClick={onClose}
         variant="ghost"
         mr={3}
-        size={{ base: "sm", sm: "md" }}
+        size={{ base: 'sm', sm: 'md' }}
       >
         Cancel
       </Button>
       <Button
         colorScheme="blue"
         onClick={handleSave}
-        size={{ base: "sm", sm: "md" }}
+        size={{ base: 'sm', sm: 'md' }}
       >
-        {isCopy ? "Copy" : "Move"}
+        {isCopy ? 'Copy' : 'Move'}
       </Button>
     </>
   );
@@ -88,7 +88,7 @@ const TransferResourceModal = ({
     <XModal
       isOpen={isOpen}
       onClose={onClose}
-      title={isCopy ? "Copy Resource" : "Move Resource"}
+      title={isCopy ? 'Copy Resource' : 'Move Resource'}
       footer={footer}
     >
       <Flex flexDir="column" w="100%" gap={2}>
@@ -98,11 +98,11 @@ const TransferResourceModal = ({
             value={destinationPath}
             onChange={(e) => {
               setDestinationPath(e.target.value);
-              removeError("destinationPath");
+              removeError('destinationPath');
             }}
             placeholder="Enter destination path"
-            size={{ base: "sm", sm: "md" }}
-            onKeyDown={(e) => e.key === "Enter" && handleSave()}
+            size={{ base: 'sm', sm: 'md' }}
+            onKeyDown={(e) => e.key === 'Enter' && handleSave()}
           />
           <FormErrorMessage>{errors?.destinationPath}</FormErrorMessage>
         </FormControl>

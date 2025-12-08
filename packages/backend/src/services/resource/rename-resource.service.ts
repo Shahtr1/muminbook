@@ -1,31 +1,31 @@
-import { PrimaryId } from "../../constants/primaryId";
-import ResourceModel from "../../models/resource.model";
-import appAssert from "../../utils/appAssert";
-import { BAD_REQUEST, CONFLICT, NOT_FOUND } from "../../constants/http";
-import ResourceType from "../../constants/enums/resourceType";
+import { PrimaryId } from '../../constants/primaryId';
+import ResourceModel from '../../models/resource.model';
+import appAssert from '../../utils/appAssert';
+import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../constants/http';
+import ResourceType from '../../constants/enums/resourceType';
 import {
   assertNotRootFolder,
   getAllDescendants,
-} from "./common-resource.service";
+} from './common-resource.service';
 
 export const renameResource = async (
   resourceId: PrimaryId,
   newName: string,
-  userId: PrimaryId,
+  userId: PrimaryId
 ) => {
   const resource = await ResourceModel.findOne({
     _id: resourceId,
     userId,
   });
 
-  appAssert(resource, NOT_FOUND, "Resource not found");
-  appAssert(!resource.deleted, BAD_REQUEST, "Cannot rename a trashed resource");
+  appAssert(resource, NOT_FOUND, 'Resource not found');
+  appAssert(!resource.deleted, BAD_REQUEST, 'Cannot rename a trashed resource');
 
   assertNotRootFolder(resource);
 
   const oldPath = resource.path;
-  const parentPath = oldPath.split("/").slice(0, -1).join("/");
-  const newPath = `${parentPath}/${newName}`.replace(/\/+/g, "/");
+  const parentPath = oldPath.split('/').slice(0, -1).join('/');
+  const newPath = `${parentPath}/${newName}`.replace(/\/+/g, '/');
 
   const conflict = await ResourceModel.findOne({
     path: newPath,
@@ -35,7 +35,7 @@ export const renameResource = async (
   appAssert(
     !conflict,
     CONFLICT,
-    `A ${conflict?.type === "file" ? "file" : "folder"} with this name already exists in the destination path`,
+    `A ${conflict?.type === 'file' ? 'file' : 'folder'} with this name already exists in the destination path`
   );
 
   const ops: any[] = [];
@@ -65,5 +65,5 @@ export const renameResource = async (
 
   await ResourceModel.bulkWrite(ops);
 
-  return { message: "Renamed successfully" };
+  return { message: 'Renamed successfully' };
 };

@@ -4,13 +4,13 @@ import {
   useBreakpointValue,
   useColorModeValue,
   useTheme,
-} from "@chakra-ui/react";
-import { useLocation } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { motion } from "framer-motion";
-import { SidebarItem } from "@/components/layout/sidebar/SidebarItem.jsx";
-import { useQuery } from "@tanstack/react-query";
+} from '@chakra-ui/react';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { motion } from 'framer-motion';
+import { SidebarItem } from '@/components/layout/sidebar/SidebarItem.jsx';
+import { useQuery } from '@tanstack/react-query';
 
 export const Sidebar = ({ items = [], label, closeable = true }) => {
   const location = useLocation();
@@ -23,7 +23,7 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
   const [isReady, setIsReady] = useState(false);
 
   const { data: windows = [] } = useQuery({
-    queryKey: ["windows"],
+    queryKey: ['windows'],
   });
 
   useEffect(() => {
@@ -34,21 +34,21 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
     setIsReady(true);
   }, []);
 
-  const bgColor = useColorModeValue("white", "gray.800");
+  const bgColor = useColorModeValue('white', 'gray.800');
 
-  const flexDirection = isSmallScreen ? "row" : "column";
+  const flexDirection = isSmallScreen ? 'row' : 'column';
   const height = isSmallScreen
-    ? "auto"
-    : `calc(100dvh - ${theme.sizes["navbar-height"]} - ${windows.length > 0 ? theme.sizes["win-manager-height"] : "0px"})`;
-  const width = isSmallScreen ? "100%" : isOpen ? "250px" : "auto";
+    ? 'auto'
+    : `calc(100dvh - ${theme.sizes['navbar-height']} - ${windows.length > 0 ? theme.sizes['win-manager-height'] : '0px'})`;
+  const width = isSmallScreen ? '100%' : isOpen ? '250px' : 'auto';
 
   const activeItemRef = useRef(null);
 
   useEffect(() => {
     if (activeItemRef.current) {
       activeItemRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
+        behavior: 'smooth',
+        block: 'center',
       });
     }
   }, [location.pathname]);
@@ -91,7 +91,7 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: isOpen ? 1 : 0 }}
           transition={{ duration: 0.3 }}
-          style={{ display: isOpen ? "block" : "none" }}
+          style={{ display: isOpen ? 'block' : 'none' }}
         >
           <Text fontWeight="600" fontSize={25} p="20px">
             {label}
@@ -106,10 +106,10 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
         overflowY="auto"
         css={
           (!isOpen || isSmallScreen) && {
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            "&::-webkit-scrollbar": {
-              display: "none",
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            '&::-webkit-scrollbar': {
+              display: 'none',
             },
           }
         }

@@ -1,22 +1,22 @@
-import { Box } from "@chakra-ui/react";
-import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { useEffect, useMemo, useState } from "react";
-import { useHandleSplitPanelSizes } from "@/hooks/suhuf/useHandleSplitPanelSizes.js";
-import { ReadingPanel } from "@/components/layout/suhuf/ReadingPanel.jsx";
-import { EditorPanel } from "@/components/layout/suhuf/EditorPanel.jsx";
-import { DefaultPanel } from "@/components/layout/suhuf/DefaultPanel.jsx";
-import Split from "react-split";
-import { Loader } from "@/components/layout/Loader.jsx";
-import { useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSafeBreakpointValue } from "@/hooks/useSafeBreakpointValue.js";
+import { Box } from '@chakra-ui/react';
+import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
+import { useEffect, useMemo, useState } from 'react';
+import { useHandleSplitPanelSizes } from '@/hooks/suhuf/useHandleSplitPanelSizes.js';
+import { ReadingPanel } from '@/components/layout/suhuf/ReadingPanel.jsx';
+import { EditorPanel } from '@/components/layout/suhuf/EditorPanel.jsx';
+import { DefaultPanel } from '@/components/layout/suhuf/DefaultPanel.jsx';
+import Split from 'react-split';
+import { Loader } from '@/components/layout/Loader.jsx';
+import { useParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSafeBreakpointValue } from '@/hooks/useSafeBreakpointValue.js';
 
 export const SuhufPanel = () => {
   const { id: suhufId } = useParams();
   const queryClient = useQueryClient();
   const { data: suhuf } = useQuery({
-    queryKey: ["suhuf", suhufId],
-    queryFn: () => queryClient.getQueryData(["suhuf", suhufId]),
+    queryKey: ['suhuf', suhufId],
+    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
     staleTime: 0,
   });
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
@@ -58,9 +58,9 @@ export const SuhufPanel = () => {
 
   const renderPanelContent = (panel) => {
     switch (panel?.fileType) {
-      case "reading":
+      case 'reading':
         return <ReadingPanel id={panel.fileId} panel={panel} />;
-      case "user":
+      case 'user':
         return <EditorPanel />;
       default:
         return <DefaultPanel suhuf={suhuf} />;
@@ -77,7 +77,7 @@ export const SuhufPanel = () => {
           key={`panel-${index}`}
           h="100%"
           w="100%"
-          borderTop={isActive ? "2px solid" : "none"}
+          borderTop={isActive ? '2px solid' : 'none'}
           borderColor="brand.500"
           onClick={() => handlePanelClick(index)}
         >
@@ -96,7 +96,7 @@ export const SuhufPanel = () => {
 
   const isSplitReady =
     !isSecondPanelOpen ||
-    (sizes.length === 2 && sizes.every((s) => typeof s === "number"));
+    (sizes.length === 2 && sizes.every((s) => typeof s === 'number'));
 
   if (!isSplitReady) {
     return <Loader />;
@@ -104,16 +104,16 @@ export const SuhufPanel = () => {
 
   return (
     <Split
-      key={`${isSmallScreen ? "vertical" : "horizontal"}-${isSecondPanelOpen ? "two" : "one"}`}
-      direction={isSmallScreen ? "vertical" : "horizontal"}
+      key={`${isSmallScreen ? 'vertical' : 'horizontal'}-${isSecondPanelOpen ? 'two' : 'one'}`}
+      direction={isSmallScreen ? 'vertical' : 'horizontal'}
       sizes={isSecondPanelOpen ? sizes : [100]}
       minSize={200}
       gutterSize={3}
       style={{
-        display: "flex",
-        width: "100%",
-        height: "100%",
-        flexDirection: isSmallScreen ? "column" : undefined,
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        flexDirection: isSmallScreen ? 'column' : undefined,
       }}
       onDragEnd={handleResize}
     >

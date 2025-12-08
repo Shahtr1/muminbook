@@ -1,12 +1,12 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
-import { useColorModeValue, useToken } from "@chakra-ui/react";
+import { SVG } from '@/components/svgs/SVG.jsx';
+import { useColorModeValue, useToken } from '@chakra-ui/react';
 
 export const SplitVerticalSVG = ({
   active,
   activeColor,
-  dimensions = "20px",
+  dimensions = '20px',
 }) => {
-  const [lightBg, darkBg] = useToken("colors", ["wn.bg.light", "wn.bg.dark"]);
+  const [lightBg, darkBg] = useToken('colors', ['wn.bg.light', 'wn.bg.dark']);
   const bgColor = useColorModeValue(lightBg, darkBg);
   return (
     <SVG

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import {
   Box,
   Button,
@@ -18,33 +18,33 @@ import {
   Stack,
   Text,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
-import { XDate } from "@/components/form/XDate.jsx";
-import { XRadio } from "@/components/form/XRadio.jsx";
-import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
-import { XAlert } from "@/components/layout/xcomp/XAlert.jsx";
-import { register } from "@/services/index.js";
+} from '@chakra-ui/react';
+import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
+import { XDate } from '@/components/form/XDate.jsx';
+import { XRadio } from '@/components/form/XRadio.jsx';
+import { XEyeIcon } from '@/components/form/XEyeIcon.jsx';
+import { XAlert } from '@/components/layout/xcomp/XAlert.jsx';
+import { register } from '@/services/index.js';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [gender, setGender] = useState("");
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [gender, setGender] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { mutate: createAccount, isPending } = useMutation({
     mutationFn: register,
     onSuccess: () => {
-      navigate("/", { replace: true });
+      navigate('/', { replace: true });
     },
     onError: ({ errors, message }) => {
       if (errors && errors.length > 0) {
@@ -64,7 +64,7 @@ const Register = () => {
 
   const processAndRegister = () => {
     setErrors({});
-    setErrorMessage("");
+    setErrorMessage('');
 
     createAccount({
       firstname,
@@ -80,7 +80,7 @@ const Register = () => {
   const handleDateChange = (timestamp) => {
     if (timestamp) {
       setDateOfBirth(timestamp);
-      removeError("dateOfBirth");
+      removeError('dateOfBirth');
     }
   };
 
@@ -100,7 +100,7 @@ const Register = () => {
     !dateOfBirth ||
     !email ||
     !gender ||
-    gender === "custom" ||
+    gender === 'custom' ||
     password.length < 6 ||
     password !== confirmPassword;
 
@@ -114,12 +114,12 @@ const Register = () => {
             w={{ base: 150, md: 200 }}
             src="/images/logos/logo-text.png"
             alt="Muminbook Logo"
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
           />
 
           <Stack
             rounded="sm"
-            bg={useColorModeValue("white", "gray.800")}
+            bg={useColorModeValue('white', 'gray.800')}
             boxShadow="md"
             p={3}
             minW={{ base: 300, sm: 400 }}
@@ -136,10 +136,10 @@ const Register = () => {
                   value={firstname}
                   onChange={(e) => {
                     setFirstname(e.target.value);
-                    removeError("firstname");
+                    removeError('firstname');
                   }}
                   placeholder="Firstname"
-                  size={{ base: "sm", md: "md" }}
+                  size={{ base: 'sm', md: 'md' }}
                 />
                 <FormErrorMessage>{errors?.firstname}</FormErrorMessage>
               </FormControl>
@@ -148,10 +148,10 @@ const Register = () => {
                   value={lastname}
                   onChange={(e) => {
                     setLastname(e.target.value);
-                    removeError("lastname");
+                    removeError('lastname');
                   }}
                   placeholder="Lastname"
-                  size={{ base: "sm", md: "md" }}
+                  size={{ base: 'sm', md: 'md' }}
                 />
                 <FormErrorMessage>{errors?.lastname}</FormErrorMessage>
               </FormControl>
@@ -164,11 +164,11 @@ const Register = () => {
             />
 
             <FormControl id="gender" isInvalid={!!errors?.gender}>
-              <FormLabel fontSize={{ base: "xs", md: "sm" }}>Gender</FormLabel>
+              <FormLabel fontSize={{ base: 'xs', md: 'sm' }}>Gender</FormLabel>
               <RadioGroup
                 onChange={(value) => {
                   setGender(value);
-                  if (value !== "custom") removeError("gender");
+                  if (value !== 'custom') removeError('gender');
                 }}
                 w="100%"
               >
@@ -188,8 +188,8 @@ const Register = () => {
               </RadioGroup>
               <FormErrorMessage>{errors?.gender}</FormErrorMessage>
             </FormControl>
-            {gender === "custom" && (
-              <Box fontSize={{ base: "0.6rem", md: "0.8rem" }}>
+            {gender === 'custom' && (
+              <Box fontSize={{ base: '0.6rem', md: '0.8rem' }}>
                 <Text>Allah clearly mentions two genders in the Qur’an:</Text>
                 <Text fontStyle="italic" fontWeight="medium">
                   “And that He creates the two mates – the male and female.”
@@ -207,10 +207,10 @@ const Register = () => {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  removeError("email");
+                  removeError('email');
                 }}
                 placeholder="Email address"
-                size={{ base: "sm", md: "md" }}
+                size={{ base: 'sm', md: 'md' }}
               />
               <FormErrorMessage>{errors?.email}</FormErrorMessage>
             </FormControl>
@@ -218,14 +218,14 @@ const Register = () => {
             <FormControl id="password" isInvalid={!!errors?.password}>
               <InputGroup>
                 <Input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    removeError("password");
+                    removeError('password');
                   }}
                   placeholder="New password"
-                  size={{ base: "sm", md: "md" }}
+                  size={{ base: 'sm', md: 'md' }}
                 />
                 {password && (
                   <InputRightElement
@@ -246,15 +246,15 @@ const Register = () => {
             >
               <InputGroup>
                 <Input
-                  type={showConfirmPassword ? "text" : "password"}
+                  type={showConfirmPassword ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={(e) => {
                     setConfirmPassword(e.target.value);
-                    removeError("confirmPassword");
+                    removeError('confirmPassword');
                   }}
                   placeholder="Confirm password"
-                  size={{ base: "sm", md: "md" }}
-                  onKeyDown={(e) => e.key === "Enter" && processAndRegister()}
+                  size={{ base: 'sm', md: 'md' }}
+                  onKeyDown={(e) => e.key === 'Enter' && processAndRegister()}
                 />
                 {confirmPassword && (
                   <InputRightElement
@@ -269,15 +269,15 @@ const Register = () => {
               <FormErrorMessage>{errors?.confirmPassword}</FormErrorMessage>
             </FormControl>
             <Text fontSize="0.6rem" mx="auto">
-              By clicking Sign Up, you agree to our{" "}
+              By clicking Sign Up, you agree to our{' '}
               <ChakraLink as={Link} to="/terms" fontWeight="semibold">
                 Terms
               </ChakraLink>
-              ,{" "}
+              ,{' '}
               <ChakraLink as={Link} to="/privacy-policy" fontWeight="semibold">
                 Privacy Policy
               </ChakraLink>
-              , and{" "}
+              , and{' '}
               <ChakraLink as={Link} to="/cookies" fontWeight="semibold">
                 Cookies Policy
               </ChakraLink>
@@ -289,7 +289,7 @@ const Register = () => {
               isDisabled={isDisabled}
               isLoading={isPending}
               onClick={processAndRegister}
-              size={{ base: "sm", md: "md" }}
+              size={{ base: 'sm', md: 'md' }}
               width={150}
               mx="auto"
             >
@@ -297,7 +297,7 @@ const Register = () => {
             </Button>
 
             <Text align="center" fontSize="sm">
-              Already have an account?{" "}
+              Already have an account?{' '}
               <ChakraLink as={Link} to="/login">
                 Sign in
               </ChakraLink>

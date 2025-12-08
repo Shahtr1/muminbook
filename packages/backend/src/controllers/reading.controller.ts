@@ -1,8 +1,8 @@
-import catchErrors from "../utils/catchErrors";
-import { assertUserAndSession } from "../utils/assertUserRoleSession";
-import { OK } from "../constants/http";
-import ReadingModel from "../models/reading.model";
-import { getReading } from "../services/reading/get-reading.service";
+import catchErrors from '../utils/catchErrors';
+import { assertUserAndSession } from '../utils/assertUserRoleSession';
+import { OK } from '../constants/http';
+import ReadingModel from '../models/reading.model';
+import { getReading } from '../services/reading/get-reading.service';
 
 export const getAllReadingsHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);

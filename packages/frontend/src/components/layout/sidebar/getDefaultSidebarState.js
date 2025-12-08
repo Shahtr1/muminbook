@@ -1,5 +1,5 @@
 export const getDefaultSidebarState = () => ({
-  leftTab: "explorer",
+  leftTab: 'explorer',
   leftTabOpen: false,
   rightTab: null,
   rightTabOpen: false,

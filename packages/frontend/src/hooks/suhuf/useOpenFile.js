@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useOpenSuhuf } from "@/hooks/suhuf/useOpenSuhuf.js";
-import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from 'react';
+import { useOpenSuhuf } from '@/hooks/suhuf/useOpenSuhuf.js';
+import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
+import { useQueryClient } from '@tanstack/react-query';
 
 const deepEqual = (a, b) => {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -15,7 +15,7 @@ export const useOpenFile = (fileId, isReading = false) => {
     setCreatedSuhufId(suhufId);
   });
 
-  const suhuf = queryClient.getQueryData(["suhuf", createdSuhufId]);
+  const suhuf = queryClient.getQueryData(['suhuf', createdSuhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(createdSuhufId);
 
   useEffect(() => {
@@ -30,9 +30,9 @@ export const useOpenFile = (fileId, isReading = false) => {
         ? {
             ...panel,
             fileId,
-            fileType: isReading ? "reading" : "user",
+            fileType: isReading ? 'reading' : 'user',
           }
-        : panel,
+        : panel
     );
 
     if (!deepEqual(updatedPanels, panels)) {

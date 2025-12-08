@@ -1,17 +1,17 @@
-import { useParams } from "react-router-dom";
-import { Box, Heading, Text, VStack } from "@chakra-ui/react";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { readingData } from "@/data/readingData.js";
+import { useParams } from 'react-router-dom';
+import { Box, Heading, Text, VStack } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { readingData } from '@/data/readingData.js';
 
 export const ReadingView = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    queryClient.setQueryData(["readingMode"], true);
+    queryClient.setQueryData(['readingMode'], true);
 
     return () => {
-      queryClient.setQueryData(["readingMode"], false);
+      queryClient.setQueryData(['readingMode'], false);
     };
   }, []);
 
@@ -35,7 +35,7 @@ export const ReadingView = () => {
         <Heading size="xl" color={item.cardColor}>
           {item.label}
         </Heading>
-        <Text fontSize="md">{item.description.replace(/\n/g, " ")}</Text>
+        <Text fontSize="md">{item.description.replace(/\n/g, ' ')}</Text>
       </VStack>
     </Box>
   );

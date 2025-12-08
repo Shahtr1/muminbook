@@ -1,11 +1,11 @@
-import { HttpStatusCode } from "../constants/http";
-import AppErrorCode from "../constants/enums/appErrorCode";
+import { HttpStatusCode } from '../constants/http';
+import AppErrorCode from '../constants/enums/appErrorCode';
 
 class AppError extends Error {
   constructor(
     public statusCode: HttpStatusCode,
     public message: string,
-    public errorCode?: AppErrorCode,
+    public errorCode?: AppErrorCode
   ) {
     super(message);
   }

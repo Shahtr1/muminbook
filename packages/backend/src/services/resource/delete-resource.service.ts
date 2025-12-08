@@ -1,20 +1,20 @@
-import { PrimaryId } from "../../constants/primaryId";
-import ResourceModel from "../../models/resource.model";
-import appAssert from "../../utils/appAssert";
-import { NOT_FOUND } from "../../constants/http";
-import ResourceType from "../../constants/enums/resourceType";
-import { thirtyDaysAgo } from "../../utils/date";
+import { PrimaryId } from '../../constants/primaryId';
+import ResourceModel from '../../models/resource.model';
+import appAssert from '../../utils/appAssert';
+import { NOT_FOUND } from '../../constants/http';
+import ResourceType from '../../constants/enums/resourceType';
+import { thirtyDaysAgo } from '../../utils/date';
 import {
   assertNotRootFolder,
   getAllDescendants,
-} from "./common-resource.service";
+} from './common-resource.service';
 
 export const deleteResource = async (
   resourceId: PrimaryId,
-  userId: PrimaryId,
+  userId: PrimaryId
 ) => {
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
-  appAssert(resource, NOT_FOUND, "Resource not found");
+  appAssert(resource, NOT_FOUND, 'Resource not found');
 
   assertNotRootFolder(resource);
 

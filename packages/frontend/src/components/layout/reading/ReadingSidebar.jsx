@@ -1,16 +1,16 @@
-import { Flex, IconButton, useColorModeValue } from "@chakra-ui/react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { ResourcesTree } from "@/components/layout/reading/resources/ResourcesTree.jsx";
-import { ResourcesTrash } from "@/components/layout/reading/resources/ResourcesTrash.jsx";
-import { ResourcesOverview } from "@/components/layout/reading/resources/ResourcesOverview.jsx";
-import { LuMenu } from "react-icons/lu";
-import { useState } from "react";
-import { useReadingLayoutConfig } from "@/hooks/reading/useReadingLayoutConfig.js";
+import { Flex, IconButton, useColorModeValue } from '@chakra-ui/react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ResourcesTree } from '@/components/layout/reading/resources/ResourcesTree.jsx';
+import { ResourcesTrash } from '@/components/layout/reading/resources/ResourcesTrash.jsx';
+import { ResourcesOverview } from '@/components/layout/reading/resources/ResourcesOverview.jsx';
+import { LuMenu } from 'react-icons/lu';
+import { useState } from 'react';
+import { useReadingLayoutConfig } from '@/hooks/reading/useReadingLayoutConfig.js';
 
 export const ReadingSidebar = ({ overview }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.300");
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.300');
 
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
@@ -19,7 +19,7 @@ export const ReadingSidebar = ({ overview }) => {
     useReadingLayoutConfig();
 
   const currentPath =
-    location.pathname.replace(/^\/reading\//, "") || "my-files";
+    location.pathname.replace(/^\/reading\//, '') || 'my-files';
 
   return (
     <>
@@ -28,7 +28,7 @@ export const ReadingSidebar = ({ overview }) => {
         aria-label="Toggle Sidebar"
         onClick={toggleSidebar}
         position="fixed"
-        left={isSidebarOpen ? sidebarWidth : "5px"}
+        left={isSidebarOpen ? sidebarWidth : '5px'}
         zIndex={10}
         size="xs"
         variant="ghost"

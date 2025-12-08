@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface ReadingDocument extends Document {
   uuid: string;
@@ -28,15 +28,15 @@ const ReadingSchema = new Schema<ReadingDocument>(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 ReadingSchema.index({ uuid: 1 }, { unique: true });
 
 const ReadingModel = mongoose.model<ReadingDocument>(
-  "Reading",
+  'Reading',
   ReadingSchema,
-  "readings",
+  'readings'
 );
 
 export default ReadingModel;

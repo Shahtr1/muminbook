@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useXToast } from "@/hooks/useXToast.js";
-import { createSuhuf } from "@/services/suhuf.service.js";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useXToast } from '@/hooks/useXToast.js';
+import { createSuhuf } from '@/services/suhuf.service.js';
 
 export const useCreateSuhuf = () => {
   const toast = useXToast();
@@ -8,12 +8,12 @@ export const useCreateSuhuf = () => {
 
   return useMutation({
     mutationFn: async (data) => {
-      toast.startLoading("Creating Suhuf...");
+      toast.startLoading('Creating Suhuf...');
       return await createSuhuf(data);
     },
     onSuccess: (data) => {
-      toast.success("Suhuf created.");
-      queryClient.invalidateQueries({ queryKey: ["windows"] });
+      toast.success('Suhuf created.');
+      queryClient.invalidateQueries({ queryKey: ['windows'] });
     },
     onError: toast.error,
     onSettled: toast.stopLoading,

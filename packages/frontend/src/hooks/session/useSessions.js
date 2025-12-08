@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { getSessions } from "@/services/index.js";
+import { useQuery } from '@tanstack/react-query';
+import { getSessions } from '@/services/index.js';
 
-export const SESSIONS = "sessions";
+export const SESSIONS = 'sessions';
 
 const useSessions = (opts = {}) => {
   const { data: sessions = [], ...rest } = useQuery({

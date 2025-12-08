@@ -1,46 +1,46 @@
-import { mode } from "@chakra-ui/theme-tools";
+import { mode } from '@chakra-ui/theme-tools';
 
 const selectTheme = {
   baseStyle: {
-    fontWeight: "medium",
+    fontWeight: 'medium',
   },
   variants: {
     outline: (props) => ({
       field: {
-        borderRadius: "sm",
-        borderColor: mode("gray.300", "whiteAlpha.500")(props),
-        bg: mode("white", "gray.800")(props),
-        color: mode("text.primary", "whiteAlpha.900")(props),
+        borderRadius: 'sm',
+        borderColor: mode('gray.300', 'whiteAlpha.500')(props),
+        bg: mode('white', 'gray.800')(props),
+        color: mode('text.primary', 'whiteAlpha.900')(props),
         _placeholder: {
-          color: mode("text.secondary", "whiteAlpha.600")(props),
+          color: mode('text.secondary', 'whiteAlpha.600')(props),
         },
         _focus: {
-          borderColor: "brand.500",
-          boxShadow: "none",
+          borderColor: 'brand.500',
+          boxShadow: 'none',
         },
       },
       icon: {
-        color: mode("gray.600", "whiteAlpha.700")(props),
+        color: mode('gray.600', 'whiteAlpha.700')(props),
       },
     }),
     filled: (props) => ({
       field: {
-        borderRadius: "sm",
-        bg: mode("gray.100", "gray.700")(props),
-        color: mode("text.primary", "whiteAlpha.900")(props),
+        borderRadius: 'sm',
+        bg: mode('gray.100', 'gray.700')(props),
+        color: mode('text.primary', 'whiteAlpha.900')(props),
         _placeholder: {
-          color: mode("text.secondary", "whiteAlpha.600")(props),
+          color: mode('text.secondary', 'whiteAlpha.600')(props),
         },
         _focus: {
-          bg: mode("white", "gray.800")(props),
-          borderColor: "brand.500",
-          boxShadow: "none",
+          bg: mode('white', 'gray.800')(props),
+          borderColor: 'brand.500',
+          boxShadow: 'none',
         },
       },
     }),
   },
   defaultProps: {
-    variant: "outline",
+    variant: 'outline',
   },
 };
 

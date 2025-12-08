@@ -1,30 +1,30 @@
-import React from "react";
-import { useSurahs } from "@/hooks/quran/useSurahs.js";
-import { Flex, Text, Tooltip, useColorModeValue } from "@chakra-ui/react";
-import { MdNumbers } from "react-icons/md";
-import { XSearch } from "@/components/layout/xcomp/XSearch.jsx";
-import { FixedSizeList as List } from "react-window";
-import AutoSizer from "react-virtualized-auto-sizer";
-import { Loader } from "@/components/layout/Loader.jsx";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { useCachedQuery } from "@/hooks/useCachedQuery.js";
+import React from 'react';
+import { useSurahs } from '@/hooks/quran/useSurahs.js';
+import { Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
+import { MdNumbers } from 'react-icons/md';
+import { XSearch } from '@/components/layout/xcomp/XSearch.jsx';
+import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { Loader } from '@/components/layout/Loader.jsx';
+import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import { useCachedQuery } from '@/hooks/useCachedQuery.js';
 
 export const SurahsList = () => {
   const {
     data: surahs,
     isPending,
     isError,
-  } = useCachedQuery(["surahs"], useSurahs);
+  } = useCachedQuery(['surahs'], useSurahs);
 
   const bgContentColor = useColorModeValue(
-    "wn.bg_content.light",
-    "wn.bg_content.dark",
+    'wn.bg_content.light',
+    'wn.bg_content.dark'
   );
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
-  const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
+  const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
   const iconHoverGray = useColorModeValue(
-    "wn.icon.hover.light",
-    "wn.icon.hover.dark",
+    'wn.icon.hover.light',
+    'wn.icon.hover.dark'
   );
 
   const Row = ({ index, style }) => {
@@ -52,7 +52,7 @@ export const SurahsList = () => {
                 {surah.uuid}. {surah.transliteration}
               </Text>
               <Text color={iconColor} fontSize="9px">
-                {surah.revelationPlace === "mecca" ? "Meccan" : "Medinan"}
+                {surah.revelationPlace === 'mecca' ? 'Meccan' : 'Medinan'}
               </Text>
             </Flex>
             <Flex justify="space-between" align="center">

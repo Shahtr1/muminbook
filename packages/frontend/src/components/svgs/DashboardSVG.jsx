@@ -1,6 +1,6 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
-export const DashboardSVG = ({ active, activeColor, dimensions = "25px" }) => {
+export const DashboardSVG = ({ active, activeColor, dimensions = '25px' }) => {
   return (
     <>
       <SVG

@@ -92,28 +92,28 @@ npm run test:ui
 Backend tests are configured in `packages/backend/vitest.config.ts`:
 
 ```typescript
-import { defineConfig } from "vitest/config";
-import path from "path";
+import { defineConfig } from 'vitest/config';
+import path from 'path';
 
 export default defineConfig({
   test: {
     globals: true,
-    environment: "node",
+    environment: 'node',
     coverage: {
-      provider: "v8",
-      reporter: ["text", "json", "html"],
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
       exclude: [
-        "node_modules/",
-        "dist/",
-        "**/*.d.ts",
-        "**/*.config.*",
-        "**/test-utils/**",
+        'node_modules/',
+        'dist/',
+        '**/*.d.ts',
+        '**/*.config.*',
+        '**/test-utils/**',
       ],
     },
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
 });
@@ -139,24 +139,24 @@ packages/backend/src/
 ### Example Backend Test
 
 ```typescript
-import { describe, it, expect, beforeEach } from "vitest";
-import { hashValue, compareValue } from "../bcrypt";
+import { describe, it, expect, beforeEach } from 'vitest';
+import { hashValue, compareValue } from '../bcrypt';
 
-describe("Bcrypt Password Hashing", () => {
-  const testPassword = "SecurePassword123!";
+describe('Bcrypt Password Hashing', () => {
+  const testPassword = 'SecurePassword123!';
   let hashedPassword: string;
 
   beforeEach(async () => {
     hashedPassword = await hashValue(testPassword);
   });
 
-  it("should hash a password successfully", async () => {
+  it('should hash a password successfully', async () => {
     expect(hashedPassword).toBeDefined();
     expect(hashedPassword).not.toBe(testPassword);
     expect(hashedPassword.length).toBeGreaterThan(0);
   });
 
-  it("should verify correct password", async () => {
+  it('should verify correct password', async () => {
     const isMatch = await compareValue(testPassword, hashedPassword);
     expect(isMatch).toBe(true);
   });
@@ -178,25 +178,25 @@ describe("Bcrypt Password Hashing", () => {
 Frontend tests are configured in `packages/frontend/vitest.config.js`:
 
 ```javascript
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
-import path from "path";
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    environment: "jsdom",
-    setupFiles: ["./vitest.setup.js"],
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.js'],
     coverage: {
-      provider: "v8",
-      reporter: ["text", "json", "html"],
-      exclude: ["node_modules/", "dist/", "**/*.config.*", "**/test-utils/**"],
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: ['node_modules/', 'dist/', '**/*.config.*', '**/test-utils/**'],
     },
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
 });
@@ -220,23 +220,23 @@ packages/frontend/src/
 ### Example Frontend Component Test
 
 ```javascript
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
-import { Button } from "@chakra-ui/react";
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { Button } from '@chakra-ui/react';
 
-describe("Button Component", () => {
-  it("should render button with text", () => {
+describe('Button Component', () => {
+  it('should render button with text', () => {
     render(<Button>Click me</Button>);
 
-    const button = screen.getByRole("button", { name: /click me/i });
+    const button = screen.getByRole('button', { name: /click me/i });
     expect(button).toBeInTheDocument();
   });
 
-  it("should handle click events", () => {
+  it('should handle click events', () => {
     const handleClick = vi.fn();
     render(<Button onClick={handleClick}>Click</Button>);
 
-    const button = screen.getByRole("button");
+    const button = screen.getByRole('button');
     fireEvent.click(button);
 
     expect(handleClick).toHaveBeenCalledTimes(1);
@@ -260,16 +260,16 @@ describe("Button Component", () => {
 
 ```typescript
 // ✅ Good - Define constants at the top
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from 'vitest';
 
 // Test data constants
-const TEST_USER_ID = "507f1f77bcf86cd799439011";
-const TEST_EMAIL = "test@example.com";
-const TEST_PASSWORD = "SecurePassword123!";
-const ERROR_MESSAGE = "Invalid credentials";
+const TEST_USER_ID = '507f1f77bcf86cd799439011';
+const TEST_EMAIL = 'test@example.com';
+const TEST_PASSWORD = 'SecurePassword123!';
+const ERROR_MESSAGE = 'Invalid credentials';
 
-describe("Auth Tests", () => {
-  it("should authenticate user", () => {
+describe('Auth Tests', () => {
+  it('should authenticate user', () => {
     const user = { id: TEST_USER_ID, email: TEST_EMAIL };
     expect(user.email).toBe(TEST_EMAIL);
   });
@@ -278,14 +278,14 @@ describe("Auth Tests", () => {
 
 ```typescript
 // ❌ Bad - Hardcoded values scattered throughout
-describe("Auth Tests", () => {
-  it("should authenticate user", () => {
-    const user = { id: "507f1f77bcf86cd799439011", email: "test@example.com" };
-    expect(user.email).toBe("test@example.com"); // Hard to maintain
+describe('Auth Tests', () => {
+  it('should authenticate user', () => {
+    const user = { id: '507f1f77bcf86cd799439011', email: 'test@example.com' };
+    expect(user.email).toBe('test@example.com'); // Hard to maintain
   });
 
-  it("should hash password", () => {
-    const password = "SecurePassword123!"; // Duplicated value
+  it('should hash password', () => {
+    const password = 'SecurePassword123!'; // Duplicated value
     // ...
   });
 });
@@ -304,15 +304,15 @@ describe("Auth Tests", () => {
 Use `describe` blocks to group related tests:
 
 ```javascript
-describe("User Authentication", () => {
-  describe("Login", () => {
-    it("should authenticate valid credentials", () => {});
-    it("should reject invalid credentials", () => {});
+describe('User Authentication', () => {
+  describe('Login', () => {
+    it('should authenticate valid credentials', () => {});
+    it('should reject invalid credentials', () => {});
   });
 
-  describe("Registration", () => {
-    it("should create new user", () => {});
-    it("should validate email format", () => {});
+  describe('Registration', () => {
+    it('should create new user', () => {});
+    it('should validate email format', () => {});
   });
 });
 ```
@@ -323,12 +323,12 @@ Use clear, descriptive test names:
 
 ```javascript
 // ✅ Good
-it("should return 400 when email is missing", () => {});
-it("should hash password before saving to database", () => {});
+it('should return 400 when email is missing', () => {});
+it('should hash password before saving to database', () => {});
 
 // ❌ Bad
-it("works", () => {});
-it("test email", () => {});
+it('works', () => {});
+it('test email', () => {});
 ```
 
 ### Assertions
@@ -338,7 +338,7 @@ Use appropriate matchers:
 ```javascript
 // Equality
 expect(value).toBe(5);
-expect(object).toEqual({ name: "John" });
+expect(object).toEqual({ name: 'John' });
 
 // Truthiness
 expect(value).toBeTruthy();
@@ -353,7 +353,7 @@ expect(value).toBeCloseTo(0.3);
 
 // Strings
 expect(str).toMatch(/pattern/);
-expect(str).toContain("substring");
+expect(str).toContain('substring');
 
 // Arrays
 expect(array).toContain(item);
@@ -361,8 +361,8 @@ expect(array).toHaveLength(3);
 
 // DOM (frontend)
 expect(element).toBeInTheDocument();
-expect(element).toHaveTextContent("Hello");
-expect(input).toHaveValue("test");
+expect(element).toHaveTextContent('Hello');
+expect(input).toHaveValue('test');
 ```
 
 ### Mocking
@@ -370,27 +370,27 @@ expect(input).toHaveValue("test");
 **Vitest Mocks:**
 
 ```javascript
-import { vi } from "vitest";
+import { vi } from 'vitest';
 
 // Mock functions
 const mockFn = vi.fn();
 mockFn.mockReturnValue(42);
-mockFn.mockResolvedValue({ data: "test" });
+mockFn.mockResolvedValue({ data: 'test' });
 
 // Mock modules
-vi.mock("./module", () => ({
-  fetchData: vi.fn(() => Promise.resolve({ data: "mocked" })),
+vi.mock('./module', () => ({
+  fetchData: vi.fn(() => Promise.resolve({ data: 'mocked' })),
 }));
 ```
 
 **Frontend API Mocks:**
 
 ```javascript
-import { vi } from "vitest";
-import apiClient from "@/config/apiClient";
+import { vi } from 'vitest';
+import apiClient from '@/config/apiClient';
 
 // Mock API call
-vi.mock("@/config/apiClient", () => ({
+vi.mock('@/config/apiClient', () => ({
   default: {
     get: vi.fn(() => Promise.resolve({ data: { users: [] } })),
     post: vi.fn(),
@@ -402,15 +402,15 @@ vi.mock("@/config/apiClient", () => ({
 
 ```javascript
 // Using async/await
-it("should fetch user data", async () => {
+it('should fetch user data', async () => {
   const user = await fetchUser(1);
-  expect(user.name).toBe("John");
+  expect(user.name).toBe('John');
 });
 
 // Using promises
-it("should handle errors", () => {
+it('should handle errors', () => {
   return fetchUser(-1).catch((error) => {
-    expect(error.message).toMatch("not found");
+    expect(error.message).toMatch('not found');
   });
 });
 ```
@@ -517,8 +517,8 @@ Following the values from CONTRIBUTING.md:
 
 ```javascript
 // Ensure vi.mock() is called before imports
-vi.mock("./module");
-import { something } from "./module"; // ✅
+vi.mock('./module');
+import { something } from './module'; // ✅
 ```
 
 **React Testing Library errors:**

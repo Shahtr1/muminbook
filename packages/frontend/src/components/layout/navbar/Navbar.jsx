@@ -1,18 +1,18 @@
-import { Flex, Image, useColorMode, useColorModeValue } from "@chakra-ui/react";
-import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
-import { NavItem } from "@/components/layout/navbar/NavItem.jsx";
-import { useQueryClient } from "@tanstack/react-query";
-import { AUTH } from "@/hooks/useAuth.js";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { Search2Icon } from "@chakra-ui/icons";
-import { XDivider } from "@/components/layout/xcomp/XDivider.jsx";
-import { NavMenuItem } from "@/components/layout/navbar/NavMenuItem.jsx";
-import { NotificationMenu } from "@/components/layout/navbar/menus/NotificationMenu.jsx";
-import { UserMenu } from "@/components/layout/navbar/menus/UserMenu.jsx";
-import { FeaturesMenu } from "@/components/layout/navbar/menus/FeaturesMenu.jsx";
-import { navItems } from "@/data/navbarData.js";
-import { XSearch } from "@/components/layout/xcomp/XSearch.jsx";
+import { Flex, Image, useColorMode, useColorModeValue } from '@chakra-ui/react';
+import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
+import { NavItem } from '@/components/layout/navbar/NavItem.jsx';
+import { useQueryClient } from '@tanstack/react-query';
+import { AUTH } from '@/hooks/useAuth.js';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Search2Icon } from '@chakra-ui/icons';
+import { XDivider } from '@/components/layout/xcomp/XDivider.jsx';
+import { NavMenuItem } from '@/components/layout/navbar/NavMenuItem.jsx';
+import { NotificationMenu } from '@/components/layout/navbar/menus/NotificationMenu.jsx';
+import { UserMenu } from '@/components/layout/navbar/menus/UserMenu.jsx';
+import { FeaturesMenu } from '@/components/layout/navbar/menus/FeaturesMenu.jsx';
+import { navItems } from '@/data/navbarData.js';
+import { XSearch } from '@/components/layout/xcomp/XSearch.jsx';
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
@@ -23,8 +23,8 @@ export const Navbar = () => {
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const activeColor = useColorModeValue("active.light", "active.dark");
-  const defaultColor = useColorModeValue("default.light", "default.dark");
+  const activeColor = useColorModeValue('active.light', 'active.dark');
+  const defaultColor = useColorModeValue('default.light', 'default.dark');
 
   const searchInputRef = useRef(null);
 
@@ -40,9 +40,9 @@ export const Navbar = () => {
       h="navbar-height"
       inset={0}
       borderBottom="1px solid"
-      borderColor={colorMode === "light" ? "gray.300" : "whiteAlpha.300"}
+      borderColor={colorMode === 'light' ? 'gray.300' : 'whiteAlpha.300'}
       boxShadow="sm"
-      bg={colorMode === "light" ? "white" : "gray.800"}
+      bg={colorMode === 'light' ? 'white' : 'gray.800'}
       justify="center"
       zIndex={1100}
     >
@@ -58,8 +58,8 @@ export const Navbar = () => {
             src="/images/logos/logo-image.png"
             alt="Muminbook Logo"
             cursor="pointer"
-            display={{ base: "block", md: "none" }}
-            onClick={() => navigate("/")}
+            display={{ base: 'block', md: 'none' }}
+            onClick={() => navigate('/')}
           />
 
           <Image
@@ -67,14 +67,14 @@ export const Navbar = () => {
             src="/images/logos/logo-with-image.png"
             alt="Muminbook Logo"
             cursor="pointer"
-            display={{ base: "none", md: "block" }}
-            onClick={() => navigate("/")}
+            display={{ base: 'none', md: 'block' }}
+            onClick={() => navigate('/')}
           />
           <XSearch
             focused={isFocused}
             onFocusChange={setIsFocused}
             expand
-            display={{ base: isFocused ? "flex" : "none", md: "flex" }}
+            display={{ base: isFocused ? 'flex' : 'none', md: 'flex' }}
             variant="dropdown"
             isNavSearch
           />
@@ -82,15 +82,15 @@ export const Navbar = () => {
 
         <Flex
           h="100%"
-          display={{ base: isFocused ? "none" : "flex", md: "flex" }}
+          display={{ base: isFocused ? 'none' : 'flex', md: 'flex' }}
           align="center"
         >
           <Search2Icon
-            w={{ base: "45px", sm: "65px" }}
+            w={{ base: '45px', sm: '65px' }}
             fontSize={25}
             color={defaultColor}
             cursor="pointer"
-            display={{ base: "block", md: "none" }}
+            display={{ base: 'block', md: 'none' }}
             _hover={{ color: activeColor }}
             onClick={() => setIsFocused(true)}
           />
@@ -99,7 +99,7 @@ export const Navbar = () => {
             const isActive = location.pathname.startsWith(item.link);
 
             switch (item?.id) {
-              case "user":
+              case 'user':
                 return (
                   <NavMenuItem
                     key={item.id}
@@ -109,7 +109,7 @@ export const Navbar = () => {
                     showIcon={true}
                   />
                 );
-              case "notifications":
+              case 'notifications':
                 return (
                   <NavMenuItem
                     key={item.id}
@@ -118,7 +118,7 @@ export const Navbar = () => {
                     MenuComponent={NotificationMenu}
                   />
                 );
-              case "features":
+              case 'features':
                 return (
                   <NavMenuItem
                     key={item.id}

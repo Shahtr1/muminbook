@@ -1,20 +1,20 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex } from '@chakra-ui/react';
 import {
   CommonTextNode,
   TreeNode,
-} from "@/components/layout/features/nodes/TreeNode.jsx";
+} from '@/components/layout/features/nodes/TreeNode.jsx';
 
 export const ProphetNode = ({ data }) => {
   const isBig = data.ulul_azm;
-  const lastProphet = data.uuid === "muhammad";
+  const lastProphet = data.uuid === 'muhammad';
   return (
     <TreeNode>
       <Flex
         borderRadius="sm"
         bg="node"
         color="white"
-        w={lastProphet ? "120px" : isBig ? "90px" : "75px"}
-        h={lastProphet ? "60px" : isBig ? "50px" : "40px"}
+        w={lastProphet ? '120px' : isBig ? '90px' : '75px'}
+        h={lastProphet ? '60px' : isBig ? '50px' : '40px'}
         position="relative"
         align="center"
       >

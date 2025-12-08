@@ -1,8 +1,8 @@
-import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
+import { Flex, Icon, Text, useColorModeValue } from '@chakra-ui/react';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { useParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const SuhufBottomPanelHeader = ({
   hasBorder = false,
@@ -11,8 +11,8 @@ export const SuhufBottomPanelHeader = ({
   const { id: suhufId } = useParams();
   const queryClient = useQueryClient();
   const { data: suhuf } = useQuery({
-    queryKey: ["suhuf", suhufId],
-    queryFn: () => queryClient.getQueryData(["suhuf", suhufId]),
+    queryKey: ['suhuf', suhufId],
+    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
     staleTime: 0,
   });
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
@@ -31,8 +31,8 @@ export const SuhufBottomPanelHeader = ({
     });
   };
 
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
-  const boldColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
+  const boldColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
 
   return (
     <Flex
@@ -42,7 +42,7 @@ export const SuhufBottomPanelHeader = ({
       gap={1}
       px={2}
       borderBottom="1px solid"
-      borderTop={hasBorder ? "1px solid" : "none"}
+      borderTop={hasBorder ? '1px solid' : 'none'}
       borderColor={borderColor}
       onClick={toggleBottomTab}
     >

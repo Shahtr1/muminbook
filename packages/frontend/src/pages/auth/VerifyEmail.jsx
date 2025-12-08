@@ -9,16 +9,16 @@ import {
   Text,
   useColorModeValue,
   VStack,
-} from "@chakra-ui/react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { DarkModeToggle } from "@/components/layout/DarkModeToggle.jsx";
-import { verifyEmail } from "@/services/index.js";
+} from '@chakra-ui/react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
+import { verifyEmail } from '@/services/index.js';
 
 const VerifyEmail = () => {
   const { code } = useParams();
   const { isPending, isSuccess, isError } = useQuery({
-    queryKey: ["emailVerification", code],
+    queryKey: ['emailVerification', code],
     queryFn: () => verifyEmail(code),
   });
   const navigate = useNavigate();
@@ -32,15 +32,15 @@ const VerifyEmail = () => {
             w={{ base: 150, md: 200 }}
             src="/images/logos/logo-text.png"
             alt="Muminbook Logo"
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
           />
-          <Alert status={isSuccess ? "success" : "error"} w="fit-content">
+          <Alert status={isSuccess ? 'success' : 'error'} w="fit-content">
             <AlertIcon />
-            {isSuccess ? "Email Verified!" : "Invalid link"}
+            {isSuccess ? 'Email Verified!' : 'Invalid link'}
           </Alert>
           <Stack
             rounded="sm"
-            bg={useColorModeValue("white", "gray.800")}
+            bg={useColorModeValue('white', 'gray.800')}
             boxShadow="md"
             p={3}
             minW={{ base: 300, sm: 400 }}
@@ -53,7 +53,7 @@ const VerifyEmail = () => {
               <VStack align="center" spacing={4}>
                 {isError && (
                   <Text>
-                    The link is either invalid or expired.{" "}
+                    The link is either invalid or expired.{' '}
                     <ChakraLink as={Link} to="/email/reverify" replace>
                       Get a new link
                     </ChakraLink>

@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 export function useTrackVisibleAyat(items = [], containerRef) {
   const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ export function useTrackVisibleAyat(items = [], containerRef) {
     if (!container || !items.length) return;
 
     const onScroll = () => {
-      const elements = Array.from(container.querySelectorAll("[data-idx]"));
+      const elements = Array.from(container.querySelectorAll('[data-idx]'));
 
       const topMost = elements
         .map((el) => {
@@ -32,15 +32,15 @@ export function useTrackVisibleAyat(items = [], containerRef) {
       const last = lastIdsRef.current;
 
       if (surahId !== last.surahId || juzId !== last.juzId) {
-        queryClient.setQueryData(["currentSurahId"], surahId);
-        queryClient.setQueryData(["currentJuzId"], juzId);
+        queryClient.setQueryData(['currentSurahId'], surahId);
+        queryClient.setQueryData(['currentJuzId'], juzId);
         lastIdsRef.current = { surahId, juzId };
       }
     };
 
-    container.addEventListener("scroll", onScroll);
+    container.addEventListener('scroll', onScroll);
     onScroll();
 
-    return () => container.removeEventListener("scroll", onScroll);
+    return () => container.removeEventListener('scroll', onScroll);
   }, [items, containerRef, queryClient]);
 }

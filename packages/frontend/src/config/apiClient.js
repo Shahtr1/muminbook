@@ -1,6 +1,6 @@
-import axios from "axios";
-import queryClient from "./queryClient.js";
-import { navigate } from "@/services/index.js";
+import axios from 'axios';
+import queryClient from './queryClient.js';
+import { navigate } from '@/services/index.js';
 
 const options = {
   baseURL: import.meta.env.VITE_API_URL,
@@ -20,20 +20,20 @@ API.interceptors.response.use(
     const { status, data } = response || {};
 
     // try to refresh access token behind the scenes
-    if (status === 401 && data?.errorCode === "InvalidAccessToken") {
+    if (status === 401 && data?.errorCode === 'InvalidAccessToken') {
       try {
-        await TokenRefreshClient.get("/auth/refresh");
+        await TokenRefreshClient.get('/auth/refresh');
         return TokenRefreshClient(config);
       } catch (error) {
         queryClient.clear();
-        navigate("/login", {
+        navigate('/login', {
           state: { redirectUrl: window.location.pathname },
         });
       }
     }
 
     return Promise.reject({ status, ...data });
-  },
+  }
 );
 
 export default API;

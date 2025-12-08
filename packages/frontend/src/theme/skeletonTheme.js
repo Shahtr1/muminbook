@@ -1,17 +1,17 @@
-import { cssVar, defineStyle, defineStyleConfig } from "@chakra-ui/react";
+import { cssVar, defineStyle, defineStyleConfig } from '@chakra-ui/react';
 
-const $startColor = cssVar("skeleton-start-color");
-const $endColor = cssVar("skeleton-end-color");
+const $startColor = cssVar('skeleton-start-color');
+const $endColor = cssVar('skeleton-end-color');
 
 const defaultVariant = defineStyle({
-  borderRadius: "sm",
+  borderRadius: 'sm',
   _light: {
-    [$startColor.variable]: "colors.gray.300",
-    [$endColor.variable]: "colors.gray.100",
+    [$startColor.variable]: 'colors.gray.300',
+    [$endColor.variable]: 'colors.gray.100',
   },
   _dark: {
-    [$startColor.variable]: "colors.gray.700",
-    [$endColor.variable]: "colors.gray.500",
+    [$startColor.variable]: 'colors.gray.700',
+    [$endColor.variable]: 'colors.gray.500',
   },
 });
 
@@ -20,7 +20,7 @@ const skeletonTheme = defineStyleConfig({
     subtle: defaultVariant,
   },
   defaultProps: {
-    variant: "subtle",
+    variant: 'subtle',
   },
 });
 

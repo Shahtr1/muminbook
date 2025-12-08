@@ -143,7 +143,7 @@ muminbook/
 async function getUserById(userId: string): Promise<User> {
   const user = await UserModel.findById(userId);
   if (!user) {
-    throw new AppError("User not found", 404);
+    throw new AppError('User not found', 404);
   }
   return user;
 }

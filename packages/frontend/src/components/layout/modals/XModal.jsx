@@ -8,7 +8,7 @@ import {
   ModalOverlay,
   useBreakpointValue,
   useColorModeValue,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 export const XModal = ({
   isOpen,
@@ -18,7 +18,7 @@ export const XModal = ({
   footer = null,
   showCloseButton = true,
 }) => {
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
   const isMobile = useBreakpointValue({ base: true, sm: false });
 
   return (
@@ -35,7 +35,7 @@ export const XModal = ({
       <ModalOverlay />
 
       <ModalContent
-        width={isMobile ? "calc(100% - 32px)" : undefined}
+        width={isMobile ? 'calc(100% - 32px)' : undefined}
         borderRadius="sm"
         boxShadow="lg"
         overflow="hidden"
@@ -43,7 +43,7 @@ export const XModal = ({
       >
         {title && (
           <ModalHeader
-            fontSize={{ base: "15px", sm: "17px" }}
+            fontSize={{ base: '15px', sm: '17px' }}
             color="brand.500"
             borderBottom="1px solid"
             borderColor={borderColor}

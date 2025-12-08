@@ -1,19 +1,19 @@
-import ResourceModel from "../../../models/resource.model";
-import { PrimaryId } from "../../../constants/primaryId";
-import ResourceType from "../../../constants/enums/resourceType";
-import appAssert from "../../../utils/appAssert";
-import { NOT_FOUND } from "../../../constants/http";
+import ResourceModel from '../../../models/resource.model';
+import { PrimaryId } from '../../../constants/primaryId';
+import ResourceType from '../../../constants/enums/resourceType';
+import appAssert from '../../../utils/appAssert';
+import { NOT_FOUND } from '../../../constants/http';
 
 export const getOrCreateLostAndFound = async (userId: PrimaryId) => {
   const rootFolder = await ResourceModel.findOne({
-    path: "my-files",
+    path: 'my-files',
     type: ResourceType.Folder,
     userId,
   });
 
-  appAssert(rootFolder, NOT_FOUND, "Root folder not found");
+  appAssert(rootFolder, NOT_FOUND, 'Root folder not found');
 
-  const lostAndFoundPath = "my-files/lost+found";
+  const lostAndFoundPath = 'my-files/lost+found';
 
   return ResourceModel.findOneAndUpdate(
     {
@@ -23,7 +23,7 @@ export const getOrCreateLostAndFound = async (userId: PrimaryId) => {
     },
     {
       $setOnInsert: {
-        name: "lost+found",
+        name: 'lost+found',
         parent: rootFolder._id,
         path: lostAndFoundPath,
         type: ResourceType.Folder,
@@ -34,6 +34,6 @@ export const getOrCreateLostAndFound = async (userId: PrimaryId) => {
       upsert: true,
       new: true,
       setDefaultsOnInsert: true,
-    },
+    }
   );
 };

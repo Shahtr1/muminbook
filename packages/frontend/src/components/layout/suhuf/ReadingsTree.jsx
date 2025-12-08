@@ -6,15 +6,15 @@ import {
   Text,
   Tooltip,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { useState } from "react";
-import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
-import { FileSVG } from "@/components/svgs/FileSVG.jsx";
-import { useReadings } from "@/hooks/reading/useReadings.js";
+} from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
+import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
+import { FileSVG } from '@/components/svgs/FileSVG.jsx';
+import { useReadings } from '@/hooks/reading/useReadings.js';
 
 const TreeNode = ({ onSelect }) => {
-  const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
+  const defaultTextColor = useColorModeValue('text.primary', 'whiteAlpha.900');
   const [isExpanded, setIsExpanded] = useState(false);
 
   const { readings, isPending } = useReadings();
@@ -49,8 +49,8 @@ const TreeNode = ({ onSelect }) => {
           <Tooltip label="Readings" placement="auto-end" variant="inverted">
             <Text
               whiteSpace="nowrap"
-              fontSize={"11px"}
-              _groupHover={{ color: "brand.600" }}
+              fontSize={'11px'}
+              _groupHover={{ color: 'brand.600' }}
             >
               Readings
             </Text>
@@ -84,7 +84,7 @@ const TreeNode = ({ onSelect }) => {
                     <Text
                       fontSize="11px"
                       whiteSpace="nowrap"
-                      _groupHover={{ color: "brand.600" }}
+                      _groupHover={{ color: 'brand.600' }}
                     >
                       {res.label}
                     </Text>

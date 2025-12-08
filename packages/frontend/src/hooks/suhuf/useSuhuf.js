@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { getSuhuf } from "@/services/index.js";
+import { useQuery } from '@tanstack/react-query';
+import { getSuhuf } from '@/services/index.js';
 
 export const useSuhuf = (id) => {
   return useQuery({
-    queryKey: ["suhuf", id],
+    queryKey: ['suhuf', id],
     queryFn: () => getSuhuf(id),
     enabled: !!id,
     refetchOnReconnect: false,
