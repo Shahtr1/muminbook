@@ -1,0 +1,47 @@
+{
+  "name": "muminbook",
+  "version": "1.0.0",
+  "description": "A modern MERN-stack web application designed to serve as a community platform for Muslims",
+  "private": true,
+  "workspaces": [
+    "packages/backend",
+    "packages/frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "npm run backend --workspace=@muminbook/backend",
+    "frontend": "npm run frontend --workspace=@muminbook/frontend",
+    "build": "npm run build --workspaces --if-present",
+    "build:backend": "npm run build --workspace=@muminbook/backend",
+    "build:frontend": "npm run build --workspace=@muminbook/frontend",
+    "start:backend": "npm run start --workspace=@muminbook/backend",
+    "preview:frontend": "npm run preview --workspace=@muminbook/frontend",
+    "lint": "npm run lint --workspaces --if-present",
+    "clean": "rm -rf node_modules packages/*/node_modules",
+    "clean:install": "npm run clean && npm install",
+    "test": "npm run test --workspaces --if-present",
+    "test:backend": "npm run test --workspace=@muminbook/backend",
+    "test:frontend": "npm run test --workspace=@muminbook/frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shahtr1/muminbook.git"
+  },
+  "keywords": [
+    "mern",
+    "muslim",
+    "quran",
+    "hadith",
+    "community",
+    "education"
+  ],
+  "author": "",
+  "license": "ISC"
+}

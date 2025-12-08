@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "@muminbook/frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -20,7 +20,6 @@
     "@tanstack/react-query-devtools": "^5.65.1",
     "axios": "^1.7.9",
     "framer-motion": "^12.0.6",
-    "frontend": "file:",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
