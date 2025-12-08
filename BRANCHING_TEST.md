@@ -8,6 +8,7 @@ This file tests the Git workflow:
 - ✅ After testing, `develop` → `main` for production
 
 **Branch Flow:**
+
 ```
 feature/test-branching-workflow (you are here)
   ↓ (PR)
