@@ -1,4 +1,20 @@
+/**
+ * @fileoverview Tests for useTrashResource Hook
+ *
+ * This test suite validates the trash resource management functionality,
+ * including virtual path mapping, folder anchor detection, and filtering logic.
+ *
+ * @see README.md for detailed documentation on how the hook works
+ * @see useTrashResource.js for the implementation
+ */
+
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+// Mock must be defined before imports
+vi.mock('@/services/index.js', () => ({
+  getTrash: vi.fn(),
+}));
+
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useTrashResource } from './useTrashResource.js';
@@ -60,32 +76,34 @@ const mockTrashData = [
   { _id: '10', name: 'random.txt', type: 'file', path: 'my-files/random.txt' },
 ];
 
-vi.mock('@/lib/services/index.js', () => ({
-  getTrash: vi.fn(),
-}));
-
 const createWrapper = () => {
-  const client = new QueryClient();
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
   return ({ children }) => (
     <QueryClientProvider client={client}>{children}</QueryClientProvider>
   );
 };
 
-describe('useTrash (edge cases)', () => {
+describe('useTrashResource', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     api.getTrash.mockResolvedValue(mockTrashData);
   });
 
-  it('maps and filters trash/doc1 correctly', async () => {
-    // 🔁 doc1 → trash/doc1
-    // 🔁 doc1/file1.txt → trash/doc1/file1.txt
-    // 🔁 doc1/sub → trash/doc1/sub
+  it('maps folder anchors and filters direct children correctly', async () => {
+    // Tests: Folder anchor 'doc1' becomes 'trash/doc1'
+    // Only direct children (file1.txt, sub/) are shown, not nested items
 
     const { result } = renderHook(() => useTrashResource('trash/doc1'), {
       wrapper: createWrapper(),
     });
 
+    await waitFor(() => result.current.isSuccess);
     await waitFor(() => result.current.resources.length > 0);
 
     expect(result.current.virtualRoot).toBe('trash/doc1');
@@ -96,55 +114,60 @@ describe('useTrash (edge cases)', () => {
     expect(result.current.resources.length).toBe(2);
   });
 
-  it('maps and filters nested under trash/doc1/sub', async () => {
-    // 🔁 doc1/sub/nested.txt → trash/doc1/sub/nested.txt
+  it('navigates into nested folders correctly', async () => {
+    // Tests: Navigating deeper into folder structure works properly
+    // Viewing 'trash/doc1/sub' shows only files directly inside 'sub'
 
     const { result } = renderHook(() => useTrashResource('trash/doc1/sub'), {
       wrapper: createWrapper(),
     });
 
+    await waitFor(() => result.current.isSuccess);
     await waitFor(() => result.current.resources.length > 0);
     expect(result.current.resources[0].virtualPath).toBe(
       'trash/doc1/sub/nested.txt'
     );
   });
 
-  it('maps and filters trash/subdoc2 correctly', async () => {
-    // 🔁 subdoc2 → trash/subdoc2
-    // 🔁 subdoc2/deep.txt → trash/subdoc2/deep.txt
+  it('handles multiple folder anchors independently', async () => {
+    // Tests: Different folder anchors (subdoc2) are mapped correctly
+    // Each anchor creates its own virtual tree
 
     const { result } = renderHook(() => useTrashResource('trash/subdoc2'), {
       wrapper: createWrapper(),
     });
 
+    await waitFor(() => result.current.isSuccess);
     await waitFor(() => result.current.resources.length > 0);
     expect(result.current.resources[0].virtualPath).toBe(
       'trash/subdoc2/deep.txt'
     );
   });
 
-  it('maps and filters trash/tutorials correctly', async () => {
-    // 🔁 tutorials → trash/tutorials
-    // 🔁 tutorials/lesson1.md → trash/tutorials/lesson1.md
+  it('preserves folder structure for deeply nested anchors', async () => {
+    // Tests: Folder anchor 'tutorials' from deep path still works
+    // Path depth doesn't matter, only the anchor folder name
 
     const { result } = renderHook(() => useTrashResource('trash/tutorials'), {
       wrapper: createWrapper(),
     });
 
+    await waitFor(() => result.current.isSuccess);
     await waitFor(() => result.current.resources.length > 0);
     expect(result.current.resources[0].virtualPath).toBe(
       'trash/tutorials/lesson1.md'
     );
   });
 
-  it('maps orphaned files to trash/<filename>', async () => {
-    // 🔁 lonely/just-a-file.txt → trash/just-a-file.txt
-    // 🔁 random.txt → trash/random.txt
+  it('handles orphaned files (deleted without folder anchor)', async () => {
+    // Tests: Files deleted individually appear at trash root
+    // Orphans use just their filename: 'trash/filename.ext'
 
     const { result } = renderHook(() => useTrashResource('trash'), {
       wrapper: createWrapper(),
     });
 
+    await waitFor(() => result.current.isSuccess);
     await waitFor(() => result.current.resources.length > 0);
 
     const virtualPaths = result.current.resources.map((r) => r.virtualPath);
@@ -162,16 +185,22 @@ describe('useTrash (edge cases)', () => {
     expect(randomFile.name).toBe('random.txt');
   });
 
-  it('returns correct default virtualRoot', async () => {
+  it('calculates virtualRoot correctly for trash root view', async () => {
+    // Tests: When viewing trash root, virtualRoot defaults to 'trash'
+    // This happens when no folder resources match the current path
+
     const { result } = renderHook(() => useTrashResource('trash'), {
       wrapper: createWrapper(),
     });
 
-    await waitFor(() => result.current.virtualRoot !== undefined);
-    expect(result.current.virtualRoot).toBe('trash/doc1');
+    await waitFor(() => result.current.isSuccess);
+    expect(result.current.virtualRoot).toBe('trash');
   });
 
-  it('handles fallback virtualPath for unmapped files', async () => {
+  it('handles unmapped files with fallback virtualPath', async () => {
+    // Tests: Files that don't match any folder anchor use filename fallback
+    // Ensures robustness when data structure is unexpected
+
     const extraOrphan = {
       _id: 'zz',
       name: 'standalone',
@@ -185,6 +214,7 @@ describe('useTrash (edge cases)', () => {
       wrapper: createWrapper(),
     });
 
+    await waitFor(() => result.current.isSuccess);
     await waitFor(() => result.current.resources.length > 0);
 
     const file = result.current.resources.find((r) =>
