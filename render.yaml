@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: muminbook-backend
+    runtime: docker
+    dockerfilePath: ./packages/backend/Dockerfile
+    dockerContext: ./packages/backend
+    region: oregon
+    plan: free
+    branch: master
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4004
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_SENDER
+        sync: false
+      - key: APP_ORIGIN
+        sync: false
+      - key: ADMIN_FIRSTNAME
+        value: Admin
+      - key: ADMIN_LASTNAME
+        value: User
+      - key: ADMIN_DATE_OF_BIRTH
+        value: "1990-01-01"
+      - key: ADMIN_GENDER
+        value: male
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
