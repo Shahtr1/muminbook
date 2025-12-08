@@ -1,3 +1,12 @@
+/**
+ * @fileoverview JWT Utilities Test Suite
+ *
+ * Tests token signing and verification functionality for access and refresh tokens.
+ * Environment variables are configured in vitest.setup.ts to prevent initialization errors.
+ *
+ * @see ../../vitest.setup.ts for environment setup
+ */
+
 import { describe, it, expect } from 'vitest';
 import {
   signToken,
