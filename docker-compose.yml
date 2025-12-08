@@ -1,0 +1,119 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:6.0
+    container_name: muminbook-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-adminpassword}
+      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME:-muminbook}
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - muminbook-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  # Backend API
+  backend:
+    build:
+      context: ./packages/backend
+      dockerfile: Dockerfile
+    container_name: muminbook-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: ${BACKEND_PORT:-4004}
+      MONGO_URI: ${MONGO_URI:-mongodb://admin:adminpassword@mongodb:27017/muminbook?authSource=admin}
+      JWT_SECRET: ${JWT_SECRET:-your-jwt-secret-change-in-production}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-your-refresh-secret-change-in-production}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      EMAIL_SENDER: ${EMAIL_SENDER:-noreply@muminbook.com}
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:5173}
+      ADMIN_FIRSTNAME: ${ADMIN_FIRSTNAME:-Admin}
+      ADMIN_LASTNAME: ${ADMIN_LASTNAME:-User}
+      ADMIN_DATE_OF_BIRTH: ${ADMIN_DATE_OF_BIRTH:-1990-01-01}
+      ADMIN_GENDER: ${ADMIN_GENDER:-male}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@muminbook.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-ChangeMe123!}
+    ports:
+      - "${BACKEND_PORT:-4004}:4004"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - muminbook-network
+    volumes:
+      # Mount logs directory (optional)
+      - backend_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:4004/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ./packages/frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:4004}
+    container_name: muminbook-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8080}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - muminbook-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  # Redis (Optional - uncomment if needed for caching/sessions)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: muminbook-redis
+  #   restart: unless-stopped
+  #   ports:
+  #     - "${REDIS_PORT:-6379}:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   networks:
+  #     - muminbook-network
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 10s
+  #     timeout: 3s
+  #     retries: 5
+  #   command: redis-server --appendonly yes
+
+networks:
+  muminbook-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+  backend_logs:
+    driver: local
+  # redis_data:
+  #   driver: local

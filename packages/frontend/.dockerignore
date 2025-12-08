@@ -1,0 +1,57 @@
+# Dependencies
+node_modules
+npm-debug.log
+package-lock.json
+
+# Build outputs (will be generated in Docker)
+dist
+build
+
+# Environment files
+.env
+.env.local
+.env.*.local
+*.env
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Testing
+coverage
+*.test.js
+*.test.jsx
+*.spec.js
+*.spec.jsx
+__tests__
+**/__tests__
+vitest.config.js
+vitest.setup.js
+
+# Documentation
+README.md
+docs
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Development
+*.log
+tmp
+temp
+.cache
+public/mockServiceWorker.js
