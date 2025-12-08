@@ -1,21 +1,19 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
-
 # Get current branch name
 branch="$(git rev-parse --abbrev-ref HEAD)"
-
 # Define valid branch name pattern
-# Format: type/description or type/ticket-description
+# Format: type/description
 # Valid types: feature, fix, hotfix, release, chore, docs, refactor, test
 valid_branch_regex="^(feature|fix|hotfix|release|chore|docs|refactor|test)\/[a-z0-9._-]+$"
-
-# Allow main, master, develop, staging branches
-if [ "$branch" = "main" ] || [ "$branch" = "master" ] || [ "$branch" = "develop" ] || [ "$branch" = "staging" ]; then
+# Allow only main and develop branches (protected branches)
+if [ "$branch" = "main" ] || [ "$branch" = "develop" ]; then
+    echo "✅ Pushing to protected branch: $branch (no naming validation)"
     exit 0
 fi
-
 # Check if branch name matches pattern
 if ! echo "$branch" | grep -qE "$valid_branch_regex"; then
+    echo ""
     echo "❌ ERROR: Invalid branch name: '$branch'"
     echo ""
     echo "Branch names must follow this format:"
@@ -44,7 +42,5 @@ if ! echo "$branch" | grep -qE "$valid_branch_regex"; then
     echo ""
     exit 1
 fi
-
 echo "✅ Branch name is valid: $branch"
 exit 0
-

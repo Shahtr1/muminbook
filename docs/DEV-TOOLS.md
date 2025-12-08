@@ -41,7 +41,7 @@ This project has a **minimal, non-intrusive** development tools setup:
 
 **Protected branches** (no validation):
 
-- `main`, `master`, `develop`, `staging`
+- `main`, `develop`
 
 **Examples:**
 
