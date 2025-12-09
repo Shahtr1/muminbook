@@ -1,0 +1,45 @@
+# Auto-labeling configuration for PRs based on changed files
+
+backend:
+  - packages/backend/**/*
+
+frontend:
+  - packages/frontend/**/*
+
+tests:
+  - '**/__tests__/**/*'
+  - '**/*.test.*'
+  - '**/*.spec.*'
+
+docs:
+  - docs/**/*
+  - '**/*.md'
+
+ci/cd:
+  - .github/**/*
+  - '**/Dockerfile'
+  - docker-compose.yml
+  - render.yaml
+
+dependencies:
+  - package.json
+  - package-lock.json
+  - '**/package.json'
+
+config:
+  - '**/*.config.*'
+  - '**/*.json'
+  - '.env*'
+
+auth:
+  - '**/auth*'
+  - '**/authenticate*'
+
+database:
+  - '**/models/**/*'
+  - '**/migrations/**/*'
+
+api:
+  - '**/routes/**/*'
+  - '**/controllers/**/*'
+  - '**/services/**/*'
