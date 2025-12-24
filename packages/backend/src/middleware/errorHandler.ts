@@ -27,7 +27,7 @@ export const errorHandler = (
   error: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   console.error(`PATH ${req.path}`, error);
 
@@ -36,7 +36,7 @@ export const errorHandler = (
   }
 
   if (error instanceof z.ZodError) {
-    handleZodError(res, error);
+    return handleZodError(res, error);
   }
 
   if (error instanceof AppError) {
