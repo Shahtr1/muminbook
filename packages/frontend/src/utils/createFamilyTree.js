@@ -1,4 +1,4 @@
-import { nodePositions } from '@/utils/nodePositions.js';
+import { nodePositions } from '@/data/nodePositions.js';
 
 export const createFamilyTree = (tree = []) =>
   tree.map(
