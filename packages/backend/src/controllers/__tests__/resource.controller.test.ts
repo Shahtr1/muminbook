@@ -218,6 +218,117 @@ describe('Resource Controller', () => {
       );
       expect(mockResponse.status).toHaveBeenCalledWith(CREATED);
     });
+
+    it('should pass validation error to next() for invalid resource name', async () => {
+      mockRequest.body = {
+        name: 'invalid/name', // Contains forbidden character
+        type: ResourceType.Folder,
+        path: '/documents',
+      };
+
+      await createResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.createResource).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for invalid resource type', async () => {
+      mockRequest.body = {
+        name: 'New Resource',
+        type: 'invalid-type', // Invalid enum value
+        path: '/documents',
+      };
+
+      await createResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.createResource).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for missing name', async () => {
+      mockRequest.body = {
+        type: ResourceType.Folder,
+        path: '/documents',
+      };
+
+      await createResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.createResource).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for invalid file URL', async () => {
+      mockRequest.body = {
+        name: 'document.pdf',
+        type: ResourceType.File,
+        path: '/documents',
+        fileUrl: 'not-a-valid-url', // Invalid URL
+      };
+
+      await createResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.createResource).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() when resource already exists', async () => {
+      mockRequest.body = {
+        name: 'Existing Folder',
+        type: ResourceType.Folder,
+        path: '/documents',
+      };
+
+      const serviceError = new Error('Resource with this name already exists');
+      vi.mocked(resourceService.createResource).mockRejectedValue(serviceError);
+
+      await createResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for name with leading/trailing spaces', async () => {
+      mockRequest.body = {
+        name: ' Folder with spaces ',
+        type: ResourceType.Folder,
+        path: '/documents',
+      };
+
+      await createResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.createResource).not.toHaveBeenCalled();
+    });
   });
 
   describe('deleteResourceHandler', () => {
@@ -273,6 +384,55 @@ describe('Resource Controller', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         message: 'Moved to trash successfully',
       });
+    });
+
+    it('should pass error to next() for invalid resource ID', async () => {
+      mockRequest.params = { id: 'invalid-id' };
+
+      await moveToTrashResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for already trashed resource', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+
+      const serviceError = new Error('Resource is already in trash');
+      vi.mocked(resourceService.moveToTrashResource).mockRejectedValue(
+        serviceError
+      );
+
+      await moveToTrashResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for non-existent resource', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+
+      const serviceError = new Error('Resource not found');
+      vi.mocked(resourceService.moveToTrashResource).mockRejectedValue(
+        serviceError
+      );
+
+      await moveToTrashResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
     });
   });
 
@@ -332,6 +492,39 @@ describe('Resource Controller', () => {
       );
       expect(mockResponse.status).toHaveBeenCalledWith(OK);
       expect(mockResponse.json).toHaveBeenCalledWith(mockRestoreAllResponse);
+    });
+
+    it('should pass service error to next() when restore fails', async () => {
+      const serviceError = new Error('Failed to restore some resources');
+      vi.mocked(resourceService.restoreAllResources).mockRejectedValue(
+        serviceError
+      );
+
+      await restoreAllResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should handle when trash is empty', async () => {
+      vi.mocked(resourceService.restoreAllResources).mockResolvedValue({
+        message: 'No resources to restore',
+      });
+
+      await restoreAllResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockResponse.status).toHaveBeenCalledWith(OK);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        message: 'No resources to restore',
+      });
     });
   });
 
@@ -446,6 +639,102 @@ describe('Resource Controller', () => {
       expect(mockResponse.status).toHaveBeenCalledWith(OK);
       expect(mockResponse.json).toHaveBeenCalledWith(mockRenamedResource);
     });
+
+    it('should pass validation error to next() for invalid name with forbidden characters', async () => {
+      const invalidName = 'invalid/name';
+      mockRequest.params = { id: mockResourceId.toString() };
+      mockRequest.body = { name: invalidName };
+
+      await renameResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.renameResource).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for empty name', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+      mockRequest.body = { name: '' };
+
+      await renameResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.renameResource).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for name with leading/trailing spaces', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+      mockRequest.body = { name: ' file.txt ' };
+
+      await renameResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.renameResource).not.toHaveBeenCalled();
+    });
+
+    it('should pass error to next() for invalid resource ID', async () => {
+      mockRequest.params = { id: 'invalid-id' };
+      mockRequest.body = { name: 'valid-name.txt' };
+
+      await renameResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+    });
+
+    it('should pass service error to next() when name already exists', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+      mockRequest.body = { name: 'existing-name.txt' };
+
+      const serviceError = new Error(
+        'A resource with this name already exists'
+      );
+      vi.mocked(resourceService.renameResource).mockRejectedValue(serviceError);
+
+      await renameResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for non-existent resource', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+      mockRequest.body = { name: 'new-name.txt' };
+
+      const serviceError = new Error('Resource not found');
+      vi.mocked(resourceService.renameResource).mockRejectedValue(serviceError);
+
+      await renameResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+    });
   });
 
   describe('moveResourceHandler', () => {
@@ -547,6 +836,86 @@ describe('Resource Controller', () => {
       );
       expect(mockResponse.status).toHaveBeenCalledWith(OK);
       expect(mockResponse.json).toHaveBeenCalledWith(mockCopiedResource);
+    });
+
+    it('should pass validation error to next() for empty destination path', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+      mockRequest.body = { destinationPath: '' };
+
+      await copyResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.copyResource).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for missing destination path', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+      mockRequest.body = {};
+
+      await copyResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(resourceService.copyResource).not.toHaveBeenCalled();
+    });
+
+    it('should pass error to next() for invalid resource ID', async () => {
+      mockRequest.params = { id: 'invalid-id' };
+      mockRequest.body = { destinationPath: '/documents' };
+
+      await copyResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+    });
+
+    it('should pass service error to next() for non-existent resource', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+      mockRequest.body = { destinationPath: '/documents/backup' };
+
+      const serviceError = new Error('Resource not found');
+      vi.mocked(resourceService.copyResource).mockRejectedValue(serviceError);
+
+      await copyResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() when copying to same location', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+      mockRequest.body = { destinationPath: '/documents' };
+
+      const serviceError = new Error(
+        'Cannot copy resource to the same location'
+      );
+      vi.mocked(resourceService.copyResource).mockRejectedValue(serviceError);
+
+      await copyResourceHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
     });
   });
 
@@ -733,6 +1102,41 @@ describe('Resource Controller', () => {
       );
       expect(mockResponse.status).toHaveBeenCalledWith(OK);
       expect(mockResponse.json).toHaveBeenCalledWith(mockUpdatedResource);
+    });
+
+    it('should pass service error to next() for non-existent resource', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+
+      const serviceError = new Error('Resource not found');
+      vi.mocked(resourceOverviewService.updateAccessedAt).mockRejectedValue(
+        serviceError
+      );
+
+      await updateAccessedAtHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for trashed resource', async () => {
+      mockRequest.params = { id: mockResourceId.toString() };
+
+      const serviceError = new Error('Cannot update trashed resource');
+      vi.mocked(resourceOverviewService.updateAccessedAt).mockRejectedValue(
+        serviceError
+      );
+
+      await updateAccessedAtHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
     });
   });
 

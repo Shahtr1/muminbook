@@ -4,6 +4,7 @@ const forbiddenChars = /[\/\\:*?"<>|]/;
 
 export const nameSchema = z
   .string()
+  .min(1, 'Name is required')
   .refine((val) => val.trim() === val, {
     message: 'Name must not have leading or trailing spaces',
   })
