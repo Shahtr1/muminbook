@@ -6,7 +6,8 @@ const AdminGuard = () => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
 
-  const isAdmin = user?.roles?.includes('admin');
+  // Ensure roles is an array before checking
+  const isAdmin = Array.isArray(user?.roles) && user.roles.includes('admin');
 
   if (!isAdmin) {
     return <Navigate to="/forbidden" replace />;
