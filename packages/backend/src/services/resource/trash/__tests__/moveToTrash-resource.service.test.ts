@@ -103,9 +103,9 @@ describe('moveToTrashResource', () => {
         throw new AppError(BAD_REQUEST, 'Cannot modify root folder');
       });
 
-      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
-        'Cannot modify root folder'
-      );
+      await expect(
+        moveToTrashResource(mockResourceId, mockUserId)
+      ).rejects.toThrow('Cannot modify root folder');
 
       expect(assertNotRootFolder).toHaveBeenCalledWith(resource);
     });
