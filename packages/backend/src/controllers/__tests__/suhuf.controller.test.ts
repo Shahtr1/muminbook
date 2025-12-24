@@ -149,6 +149,38 @@ describe('Suhuf Controller', () => {
         windowId: mockWindowId,
       });
     });
+
+    it('should pass validation error to next() for invalid title', async () => {
+      mockRequest.body = { title: 123 }; // Invalid type
+
+      await createSuhufHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(createSuhufService.createSuhuf).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() when creation fails', async () => {
+      const customTitle = 'My Custom Suhuf';
+      mockRequest.body = { title: customTitle };
+
+      const serviceError = new Error('Failed to create suhuf');
+      vi.mocked(createSuhufService.createSuhuf).mockRejectedValue(serviceError);
+
+      await createSuhufHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
   });
 
   describe('getSuhufHandler', () => {
@@ -223,6 +255,65 @@ describe('Suhuf Controller', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         message: 'Renamed successfully',
       });
+    });
+
+    it('should pass validation error to next() for invalid title', async () => {
+      mockRequest.params = { id: mockSuhufId.toString() };
+      mockRequest.body = { title: 'Invalid/Title' }; // Contains forbidden character
+
+      await renameSuhufHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(renameSuhufService.renameSuhuf).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() when rename fails', async () => {
+      const newTitle = 'Renamed Suhuf';
+      mockRequest.params = { id: mockSuhufId.toString() };
+      mockRequest.body = { title: newTitle };
+
+      const serviceError = new Error('Suhuf not found');
+      vi.mocked(renameSuhufService.renameSuhuf).mockRejectedValue(serviceError);
+
+      await renameSuhufHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(renameSuhufService.renameSuhuf).toHaveBeenCalledWith(
+        mockSuhufId.toString(),
+        mockUserId,
+        newTitle
+      );
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass error to next() when title already exists', async () => {
+      const newTitle = 'Existing Suhuf';
+      mockRequest.params = { id: mockSuhufId.toString() };
+      mockRequest.body = { title: newTitle };
+
+      const conflictError = new Error('A suhuf with this title already exists');
+      vi.mocked(renameSuhufService.renameSuhuf).mockRejectedValue(
+        conflictError
+      );
+
+      await renameSuhufHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(conflictError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
     });
   });
 
@@ -413,6 +504,103 @@ describe('Suhuf Controller', () => {
       );
       expect(mockResponse.status).toHaveBeenCalledWith(OK);
       expect(mockResponse.json).toHaveBeenCalledWith(existingSuhuf);
+    });
+
+    it('should pass error to next() when suhuf is not found', async () => {
+      mockRequest.params = { id: mockSuhufId.toString() };
+      mockRequest.body = {
+        layout: {
+          leftTab: 'notes',
+          isLeftTabOpen: true,
+        },
+      };
+
+      vi.mocked(SuhufModel.findOneAndUpdate).mockResolvedValue(null);
+
+      await configSuhufHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(SuhufModel.findOneAndUpdate).toHaveBeenCalledWith(
+        { _id: mockSuhufId.toString(), userId: mockUserId },
+        { $set: { 'config.layout': mockRequest.body.layout } },
+        { new: true }
+      );
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for invalid panel config', async () => {
+      mockRequest.params = { id: mockSuhufId.toString() };
+      mockRequest.body = {
+        panels: [
+          {
+            fileType: 'InvalidType', // Invalid enum value
+            active: true,
+            direction: Direction.Right,
+          },
+        ],
+      };
+
+      await configSuhufHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(SuhufModel.findOneAndUpdate).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass error to next() when suhuf belongs to another user', async () => {
+      const otherUserId = new mongoose.Types.ObjectId();
+      mockRequest.params = { id: mockSuhufId.toString() };
+      mockRequest.body = {
+        layout: {
+          leftTab: 'notes',
+          isLeftTabOpen: true,
+        },
+      };
+
+      vi.mocked(getUserIdUtil.getUserId).mockResolvedValue(otherUserId);
+      vi.mocked(SuhufModel.findOneAndUpdate).mockResolvedValue(null);
+
+      await configSuhufHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(SuhufModel.findOneAndUpdate).toHaveBeenCalledWith(
+        { _id: mockSuhufId.toString(), userId: otherUserId },
+        { $set: { 'config.layout': mockRequest.body.layout } },
+        { new: true }
+      );
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for invalid layout config', async () => {
+      mockRequest.params = { id: mockSuhufId.toString() };
+      mockRequest.body = {
+        layout: {
+          splitRatio: [150, 50], // Invalid: sum > 100
+        },
+      };
+
+      await configSuhufHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(SuhufModel.findOneAndUpdate).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
     });
   });
 });
