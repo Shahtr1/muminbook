@@ -12,11 +12,11 @@ const cloneResource = (
 };
 
 export const generateCopyName = async (
-  baseName: string,
+  resourceName: string,
   destinationPath: string,
   userId: PrimaryId
 ): Promise<string> => {
-  let copyName = baseName;
+  let copyName = resourceName;
   let counter = 1;
 
   while (
@@ -26,7 +26,7 @@ export const generateCopyName = async (
       deleted: false,
     })
   ) {
-    copyName = `${baseName} (Copy${counter === 1 ? '' : ` ${counter}`})`;
+    copyName = `${resourceName} (Copy${counter === 1 ? '' : ` ${counter}`})`;
     counter++;
   }
 
@@ -60,6 +60,11 @@ export const buildClonedDescendants = (
   rootNewId: PrimaryId
 ) => {
   const ops: any[] = [];
+
+  if (descendants.length === 0) {
+    return ops;
+  }
+
   const idMap = new Map<string, PrimaryId>();
   idMap.set(descendants[0].parent?.toString() || '', rootNewId);
 
