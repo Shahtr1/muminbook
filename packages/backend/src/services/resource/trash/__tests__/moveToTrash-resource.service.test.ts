@@ -65,11 +65,11 @@ describe('moveToTrashResource', () => {
     it('should throw NOT_FOUND error when resource does not exist', async () => {
       vi.mocked(ResourceModel.findOne).mockResolvedValue(null);
 
-      await expect(
-        moveToTrashResource(mockResourceId, mockUserId)
-      ).rejects.toThrow(AppError);
+      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
+        AppError
+      );
 
-      await expect(
+      expect(
         moveToTrashResource(mockResourceId, mockUserId)
       ).rejects.toMatchObject({
         statusCode: NOT_FOUND,
@@ -103,9 +103,9 @@ describe('moveToTrashResource', () => {
         throw new AppError(BAD_REQUEST, 'Cannot modify root folder');
       });
 
-      await expect(
-        moveToTrashResource(mockResourceId, mockUserId)
-      ).rejects.toThrow('Cannot modify root folder');
+      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
+        'Cannot modify root folder'
+      );
 
       expect(assertNotRootFolder).toHaveBeenCalledWith(resource);
     });
@@ -701,9 +701,9 @@ describe('moveToTrashResource', () => {
       const dbError = new Error('Database connection failed');
       vi.mocked(ResourceModel.findOne).mockRejectedValue(dbError);
 
-      await expect(
-        moveToTrashResource(mockResourceId, mockUserId)
-      ).rejects.toThrow('Database connection failed');
+      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
+        'Database connection failed'
+      );
     });
 
     it('should propagate errors from getAllDescendants', async () => {
@@ -717,9 +717,9 @@ describe('moveToTrashResource', () => {
         new Error('Failed to get descendants')
       );
 
-      await expect(
-        moveToTrashResource(mockResourceId, mockUserId)
-      ).rejects.toThrow('Failed to get descendants');
+      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
+        'Failed to get descendants'
+      );
     });
 
     it('should propagate errors from bulkWrite', async () => {
@@ -736,9 +736,9 @@ describe('moveToTrashResource', () => {
         new Error('Bulk write failed')
       );
 
-      await expect(
-        moveToTrashResource(mockResourceId, mockUserId)
-      ).rejects.toThrow('Bulk write failed');
+      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
+        'Bulk write failed'
+      );
     });
   });
 });
