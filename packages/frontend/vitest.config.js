@@ -15,9 +15,10 @@ export default defineConfig({
         'node_modules/',
         'src/**/*.test.{js,jsx}',
         '*.config.js',
-        'src/main.jsx',
+        'src/**/*.jsx',
         'src/data/**',
         'src/theme/**',
+        'public/**',
       ],
       thresholds: {
         lines: 40,
