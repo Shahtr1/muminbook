@@ -19,6 +19,7 @@ export default defineConfig({
         'src/data/**',
         'src/theme/**',
         'public/**',
+        'dist/**',
       ],
       thresholds: {
         lines: 30,
