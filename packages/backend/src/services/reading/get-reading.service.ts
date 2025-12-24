@@ -9,11 +9,11 @@ import {
 
 import SurahModel from '../../models/surah.model';
 import JuzModel from '../../models/juz.model';
-import ReadingStartType from '../../constants/enums/readingStartType';
+import QuranDivisionType from '../../constants/enums/quranDivisionType';
 
 async function getPaginatedCollection(query: any) {
   const {
-    startType = ReadingStartType.Surah,
+    startType = QuranDivisionType.Surah,
     startValue,
     after,
     before,
@@ -30,7 +30,7 @@ async function getPaginatedCollection(query: any) {
     } else if (before) {
       mongoQuery.uuid = { $lt: parseInt(before) };
     } else {
-      if (startType === ReadingStartType.Surah) {
+      if (startType === QuranDivisionType.Surah) {
         const surah = await SurahModel.findOne({ uuid: numericStartValue });
         appAssert(surah, NOT_FOUND, `Surah with uuid ${startValue} not found`);
 
@@ -45,7 +45,7 @@ async function getPaginatedCollection(query: any) {
         );
 
         mongoQuery.uuid = { $gte: firstAyah.uuid };
-      } else if (startType === ReadingStartType.Juz) {
+      } else if (startType === QuranDivisionType.Juz) {
         const juz = await JuzModel.findOne({ uuid: numericStartValue });
         appAssert(juz, NOT_FOUND, `Juz with uuid ${startValue} not found`);
 
@@ -58,9 +58,9 @@ async function getPaginatedCollection(query: any) {
         mongoQuery.uuid = { $gte: firstAyah.uuid };
       } else if (
         [
-          ReadingStartType.Manzil,
-          ReadingStartType.Ruku,
-          ReadingStartType.HizbQuarter,
+          QuranDivisionType.Manzil,
+          QuranDivisionType.Ruku,
+          QuranDivisionType.HizbQuarter,
         ].includes(startType)
       ) {
         mongoQuery[startType] = numericStartValue;

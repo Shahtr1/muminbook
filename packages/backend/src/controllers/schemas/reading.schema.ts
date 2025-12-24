@@ -1,5 +1,5 @@
 import z from 'zod';
-import ReadingStartType from '../../constants/enums/readingStartType';
+import QuranDivisionType from '../../constants/enums/quranDivisionType';
 
 export const getReadingQuerySchema = z.object({
   page: z
@@ -15,12 +15,12 @@ export const getReadingQuerySchema = z.object({
     .refine(
       (val) =>
         !val ||
-        Object.values(ReadingStartType).includes(val as ReadingStartType),
+        Object.values(QuranDivisionType).includes(val as QuranDivisionType),
       {
-        message: `startType must be one of: ${Object.values(ReadingStartType).join(', ')}`,
+        message: `startType must be one of: ${Object.values(QuranDivisionType).join(', ')}`,
       }
     )
-    .transform((val) => (val as ReadingStartType) || ReadingStartType.Surah),
+    .transform((val) => (val as QuranDivisionType) || QuranDivisionType.Surah),
   startValue: z.string().optional(),
   after: z.string().optional(),
   before: z.string().optional(),

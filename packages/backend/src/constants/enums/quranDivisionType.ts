@@ -1,4 +1,4 @@
-enum ReadingStartType {
+enum QuranDivisionType {
   Surah = 'surah',
   Juz = 'juz',
   Manzil = 'manzil',
@@ -6,4 +6,4 @@ enum ReadingStartType {
   HizbQuarter = 'hizbQuarter',
 }
 
-export default ReadingStartType;
+export default QuranDivisionType;
