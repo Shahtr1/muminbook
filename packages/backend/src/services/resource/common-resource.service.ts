@@ -3,6 +3,10 @@ import appAssert from '../../utils/appAssert';
 import ResourceModel, { ResourceDocument } from '../../models/resource.model';
 import { PrimaryId } from '../../constants/primaryId';
 
+// Regex to match special characters that need to be escaped in regex patterns
+// This ensures user-provided paths don't break the regex when searching for descendants
+const REGEX_SPECIAL_CHARS = /[.*+?^${}()|[\]\\]/g;
+
 export const assertNotRootFolder = (
   resource: ResourceDocument,
   message = 'Cannot modify root folder'
@@ -16,7 +20,8 @@ export const getAllDescendants = async (
   userId: PrimaryId,
   includeDeleted = true
 ) => {
-  const escapedPath = parentPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Escape special regex characters in the path to prevent regex injection
+  const escapedPath = parentPath.replace(REGEX_SPECIAL_CHARS, '\\$&');
 
   const filter: any = {
     path: new RegExp(`^${escapedPath}/`),
