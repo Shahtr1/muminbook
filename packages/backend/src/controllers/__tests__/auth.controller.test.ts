@@ -97,6 +97,171 @@ describe('Auth Controller', () => {
       expect(mockResponse.status).toHaveBeenCalledWith(CREATED);
       expect(mockResponse.json).toHaveBeenCalledWith(mockUser);
     });
+
+    it('should pass validation error to next() for invalid email', async () => {
+      mockRequest.body = {
+        firstname: 'John',
+        lastname: 'Doe',
+        dateOfBirth: new Date('1990-01-01').getTime(),
+        gender: 'male',
+        email: 'invalid-email', // Invalid email format
+        password: 'SecurePass123!',
+        confirmPassword: 'SecurePass123!',
+      };
+      mockRequest.headers = { 'user-agent': 'Mozilla/5.0' };
+
+      await registerHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.createAccount).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for password mismatch', async () => {
+      mockRequest.body = {
+        firstname: 'John',
+        lastname: 'Doe',
+        dateOfBirth: new Date('1990-01-01').getTime(),
+        gender: 'male',
+        email: 'john@example.com',
+        password: 'SecurePass123!',
+        confirmPassword: 'DifferentPass123!', // Password mismatch
+      };
+      mockRequest.headers = { 'user-agent': 'Mozilla/5.0' };
+
+      await registerHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.createAccount).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for short password', async () => {
+      mockRequest.body = {
+        firstname: 'John',
+        lastname: 'Doe',
+        dateOfBirth: new Date('1990-01-01').getTime(),
+        gender: 'male',
+        email: 'john@example.com',
+        password: '12345', // Too short
+        confirmPassword: '12345',
+      };
+      mockRequest.headers = { 'user-agent': 'Mozilla/5.0' };
+
+      await registerHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.createAccount).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for invalid gender', async () => {
+      mockRequest.body = {
+        firstname: 'John',
+        lastname: 'Doe',
+        dateOfBirth: new Date('1990-01-01').getTime(),
+        gender: 'other', // Invalid enum value
+        email: 'john@example.com',
+        password: 'SecurePass123!',
+        confirmPassword: 'SecurePass123!',
+      };
+      mockRequest.headers = { 'user-agent': 'Mozilla/5.0' };
+
+      await registerHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.createAccount).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for short firstname', async () => {
+      mockRequest.body = {
+        firstname: 'J', // Too short
+        lastname: 'Doe',
+        dateOfBirth: new Date('1990-01-01').getTime(),
+        gender: 'male',
+        email: 'john@example.com',
+        password: 'SecurePass123!',
+        confirmPassword: 'SecurePass123!',
+      };
+      mockRequest.headers = { 'user-agent': 'Mozilla/5.0' };
+
+      await registerHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.createAccount).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() when account creation fails', async () => {
+      mockRequest.body = {
+        firstname: 'John',
+        lastname: 'Doe',
+        dateOfBirth: new Date('1990-01-01').getTime(),
+        gender: 'male',
+        email: 'john@example.com',
+        password: 'SecurePass123!',
+        confirmPassword: 'SecurePass123!',
+      };
+      mockRequest.headers = { 'user-agent': 'Mozilla/5.0' };
+
+      const serviceError = new Error('Email already exists');
+      vi.mocked(authService.createAccount).mockRejectedValue(serviceError);
+
+      await registerHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for invalid date of birth', async () => {
+      mockRequest.body = {
+        firstname: 'John',
+        lastname: 'Doe',
+        dateOfBirth: 'invalid-date', // Invalid date format
+        gender: 'male',
+        email: 'john@example.com',
+        password: 'SecurePass123!',
+        confirmPassword: 'SecurePass123!',
+      };
+      mockRequest.headers = { 'user-agent': 'Mozilla/5.0' };
+
+      await registerHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.createAccount).not.toHaveBeenCalled();
+    });
   });
 
   describe('loginHandler', () => {
@@ -225,6 +390,56 @@ describe('Auth Controller', () => {
         { path: '/auth/refresh' }
       );
     });
+
+    it('should pass error to next() when refresh token is missing', async () => {
+      mockRequest.cookies = {}; // No refresh token
+
+      await refreshHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(authService.refreshUserAccessToken).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for invalid refresh token', async () => {
+      mockRequest.cookies = { refreshToken: 'invalid-token' };
+
+      const serviceError = new Error('Invalid refresh token');
+      vi.mocked(authService.refreshUserAccessToken).mockRejectedValue(
+        serviceError
+      );
+
+      await refreshHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for expired refresh token', async () => {
+      mockRequest.cookies = { refreshToken: 'expired-token' };
+
+      const serviceError = new Error('Refresh token expired');
+      vi.mocked(authService.refreshUserAccessToken).mockRejectedValue(
+        serviceError
+      );
+
+      await refreshHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
   });
 
   describe('verifyEmailHandler', () => {
@@ -263,6 +478,57 @@ describe('Auth Controller', () => {
         'user@example.com'
       );
     });
+
+    it('should pass validation error to next() for invalid email', async () => {
+      mockRequest.body = { email: 'not-an-email' }; // Invalid email format
+
+      await reverifyEmailHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.sendVerifyEmailLink).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for non-existent user', async () => {
+      mockRequest.body = { email: 'nonexistent@example.com' };
+
+      const serviceError = new Error('User not found');
+      vi.mocked(authService.sendVerifyEmailLink).mockRejectedValue(
+        serviceError
+      );
+
+      await reverifyEmailHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for already verified email', async () => {
+      mockRequest.body = { email: 'verified@example.com' };
+
+      const serviceError = new Error('Email already verified');
+      vi.mocked(authService.sendVerifyEmailLink).mockRejectedValue(
+        serviceError
+      );
+
+      await reverifyEmailHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
   });
 
   describe('sendPasswordResetHandler', () => {
@@ -281,6 +547,53 @@ describe('Auth Controller', () => {
       );
 
       expect(authService.sendPasswordResetEmail).toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for invalid email', async () => {
+      mockRequest.body = { email: 'invalid-email' }; // Invalid format
+
+      await sendPasswordResetHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.sendPasswordResetEmail).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for missing email', async () => {
+      mockRequest.body = {}; // No email provided
+
+      await sendPasswordResetHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.sendPasswordResetEmail).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for non-existent user', async () => {
+      mockRequest.body = { email: 'nonexistent@example.com' };
+
+      const serviceError = new Error('User not found');
+      vi.mocked(authService.sendPasswordResetEmail).mockRejectedValue(
+        serviceError
+      );
+
+      await sendPasswordResetHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
     });
   });
 
@@ -306,6 +619,113 @@ describe('Auth Controller', () => {
 
       expect(authService.resetPassword).toHaveBeenCalled();
       expect(cookieUtils.clearAuthCookies).toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for short password', async () => {
+      mockRequest.body = {
+        password: '12345', // Too short
+        verificationCode: new Types.ObjectId().toString(),
+      };
+
+      await resetPasswordHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.resetPassword).not.toHaveBeenCalled();
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for missing verification code', async () => {
+      mockRequest.body = {
+        password: 'NewPassword123!',
+        // verificationCode is missing
+      };
+
+      await resetPasswordHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.resetPassword).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for empty verification code', async () => {
+      mockRequest.body = {
+        password: 'NewPassword123!',
+        verificationCode: '', // Empty code
+      };
+
+      await resetPasswordHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.resetPassword).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for invalid verification code', async () => {
+      mockRequest.body = {
+        password: 'NewPassword123!',
+        verificationCode: new Types.ObjectId().toString(),
+      };
+
+      const serviceError = new Error('Invalid or expired verification code');
+      vi.mocked(authService.resetPassword).mockRejectedValue(serviceError);
+
+      await resetPasswordHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass service error to next() for expired reset token', async () => {
+      mockRequest.body = {
+        password: 'NewPassword123!',
+        verificationCode: new Types.ObjectId().toString(),
+      };
+
+      const serviceError = new Error('Password reset token has expired');
+      vi.mocked(authService.resetPassword).mockRejectedValue(serviceError);
+
+      await resetPasswordHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(serviceError);
+      expect(mockResponse.status).not.toHaveBeenCalled();
+    });
+
+    it('should pass validation error to next() for too long password', async () => {
+      mockRequest.body = {
+        password: 'a'.repeat(300), // Exceeds max length of 255
+        verificationCode: new Types.ObjectId().toString(),
+      };
+
+      await resetPasswordHandler(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
+      expect(authService.resetPassword).not.toHaveBeenCalled();
     });
   });
 });
