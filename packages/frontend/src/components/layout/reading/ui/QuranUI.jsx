@@ -7,8 +7,6 @@ import { RdWrapperUI } from '@/components/layout/reading/ui/RdWrapperUI.jsx';
 import { useReadingInfinite } from '@/hooks/reading/useReadings.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { InfiniteScroller } from '@/components/layout/custom/InfiniteScroller.jsx';
-import { AyatWithMarker } from '@/components/layout/reading/AyatWithMarker.jsx';
 import { UiHeaderInfo } from '@/components/layout/reading/ui/UiHeaderInfo.jsx';
 
 export const QuranUI = ({ fileId }) => {
@@ -64,27 +62,6 @@ export const QuranUI = ({ fileId }) => {
             textAlign="right"
           >
             <UiHeaderInfo />
-            <InfiniteScroller
-              items={flatData || []}
-              renderItem={(item) => <AyatWithMarker item={item} />}
-              direction="rtl"
-              fontSize="30px"
-              onLoadNext={() => {
-                if (hasNextPage && !isFetchingNextPage) {
-                  fetchNextPage();
-                }
-              }}
-              onLoadPrevious={() => {
-                if (hasPreviousPage && !isFetchingPreviousPage) {
-                  fetchPreviousPage();
-                }
-              }}
-              isFetchingNext={isFetchingNextPage}
-              isFetchingPrevious={isFetchingPreviousPage}
-              hasNext={hasNextPage}
-              hasPrevious={hasPreviousPage}
-              anchor={'surah-' + startValue}
-            />
           </Box>
         </Flex>
       </Flex>
