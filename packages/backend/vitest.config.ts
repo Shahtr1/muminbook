@@ -16,7 +16,12 @@ export default defineConfig({
         'src/index.ts',
         'copy-file.js',
         'src/data/**',
+        'src/jobs/**',
+        'src/models/**',
         'src/constants/**',
+        'src/routes/**',
+        'src/config/**',
+        'dist/**',
       ],
       thresholds: {
         lines: 50,
