@@ -1,25 +1,25 @@
-import { Flex, useBreakpointValue } from "@chakra-ui/react";
-import { Folder } from "@/components/layout/reading/resources/Folder.jsx";
-import { ReadingCard } from "@/components/layout/reading/ReadingCard.jsx";
-import { useNavigate } from "react-router-dom";
-import { useIsMyFilesEmpty } from "@/hooks/resource/useIsMyFilesEmpty.js";
-import { Loader } from "@/components/layout/Loader.jsx";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { useReadings } from "@/hooks/reading/useReadings.js";
-import { QuranSVG } from "@/components/svgs/QuranSVG.jsx";
-import { ArabicEnglishSVG } from "@/components/svgs/ArabicEnglishSVG.jsx";
-import { BookSVG } from "@/components/svgs/BookSVG.jsx";
-import { StorySVG } from "@/components/svgs/StorySVG.jsx";
+import { Flex, useBreakpointValue } from '@chakra-ui/react';
+import { Folder } from '@/components/layout/reading/resources/Folder.jsx';
+import { ReadingCard } from '@/components/layout/reading/ReadingCard.jsx';
+import { useNavigate } from 'react-router-dom';
+import { useIsMyFilesEmpty } from '@/hooks/resource/useIsMyFilesEmpty.js';
+import { Loader } from '@/components/layout/Loader.jsx';
+import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import { useReadings } from '@/hooks/reading/useReadings.js';
+import { QuranSVG } from '@/components/svgs/QuranSVG.jsx';
+import { ArabicEnglishSVG } from '@/components/svgs/ArabicEnglishSVG.jsx';
+import { BookSVG } from '@/components/svgs/BookSVG.jsx';
+import { StorySVG } from '@/components/svgs/StorySVG.jsx';
 
 export const ReadingList = () => {
   const readingSvgMap = {
     quran: QuranSVG,
-    "sealed-nectar": StorySVG,
-    "sahih-bukhari": StorySVG,
-    "sahih-muslim": StorySVG,
-    "sahih-international": ArabicEnglishSVG,
+    'sealed-nectar': StorySVG,
+    'sahih-bukhari': StorySVG,
+    'sahih-muslim': StorySVG,
+    'sahih-international': ArabicEnglishSVG,
   };
-  const gapSize = "25px";
+  const gapSize = '25px';
   const itemWidth = useBreakpointValue({
     base: `100%`,
     sm: `calc(50% - ${gapSize})`,
@@ -48,7 +48,7 @@ export const ReadingList = () => {
   return (
     <Flex gap={gapSize} flexWrap="wrap" px={8} py={2}>
       <Folder
-        onClick={() => navigate("my-files")}
+        onClick={() => navigate('my-files')}
         width={itemWidth}
         resource={{ empty: emptyMyFiles }}
       />

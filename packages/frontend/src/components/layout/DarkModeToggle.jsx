@@ -1,12 +1,12 @@
-import { IconButton, useColorMode } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { IconButton, useColorMode } from '@chakra-ui/react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 export const DarkModeToggle = ({
   position,
   inset,
   disableInteraction = false,
-  variant = "auth",
-  height = "auto",
+  variant = 'auth',
+  height = 'auto',
 }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -14,22 +14,22 @@ export const DarkModeToggle = ({
     <IconButton
       aria-label="Toggle Dark Mode"
       icon={
-        colorMode === "light" ? (
-          <MoonIcon color={variant === "navbar" ? "text.primary" : undefined} />
+        colorMode === 'light' ? (
+          <MoonIcon color={variant === 'navbar' ? 'text.primary' : undefined} />
         ) : (
-          <SunIcon color={variant === "navbar" ? "white" : undefined} />
+          <SunIcon color={variant === 'navbar' ? 'white' : undefined} />
         )
       }
       onClick={toggleColorMode}
       variant="ghost"
-      size={variant === "window" ? "xs" : "lg"}
+      size={variant === 'window' ? 'xs' : 'lg'}
       position={position}
       inset={inset}
-      _hover={disableInteraction ? { bg: "transparent" } : undefined}
-      _active={disableInteraction ? { transform: "none" } : undefined}
+      _hover={disableInteraction ? { bg: 'transparent' } : undefined}
+      _active={disableInteraction ? { transform: 'none' } : undefined}
       borderRadius="none"
       w="28px"
-      h={variant === "auth" ? "40px" : height}
+      h={variant === 'auth' ? '40px' : height}
     />
   );
 };

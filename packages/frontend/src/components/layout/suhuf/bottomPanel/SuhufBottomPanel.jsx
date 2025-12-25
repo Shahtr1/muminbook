@@ -1,8 +1,8 @@
-import { Flex, useColorModeValue } from "@chakra-ui/react";
-import { SuhufBottomPanelHeader } from "@/components/layout/suhuf/bottomPanel/SuhufBottomPanelHeader.jsx";
+import { Flex, useColorModeValue } from '@chakra-ui/react';
+import { SuhufBottomPanelHeader } from '@/components/layout/suhuf/bottomPanel/SuhufBottomPanelHeader.jsx';
 
 export const SuhufBottomPanel = ({ readings }) => {
-  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
+  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
 
   return (
     <Flex h="100%" w="100%" bg={bgColor} flexDir="column">

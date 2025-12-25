@@ -1,11 +1,11 @@
-import API from "../config/apiClient.js";
+import API from '../config/apiClient.js';
 
-export const getResources = (path = "my-files") =>
+export const getResources = (path = 'my-files') =>
   API.get(`/resources?path=${path}`);
-export const isMyFilesEmpty = () => API.get("/resources/is-my-files-empty");
-export const isTrashEmpty = () => API.get("/resources/is-trash-empty");
-export const getTrash = () => API.get("/resources/trash");
-export const createResource = (data) => API.post("/resources", data);
+export const isMyFilesEmpty = () => API.get('/resources/is-my-files-empty');
+export const isTrashEmpty = () => API.get('/resources/is-trash-empty');
+export const getTrash = () => API.get('/resources/trash');
+export const createResource = (data) => API.post('/resources', data);
 export const renameResource = (data) =>
   API.patch(`/resources/${data.id}/rename`, data);
 export const copyResource = (data) =>

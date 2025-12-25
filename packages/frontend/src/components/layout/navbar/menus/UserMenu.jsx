@@ -5,13 +5,13 @@ import {
   MenuItem,
   MenuList,
   Text,
-} from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AUTH } from "@/hooks/useAuth.js";
-import { XDivider } from "@/components/layout/xcomp/XDivider.jsx";
-import { userData } from "@/data/userData.js";
-import { logout } from "@/services/index.js";
+} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AUTH } from '@/hooks/useAuth.js';
+import { XDivider } from '@/components/layout/xcomp/XDivider.jsx';
+import { userData } from '@/data/userData.js';
+import { logout } from '@/services/index.js';
 
 export const UserMenu = ({
   children,
@@ -25,7 +25,7 @@ export const UserMenu = ({
   const navigate = useNavigate();
   const roles = user?.roles || [];
 
-  const username = user?.firstname + " " + user?.lastname;
+  const username = user?.firstname + ' ' + user?.lastname;
 
   const { mutate: signOut } = useMutation({
     mutationFn: logout,
@@ -33,7 +33,7 @@ export const UserMenu = ({
       queryClient.clear();
     },
     onSettled: () => {
-      navigate("/login", { replace: true });
+      navigate('/login', { replace: true });
     },
   });
 
@@ -51,8 +51,8 @@ export const UserMenu = ({
         cursor="pointer"
         height="100%"
         sx={{
-          "> span": {
-            height: "100%",
+          '> span': {
+            height: '100%',
           },
         }}
         onMouseEnter={onMouseEnter}
@@ -91,7 +91,7 @@ export const UserMenu = ({
         {userData
           .filter(
             (item) =>
-              !item.roles || item.roles.some((role) => roles.includes(role)),
+              !item.roles || item.roles.some((role) => roles.includes(role))
           )
           .map((item) => (
             <MenuItem py={1} key={item.id} onClick={() => navigate(item.link)}>

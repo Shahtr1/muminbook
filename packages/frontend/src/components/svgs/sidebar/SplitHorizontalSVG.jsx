@@ -1,12 +1,12 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
-import { useColorModeValue, useToken } from "@chakra-ui/react";
+import { SVG } from '@/components/svgs/SVG.jsx';
+import { useColorModeValue, useToken } from '@chakra-ui/react';
 
 export const SplitHorizontalSVG = ({
   active,
   activeColor,
-  dimensions = "20px",
+  dimensions = '20px',
 }) => {
-  const [lightBg, darkBg] = useToken("colors", ["wn.bg.light", "wn.bg.dark"]);
+  const [lightBg, darkBg] = useToken('colors', ['wn.bg.light', 'wn.bg.dark']);
   const bgColor = useColorModeValue(lightBg, darkBg);
   return (
     <SVG
@@ -29,9 +29,9 @@ export const SplitHorizontalSVG = ({
       {/* Left panel with padding */}
       <rect
         x="3"
-        y={active ? "2" : "4"}
+        y={active ? '2' : '4'}
         width="8"
-        height={active ? "20" : "17"}
+        height={active ? '20' : '17'}
         rx="1"
         ry="1"
         fill={active ? activeColor : bgColor}
@@ -40,9 +40,9 @@ export const SplitHorizontalSVG = ({
       {/* Right panel with padding */}
       <rect
         x="13"
-        y={active ? "2" : "4"}
+        y={active ? '2' : '4'}
         width="8"
-        height={active ? "20" : "17"}
+        height={active ? '20' : '17'}
         rx="1"
         ry="1"
         fill={active ? activeColor : bgColor}

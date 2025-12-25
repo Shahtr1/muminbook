@@ -1,14 +1,14 @@
-import { PrimaryId } from "../../constants/primaryId";
-import ResourceModel from "../../models/resource.model";
-import ResourceType from "../../constants/enums/resourceType";
-import appAssert from "../../utils/appAssert";
-import { NOT_FOUND } from "../../constants/http";
+import { PrimaryId } from '../../constants/primaryId';
+import ResourceModel from '../../models/resource.model';
+import ResourceType from '../../constants/enums/resourceType';
+import appAssert from '../../utils/appAssert';
+import { NOT_FOUND } from '../../constants/http';
 
 export const getResourceChildren = async (
   folderPath: string,
-  userId: PrimaryId,
+  userId: PrimaryId
 ) => {
-  const path = decodeURIComponent(folderPath || "my-files");
+  const path = decodeURIComponent(folderPath || 'my-files');
 
   const folder = await ResourceModel.findOne({
     path,
@@ -17,7 +17,7 @@ export const getResourceChildren = async (
     deleted: false,
   });
 
-  appAssert(folder, NOT_FOUND, "Folder not found");
+  appAssert(folder, NOT_FOUND, 'Folder not found');
 
   const children = await ResourceModel.find({
     parent: folder._id,
@@ -31,11 +31,11 @@ export const getResourceChildren = async (
 
   const childCounts = await ResourceModel.aggregate([
     { $match: { parent: { $in: folderIds }, userId, deleted: false } },
-    { $group: { _id: "$parent", count: { $sum: 1 } } },
+    { $group: { _id: '$parent', count: { $sum: 1 } } },
   ]);
 
   const childCountMap = new Map(
-    childCounts.map((item) => [item._id.toString(), item.count]),
+    childCounts.map((item) => [item._id.toString(), item.count])
   );
 
   const formattedChildren = children.map((child) => ({
@@ -56,8 +56,8 @@ export const getResourceChildren = async (
 
   for (const child of formattedChildren) {
     if (
-      path === "my-files" &&
-      child.name === "lost+found" &&
+      path === 'my-files' &&
+      child.name === 'lost+found' &&
       child.type === ResourceType.Folder
     ) {
       lostFoundFolder.push(child);

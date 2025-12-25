@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const usePreloadImages = (navItems) => {
   const [preloadedImages, setPreloadedImages] = useState({});
@@ -9,8 +9,8 @@ export const usePreloadImages = (navItems) => {
 
       await Promise.all(
         navItems.flatMap((item) =>
-          ["light", "dark"].flatMap((mode) =>
-            ["", "-active"].map(
+          ['light', 'dark'].flatMap((mode) =>
+            ['', '-active'].map(
               (state) =>
                 new Promise((resolve) => {
                   const img = new window.Image();
@@ -21,10 +21,10 @@ export const usePreloadImages = (navItems) => {
                     images[item.icon][`${mode}${state}`] = img.src;
                     resolve();
                   };
-                }),
-            ),
-          ),
-        ),
+                })
+            )
+          )
+        )
       );
 
       setPreloadedImages(images);

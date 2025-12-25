@@ -11,25 +11,25 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
-} from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
-import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
-import { FileSVG } from "@/components/svgs/FileSVG.jsx";
-import { useEffect, useState } from "react";
+} from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
+import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
+import { FileSVG } from '@/components/svgs/FileSVG.jsx';
+import { useEffect, useState } from 'react';
 
 export const AddMenu = ({ onCreate }) => {
-  const hoverBg = useColorModeValue("gray.100", "gray.700");
+  const hoverBg = useColorModeValue('gray.100', 'gray.700');
 
   const [showFileInput, setShowFileInput] = useState(false);
   const [showFolderInput, setShowFolderInput] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleReset = () => {
     setShowFileInput(false);
     setShowFolderInput(false);
-    setInputValue("");
+    setInputValue('');
   };
 
   const handleCreate = () => {
@@ -37,7 +37,7 @@ export const AddMenu = ({ onCreate }) => {
 
     if (onCreate) {
       onCreate({
-        type: showFileInput ? "file" : "folder",
+        type: showFileInput ? 'file' : 'folder',
         name: inputValue.trim(),
       });
     }
@@ -60,7 +60,7 @@ export const AddMenu = ({ onCreate }) => {
         cursor="pointer"
         height="100%"
         onClick={isOpen ? onClose : onOpen}
-        sx={{ "> span": { height: "100%" } }}
+        sx={{ '> span': { height: '100%' } }}
       >
         <Flex
           align="center"
@@ -71,13 +71,13 @@ export const AddMenu = ({ onCreate }) => {
           cursor="pointer"
           justify="center"
           h="23px"
-          w={{ base: "auto", sm: "50px" }}
+          w={{ base: 'auto', sm: '50px' }}
         >
-          <AddIcon color="#fff" fontSize={{ base: "8px", sm: "9px" }} />
+          <AddIcon color="#fff" fontSize={{ base: '8px', sm: '9px' }} />
           <Text
             color="#fff"
-            fontSize={{ base: "11px", sm: "12px" }}
-            display={{ base: "none", sm: "initial" }}
+            fontSize={{ base: '11px', sm: '12px' }}
+            display={{ base: 'none', sm: 'initial' }}
           >
             Add
           </Text>
@@ -88,22 +88,22 @@ export const AddMenu = ({ onCreate }) => {
         py={1}
         w={
           showFileInput || showFolderInput
-            ? "80%"
-            : { base: "130px", sm: "150px" }
+            ? '80%'
+            : { base: '130px', sm: '150px' }
         }
         minW="unset"
       >
         {showFileInput || showFolderInput ? (
           <Box px={2} py={1} display="flex" gap={1} alignItems="center">
-            <InputGroup size={{ base: "xs", sm: "sm" }} flex="1">
+            <InputGroup size={{ base: 'xs', sm: 'sm' }} flex="1">
               <Input
-                placeholder={showFileInput ? "File name" : "Folder name"}
+                placeholder={showFileInput ? 'File name' : 'Folder name'}
                 autoFocus
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") handleCreate();
-                  if (e.key === "Escape") {
+                  if (e.key === 'Enter') handleCreate();
+                  if (e.key === 'Escape') {
                     handleReset();
                     onClose();
                   }
@@ -112,7 +112,7 @@ export const AddMenu = ({ onCreate }) => {
               {showFileInput && <InputRightAddon>.txt</InputRightAddon>}
             </InputGroup>
             <Button
-              size={{ base: "xs", sm: "sm" }}
+              size={{ base: 'xs', sm: 'sm' }}
               colorScheme="brand"
               onClick={handleCreate}
               whiteSpace="nowrap"
@@ -137,7 +137,7 @@ export const AddMenu = ({ onCreate }) => {
               w="100%"
             >
               <FileSVG dimensions="15px" activeColor="brand.500" />
-              <Text fontSize={{ base: "12px", sm: "13px" }}>File</Text>
+              <Text fontSize={{ base: '12px', sm: '13px' }}>File</Text>
             </Box>
             <Box
               as="button"
@@ -154,7 +154,7 @@ export const AddMenu = ({ onCreate }) => {
               w="100%"
             >
               <FolderSVG dimensions="15px" />
-              <Text fontSize={{ base: "12px", sm: "13px" }}>Folder</Text>
+              <Text fontSize={{ base: '12px', sm: '13px' }}>Folder</Text>
             </Box>
           </>
         )}

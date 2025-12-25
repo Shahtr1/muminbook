@@ -1,5 +1,5 @@
-import { TreeNode } from "@/components/layout/features/nodes/TreeNode.jsx";
-import { Text } from "@chakra-ui/react";
+import { TreeNode } from '@/components/layout/features/nodes/TreeNode.jsx';
+import { Text } from '@chakra-ui/react';
 
 export const BannerNode = ({ data }) => {
   return (

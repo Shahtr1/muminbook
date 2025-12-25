@@ -1,14 +1,14 @@
-import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import { useState } from "react";
-import { NavItem } from "@/components/layout/navbar/NavItem.jsx";
+import { Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
+import { NavItem } from '@/components/layout/navbar/NavItem.jsx';
 
 export const NavMenuItem = ({ item, active, MenuComponent, showIcon }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [hoverMenu, setHoverMenu] = useState(false);
 
-  const activeColor = useColorModeValue("active.light", "active.dark");
-  const defaultColor = useColorModeValue("default.light", "default.dark");
+  const activeColor = useColorModeValue('active.light', 'active.dark');
+  const defaultColor = useColorModeValue('default.light', 'default.dark');
 
   return (
     <MenuComponent
@@ -26,13 +26,13 @@ export const NavMenuItem = ({ item, active, MenuComponent, showIcon }) => {
           }}
           activeBorderColor={
             openMenu || (hoverMenu === item.id && !active)
-              ? "transparent"
-              : (active ?? "unset")
+              ? 'transparent'
+              : (active ?? 'unset')
           }
         >
           <Flex align="end">
             <Text
-              display={{ base: "none", md: "block" }}
+              display={{ base: 'none', md: 'block' }}
               fontSize="xs"
               fontWeight="medium"
               color={
@@ -48,7 +48,7 @@ export const NavMenuItem = ({ item, active, MenuComponent, showIcon }) => {
                 color={
                   openMenu || hoverMenu === item.id ? activeColor : defaultColor
                 }
-                display={{ base: "none", md: "block" }}
+                display={{ base: 'none', md: 'block' }}
               />
             )}
           </Flex>

@@ -1,11 +1,11 @@
-import { Flex, Radio, Text, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Radio, Text, useColorModeValue } from '@chakra-ui/react';
 
 export const XRadio = ({ value, label, hasError }) => {
   const borderColor = hasError
-    ? useColorModeValue("red.500", "red.300")
-    : useColorModeValue("gray.300", "whiteAlpha.500");
+    ? useColorModeValue('red.500', 'red.300')
+    : useColorModeValue('gray.300', 'whiteAlpha.500');
 
-  const borderWidth = hasError ? "2px" : "1px";
+  const borderWidth = hasError ? '2px' : '1px';
 
   return (
     <Flex
@@ -14,10 +14,10 @@ export const XRadio = ({ value, label, hasError }) => {
       borderStyle="solid"
       borderColor={borderColor}
       alignItems="center"
-      height={{ base: "8", md: "10" }}
+      height={{ base: '8', md: '10' }}
       borderRadius="sm"
-      pl={{ base: "1", md: "2" }}
-      pr={{ base: "3" }}
+      pl={{ base: '1', md: '2' }}
+      pr={{ base: '3' }}
     >
       <Radio
         value={value}

@@ -1,6 +1,6 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
-export const QuranSVG = ({ active, activeColor, dimensions = "25px" }) => {
+export const QuranSVG = ({ active, activeColor, dimensions = '25px' }) => {
   return (
     <SVG
       dimensions={dimensions}
@@ -10,7 +10,7 @@ export const QuranSVG = ({ active, activeColor, dimensions = "25px" }) => {
     >
       <g
         fill="none"
-        stroke={activeColor || "#000"}
+        stroke={activeColor || '#000'}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="1.5"

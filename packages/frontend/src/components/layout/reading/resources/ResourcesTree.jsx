@@ -7,12 +7,12 @@ import {
   Text,
   Tooltip,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { useEffect, useState } from "react";
-import { useResources } from "@/hooks/resource/useResources.js";
-import { FolderSVG } from "@/components/svgs/FolderSVG.jsx";
-import { FileSVG } from "@/components/svgs/FileSVG.jsx";
+} from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { useEffect, useState } from 'react';
+import { useResources } from '@/hooks/resource/useResources.js';
+import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
+import { FileSVG } from '@/components/svgs/FileSVG.jsx';
 
 const TreeNode = ({
   path,
@@ -23,9 +23,9 @@ const TreeNode = ({
   showFiles = true,
   windowMode = false,
 }) => {
-  const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
+  const defaultTextColor = useColorModeValue('text.primary', 'whiteAlpha.900');
   const [isExpanded, setIsExpanded] = useState(false);
-  const [shouldFetch, setShouldFetch] = useState(path === "my-files");
+  const [shouldFetch, setShouldFetch] = useState(path === 'my-files');
 
   const isActive = activePath === path;
   const isInActivePath =
@@ -79,18 +79,18 @@ const TreeNode = ({
           />
         ) : (
           <Flex align="center" gap="5px" overflow="hidden">
-            <FolderSVG dimensions={windowMode ? "12px" : "15px"} />
+            <FolderSVG dimensions={windowMode ? '12px' : '15px'} />
             <Tooltip
               label={decodeURIComponent(name)}
               hasArrow={!windowMode}
               placement="auto-end"
-              variant={windowMode ? "inverted" : undefined}
+              variant={windowMode ? 'inverted' : undefined}
             >
               <Text
                 whiteSpace="nowrap"
-                fontSize={windowMode ? "11px" : "13px"}
-                _groupHover={{ color: isActive ? "brand.500" : "brand.600" }}
-                color={isActive ? "brand.500" : defaultTextColor}
+                fontSize={windowMode ? '11px' : '13px'}
+                _groupHover={{ color: isActive ? 'brand.500' : 'brand.600' }}
+                color={isActive ? 'brand.500' : defaultTextColor}
               >
                 {decodeURIComponent(name)}
               </Text>
@@ -104,11 +104,11 @@ const TreeNode = ({
           resources?.map((res) => {
             const resPath = `${path}/${encodeURIComponent(res.name)}`.replace(
               /\/+/g,
-              "/",
+              '/'
             );
 
-            if (res.type === "folder") {
-              if (res.empty && res.name === "lost+found") {
+            if (res.type === 'folder') {
+              if (res.empty && res.name === 'lost+found') {
                 return null;
               }
 
@@ -142,7 +142,7 @@ const TreeNode = ({
                     role="group"
                   >
                     <FileSVG
-                      dimensions={windowMode ? "12px" : "15px"}
+                      dimensions={windowMode ? '12px' : '15px'}
                       activeColor="brand.500"
                     />
 
@@ -150,12 +150,12 @@ const TreeNode = ({
                       label={res.name}
                       hasArrow={!windowMode}
                       placement="auto-end"
-                      variant={windowMode ? "inverted" : undefined}
+                      variant={windowMode ? 'inverted' : undefined}
                     >
                       <Text
-                        fontSize={windowMode ? "11px" : "13px"}
+                        fontSize={windowMode ? '11px' : '13px'}
                         whiteSpace="nowrap"
-                        _groupHover={{ color: "brand.600" }}
+                        _groupHover={{ color: 'brand.600' }}
                       >
                         {res.name}
                       </Text>
@@ -170,7 +170,7 @@ const TreeNode = ({
 };
 
 export const ResourcesTree = ({
-  rootPath = "my-files",
+  rootPath = 'my-files',
   activePath,
   onSelect,
   showFiles = true,

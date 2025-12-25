@@ -1,29 +1,29 @@
 const alertTheme = {
   baseStyle: {
     container: {
-      borderRadius: "sm",
-      fontSize: "sm",
+      borderRadius: 'sm',
+      fontSize: 'sm',
     },
   },
   variants: {
     subtle: (props) => ({
       container: {
-        borderRadius: "sm",
+        borderRadius: 'sm',
       },
     }),
     solid: (props) => ({
       container: {
-        borderRadius: "sm",
+        borderRadius: 'sm',
       },
     }),
     leftAccent: (props) => ({
       container: {
-        borderRadius: "sm",
+        borderRadius: 'sm',
       },
     }),
     topAccent: (props) => ({
       container: {
-        borderRadius: "sm",
+        borderRadius: 'sm',
       },
     }),
   },

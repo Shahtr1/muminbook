@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { isTrashEmpty } from "@/services/index.js";
+import { useQuery } from '@tanstack/react-query';
+import { isTrashEmpty } from '@/services/index.js';
 
 export const useIsTrashEmpty = () => {
   const { data, ...rest } = useQuery({
-    queryKey: ["isTrashEmpty"],
+    queryKey: ['isTrashEmpty'],
     queryFn: isTrashEmpty,
     retry: false,
     refetchOnWindowFocus: false,

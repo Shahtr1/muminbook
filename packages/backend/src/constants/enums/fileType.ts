@@ -1,7 +1,7 @@
 enum FileType {
-  Reading = "reading",
-  User = "user",
-  None = "none",
+  Reading = 'reading',
+  User = 'user',
+  None = 'none',
 }
 
 export default FileType;

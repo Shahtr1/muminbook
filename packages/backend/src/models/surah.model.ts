@@ -1,5 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-import RevelationPlace from "../constants/enums/revelationPlace";
+import mongoose, { Document, Schema } from 'mongoose';
+import RevelationPlace from '../constants/enums/revelationPlace';
 
 export interface SurahDocument extends Document {
   uuid: number;
@@ -40,15 +40,15 @@ const surahSchema = new Schema<SurahDocument>(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 surahSchema.index({ uuid: 1 }, { unique: true });
 
 const SurahModel = mongoose.model<SurahDocument>(
-  "Surah",
+  'Surah',
   surahSchema,
-  "surahs",
+  'surahs'
 );
 
 export default SurahModel;

@@ -1,6 +1,6 @@
-import { PrimaryId } from "../../../constants/primaryId";
-import ResourceModel from "../../../models/resource.model";
-import ResourceType from "../../../constants/enums/resourceType";
+import { PrimaryId } from '../../../constants/primaryId';
+import ResourceModel from '../../../models/resource.model';
+import ResourceType from '../../../constants/enums/resourceType';
 
 export const getTrashedResources = async (userId: PrimaryId) => {
   const resources = await ResourceModel.find({
@@ -22,14 +22,14 @@ export const getTrashedResources = async (userId: PrimaryId) => {
     },
     {
       $group: {
-        _id: "$parent",
+        _id: '$parent',
         count: { $sum: 1 },
       },
     },
   ]);
 
   const childCountMap = new Map(
-    childCounts.map((item) => [item._id.toString(), item.count]),
+    childCounts.map((item) => [item._id.toString(), item.count])
   );
 
   const folders = [];

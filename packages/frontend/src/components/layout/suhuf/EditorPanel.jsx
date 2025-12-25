@@ -1,7 +1,7 @@
-import { useColorMode } from "@chakra-ui/react";
-import { Editor, useMonaco } from "@monaco-editor/react";
-import { useEffect, useState } from "react";
-import { defineMbTheme } from "@/theme/monacoTheme.js";
+import { useColorMode } from '@chakra-ui/react';
+import { Editor, useMonaco } from '@monaco-editor/react';
+import { useEffect, useState } from 'react';
+import { defineMbTheme } from '@/theme/monacoTheme.js';
 
 export const EditorPanel = ({ value, onValueChange }) => {
   const { colorMode } = useColorMode();
@@ -9,7 +9,7 @@ export const EditorPanel = ({ value, onValueChange }) => {
   const [themeReady, setThemeReady] = useState(false);
 
   const selectedTheme =
-    colorMode === "dark" ? "mb-theme-dark" : "mb-theme-light";
+    colorMode === 'dark' ? 'mb-theme-dark' : 'mb-theme-light';
   const editorKey = `editor-${selectedTheme}`;
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export const EditorPanel = ({ value, onValueChange }) => {
       onChange={onValueChange}
       theme={selectedTheme}
       options={{
-        wordWrap: "on",
+        wordWrap: 'on',
         fontSize: 14,
       }}
     />

@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
-import useDeleteSession from "../../hooks/session/useDeleteSession.js";
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import useDeleteSession from '../../hooks/session/useDeleteSession.js';
 
 const SessionCard = ({ session }) => {
   const { _id, createdAt, userAgent, email, isCurrent } = session;
@@ -13,8 +13,8 @@ const SessionCard = ({ session }) => {
           {email}
         </Text>
         <Text fontWeight="bold" fontSize="sm" mb={1}>
-          {new Date(createdAt).toLocaleString("en-US")}
-          {isCurrent && " (current session)"}
+          {new Date(createdAt).toLocaleString('en-US')}
+          {isCurrent && ' (current session)'}
         </Text>
         <Text color="gray.500" fontSize="xs">
           {userAgent}

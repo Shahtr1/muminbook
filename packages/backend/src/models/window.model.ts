@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import WindowType from "../constants/enums/windowType";
-import { PrimaryId } from "../constants/primaryId";
-import "./suhuf.model";
+import mongoose from 'mongoose';
+import WindowType from '../constants/enums/windowType';
+import { PrimaryId } from '../constants/primaryId';
+import './suhuf.model';
 
 export interface WindowDocument extends mongoose.Document {
   userId: PrimaryId;
@@ -15,7 +15,7 @@ const windowSchema = new mongoose.Schema<WindowDocument>(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true,
     },
@@ -27,16 +27,16 @@ const windowSchema = new mongoose.Schema<WindowDocument>(
     typeId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      refPath: "type",
+      refPath: 'type',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const WindowModel = mongoose.model<WindowDocument>(
-  "Window",
+  'Window',
   windowSchema,
-  "windows",
+  'windows'
 );
 
 export default WindowModel;

@@ -1,5 +1,5 @@
 enum WindowType {
-  Suhuf = "Suhuf",
+  Suhuf = 'Suhuf',
 }
 
 export default WindowType;

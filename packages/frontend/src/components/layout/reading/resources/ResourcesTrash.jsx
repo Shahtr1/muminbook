@@ -6,27 +6,27 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
-} from "@chakra-ui/react";
-import { TrashSVG } from "@/components/svgs/TrashSVG.jsx";
-import { useLocation, useNavigate } from "react-router-dom";
-import { HiDotsVertical } from "react-icons/hi";
-import { ActionItems } from "@/components/layout/reading/ActionItems.jsx";
-import ConfirmationModal from "@/components/layout/modals/ConfirmationModal.jsx";
-import { useEmptyTrashResource } from "@/hooks/resource/trash/useEmptyTrashResource.js";
-import { useIsTrashEmpty } from "@/hooks/resource/trash/useIsTrashEmpty.js";
-import { useRestoreAllResource } from "@/hooks/resource/trash/useRestoreAllResource.js";
-import { useState } from "react";
+} from '@chakra-ui/react';
+import { TrashSVG } from '@/components/svgs/TrashSVG.jsx';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { HiDotsVertical } from 'react-icons/hi';
+import { ActionItems } from '@/components/layout/reading/ActionItems.jsx';
+import ConfirmationModal from '@/components/layout/modals/ConfirmationModal.jsx';
+import { useEmptyTrashResource } from '@/hooks/resource/trash/useEmptyTrashResource.js';
+import { useIsTrashEmpty } from '@/hooks/resource/trash/useIsTrashEmpty.js';
+import { useRestoreAllResource } from '@/hooks/resource/trash/useRestoreAllResource.js';
+import { useState } from 'react';
 
 export const ResourcesTrash = () => {
   const { emptyTrash } = useIsTrashEmpty();
   const location = useLocation();
   const navigate = useNavigate();
-  const defaultTextColor = useColorModeValue("text.primary", "whiteAlpha.900");
+  const defaultTextColor = useColorModeValue('text.primary', 'whiteAlpha.900');
 
   const { mutate: emptyTrashResource } = useEmptyTrashResource();
   const { mutate: restoreAllResource } = useRestoreAllResource();
 
-  const isTrashView = location.pathname.includes("/reading/trash");
+  const isTrashView = location.pathname.includes('/reading/trash');
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [actionType, setActionType] = useState(null);
@@ -37,20 +37,20 @@ export const ResourcesTrash = () => {
   };
 
   const handleAction = () => {
-    if (actionType === "empty") {
+    if (actionType === 'empty') {
       emptyTrashResource();
-    } else if (actionType === "restore") {
+    } else if (actionType === 'restore') {
       restoreAllResource();
     }
     onClose();
   };
 
   const modalTitle =
-    actionType === "empty" ? "Empty Trash" : "Restore All Items";
+    actionType === 'empty' ? 'Empty Trash' : 'Restore All Items';
   const modalText =
-    actionType === "empty"
-      ? "Are you sure you want to empty trash?"
-      : "Are you sure you want to restore all items?";
+    actionType === 'empty'
+      ? 'Are you sure you want to empty trash?'
+      : 'Are you sure you want to restore all items?';
 
   return (
     <>
@@ -61,12 +61,12 @@ export const ResourcesTrash = () => {
           gap={5}
           cursor="pointer"
           role="group"
-          onClick={() => navigate("trash")}
+          onClick={() => navigate('trash')}
         >
           <Text
             fontSize="14px"
-            _groupHover={{ color: isTrashView ? "brand.500" : "brand.600" }}
-            color={isTrashView ? "brand.500" : defaultTextColor}
+            _groupHover={{ color: isTrashView ? 'brand.500' : 'brand.600' }}
+            color={isTrashView ? 'brand.500' : defaultTextColor}
           >
             Trash
           </Text>
@@ -81,10 +81,10 @@ export const ResourcesTrash = () => {
               cursor="pointer"
               height="100%"
               sx={{
-                "> span": {
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
+                '> span': {
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
                 },
               }}
             >
@@ -94,8 +94,8 @@ export const ResourcesTrash = () => {
             <MenuList minW="fit-content" maxW="fit-content">
               <ActionItems
                 variant="trash"
-                onEmptyTrash={() => openModal("empty")}
-                onRestoreAll={() => openModal("restore")}
+                onEmptyTrash={() => openModal('empty')}
+                onRestoreAll={() => openModal('restore')}
               />
             </MenuList>
           </Menu>
@@ -109,7 +109,7 @@ export const ResourcesTrash = () => {
         yesLabel="Yes"
         noLabel="No"
         onSave={handleAction}
-        yesVariant={actionType === "empty" ? "danger" : "solid"}
+        yesVariant={actionType === 'empty' ? 'danger' : 'solid'}
       >
         <Text>{modalText}</Text>
       </ConfirmationModal>

@@ -1,28 +1,26 @@
-import React from "react";
-import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
-import { useSurahs } from "@/hooks/quran/useSurahs.js";
-import { useCachedQuery } from "@/hooks/useCachedQuery.js";
-import { useJuz } from "@/hooks/quran/useJuz.js";
-import { RdWrapperUI } from "@/components/layout/reading/ui/RdWrapperUI.jsx";
-import { useReadingInfinite } from "@/hooks/reading/useReadings.js";
-import { Loader } from "@/components/layout/Loader.jsx";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { InfiniteScroller } from "@/components/layout/custom/InfiniteScroller.jsx";
-import { AyatWithMarker } from "@/components/layout/reading/AyatWithMarker.jsx";
-import { UiHeaderInfo } from "@/components/layout/reading/ui/UiHeaderInfo.jsx";
+import React from 'react';
+import { Box, Flex, useBreakpointValue } from '@chakra-ui/react';
+import { useSurahs } from '@/hooks/quran/useSurahs.js';
+import { useCachedQuery } from '@/hooks/useCachedQuery.js';
+import { useJuz } from '@/hooks/quran/useJuz.js';
+import { RdWrapperUI } from '@/components/layout/reading/ui/RdWrapperUI.jsx';
+import { useReadingInfinite } from '@/hooks/reading/useReadings.js';
+import { Loader } from '@/components/layout/Loader.jsx';
+import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import { UiHeaderInfo } from '@/components/layout/reading/ui/UiHeaderInfo.jsx';
 
 export const QuranUI = ({ fileId }) => {
   const {
     data: surahs,
     isPending: isSurahsPending,
     isError: isSurahsError,
-  } = useCachedQuery(["surahs"], useSurahs);
+  } = useCachedQuery(['surahs'], useSurahs);
 
   const {
     data: juzList,
     isPending: isJuzListPending,
     isError: isJuzListError,
-  } = useCachedQuery(["juzList"], useJuz);
+  } = useCachedQuery(['juzList'], useJuz);
 
   const startValue = 114;
 
@@ -37,8 +35,8 @@ export const QuranUI = ({ fileId }) => {
     isPending: isReadingPending,
     isError: isReadingError,
   } = useReadingInfinite({
-    fileId: "quran",
-    startType: "surah",
+    fileId: 'quran',
+    startType: 'surah',
     startValue: startValue,
     limit: 150,
   });
@@ -64,27 +62,6 @@ export const QuranUI = ({ fileId }) => {
             textAlign="right"
           >
             <UiHeaderInfo />
-            <InfiniteScroller
-              items={flatData || []}
-              renderItem={(item) => <AyatWithMarker item={item} />}
-              direction="rtl"
-              fontSize="30px"
-              onLoadNext={() => {
-                if (hasNextPage && !isFetchingNextPage) {
-                  fetchNextPage();
-                }
-              }}
-              onLoadPrevious={() => {
-                if (hasPreviousPage && !isFetchingPreviousPage) {
-                  fetchPreviousPage();
-                }
-              }}
-              isFetchingNext={isFetchingNextPage}
-              isFetchingPrevious={isFetchingPreviousPage}
-              hasNext={hasNextPage}
-              hasPrevious={hasPreviousPage}
-              anchor={"surah-" + startValue}
-            />
           </Box>
         </Flex>
       </Flex>

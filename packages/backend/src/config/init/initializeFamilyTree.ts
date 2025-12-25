@@ -1,15 +1,15 @@
-import FamilyTreeModel from "../../models/family-tree.model";
-import { familyTreeApi } from "../../data/familyTreeApi";
-import { PrimaryId } from "../../constants/primaryId";
+import FamilyTreeModel from '../../models/family-tree.model';
+import { familyTreeApi } from '../../data/familyTreeApi';
+import { PrimaryId } from '../../constants/primaryId';
 
 const initializeFamilyTree = async () => {
   try {
-    console.log("🌳 Initializing Family Tree...");
+    console.log('🌳 Initializing Family Tree...');
 
     const existingRecords = await FamilyTreeModel.countDocuments();
     if (existingRecords > 0) {
       console.log(
-        `ℹ️ Family Tree already initialized with ${existingRecords} entries.`,
+        `ℹ️ Family Tree already initialized with ${existingRecords} entries.`
       );
       return;
     }
@@ -61,16 +61,16 @@ const initializeFamilyTree = async () => {
 
         await FamilyTreeModel.findOneAndUpdate(
           { uuid: member.uuid },
-          { parents: parentsArray },
+          { parents: parentsArray }
         );
         linkedCount++;
       }
     }
 
     console.log(`🔗 Linked parent relationships for ${linkedCount} members.`);
-    console.log("🎉 Family Tree initialized successfully.");
+    console.log('🎉 Family Tree initialized successfully.');
   } catch (error) {
-    console.error("❌ Error while initializing Family Tree:", error);
+    console.error('❌ Error while initializing Family Tree:', error);
     process.exit(1);
   }
 };

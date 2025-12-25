@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { PrimaryId } from "../constants/primaryId";
+import mongoose from 'mongoose';
+import { PrimaryId } from '../constants/primaryId';
 
 export interface UserRoleDocument extends mongoose.Document {
   userId: PrimaryId;
@@ -12,24 +12,24 @@ const userRoleSchema = new mongoose.Schema<UserRoleDocument>(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true,
     },
     roleId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Role",
+      ref: 'Role',
       required: true,
       index: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const UserRoleModel = mongoose.model<UserRoleDocument>(
-  "UserRole",
+  'UserRole',
   userRoleSchema,
-  "user_roles",
+  'user_roles'
 );
 
 export default UserRoleModel;

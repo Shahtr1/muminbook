@@ -1,10 +1,10 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
 export const TrashSVG = ({
   active,
   activeColor,
   empty = true,
-  dimensions = "25px",
+  dimensions = '25px',
 }) => {
   return (
     <>
@@ -26,32 +26,32 @@ export const TrashSVG = ({
         <path
           id="trash-color-1"
           d="M17.3 26.4c.4 3.3-4.9-3.7-6.5-1.6c-.8 1.1 3.6 6.5 3.6 6.5l11-4.9s1-8.6-.5-7c-3.6 3.8-8.3 1.4-7.6 7"
-          fill={empty ? "transparent" : "#c1f7f4"}
+          fill={empty ? 'transparent' : '#c1f7f4'}
         />
         <path
           id="trash-color-2"
           d="M22.8 26.4c-3.4-.5-2.4-6.2-5-5.5c-3.5.9-.9 5.3-7.2 8.1c0 0 18.1 12.4 19.6-.1c0 .1-3-6.8-4.9-6.2c-1.1.3-.2 4-2.5 3.7"
-          fill={empty ? "transparent" : "#97ede6"}
+          fill={empty ? 'transparent' : '#97ede6'}
         />
         <path
           id="trash-color-3"
           d="M33.3 25.7c-.3 3.3 8.5 9.5 8.5 9.5l11.8-9.6s-3.8-1.1-5-2.6c-.8-1.1-2-4.2-4.4-3.8c-2.6.5-1.8 4.8-3.1 5.8c-1.4 1.1-7.6-1.6-7.8.7"
-          fill={empty ? "transparent" : "#c1f7f4"}
+          fill={empty ? 'transparent' : '#c1f7f4'}
         />
         <path
           id="trash-color-4"
           d="M48.9 20.4c-1.1-.9-14.1 8.3-14.2 8.6c-.4 2.2 5.1 2 5.8 2c-.8 4.2 13.5.1 13.8-2.2c-1.1-2.5-3-3.6-5.8-3.4c-.2 0 2.4-3.3.4-5"
-          fill={empty ? "transparent" : "#97ede6"}
+          fill={empty ? 'transparent' : '#97ede6'}
         />
         <path
           id="trash-color-5"
           d="M23.6 35.5c-.8 1.1 17.2-.6 17.4-.9c1.4-1.7-3.4-4.1-4-4.5c2.9-3.3.8-4.4-3.2-3.3c.4-6.8-1.2-8.5-4.5 0c-1.2-.6-5.4-.1-6.3 2.1c-1.1 2.4 4.8 1 .6 6.6"
-          fill={empty ? "transparent" : "#44d7cc"}
+          fill={empty ? 'transparent' : '#44d7cc'}
         />
         <path
           id="trash-color-6"
           d="M27.3 21.8c-1.8.5-1.1 12.6 1.3 13.2c-.2.3-2.5 2.8-1.5 3.6c1.6 1.4 8.9-4.7 8.6-6.5c6.8.8 9-.7.3-4.3c.7-1 3.9-4.1 1.8-5.1c-2.4-1.2-4.4 3.1-6.1 2.8c-1.5-.3-1.9-4.4-4.4-3.7"
-          fill={empty ? "transparent" : "#6ae2d9"}
+          fill={empty ? 'transparent' : '#6ae2d9'}
         />
         <g fill="#1e857f">
           <path d="M51.7 32l-2 18.2c0 7.6-8.5 13.8-18.9 13.8c12.5 0 22.6-6.2 22.6-13.8l3-23.5c-.7 2-2.3 3.8-4.7 5.3" />

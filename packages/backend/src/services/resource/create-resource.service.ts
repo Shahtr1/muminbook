@@ -1,8 +1,8 @@
-import ResourceType from "../../constants/enums/resourceType";
-import { PrimaryId } from "../../constants/primaryId";
-import ResourceModel from "../../models/resource.model";
-import appAssert from "../../utils/appAssert";
-import { CONFLICT, NOT_FOUND } from "../../constants/http";
+import ResourceType from '../../constants/enums/resourceType';
+import { PrimaryId } from '../../constants/primaryId';
+import ResourceModel from '../../models/resource.model';
+import appAssert from '../../utils/appAssert';
+import { CONFLICT, NOT_FOUND } from '../../constants/http';
 
 export type CreateResourceParams = {
   name: string;
@@ -14,11 +14,11 @@ export type CreateResourceParams = {
 
 export const createResource = async (
   data: CreateResourceParams,
-  userId: PrimaryId,
+  userId: PrimaryId
 ) => {
   const { name, type, path, fileUrl, contentType } = data;
   const parentPath = decodeURIComponent(path);
-  const fullPath = `${decodeURIComponent(path)}/${name}`.replace(/\/+/g, "/");
+  const fullPath = `${decodeURIComponent(path)}/${name}`.replace(/\/+/g, '/');
 
   const parentFolder = await ResourceModel.findOne({
     path: parentPath,
@@ -27,7 +27,7 @@ export const createResource = async (
     deleted: false,
   });
 
-  appAssert(parentFolder, NOT_FOUND, "Parent folder not found");
+  appAssert(parentFolder, NOT_FOUND, 'Parent folder not found');
 
   const alreadyExists = await ResourceModel.findOne({
     name,
@@ -39,7 +39,7 @@ export const createResource = async (
   appAssert(
     !alreadyExists,
     CONFLICT,
-    `A ${alreadyExists?.type === "file" ? "file" : "folder"} with this name already exists`,
+    `A ${alreadyExists?.type === 'file' ? 'file' : 'folder'} with this name already exists`
   );
 
   const resource = await ResourceModel.create({

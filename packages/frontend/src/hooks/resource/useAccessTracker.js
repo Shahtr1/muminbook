@@ -1,6 +1,6 @@
-import { useRef } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { updateAccess } from "@/services/index.js";
+import { useRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { updateAccess } from '@/services/index.js';
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -26,9 +26,9 @@ export const useAccessTracker = () => {
       try {
         await updateAccess(resourceId);
         lastUpdatedRef.current.set(resourceId, Date.now());
-        queryClient.invalidateQueries({ queryKey: ["overview"] });
+        queryClient.invalidateQueries({ queryKey: ['overview'] });
       } catch (err) {
-        console.error("Access update failed", err);
+        console.error('Access update failed', err);
       }
     }, 300); // Debounce delay
   };

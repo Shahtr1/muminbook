@@ -1,6 +1,6 @@
-import mongoose, { Document, Schema } from "mongoose";
-import LineageType from "../constants/enums/lineageType";
-import { PrimaryId } from "../constants/primaryId";
+import mongoose, { Document, Schema } from 'mongoose';
+import LineageType from '../constants/enums/lineageType';
+import { PrimaryId } from '../constants/primaryId';
 
 export interface FamilyTreeDocument extends Document {
   uuid: string;
@@ -42,15 +42,15 @@ const familyTreeSchema = new Schema<FamilyTreeDocument>({
   parents: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "FamilyTree",
+      ref: 'FamilyTree',
     },
   ],
 });
 
 const FamilyTreeModel = mongoose.model<FamilyTreeDocument>(
-  "FamilyTree",
+  'FamilyTree',
   familyTreeSchema,
-  "family_tree",
+  'family_tree'
 );
 
 export default FamilyTreeModel;

@@ -1,9 +1,9 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
 export const SidebarBottomSVG = ({
   active,
   activeColor,
-  dimensions = "20px",
+  dimensions = '20px',
 }) => {
   return (
     <SVG
@@ -24,7 +24,7 @@ export const SidebarBottomSVG = ({
         y="3"
       />
       <rect
-        fill={active ? activeColor : "none"}
+        fill={active ? activeColor : 'none'}
         height="6"
         rx="2"
         ry="2"

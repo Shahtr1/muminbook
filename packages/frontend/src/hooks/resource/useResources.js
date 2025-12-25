@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { getResources } from "@/services/index.js";
+import { useQuery } from '@tanstack/react-query';
+import { getResources } from '@/services/index.js';
 
-const RESOURCES = "resources";
+const RESOURCES = 'resources';
 
-export const useResources = (path = "my-files") => {
+export const useResources = (path = 'my-files') => {
   const { data = [], ...rest } = useQuery({
     queryKey: [RESOURCES, path],
     queryFn: () => getResources(path),

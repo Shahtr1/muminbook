@@ -1,9 +1,9 @@
-import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
-import { TreeNode } from "@/components/layout/features/nodes/TreeNode.jsx";
+import { Box, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { TreeNode } from '@/components/layout/features/nodes/TreeNode.jsx';
 
 export const FlagNode = ({ data }) => {
-  const flag = data.uuid === "abbasid" ? "black" : "white";
-  const color = useColorModeValue("node", "whiteAlpha.900");
+  const flag = data.uuid === 'abbasid' ? 'black' : 'white';
+  const color = useColorModeValue('node', 'whiteAlpha.900');
   return (
     <TreeNode>
       <Flex flexDirection="column" justifyContent="center" align="center">

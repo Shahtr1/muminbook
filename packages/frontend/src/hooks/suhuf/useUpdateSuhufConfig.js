@@ -1,6 +1,6 @@
-import { useXToast } from "@/hooks/useXToast.js";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateSuhufConfig } from "@/services/index.js";
+import { useXToast } from '@/hooks/useXToast.js';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateSuhufConfig } from '@/services/index.js';
 
 export const useUpdateSuhufConfig = (suhufId) => {
   const toast = useXToast();
@@ -12,11 +12,11 @@ export const useUpdateSuhufConfig = (suhufId) => {
     },
 
     onMutate: async (configUpdate) => {
-      await queryClient.cancelQueries(["suhuf", suhufId]);
+      await queryClient.cancelQueries(['suhuf', suhufId]);
 
-      const previousSuhuf = queryClient.getQueryData(["suhuf", suhufId]);
+      const previousSuhuf = queryClient.getQueryData(['suhuf', suhufId]);
 
-      queryClient.setQueryData(["suhuf", suhufId], (old) => ({
+      queryClient.setQueryData(['suhuf', suhufId], (old) => ({
         ...old,
         config: {
           ...old?.config,
@@ -29,7 +29,7 @@ export const useUpdateSuhufConfig = (suhufId) => {
 
     onError: (error, _, context) => {
       if (context?.previousSuhuf) {
-        queryClient.setQueryData(["suhuf", suhufId], context.previousSuhuf);
+        queryClient.setQueryData(['suhuf', suhufId], context.previousSuhuf);
       }
       toast.error(error);
     },

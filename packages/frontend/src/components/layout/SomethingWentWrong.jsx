@@ -7,20 +7,20 @@ import {
   IconButton,
   Text,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { RepeatIcon } from "@chakra-ui/icons";
-import React from "react";
+} from '@chakra-ui/react';
+import { RepeatIcon } from '@chakra-ui/icons';
+import React from 'react';
 
 export const SomethingWentWrong = ({
-  height = "100%",
-  width = "100%",
+  height = '100%',
+  width = '100%',
   transparent = false,
 }) => {
   const handleRefresh = () => {
     window.location.reload();
   };
 
-  const iconColor = useColorModeValue("text.primary", "whiteAlpha.900");
+  const iconColor = useColorModeValue('text.primary', 'whiteAlpha.900');
 
   return (
     <Flex width={width} height={height} justify="center" align="center">
@@ -31,7 +31,7 @@ export const SomethingWentWrong = ({
         alignItems="center"
         textAlign="center"
         p={6}
-        bg={transparent ? "transparent" : undefined}
+        bg={transparent ? 'transparent' : undefined}
       >
         <AlertIcon boxSize="24px" />
         <AlertTitle>
@@ -52,17 +52,17 @@ export const SomethingWentWrong = ({
           borderColor={iconColor}
           onClick={handleRefresh}
           _hover={{
-            bg: "transparent",
+            bg: 'transparent',
             color: iconColor,
             borderColor: iconColor,
           }}
           _focus={{
-            bg: "transparent",
+            bg: 'transparent',
             color: iconColor,
             borderColor: iconColor,
           }}
           _active={{
-            bg: "transparent",
+            bg: 'transparent',
             color: iconColor,
             borderColor: iconColor,
           }}

@@ -1,32 +1,32 @@
 import ResourceModel, {
   ResourceDocument,
-} from "../../../models/resource.model";
-import { PrimaryId } from "../../../constants/primaryId";
+} from '../../../models/resource.model';
+import { PrimaryId } from '../../../constants/primaryId';
 
 const cloneResource = (
   resource: ResourceDocument,
-  overrides: Partial<ResourceDocument>,
+  overrides: Partial<ResourceDocument>
 ): Partial<ResourceDocument> => {
   const { _id, createdAt, updatedAt, ...rest } = resource.toObject();
   return { ...rest, ...overrides };
 };
 
 export const generateCopyName = async (
-  baseName: string,
+  resourceName: string,
   destinationPath: string,
-  userId: PrimaryId,
+  userId: PrimaryId
 ): Promise<string> => {
-  let copyName = baseName;
+  let copyName = resourceName;
   let counter = 1;
 
   while (
     await ResourceModel.findOne({
-      path: `${destinationPath}/${copyName}`.replace(/\/+/g, "/"),
+      path: `${destinationPath}/${copyName}`.replace(/\/+/g, '/'),
       userId,
       deleted: false,
     })
   ) {
-    copyName = `${baseName} (Copy${counter === 1 ? "" : ` ${counter}`})`;
+    copyName = `${resourceName} (Copy${counter === 1 ? '' : ` ${counter}`})`;
     counter++;
   }
 
@@ -38,7 +38,7 @@ export const buildClonedRootResource = (
   copyName: string,
   baseNewPath: string,
   destinationParentId: PrimaryId,
-  userId: PrimaryId,
+  userId: PrimaryId
 ) => {
   const newId = new ResourceModel()._id;
   const cloned = cloneResource(resource, {
@@ -57,20 +57,25 @@ export const buildClonedDescendants = (
   baseNewPath: string,
   userId: PrimaryId,
   destinationParentId: PrimaryId,
-  rootNewId: PrimaryId,
+  rootNewId: PrimaryId
 ) => {
   const ops: any[] = [];
+
+  if (descendants.length === 0) {
+    return ops;
+  }
+
   const idMap = new Map<string, PrimaryId>();
-  idMap.set(descendants[0].parent?.toString() || "", rootNewId);
+  idMap.set(descendants[0].parent?.toString() || '', rootNewId);
 
   for (const desc of descendants) {
-    const relativePath = desc.path.replace(originalRootPath, "");
-    const newPath = `${baseNewPath}${relativePath}`.replace(/\/+/g, "/");
+    const relativePath = desc.path.replace(originalRootPath, '');
+    const newPath = `${baseNewPath}${relativePath}`.replace(/\/+/g, '/');
     const newId = new ResourceModel()._id as PrimaryId;
     idMap.set((desc._id as PrimaryId).toString(), newId);
 
     const newParentId =
-      idMap.get(desc.parent?.toString() || "") || destinationParentId;
+      idMap.get(desc.parent?.toString() || '') || destinationParentId;
 
     const cloned = cloneResource(desc, {
       _id: newId,

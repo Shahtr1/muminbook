@@ -1,21 +1,21 @@
-import { Flex, Icon, Tooltip, useColorModeValue } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
-import { useUpdateSuhufConfig } from "@/hooks/suhuf/useUpdateSuhufConfig.js";
-import { FaComments, FaList } from "react-icons/fa";
-import { BsHighlights } from "react-icons/bs";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { SurahsList } from "@/components/layout/reading/ui/wrapper/list/SurahsList.jsx";
-import { CommentsList } from "@/components/layout/reading/ui/wrapper/list/CommentsList.jsx";
-import { HighlightsList } from "@/components/layout/reading/ui/wrapper/list/HighlightsList.jsx";
-import { VscFilterFilled } from "react-icons/vsc";
-import { FilterAyatList } from "@/components/layout/reading/ui/wrapper/list/FilterAyatList.jsx";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Flex, Icon, Tooltip, useColorModeValue } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
+import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
+import { FaComments, FaList } from 'react-icons/fa';
+import { BsHighlights } from 'react-icons/bs';
+import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import { SurahsList } from '@/components/layout/reading/ui/wrapper/list/SurahsList.jsx';
+import { CommentsList } from '@/components/layout/reading/ui/wrapper/list/CommentsList.jsx';
+import { HighlightsList } from '@/components/layout/reading/ui/wrapper/list/HighlightsList.jsx';
+import { VscFilterFilled } from 'react-icons/vsc';
+import { FilterAyatList } from '@/components/layout/reading/ui/wrapper/list/FilterAyatList.jsx';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 const readingSidebarData = [
-  { label: "List", id: "list", icon: FaList },
-  { label: "Filter ayats", id: "filter", icon: VscFilterFilled },
-  { label: "Comments", id: "comments", icon: FaComments },
-  { label: "Highlights", id: "highlights", icon: BsHighlights },
+  { label: 'List', id: 'list', icon: FaList },
+  { label: 'Filter ayats', id: 'filter', icon: VscFilterFilled },
+  { label: 'Comments', id: 'comments', icon: FaComments },
+  { label: 'Highlights', id: 'highlights', icon: BsHighlights },
 ];
 
 export const RdWrapperSidebar = ({ fileId }) => {
@@ -23,8 +23,8 @@ export const RdWrapperSidebar = ({ fileId }) => {
   const { id: suhufId } = useParams();
 
   const { data: suhuf } = useQuery({
-    queryKey: ["suhuf", suhufId],
-    queryFn: () => queryClient.getQueryData(["suhuf", suhufId]),
+    queryKey: ['suhuf', suhufId],
+    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
     staleTime: 0,
   });
 
@@ -33,21 +33,21 @@ export const RdWrapperSidebar = ({ fileId }) => {
   const layout = suhuf?.config?.layout || {};
   const readingLayouts = layout.reading || [];
 
-  const iconActiveColor = useColorModeValue("wn.bold.light", "wn.bold.dark");
-  const iconColor = useColorModeValue("wn.icon.light", "wn.icon.dark");
+  const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
+  const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
   const iconHoverGray = useColorModeValue(
-    "wn.icon.hover.light",
-    "wn.icon.hover.dark",
+    'wn.icon.hover.light',
+    'wn.icon.hover.dark'
   );
-  const bgColor = useColorModeValue("wn.bg.light", "wn.bg.dark");
+  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
   const bgContentColor = useColorModeValue(
-    "wn.bg_content.light",
-    "wn.bg_content.dark",
+    'wn.bg_content.light',
+    'wn.bg_content.dark'
   );
-  const borderColor = useColorModeValue("gray.300", "whiteAlpha.500");
+  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
 
   if (!fileId) {
-    console.error("No file id found in reading layout.");
+    console.error('No file id found in reading layout.');
     return <SomethingWentWrong />;
   }
 
@@ -64,7 +64,7 @@ export const RdWrapperSidebar = ({ fileId }) => {
             sidebar: tabKey,
             sidebarOpen: isSame ? !isOpen : true,
           }
-        : r,
+        : r
     );
 
     const fileExists = readingLayouts.some((r) => r.id === fileId);
@@ -116,7 +116,7 @@ export const RdWrapperSidebar = ({ fileId }) => {
             <Flex
               _hover={{ bg: iconHoverGray }}
               bg={
-                activeTab === item.id && isOpen ? iconHoverGray : "transparent"
+                activeTab === item.id && isOpen ? iconHoverGray : 'transparent'
               }
               w="80%"
               justify="center"
@@ -154,13 +154,13 @@ export const RdWrapperSidebar = ({ fileId }) => {
         flexDir="column"
         overflowY="auto"
         transition="transform 0.2s ease-in-out"
-        transform={isOpen ? "translateX(0)" : "translateX(-160px)"}
+        transform={isOpen ? 'translateX(0)' : 'translateX(-160px)'}
         zIndex={1}
       >
-        {isOpen && activeTab === "highlights" && <HighlightsList />}
-        {isOpen && activeTab === "comments" && <CommentsList />}
-        {isOpen && activeTab === "list" && <SurahsList />}
-        {isOpen && activeTab === "filter" && <FilterAyatList />}
+        {isOpen && activeTab === 'highlights' && <HighlightsList />}
+        {isOpen && activeTab === 'comments' && <CommentsList />}
+        {isOpen && activeTab === 'list' && <SurahsList />}
+        {isOpen && activeTab === 'filter' && <FilterAyatList />}
       </Flex>
     </Flex>
   );

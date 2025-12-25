@@ -1,5 +1,5 @@
-import { PrimaryId } from "../primaryId";
-import RevelationPlace from "../enums/revelationPlace";
+import { PrimaryId } from '../primaryId';
+import RevelationPlace from '../enums/revelationPlace';
 
 export type Ayat = {
   uuid: number;

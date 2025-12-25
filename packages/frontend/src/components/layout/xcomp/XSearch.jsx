@@ -7,45 +7,45 @@ import {
   Text,
   useColorModeValue,
   useTheme,
-} from "@chakra-ui/react";
-import { Search2Icon } from "@chakra-ui/icons";
-import { useEffect, useRef, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+} from '@chakra-ui/react';
+import { Search2Icon } from '@chakra-ui/icons';
+import { useEffect, useRef, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const XSearch = ({
   focused = false,
   onFocusChange,
   onSearch,
   expand = false,
-  display = "flex",
+  display = 'flex',
   bgColor,
   color,
-  size = "sm",
+  size = 'sm',
   width,
-  parentWidth = "100%",
-  variant = "default",
+  parentWidth = '100%',
+  variant = 'default',
   isNavSearch = false,
   debounceDelay = 300,
-  placeholder = "Search",
+  placeholder = 'Search',
   showIcon = true,
   dropdownContent,
 }) => {
-  const xColor = color || useColorModeValue("default.light", "default.dark");
+  const xColor = color || useColorModeValue('default.light', 'default.dark');
   const searchInputRef = useRef(null);
   const wrapperRef = useRef(null);
   const dropdownRef = useRef(null);
   const theme = useTheme();
   const queryClient = useQueryClient();
 
-  const windowMode = queryClient.getQueryData(["windowMode"]) || false;
+  const windowMode = queryClient.getQueryData(['windowMode']) || false;
 
   const [isFocused, setIsFocused] = useState(focused);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const debounceRef = useRef(null);
 
-  const dropdownBg = useColorModeValue("white", "gray.800");
-  const dropdownHover = useColorModeValue("gray.100", "gray.700");
-  const borderColor = useColorModeValue("gray.200", "whiteAlpha.300");
+  const dropdownBg = useColorModeValue('white', 'gray.800');
+  const dropdownHover = useColorModeValue('gray.100', 'gray.700');
+  const borderColor = useColorModeValue('gray.200', 'whiteAlpha.300');
 
   // Sync focus prop
   useEffect(() => {
@@ -66,13 +66,13 @@ export const XSearch = ({
         (!dropdownRef.current || !dropdownRef.current.contains(event.target))
       ) {
         setIsFocused(false);
-        setSearch("");
+        setSearch('');
         onFocusChange?.(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [onFocusChange]);
 
   useEffect(() => {
@@ -89,9 +89,9 @@ export const XSearch = ({
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         setIsFocused(false);
-        setSearch("");
+        setSearch('');
         onFocusChange?.(false);
         searchInputRef.current?.blur();
       }
@@ -99,20 +99,20 @@ export const XSearch = ({
 
     const inputEl = searchInputRef.current;
     if (inputEl) {
-      inputEl.addEventListener("keydown", handleKeyDown);
+      inputEl.addEventListener('keydown', handleKeyDown);
     }
 
     return () => {
       if (inputEl) {
-        inputEl.removeEventListener("keydown", handleKeyDown);
+        inputEl.removeEventListener('keydown', handleKeyDown);
       }
     };
   }, [onFocusChange]);
 
   useEffect(() => {
-    if (variant !== "dropdown" || !isNavSearch) return;
+    if (variant !== 'dropdown' || !isNavSearch) return;
     const handleGlobalKeydown = (e) => {
-      if (e.ctrlKey && e.key.toLowerCase() === "k") {
+      if (e.ctrlKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setIsFocused(true);
         onFocusChange?.(true);
@@ -122,10 +122,10 @@ export const XSearch = ({
       }
     };
 
-    window.addEventListener("keydown", handleGlobalKeydown);
+    window.addEventListener('keydown', handleGlobalKeydown);
 
     return () => {
-      window.removeEventListener("keydown", handleGlobalKeydown);
+      window.removeEventListener('keydown', handleGlobalKeydown);
     };
   }, [onFocusChange]);
 
@@ -139,12 +139,12 @@ export const XSearch = ({
       id="dropdown"
       ref={dropdownRef}
       direction="column"
-      pos={isNavSearch ? "fixed" : "unset"}
-      top={windowMode ? "30px" : `${theme.sizes["navbar-height"]}`}
-      left={isNavSearch ? "50%" : "unset"}
-      transform={isNavSearch ? "translateX(-50%)" : "unset"}
-      w={isNavSearch ? "99vw" : "auto"}
-      maxW={isNavSearch ? "99vw" : "auto"}
+      pos={isNavSearch ? 'fixed' : 'unset'}
+      top={windowMode ? '30px' : `${theme.sizes['navbar-height']}`}
+      left={isNavSearch ? '50%' : 'unset'}
+      transform={isNavSearch ? 'translateX(-50%)' : 'unset'}
+      w={isNavSearch ? '99vw' : 'auto'}
+      maxW={isNavSearch ? '99vw' : 'auto'}
       border="1px solid"
       borderColor={borderColor}
       borderRadius="sm"
@@ -153,7 +153,7 @@ export const XSearch = ({
       mt={1}
     >
       {dropdownContent ??
-        (import.meta.env.VITE_NODE_ENV === "development" && (
+        (import.meta.env.VITE_NODE_ENV === 'development' && (
           <Text
             fontSize="xs"
             p={2}
@@ -171,14 +171,14 @@ export const XSearch = ({
     <InputGroup
       ref={wrapperRef}
       display={display}
-      flex={{ md: expand && isFocused ? 1 : expand ? 0.5 : "unset" }}
+      flex={{ md: expand && isFocused ? 1 : expand ? 0.5 : 'unset' }}
       transition="all 0.3s ease-in-out"
       position="relative"
       w={parentWidth}
       flexDir="column"
     >
       {showIcon && (
-        <InputLeftElement height="100%" w={size === "xs" ? 7 : undefined}>
+        <InputLeftElement height="100%" w={size === 'xs' ? 7 : undefined}>
           <Search2Icon color={xColor} fontSize={size} />
         </InputLeftElement>
       )}
@@ -198,14 +198,14 @@ export const XSearch = ({
         <InputRightElement
           height="100%"
           pr={3}
-          display={{ base: "none", sm: "flex" }}
+          display={{ base: 'none', sm: 'flex' }}
         >
           <Text fontSize="xs" fontWeight="thin" whiteSpace="nowrap">
             Ctrl + k
           </Text>
         </InputRightElement>
       )}
-      {variant === "dropdown" && isFocused && dropdown()}
+      {variant === 'dropdown' && isFocused && dropdown()}
     </InputGroup>
   );
 };

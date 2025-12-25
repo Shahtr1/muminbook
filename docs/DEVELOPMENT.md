@@ -106,16 +106,16 @@ git push origin feature/your-feature-name
 
 ```typescript
 // packages/backend/src/controllers/example.controller.ts
-import { Request, Response } from "express";
-import { exampleService } from "../services/example.service";
-import { OK } from "../constants/http";
-import catchErrors from "../utils/catchErrors";
+import { Request, Response } from 'express';
+import { exampleService } from '../services/example.service';
+import { OK } from '../constants/http';
+import catchErrors from '../utils/catchErrors';
 
 export const exampleHandler = catchErrors(
   async (req: Request, res: Response) => {
     const result = await exampleService(req.body);
     return res.status(OK).json(result);
-  },
+  }
 );
 ```
 
@@ -123,18 +123,18 @@ export const exampleHandler = catchErrors(
 
 ```typescript
 // packages/backend/src/services/example.service.ts
-import { UserModel } from "../models/user.model";
-import appAssert from "../utils/appAssert";
-import { NOT_FOUND } from "../constants/http";
+import { UserModel } from '../models/user.model';
+import appAssert from '../utils/appAssert';
+import { NOT_FOUND } from '../constants/http';
 
 export const exampleService = async (userId: string) => {
   const user = await UserModel.findById(userId);
 
-  appAssert(user, NOT_FOUND, "User not found");
+  appAssert(user, NOT_FOUND, 'User not found');
 
   return {
     user,
-    message: "Success",
+    message: 'Success',
   };
 };
 ```
@@ -143,7 +143,7 @@ export const exampleService = async (userId: string) => {
 
 ```typescript
 // packages/backend/src/models/example.model.ts
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const exampleSchema = new mongoose.Schema(
   {
@@ -154,7 +154,7 @@ const exampleSchema = new mongoose.Schema(
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     isActive: {
@@ -164,23 +164,23 @@ const exampleSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-export const ExampleModel = mongoose.model("Example", exampleSchema);
+export const ExampleModel = mongoose.model('Example', exampleSchema);
 ```
 
 #### Route Definition
 
 ```typescript
 // packages/backend/src/routes/example.route.ts
-import { Router } from "express";
-import { exampleHandler } from "../controllers/example.controller";
+import { Router } from 'express';
+import { exampleHandler } from '../controllers/example.controller';
 
 const exampleRoutes = Router();
 
 // prefix: /example
-exampleRoutes.get("/", exampleHandler);
+exampleRoutes.get('/', exampleHandler);
 
 export default exampleRoutes;
 ```
@@ -191,8 +191,8 @@ export default exampleRoutes;
 
 ```jsx
 // packages/frontend/src/components/ExampleComponent.jsx
-import { Box, Text, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Text, Button } from '@chakra-ui/react';
+import { useState } from 'react';
 
 export const ExampleComponent = ({ title, onAction }) => {
   const [count, setCount] = useState(0);
@@ -220,12 +220,12 @@ export const ExampleComponent = ({ title, onAction }) => {
 
 ```jsx
 // packages/frontend/src/hooks/useExample.js
-import { useQuery } from "@tanstack/react-query";
-import { getExample } from "@/services/api";
+import { useQuery } from '@tanstack/react-query';
+import { getExample } from '@/services/api';
 
 export const useExample = (id) => {
   return useQuery({
-    queryKey: ["example", id],
+    queryKey: ['example', id],
     queryFn: () => getExample(id),
     enabled: !!id,
     staleTime: 5 * 60 * 1000,
@@ -237,7 +237,7 @@ export const useExample = (id) => {
 
 ```jsx
 // packages/frontend/src/services/api/exampleApi.js
-import apiClient from "@/config/apiClient";
+import apiClient from '@/config/apiClient';
 
 export const getExample = async (id) => {
   const { data } = await apiClient.get(`/example/${id}`);
@@ -245,7 +245,7 @@ export const getExample = async (id) => {
 };
 
 export const createExample = async (payload) => {
-  const { data } = await apiClient.post("/example", payload);
+  const { data } = await apiClient.post('/example', payload);
   return data;
 };
 ```
@@ -283,20 +283,20 @@ npm run test -- --coverage
 
 ```typescript
 // packages/backend/src/__tests__/auth.test.ts
-import { describe, it, expect } from "vitest";
-import { hashPassword, verifyPassword } from "../utils/bcrypt";
+import { describe, it, expect } from 'vitest';
+import { hashPassword, verifyPassword } from '../utils/bcrypt';
 
-describe("Password Utilities", () => {
-  it("should hash password correctly", async () => {
-    const password = "Test123!";
+describe('Password Utilities', () => {
+  it('should hash password correctly', async () => {
+    const password = 'Test123!';
     const hashed = await hashPassword(password);
 
     expect(hashed).not.toBe(password);
     expect(hashed).toHaveLength(60);
   });
 
-  it("should verify password correctly", async () => {
-    const password = "Test123!";
+  it('should verify password correctly', async () => {
+    const password = 'Test123!';
     const hashed = await hashPassword(password);
 
     const isValid = await verifyPassword(password, hashed);
@@ -323,27 +323,27 @@ npm run test -- --coverage
 
 ```jsx
 // packages/frontend/src/__tests__/UserCard.test.jsx
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
-import { UserCard } from "../components/UserCard";
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { UserCard } from '../components/UserCard';
 
-describe("UserCard", () => {
-  it("renders user information", () => {
-    const user = { name: "John Doe", email: "john@example.com" };
+describe('UserCard', () => {
+  it('renders user information', () => {
+    const user = { name: 'John Doe', email: 'john@example.com' };
     render(<UserCard user={user} />);
 
-    expect(screen.getByText("John Doe")).toBeInTheDocument();
-    expect(screen.getByText("john@example.com")).toBeInTheDocument();
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByText('john@example.com')).toBeInTheDocument();
   });
 
-  it("calls onEdit when button clicked", () => {
+  it('calls onEdit when button clicked', () => {
     const onEdit = vi.fn();
-    const user = { id: "123", name: "John Doe" };
+    const user = { id: '123', name: 'John Doe' };
 
     render(<UserCard user={user} onEdit={onEdit} />);
-    fireEvent.click(screen.getByText("Edit"));
+    fireEvent.click(screen.getByText('Edit'));
 
-    expect(onEdit).toHaveBeenCalledWith("123");
+    expect(onEdit).toHaveBeenCalledWith('123');
   });
 });
 ```
@@ -379,8 +379,8 @@ describe("UserCard", () => {
 
 ```typescript
 // Add debug logging
-console.log("[DEBUG] User data:", user);
-console.error("[ERROR] Failed to save:", error);
+console.log('[DEBUG] User data:', user);
+console.error('[ERROR] Failed to save:', error);
 ```
 
 ### Frontend Debugging
@@ -395,19 +395,19 @@ Install [React Developer Tools](https://react.dev/learn/react-developer-tools) b
 // Log all API requests
 // packages/frontend/src/config/apiClient.js
 apiClient.interceptors.request.use((config) => {
-  console.log("[API Request]", config.method.toUpperCase(), config.url);
+  console.log('[API Request]', config.method.toUpperCase(), config.url);
   return config;
 });
 
 apiClient.interceptors.response.use(
   (response) => {
-    console.log("[API Response]", response.status, response.data);
+    console.log('[API Response]', response.status, response.data);
     return response;
   },
   (error) => {
-    console.error("[API Error]", error.response?.data);
+    console.error('[API Error]', error.response?.data);
     return Promise.reject(error);
-  },
+  }
 );
 ```
 
@@ -430,11 +430,11 @@ export const featureHandler = catchErrors(async (req, res) => {
 
 ```typescript
 // packages/backend/src/routes/feature.route.ts
-import { Router } from "express";
-import { featureHandler } from "../controllers/feature.controller";
+import { Router } from 'express';
+import { featureHandler } from '../controllers/feature.controller';
 
 const featureRoutes = Router();
-featureRoutes.get("/", featureHandler);
+featureRoutes.get('/', featureHandler);
 export default featureRoutes;
 ```
 
@@ -442,8 +442,8 @@ export default featureRoutes;
 
 ```typescript
 // packages/backend/src/app.ts
-import featureRoutes from "./routes/feature.route";
-app.use("/feature", authenticate(), featureRoutes);
+import featureRoutes from './routes/feature.route';
+app.use('/feature', authenticate(), featureRoutes);
 ```
 
 ### Add a New React Page
@@ -461,7 +461,7 @@ export const NewPage = () => {
 
 ```jsx
 // packages/frontend/src/App.jsx
-import { NewPage } from "./pages/NewPage";
+import { NewPage } from './pages/NewPage';
 
 <Route path="/new-page" element={<NewPage />} />;
 ```
@@ -470,17 +470,17 @@ import { NewPage } from "./pages/NewPage";
 
 ```typescript
 // packages/backend/src/models/new-feature.model.ts
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const newFeatureSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     // Add fields
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-export const NewFeatureModel = mongoose.model("NewFeature", newFeatureSchema);
+export const NewFeatureModel = mongoose.model('NewFeature', newFeatureSchema);
 ```
 
 ### Add Environment Variable
@@ -496,7 +496,7 @@ NEW_FEATURE_API_KEY=your_key_here
 
 ```typescript
 // packages/backend/src/constants/env.ts
-export const NEW_FEATURE_API_KEY = process.env.NEW_FEATURE_API_KEY || "";
+export const NEW_FEATURE_API_KEY = process.env.NEW_FEATURE_API_KEY || '';
 ```
 
 **3. Update SETUP.md documentation**
@@ -604,12 +604,12 @@ npm run build
 2. **Select Only Needed Fields:**
 
    ```typescript
-   User.find().select("name email -_id");
+   User.find().select('name email -_id');
    ```
 
 3. **Avoid N+1 Queries:**
    ```typescript
-   User.find().populate("role");
+   User.find().populate('role');
    ```
 
 ### Frontend
@@ -617,7 +617,7 @@ npm run build
 1. **Lazy Load Components:**
 
    ```jsx
-   const LazyComponent = lazy(() => import("./Component"));
+   const LazyComponent = lazy(() => import('./Component'));
    ```
 
 2. **Memoize Expensive Calculations:**

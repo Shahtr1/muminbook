@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { Flex, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
-import { FileSVG } from "@/components/svgs/FileSVG.jsx";
-import { ItemToolbar } from "@/components/layout/reading/toolbar/ItemToolbar.jsx";
-import { ResourcesActionItems } from "@/components/layout/reading/resources/ResourcesActionItems.jsx";
+import { useEffect, useState } from 'react';
+import { Flex, Text, Tooltip, useBreakpointValue } from '@chakra-ui/react';
+import { FileSVG } from '@/components/svgs/FileSVG.jsx';
+import { ItemToolbar } from '@/components/layout/reading/toolbar/ItemToolbar.jsx';
+import { ResourcesActionItems } from '@/components/layout/reading/resources/ResourcesActionItems.jsx';
 
 export const File = ({ onClick, width, folderPath, resource }) => {
   const dimensions = useBreakpointValue({
-    base: "40px",
-    sm: "60px",
+    base: '40px',
+    sm: '60px',
   });
 
   const [hasMounted, setHasMounted] = useState(false);
@@ -41,7 +41,7 @@ export const File = ({ onClick, width, folderPath, resource }) => {
         <FileSVG dimensions={dimensions} activeColor="brand.500" />
         <Tooltip label={resource.name} hasArrow placement="bottom">
           <Text
-            fontSize={{ base: "10px", sm: "13px" }}
+            fontSize={{ base: '10px', sm: '13px' }}
             color="brand.500"
             fontWeight="medium"
             overflow="hidden"

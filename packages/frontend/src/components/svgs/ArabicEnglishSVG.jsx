@@ -1,9 +1,9 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
 export const ArabicEnglishSVG = ({
   active,
   activeColor,
-  dimensions = "25px",
+  dimensions = '25px',
 }) => {
   return (
     <>

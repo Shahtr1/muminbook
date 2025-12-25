@@ -1,6 +1,6 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
-export const AyatSVG = ({ active, activeColor, dimensions = "25px" }) => {
+export const AyatSVG = ({ active, activeColor, dimensions = '25px' }) => {
   return (
     <>
       <SVG dimensions={dimensions} active={active} viewBox="0 0 736 736">

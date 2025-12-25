@@ -1,7 +1,7 @@
-import catchErrors from "../utils/catchErrors";
-import { CREATED, OK } from "../constants/http";
-import { assertUserAndSession } from "../utils/assertUserRoleSession";
-import ResourceType from "../constants/enums/resourceType";
+import catchErrors from '../utils/catchErrors';
+import { CREATED, OK } from '../constants/http';
+import { assertUserAndSession } from '../utils/assertUserRoleSession';
+import ResourceType from '../constants/enums/resourceType';
 import {
   copyResource,
   createResource,
@@ -14,18 +14,18 @@ import {
   renameResource,
   restoreAllResources,
   restoreResource,
-} from "../services/resource";
-import mongoose from "mongoose";
-import { getUserId } from "../utils/getUserId";
-import { isMyFilesEmpty } from "../services/resource/isMyFilesEmpty-resource.service";
+} from '../services/resource';
+import mongoose from 'mongoose';
+import { getUserId } from '../utils/getUserId';
+import { isMyFilesEmpty } from '../services/resource/isMyFilesEmpty-resource.service';
 import {
   getOverview,
   togglePinResource,
   updateAccessedAt,
-} from "../services/resource/overview.service";
-import { isTrashEmpty } from "../services/resource/trash/isTrashEmpty-resource.service";
-import { dstPathSchema, resourceSchema } from "./schemas/resource.schema";
-import { renameSchema } from "./schemas/common.schema";
+} from '../services/resource/overview.service';
+import { isTrashEmpty } from '../services/resource/trash/isTrashEmpty-resource.service';
+import { dstPathSchema, resourceSchema } from './schemas/resource.schema';
+import { renameSchema } from './schemas/common.schema';
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);
@@ -65,7 +65,7 @@ export const deleteResourceHandler = catchErrors(async (req, res) => {
 
   await deleteResource(resourceId, userId);
 
-  return res.status(OK).json({ message: "Deleted successfully" });
+  return res.status(OK).json({ message: 'Deleted successfully' });
 });
 
 export const moveToTrashResourceHandler = catchErrors(async (req, res) => {
@@ -77,7 +77,7 @@ export const moveToTrashResourceHandler = catchErrors(async (req, res) => {
 
   await moveToTrashResource(resourceId, userId);
 
-  return res.status(OK).json({ message: "Moved to trash successfully" });
+  return res.status(OK).json({ message: 'Moved to trash successfully' });
 });
 
 export const restoreResourceHandler = catchErrors(async (req, res) => {
@@ -113,7 +113,7 @@ export const emptyTrashHandler = catchErrors(async (req, res) => {
 
   await permanentlyDeleteTrashedResources(userId);
 
-  return res.status(OK).json({ message: "Trash emptied successfully" });
+  return res.status(OK).json({ message: 'Trash emptied successfully' });
 });
 
 export const renameResourceHandler = catchErrors(async (req, res) => {

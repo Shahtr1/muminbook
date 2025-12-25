@@ -4,20 +4,20 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import {
   HiArrowCircleUp,
   HiDuplicate,
   HiFolder,
   HiPencilAlt,
   HiTrash,
-} from "react-icons/hi";
-import { useLocation } from "react-router-dom";
-import { BsPinAngle, BsPinAngleFill } from "react-icons/bs";
+} from 'react-icons/hi';
+import { useLocation } from 'react-router-dom';
+import { BsPinAngle, BsPinAngleFill } from 'react-icons/bs';
 
 export const ActionItems = ({
-  variant = "resources",
-  type = "folder",
+  variant = 'resources',
+  type = 'folder',
   pinned = false,
   onRename,
   onCopy,
@@ -29,17 +29,17 @@ export const ActionItems = ({
   onEmptyTrash,
   onPin,
 }) => {
-  const bg = useColorModeValue("gray.100", "gray.700");
+  const bg = useColorModeValue('gray.100', 'gray.700');
   const location = useLocation();
-  const isTrashView = location.pathname.includes("/reading/trash");
+  const isTrashView = location.pathname.includes('/reading/trash');
   const isLostAndFound = location.pathname.includes(
-    "/reading/my-files/lost%2Bfound",
+    '/reading/my-files/lost%2Bfound'
   );
-  const currentIsTrash = isTrashView && variant === "resources";
+  const currentIsTrash = isTrashView && variant === 'resources';
 
   // Responsive sizing
-  const iconSize = useBreakpointValue({ base: "13px", sm: "15px" });
-  const fontSize = useBreakpointValue({ base: "11px", sm: "13px" });
+  const iconSize = useBreakpointValue({ base: '13px', sm: '15px' });
+  const fontSize = useBreakpointValue({ base: '11px', sm: '13px' });
   const gapSize = useBreakpointValue({ base: 1, sm: 2 });
   const paddingY = useBreakpointValue({ base: 1, sm: 2 });
 
@@ -61,7 +61,7 @@ export const ActionItems = ({
   );
 
   // Trash view (bulk actions)
-  if (variant === "trash") {
+  if (variant === 'trash') {
     return (
       <>
         {renderItem(
@@ -69,30 +69,30 @@ export const ActionItems = ({
             size={iconSize}
             color="var(--chakra-colors-green-500)"
           />,
-          "Restore All",
-          "green.500",
-          onRestoreAll,
+          'Restore All',
+          'green.500',
+          onRestoreAll
         )}
         {renderItem(
           <HiTrash size={iconSize} color="var(--chakra-colors-red-500)" />,
-          "Empty Trash",
-          "red.500",
-          onEmptyTrash,
+          'Empty Trash',
+          'red.500',
+          onEmptyTrash
         )}
       </>
     );
   }
 
   // Reading card placeholder
-  if (variant === "readingCard") {
+  if (variant === 'readingCard') {
     return (
       <>
         {renderItem(
           <HiPencilAlt size={iconSize} />,
-          "Coming Soon",
+          'Coming Soon',
           undefined,
           null,
-          true,
+          true
         )}
       </>
     );
@@ -108,55 +108,55 @@ export const ActionItems = ({
               size={iconSize}
               color="var(--chakra-colors-green-500)"
             />,
-            "Restore",
-            "green.500",
-            onRestore,
+            'Restore',
+            'green.500',
+            onRestore
           )}
           {renderItem(
             <HiTrash size={iconSize} color="var(--chakra-colors-red-500)" />,
-            "Delete",
-            "red.500",
-            onDelete,
+            'Delete',
+            'red.500',
+            onDelete
           )}
         </>
       ) : (
         <>
           {renderItem(
             <HiPencilAlt size={iconSize} />,
-            "Rename",
+            'Rename',
             undefined,
-            onRename,
+            onRename
           )}
-          {type === "folder" &&
+          {type === 'folder' &&
             renderItem(
               pinned ? (
                 <BsPinAngleFill size={iconSize} />
               ) : (
                 <BsPinAngle size={iconSize} />
               ),
-              pinned ? "Unpin" : "Pin",
+              pinned ? 'Unpin' : 'Pin',
               undefined,
-              onPin,
+              onPin
             )}
 
           {!isLostAndFound &&
             renderItem(
               <HiDuplicate size={iconSize} />,
-              "Copy",
+              'Copy',
               undefined,
-              onCopy,
+              onCopy
             )}
           {renderItem(
             <HiFolder size={iconSize} />,
-            "Move to Folder",
+            'Move to Folder',
             undefined,
-            onMoveToFolder,
+            onMoveToFolder
           )}
           {renderItem(
             <HiTrash size={iconSize} color="var(--chakra-colors-red-500)" />,
-            "Move to Trash",
-            "red.500",
-            onMoveToTrash,
+            'Move to Trash',
+            'red.500',
+            onMoveToTrash
           )}
         </>
       )}

@@ -7,6 +7,8 @@
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![CI Pipeline](https://github.com/Shahtr1/muminbook/actions/workflows/ci.yml/badge.svg)](https://github.com/Shahtr1/muminbook/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-188%20passing-success)](https://github.com/Shahtr1/muminbook/actions)
 
 _Empowering Muslims worldwide to share knowledge, study Quran & Hadith collaboratively, and connect through live study rooms_
 

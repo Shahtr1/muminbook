@@ -1,6 +1,6 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
-export const ReadingSVG = ({ active, dimensions = "25px" }) => {
+export const ReadingSVG = ({ active, dimensions = '25px' }) => {
   return (
     <>
       <SVG dimensions={dimensions} active={active} viewBox="0 0 395.78 395.78">

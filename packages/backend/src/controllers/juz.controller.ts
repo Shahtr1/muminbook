@@ -1,7 +1,7 @@
-import catchErrors from "../utils/catchErrors";
-import { assertUserAndSession } from "../utils/assertUserRoleSession";
-import { OK } from "../constants/http";
-import JuzModel from "../models/juz.model";
+import catchErrors from '../utils/catchErrors';
+import { assertUserAndSession } from '../utils/assertUserRoleSession';
+import { OK } from '../constants/http';
+import JuzModel from '../models/juz.model';
 
 export const getJuzHandler = catchErrors(async (req, res) => {
   assertUserAndSession(req);

@@ -255,12 +255,12 @@ packages/frontend/src/
 
 ```jsx
 // Using React Query
-import { useQuery } from "@tanstack/react-query";
-import { getUser } from "@/services/api";
+import { useQuery } from '@tanstack/react-query';
+import { getUser } from '@/services/api';
 
 export const UserProfile = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["user"],
+    queryKey: ['user'],
     queryFn: getUser,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });

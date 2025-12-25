@@ -10,9 +10,9 @@ export const tooltipTheme = {
       return {
         bg: bgColor,
         color: textColor,
-        border: "1px solid",
+        border: '1px solid',
         borderColor: borderColor,
-        fontSize: "12px",
+        fontSize: '12px',
       };
     },
   },

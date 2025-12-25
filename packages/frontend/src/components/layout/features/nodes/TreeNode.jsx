@@ -1,11 +1,11 @@
-import { Handle, Position } from "reactflow";
-import { Fragment } from "react";
-import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import { Handle, Position } from 'reactflow';
+import { Fragment } from 'react';
+import { Flex, Text, useColorModeValue } from '@chakra-ui/react';
 
 export const CommonTextNode = ({
   data,
-  width = "100%",
-  color = useColorModeValue("node", "whiteAlpha.900"),
+  width = '100%',
+  color = useColorModeValue('node', 'whiteAlpha.900'),
 }) => {
   return (
     <Flex
@@ -39,8 +39,8 @@ export const TreeNode = ({ children }) => {
         type="target"
         position={Position.Top}
         style={{
-          background: "transparent",
-          border: "none",
+          background: 'transparent',
+          border: 'none',
           width: 0,
           height: 0,
         }}
@@ -50,8 +50,8 @@ export const TreeNode = ({ children }) => {
         type="target"
         position={Position.Bottom}
         style={{
-          background: "transparent",
-          border: "none",
+          background: 'transparent',
+          border: 'none',
           width: 0,
           height: 0,
         }}
@@ -61,8 +61,8 @@ export const TreeNode = ({ children }) => {
         type="target"
         position={Position.Left}
         style={{
-          background: "transparent",
-          border: "none",
+          background: 'transparent',
+          border: 'none',
           width: 0,
           height: 0,
         }}
@@ -72,8 +72,8 @@ export const TreeNode = ({ children }) => {
         type="target"
         position={Position.Right}
         style={{
-          background: "transparent",
-          border: "none",
+          background: 'transparent',
+          border: 'none',
           width: 0,
           height: 0,
         }}
@@ -83,8 +83,8 @@ export const TreeNode = ({ children }) => {
         type="source"
         position={Position.Top}
         style={{
-          background: "transparent",
-          border: "none",
+          background: 'transparent',
+          border: 'none',
           width: 0,
           height: 0,
         }}
@@ -94,8 +94,8 @@ export const TreeNode = ({ children }) => {
         type="source"
         position={Position.Bottom}
         style={{
-          background: "transparent",
-          border: "none",
+          background: 'transparent',
+          border: 'none',
           width: 0,
           height: 0,
         }}
@@ -105,8 +105,8 @@ export const TreeNode = ({ children }) => {
         type="source"
         position={Position.Left}
         style={{
-          background: "transparent",
-          border: "none",
+          background: 'transparent',
+          border: 'none',
           width: 0,
           height: 0,
         }}
@@ -116,8 +116,8 @@ export const TreeNode = ({ children }) => {
         type="source"
         position={Position.Right}
         style={{
-          background: "transparent",
-          border: "none",
+          background: 'transparent',
+          border: 'none',
           width: 0,
           height: 0,
         }}

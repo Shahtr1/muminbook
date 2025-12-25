@@ -1,11 +1,11 @@
-import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
-import { SurahSVG } from "@/components/svgs/frames/SurahSVG.jsx";
-import { AyatSVG } from "@/components/svgs/frames/AyatSVG.jsx";
-import { toArabicNumeral } from "@/utils/toArabicNumeral.js";
-import { useParentWidth } from "@/hooks/useParentWidth.js";
+import { Box, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { SurahSVG } from '@/components/svgs/frames/SurahSVG.jsx';
+import { AyatSVG } from '@/components/svgs/frames/AyatSVG.jsx';
+import { toArabicNumeral } from '@/utils/toArabicNumeral.js';
+import { useParentWidth } from '@/hooks/useParentWidth.js';
 
 export const SurahHeader = ({ rtl = false, surah, juz }) => {
-  const frameColor = useColorModeValue("text.primary", "whiteAlpha.900");
+  const frameColor = useColorModeValue('text.primary', 'whiteAlpha.900');
   const surahName = rtl ? surah.name : surah.transliteration;
   const surahNumber = rtl ? toArabicNumeral(surah.uuid) : surah.uuid;
   const juzName = rtl ? juz.name : juz.transliteration;
@@ -28,13 +28,13 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
       position="relative"
       mb={isSmallScreen ? 4 : 2}
       mt={2}
-      fontFamily={rtl ? "ArabicFont" : "Nunito Sans"}
-      fontSize={rtl ? "20px" : "13px"}
+      fontFamily={rtl ? 'ArabicFont' : 'Nunito Sans'}
+      fontSize={rtl ? '20px' : '13px'}
     >
       <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
       <Flex position="relative" justify="center" align="center">
         <AyatSVG
-          dimensions={isSmallScreen ? "25px" : "35px"}
+          dimensions={isSmallScreen ? '25px' : '35px'}
           activeColor={frameColor}
         />
         <Text
@@ -42,7 +42,7 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
           top="40%"
           left="50%"
           transform="translate(-50%, -50%)"
-          fontSize={isSmallScreen ? "18px" : "25px"}
+          fontSize={isSmallScreen ? '18px' : '25px'}
           whiteSpace="nowrap"
         >
           {surahNumber}
@@ -55,7 +55,7 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
           top="45%"
           left="50%"
           transform="translate(-50%, -50%)"
-          fontSize={isSmallScreen ? "17px" : "25px"}
+          fontSize={isSmallScreen ? '17px' : '25px'}
           whiteSpace="nowrap"
         >
           {surahName}
@@ -72,7 +72,7 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
           left="50%"
           transform="translateX(-50%)"
         >
-          <Text>{rtl ? "الجزء" : "Juz"}</Text>
+          <Text>{rtl ? 'الجزء' : 'Juz'}</Text>
           <Text mx={1}>-</Text>
           <Text whiteSpace="nowrap">{juzNumber}</Text>
           <Text mx={1}>-</Text>
@@ -84,7 +84,7 @@ export const SurahHeader = ({ rtl = false, surah, juz }) => {
         <Flex flex={1} h="1px" bgColor={frameColor}></Flex>
         {!isSmallScreen && (
           <>
-            <Text>{rtl ? "الجزء" : "Juz"}</Text>
+            <Text>{rtl ? 'الجزء' : 'Juz'}</Text>
             <Flex position="relative" justify="center" align="center">
               <AyatSVG dimensions="25px" activeColor={frameColor} />
               <Text

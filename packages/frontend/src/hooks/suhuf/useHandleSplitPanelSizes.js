@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useHandleSplitPanelSizes = ({
   layout = {},
@@ -11,7 +11,7 @@ export const useHandleSplitPanelSizes = ({
     layout.splitRatio?.length === 2 ? layout.splitRatio : defaultSizes;
 
   const [sizes, setSizes] = useState(() =>
-    isSecondPanelOpen ? initialSizes : [100],
+    isSecondPanelOpen ? initialSizes : [100]
   );
 
   // Sync state when split panel toggles
@@ -35,7 +35,7 @@ export const useHandleSplitPanelSizes = ({
 
   const handleResize = (newSizes) => {
     setSizes(newSizes);
-    if (isSecondPanelOpen && typeof onUpdateLayout === "function") {
+    if (isSecondPanelOpen && typeof onUpdateLayout === 'function') {
       // TODO: Fix this as it has old data, which doesnt save left suhuf sidebar config correctly
       onUpdateLayout({
         layout: {

@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { getFamilyTree } from "@/services/index.js";
+import { useQuery } from '@tanstack/react-query';
+import { getFamilyTree } from '@/services/index.js';
 
-export const FAMILY_TREE = "family_tree";
+export const FAMILY_TREE = 'family_tree';
 
 const useFamilyTree = (opts = {}) => {
   const { data: familyTree = [], ...rest } = useQuery({

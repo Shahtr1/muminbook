@@ -1,13 +1,13 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 
 export const FolderSVG = ({
   active,
   activeColor,
-  dimensions = "25px",
+  dimensions = '25px',
   empty = true,
 }) => {
-  const folderFillId = `folder-fill-${empty ? "empty" : "full"}`;
-  const folderSideFillId = `folder-side-fill-${empty ? "empty" : "full"}`;
+  const folderFillId = `folder-fill-${empty ? 'empty' : 'full'}`;
+  const folderSideFillId = `folder-side-fill-${empty ? 'empty' : 'full'}`;
 
   return (
     <>
@@ -40,8 +40,8 @@ export const FolderSVG = ({
           y2="27.39"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor={empty ? "transparent" : "#e3fdfc"} />
-          <stop offset=".909" stopColor={empty ? "transparent" : "#c1f7f4"} />
+          <stop offset="0" stopColor={empty ? 'transparent' : '#e3fdfc'} />
+          <stop offset=".909" stopColor={empty ? 'transparent' : '#c1f7f4'} />
         </linearGradient>
 
         <path
@@ -56,8 +56,8 @@ export const FolderSVG = ({
           y2="19"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor={empty ? "transparent" : "#e3fdfc"} />
-          <stop offset=".909" stopColor={empty ? "transparent" : "#c1f7f4"} />
+          <stop offset="0" stopColor={empty ? 'transparent' : '#e3fdfc'} />
+          <stop offset=".909" stopColor={empty ? 'transparent' : '#c1f7f4'} />
         </linearGradient>
 
         <path

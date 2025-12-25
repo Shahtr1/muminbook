@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Alert,
   AlertIcon,
@@ -9,15 +9,15 @@ import {
   InputGroup,
   InputRightElement,
   Link as ChakraLink,
-} from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { XEyeIcon } from "@/components/form/XEyeIcon.jsx";
-import { XAlert } from "@/components/layout/xcomp/XAlert.jsx";
-import { resetPassword } from "@/services/index.js";
+} from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { XEyeIcon } from '@/components/form/XEyeIcon.jsx';
+import { XAlert } from '@/components/layout/xcomp/XAlert.jsx';
+import { resetPassword } from '@/services/index.js';
 
 export const ResetPasswordForm = ({ code }) => {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -37,7 +37,7 @@ export const ResetPasswordForm = ({ code }) => {
       {isError && (
         <XAlert
           status="error"
-          message={error?.message || "An error occurred"}
+          message={error?.message || 'An error occurred'}
         ></XAlert>
       )}
       {isSuccess ? (
@@ -59,12 +59,12 @@ export const ResetPasswordForm = ({ code }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={(e) =>
-                  e.key === "Enter" &&
+                  e.key === 'Enter' &&
                   resetUserPassword({ password, verificationCode: code })
                 }
                 autoFocus
                 placeholder="New Password"
-                size={{ base: "sm", md: "md" }}
+                size={{ base: 'sm', md: 'md' }}
               />
               {password && (
                 <InputRightElement
@@ -84,7 +84,7 @@ export const ResetPasswordForm = ({ code }) => {
             onClick={() =>
               resetUserPassword({ password, verificationCode: code })
             }
-            size={{ base: "sm", md: "md" }}
+            size={{ base: 'sm', md: 'md' }}
           >
             Reset Password
           </Button>

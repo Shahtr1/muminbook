@@ -1,10 +1,10 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getReading, getReadings } from "@/services/index.js";
-import { useMemo } from "react";
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { getReading, getReadings } from '@/services/index.js';
+import { useMemo } from 'react';
 
 export const useReadings = () => {
   const { data = [], ...rest } = useQuery({
-    queryKey: ["readings"],
+    queryKey: ['readings'],
     queryFn: getReadings,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -16,11 +16,11 @@ export const useReadings = () => {
 };
 
 export const useReadingInfinite = (
-  { fileId, startType = "surah", startValue, limit = 20 },
-  options = {},
+  { fileId, startType = 'surah', startValue, limit = 20 },
+  options = {}
 ) => {
   const queryKey = useMemo(() => {
-    return ["reading", fileId, startType, startValue];
+    return ['reading', fileId, startType, startValue];
   }, [fileId, startType, startValue]);
 
   return useInfiniteQuery({

@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useXToast } from "@/hooks/useXToast.js";
-import { emptyTrash } from "@/services/index.js";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useXToast } from '@/hooks/useXToast.js';
+import { emptyTrash } from '@/services/index.js';
 
 export const useEmptyTrashResource = () => {
   const toast = useXToast();
@@ -8,15 +8,15 @@ export const useEmptyTrashResource = () => {
 
   return useMutation({
     mutationFn: async () => {
-      toast.startLoading("Emptying trash...");
+      toast.startLoading('Emptying trash...');
       return await emptyTrash();
     },
     onSuccess: () => {
-      toast.success("Trash emptied");
+      toast.success('Trash emptied');
       queryClient.invalidateQueries({
-        queryKey: ["trash"],
+        queryKey: ['trash'],
       });
-      queryClient.invalidateQueries({ queryKey: ["isTrashEmpty"] });
+      queryClient.invalidateQueries({ queryKey: ['isTrashEmpty'] });
     },
     onError: toast.error,
     onSettled: toast.stopLoading,

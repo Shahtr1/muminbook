@@ -4,7 +4,7 @@ import React, {
   useMemo,
   useRef,
   useState,
-} from "react";
+} from 'react';
 import ReactFlow, {
   applyEdgeChanges,
   applyNodeChanges,
@@ -12,18 +12,18 @@ import ReactFlow, {
   Controls,
   ReactFlowProvider,
   useReactFlow,
-} from "reactflow";
-import "reactflow/dist/style.css";
-import { Box, useTheme } from "@chakra-ui/react";
-import { ProphetNode } from "@/components/layout/features/nodes/ProphetNode.jsx";
-import { TextNode } from "@/components/layout/features/nodes/TextNode.jsx";
-import { CaliphNode } from "@/components/layout/features/nodes/CaliphNode.jsx";
-import useFamilyTree from "@/hooks/useFamilyTree.js";
-import { createFamilyTree } from "@/utils/createFamilyTree.js";
-import { Loader } from "@/components/layout/Loader.jsx";
-import { SomethingWentWrong } from "@/components/layout/SomethingWentWrong.jsx";
-import { BannerNode } from "@/components/layout/features/nodes/BannerNode.jsx";
-import { FlagNode } from "@/components/layout/features/nodes/FlagNode.jsx";
+} from 'reactflow';
+import 'reactflow/dist/style.css';
+import { Box, useTheme } from '@chakra-ui/react';
+import { ProphetNode } from '@/components/layout/features/nodes/ProphetNode.jsx';
+import { TextNode } from '@/components/layout/features/nodes/TextNode.jsx';
+import { CaliphNode } from '@/components/layout/features/nodes/CaliphNode.jsx';
+import useFamilyTree from '@/hooks/useFamilyTree.js';
+import { createFamilyTree } from '@/utils/createFamilyTree.js';
+import { Loader } from '@/components/layout/Loader.jsx';
+import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import { BannerNode } from '@/components/layout/features/nodes/BannerNode.jsx';
+import { FlagNode } from '@/components/layout/features/nodes/FlagNode.jsx';
 
 const nodeTypes = {
   prophet: ProphetNode,
@@ -37,20 +37,20 @@ const handlePositions = (parent, node) => {
   let sourceHandle;
   let targetHandle;
   if (parent.position.x < node.position.x) {
-    sourceHandle = "right";
-    targetHandle = "left";
+    sourceHandle = 'right';
+    targetHandle = 'left';
   }
   if (parent.position.x > node.position.x) {
-    sourceHandle = "left";
-    targetHandle = "right";
+    sourceHandle = 'left';
+    targetHandle = 'right';
   }
   if (parent.position.y < node.position.y) {
-    sourceHandle = "bottom";
-    targetHandle = "top";
+    sourceHandle = 'bottom';
+    targetHandle = 'top';
   }
   if (parent.position.y > node.position.y) {
-    sourceHandle = "top";
-    targetHandle = "bottom";
+    sourceHandle = 'top';
+    targetHandle = 'bottom';
   }
   return { sourceHandle, targetHandle };
 };
@@ -71,14 +71,14 @@ const createEdges = (nodes, color) => {
           sourceHandle,
           target: node.id,
           targetHandle,
-          type: "smoothstep",
+          type: 'smoothstep',
           style: {
-            strokeDasharray: lineages[index] === "indirect" ? "5 5" : "none",
+            strokeDasharray: lineages[index] === 'indirect' ? '5 5' : 'none',
             stroke: color,
-            strokeWidth: "1.5px",
+            strokeWidth: '1.5px',
           },
         };
-      }),
+      })
     )
     .filter(Boolean);
 };
@@ -119,7 +119,7 @@ const FamilyTreeContent = () => {
   const zoomToLastProphet = () => {
     if (zoomedRef.current) return;
 
-    const lastProphet = nodes.find((node) => node.data.uuid === "muhammad");
+    const lastProphet = nodes.find((node) => node.data.uuid === 'muhammad');
     if (lastProphet) {
       setTimeout(() => {
         goto(lastProphet);
@@ -136,12 +136,12 @@ const FamilyTreeContent = () => {
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    [],
+    []
   );
 
   const onEdgesChange = useCallback(
     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    [],
+    []
   );
 
   if (isPending) return <Loader />;

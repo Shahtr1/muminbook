@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
-import { useCreateSuhuf } from "@/hooks/suhuf/useCreateSuhuf.js";
+import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCreateSuhuf } from '@/hooks/suhuf/useCreateSuhuf.js';
 
 export const useOpenSuhuf = (onSuccess) => {
   const navigate = useNavigate();
@@ -8,11 +8,11 @@ export const useOpenSuhuf = (onSuccess) => {
   const { mutate: createSuhuf } = useCreateSuhuf();
 
   return () => {
-    const windows = queryClient.getQueryData(["windows"]) || [];
-    const baseTitle = "Untitled Suhuf";
+    const windows = queryClient.getQueryData(['windows']) || [];
+    const baseTitle = 'Untitled Suhuf';
 
     const openTitles = windows
-      .filter((win) => win.type === "Suhuf" && win.typeId?.title)
+      .filter((win) => win.type === 'Suhuf' && win.typeId?.title)
       .map((win) => win.typeId.title);
 
     let newTitle = baseTitle;
@@ -27,9 +27,9 @@ export const useOpenSuhuf = (onSuccess) => {
       {
         onSuccess: ({ suhufId }) => {
           navigate(`/suhuf/${suhufId}`);
-          if (typeof onSuccess === "function") onSuccess(suhufId);
+          if (typeof onSuccess === 'function') onSuccess(suhufId);
         },
-      },
+      }
     );
   };
 };

@@ -1,18 +1,18 @@
-import { SVG } from "@/components/svgs/SVG.jsx";
+import { SVG } from '@/components/svgs/SVG.jsx';
 import {
   Box,
   Flex,
   useBreakpointValue,
   useColorModeValue,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import {
   absoluteBoxStyles,
   absoluteSvgStyles,
-} from "@/components/svgs/MaleFemaleCommonStyles.js";
+} from '@/components/svgs/MaleFemaleCommonStyles.js';
 
-export const MaleSVG = ({ color, dimensions = "25px" }) => {
+export const MaleSVG = ({ color, dimensions = '25px' }) => {
   const isMdScreen = useBreakpointValue({ base: true, md: false });
-  const bgColor = useColorModeValue("white", "gray.800");
+  const bgColor = useColorModeValue('white', 'gray.800');
   return (
     <Flex position="relative" height="100%" width="100%" overflow="hidden">
       <Box
@@ -23,7 +23,7 @@ export const MaleSVG = ({ color, dimensions = "25px" }) => {
       />
       <SVG
         dimensions={dimensions}
-        activeColor={color ? color : "white"}
+        activeColor={color ? color : 'white'}
         viewBox="0 0 508.609 508.609"
         absolute={true}
         absoluteStyles={absoluteSvgStyles(isMdScreen)}

@@ -1,19 +1,19 @@
-import { PrimaryId } from "../../../constants/primaryId";
-import ResourceModel from "../../../models/resource.model";
-import appAssert from "../../../utils/appAssert";
-import { NOT_FOUND } from "../../../constants/http";
-import ResourceType from "../../../constants/enums/resourceType";
+import { PrimaryId } from '../../../constants/primaryId';
+import ResourceModel from '../../../models/resource.model';
+import appAssert from '../../../utils/appAssert';
+import { NOT_FOUND } from '../../../constants/http';
+import ResourceType from '../../../constants/enums/resourceType';
 import {
   assertNotRootFolder,
   getAllDescendants,
-} from "../common-resource.service";
+} from '../common-resource.service';
 
 export const moveToTrashResource = async (
   resourceId: PrimaryId,
-  userId: PrimaryId,
+  userId: PrimaryId
 ) => {
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
-  appAssert(resource, NOT_FOUND, "Resource not found");
+  appAssert(resource, NOT_FOUND, 'Resource not found');
 
   assertNotRootFolder(resource);
 

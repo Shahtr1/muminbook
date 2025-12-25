@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import ResourceType from "../constants/enums/resourceType";
-import { PrimaryId } from "../constants/primaryId";
+import mongoose from 'mongoose';
+import ResourceType from '../constants/enums/resourceType';
+import { PrimaryId } from '../constants/primaryId';
 
 export interface ResourceDocument extends mongoose.Document {
   userId: PrimaryId;
@@ -22,7 +22,7 @@ const resourceSchema = new mongoose.Schema<ResourceDocument>(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       index: true,
       required: true,
     },
@@ -35,7 +35,7 @@ const resourceSchema = new mongoose.Schema<ResourceDocument>(
     path: { type: String, required: true, index: true },
     parent: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Resource",
+      ref: 'Resource',
       default: null,
       index: true,
     },
@@ -46,12 +46,12 @@ const resourceSchema = new mongoose.Schema<ResourceDocument>(
     deleted: { type: Boolean, default: false },
     deletedAt: { type: Date },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const ResourceModel = mongoose.model<ResourceDocument>(
-  "Resource",
-  resourceSchema,
+  'Resource',
+  resourceSchema
 );
 
 export default ResourceModel;
