@@ -11,7 +11,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-adminpassword}
       MONGO_INITDB_DATABASE: ${MONGO_DB_NAME:-muminbook}
     ports:
-      - "${MONGO_PORT:-27017}:27017"
+      - '${MONGO_PORT:-27017}:27017'
     volumes:
       - mongodb_data:/data/db
       - mongodb_config:/data/configdb
@@ -46,8 +46,9 @@ services:
       ADMIN_GENDER: ${ADMIN_GENDER:-male}
       ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@muminbook.com}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-ChangeMe123!}
+      RENDER_BACKEND_URL: ${RENDER_BACKEND_URL}
     ports:
-      - "${BACKEND_PORT:-4004}:4004"
+      - '${BACKEND_PORT:-4004}:4004'
     depends_on:
       mongodb:
         condition: service_healthy
@@ -57,7 +58,13 @@ services:
       # Mount logs directory (optional)
       - backend_logs:/app/logs
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:4004/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://127.0.0.1:4004/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})",
+        ]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -73,14 +80,22 @@ services:
     container_name: muminbook-frontend
     restart: unless-stopped
     ports:
-      - "${FRONTEND_PORT:-8080}:8080"
+      - '${FRONTEND_PORT:-8080}:8080'
     depends_on:
       backend:
         condition: service_healthy
     networks:
       - muminbook-network
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      test:
+        [
+          'CMD',
+          'wget',
+          '--no-verbose',
+          '--tries=1',
+          '--spider',
+          'http://localhost:8080/health',
+        ]
       interval: 30s
       timeout: 3s
       retries: 3
