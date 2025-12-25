@@ -13,7 +13,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: '4004'
+        value: 4004
       - key: RENDER_BACKEND_URL
         sync: false
       - key: MONGO_URI
@@ -40,15 +40,3 @@ services:
         sync: false
       - key: ADMIN_PASSWORD
         sync: false
-
-# Scheduled jobs (Render cron jobs) - pings the backend every 14 minutes to keep it awake
-# Replace `https://your-backend-render-url.onrender.com` with your actual backend public URL
-cronJobs:
-  - name: ping-backend
-    schedule: '*/14 * * * *'
-    command: 'curl -fsS https://muminbook-backend.onrender.com/ || true'
-    region: singapore
-    plan: free
-    envVars:
-      - key: NODE_ENV
-        value: production
