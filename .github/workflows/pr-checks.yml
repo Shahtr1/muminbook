@@ -135,17 +135,6 @@ jobs:
           npx tsc --noEmit
         continue-on-error: true
 
-  label-pr:
-    name: Auto Label PR
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Label PR based on files
-        uses: actions/labeler@v5
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          configuration-path: .github/labeler.yml
-
   all-pr-checks-passed:
     name: All PR Checks Passed
     runs-on: ubuntu-latest

@@ -1,47 +1,50 @@
-# Auto-labeling configuration for PRs based on changed files
-# Use simple mapping: label-name -> array of glob patterns (strings).
-# Quoting globs and using consistent patterns helps avoid YAML parsing issues.
+# Auto-labeler configuration — DISABLED
+# The repository previously used this file with `actions/labeler@v5`.
+# The PR checks workflow no longer runs the auto-labeler job.
+# Keeping the file commented out as a reversible record. If you prefer to
+# permanently delete this file, remove it with `git rm .github/labeler.yml`.
 
-backend:
-  - 'packages/backend/**'
-
-frontend:
-  - 'packages/frontend/**'
-
-tests:
-  - '**/__tests__/**'
-  - '**/*.test.*'
-  - '**/*.spec.*'
-
-docs:
-  - 'docs/**'
-  - '**/*.md'
-
-ci/cd:
-  - '.github/**'
-  - '**/Dockerfile'
-  - 'docker-compose.yml'
-  - 'render.yaml'
-
-dependencies:
-  - 'package.json'
-  - 'package-lock.json'
-  - '**/package.json'
-
-config:
-  - '**/*.config.*'
-  - '**/*.json'
-  - '.env*'
-
-auth:
-  - '**/auth*'
-  - '**/authenticate*'
-
-database:
-  - '**/models/**'
-  - '**/migrations/**'
-
-api:
-  - '**/routes/**'
-  - '**/controllers/**'
-  - '**/services/**'
+# Original labeler mappings (disabled):
+# backend:
+#   - 'packages/backend/**'
+#
+# frontend:
+#   - 'packages/frontend/**'
+#
+# tests:
+#   - '**/__tests__/**'
+#   - '**/*.test.*'
+#   - '**/*.spec.*'
+#
+# docs:
+#   - 'docs/**'
+#   - '**/*.md'
+#
+# ci/cd:
+#   - '.github/**'
+#   - '**/Dockerfile'
+#   - 'docker-compose.yml'
+#   - 'render.yaml'
+#
+# dependencies:
+#   - 'package.json'
+#   - 'package-lock.json'
+#   - '**/package.json'
+#
+# config:
+#   - '**/*.config.*'
+#   - '**/*.json'
+#   - '.env*'
+#
+# auth:
+#   - '**/auth*'
+#   - '**/authenticate*'
+#
+# database:
+#   - '**/models/**'
+#   - '**/migrations/**'
+#
+# api:
+#   - '**/routes/**'
+#   - '**/controllers/**'
+#   - '**/services/**'
