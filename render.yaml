@@ -14,6 +14,8 @@ services:
         value: production
       - key: PORT
         value: 4004
+      - key: RENDER_BACKEND_URL
+        sync: false
       - key: MONGO_URI
         sync: false
       - key: JWT_SECRET
@@ -31,7 +33,7 @@ services:
       - key: ADMIN_LASTNAME
         value: User
       - key: ADMIN_DATE_OF_BIRTH
-        value: "1990-01-01"
+        value: '1990-01-01'
       - key: ADMIN_GENDER
         value: male
       - key: ADMIN_EMAIL

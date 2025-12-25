@@ -19,22 +19,22 @@ Complete guide for deploying Muminbook to production using free tier services.
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                   PRODUCTION STACK                   │
+│                   PRODUCTION STACK                  │
 ├─────────────────────────────────────────────────────┤
-│                                                      │
-│  ┌──────────────┐    ┌──────────────┐              │
-│  │   Vercel     │───▶│    Render    │              │
-│  │  (Frontend)  │    │  (Backend)   │              │
-│  │              │    │              │              │
-│  │  React App   │    │  Express API │              │
-│  └──────────────┘    └──────┬───────┘              │
-│                              │                       │
-│                              ▼                       │
-│                      ┌──────────────┐              │
-│                      │ MongoDB Atlas│              │
-│                      │  (Database)  │              │
-│                      └──────────────┘              │
-│                                                      │
+│                                                     │
+│  ┌──────────────┐    ┌──────────────┐               │
+│  │   Vercel     │───▶│    Render    │               │
+│  │  (Frontend)  │    │  (Backend)   │               │
+│  │              │    │              │               │
+│  │  React App   │    │  Express API │               │
+│  └──────────────┘    └──────┬───────┘               │
+│                              │                      │
+│                              ▼                      │
+│                      ┌──────────────┐               │
+│                      │ MongoDB Atlas│               │
+│                      │  (Database)  │               │
+│                      └──────────────┘               │
+│                                                     │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -72,7 +72,9 @@ Before deploying, ensure you have:
 1. Go to **"Network Access"** (left sidebar)
 2. Click **"Add IP Address"**
 3. Click **"Allow Access from Anywhere"** (0.0.0.0/0)
-   - ⚠️ This is safe because we use username/password authentication
+
+- ⚠️ This is safe because we use username/password authentication
+
 4. Click **"Confirm"**
 
 ### 1.2 Create Database User (If Not Exists)
@@ -98,9 +100,10 @@ mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/?retryWrites=true
 ```
 
 6. **Replace placeholders:**
-   - `<username>` → Your database username
-   - `<password>` → Your database password
-   - Add database name after `.net/`: `muminbook`
+
+- `<username>` → Your database username
+- `<password>` → Your database password
+- Add database name after `.net/`: `muminbook`
 
 **Final connection string example:**
 
@@ -110,7 +113,8 @@ mongodb+srv://muminbook_prod:YourPassword123@cluster0.abc123.mongodb.net/muminbo
 
 **✅ Save this! You'll need it for Render.**
 
-**💡 Tip:** You can use the same database (muminbook) on Cluster0 for both development and production, or create separate databases like `muminbook_dev` and `muminbook_prod`.
+**💡 Tip:** You can use the same database (muminbook) on Cluster0 for both development and production, or create separate
+databases like `muminbook_dev` and `muminbook_prod`.
 
 ---
 
@@ -155,22 +159,23 @@ Click **"Advanced"** → **"Add Environment Variable"**
 
 Add these one by one:
 
-| Key                   | Value                          | Notes               |
-| --------------------- | ------------------------------ | ------------------- |
-| `NODE_ENV`            | `production`                   | Already set         |
-| `PORT`                | `4004`                         | Render uses this    |
-| `MONGO_URI`           | `mongodb+srv://...`            | From Step 1.5       |
-| `JWT_SECRET`          | Generate random                | See below           |
-| `JWT_REFRESH_SECRET`  | Generate random                | See below           |
-| `RESEND_API_KEY`      | Your Resend key                | From Resend.com     |
-| `EMAIL_SENDER`        | `noreply@yourdomain.com`       | Your email          |
-| `APP_ORIGIN`          | `https://muminbook.vercel.app` | Update after Vercel |
-| `ADMIN_FIRSTNAME`     | `Admin`                        |                     |
-| `ADMIN_LASTNAME`      | `User`                         |                     |
-| `ADMIN_DATE_OF_BIRTH` | `1990-01-01`                   |                     |
-| `ADMIN_GENDER`        | `male`                         |                     |
-| `ADMIN_EMAIL`         | `admin@example.com`            | Your admin email    |
-| `ADMIN_PASSWORD`      | Strong password                | Change this!        |
+| Key                   | Value                          | Notes                    |
+| --------------------- | ------------------------------ | ------------------------ |
+| `NODE_ENV`            | `production`                   | Already set              |
+| `PORT`                | `4004`                         | Render uses this         |
+| `RENDER_BACKEND_URL`  | Your Render URL                | For keep-alive (if used) |
+| `MONGO_URI`           | `mongodb+srv://...`            | From Step 1.5            |
+| `JWT_SECRET`          | Generate random                | See below                |
+| `JWT_REFRESH_SECRET`  | Generate random                | See below                |
+| `RESEND_API_KEY`      | Your Resend key                | From Resend.com          |
+| `EMAIL_SENDER`        | `noreply@yourdomain.com`       | Your email               |
+| `APP_ORIGIN`          | `https://muminbook.vercel.app` | Update after Vercel      |
+| `ADMIN_FIRSTNAME`     | `Admin`                        |                          |
+| `ADMIN_LASTNAME`      | `User`                         |                          |
+| `ADMIN_DATE_OF_BIRTH` | `1990-01-01`                   |                          |
+| `ADMIN_GENDER`        | `male`                         |                          |
+| `ADMIN_EMAIL`         | `admin@example.com`            | Your admin email         |
+| `ADMIN_PASSWORD`      | Strong password                | Change this!             |
 
 **Generate secrets (run locally):**
 
@@ -324,13 +329,15 @@ VITE_API_URL=https://your-backend.onrender.com
    ```
 
 2. **Open Frontend:**
-   - Visit your Vercel URL
-   - Try logging in with admin credentials
-   - Test a few features
+
+- Visit your Vercel URL
+- Try logging in with admin credentials
+- Test a few features
 
 3. **Check Database:**
-   - In MongoDB Atlas, go to **"Collections"**
-   - You should see data being created
+
+- In MongoDB Atlas, go to **"Collections"**
+- You should see data being created
 
 ### Enable Auto-Deploy
 
@@ -382,15 +389,38 @@ Dashboard → muminbook-backend → Logs
 
 **Issue:** First request after 15min takes 30-60s
 
-**Solutions:**
+**✅ Built-in Solution:** The backend includes an optional keep-alive mechanism that prevents the server from sleeping
+when enabled by Render configuration.
+
+**How it works:**
+
+- A cron job runs every 14 minutes (just before the 15-minute timeout)
+- It pings the backend health endpoint automatically
+- Only runs in production mode (won't interfere with local development)
+- Logs each ping to help you monitor activity
+- **Enabled only when `RENDER_BACKEND_URL` is provided**
+
+**Setup:**
+
+1. In your Render dashboard, add the `RENDER_BACKEND_URL` environment variable:
+
+- Key: `RENDER_BACKEND_URL`
+- Value: Your Render backend URL (e.g., `https://muminbook-backend.onrender.com`)
+
+2. That's it! The keep-alive job will start automatically when deployed (only in production and when
+   `RENDER_BACKEND_URL` is set)
+
+**Alternative Solutions:**
 
 1. **Upgrade to paid plan** ($7/month - no cold starts)
-2. **Use cron job to ping every 14 minutes:**
+2. **Use external monitoring service:**
    ```bash
-   # Use cron-job.org or UptimeRobot
+   # Use cron-job.org or UptimeRobot to ping every 14 minutes
    curl https://your-backend.onrender.com/
    ```
 3. **Accept trade-off** (most free apps do this)
+
+**Note:** The built-in keep-alive uses minimal resources and keeps your backend responsive for users.
 
 ### Database Connection Timeout
 
