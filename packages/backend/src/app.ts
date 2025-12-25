@@ -11,7 +11,6 @@ import authenticate from './middleware/authenticate';
 import familyTreeRoutes from './routes/family-tree.route';
 import resourceRoutes from './routes/resource.route';
 import './jobs/trashCleanupJob';
-import './jobs/keepAliveJob';
 import suhufRoutes from './routes/suhuf.route';
 import windowRoute from './routes/window.route';
 import readingRoutes from './routes/reading.route';
