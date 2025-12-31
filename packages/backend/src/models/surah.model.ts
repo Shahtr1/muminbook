@@ -7,7 +7,7 @@ export interface SurahDocument extends Document {
   transliteration: string;
   meaning: string;
   revelationPlace: RevelationPlace;
-  totalAyats: number;
+  totalAyat: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -35,7 +35,7 @@ const surahSchema = new Schema<SurahDocument>(
       enum: Object.values(RevelationPlace),
       required: true,
     },
-    totalAyats: {
+    totalAyat: {
       type: Number,
       required: true,
     },
