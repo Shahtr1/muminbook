@@ -30,7 +30,7 @@ app.use(
 
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.status(OK).json({ status: 'healthy' });
 });
 
