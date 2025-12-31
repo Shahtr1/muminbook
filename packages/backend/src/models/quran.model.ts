@@ -5,7 +5,7 @@ export interface QuranDocument extends Document {
   uuid: number;
   sno: number;
   surahId: PrimaryId;
-  ayat: string;
+  ayah: string;
   audioUrl: string;
   juzId: PrimaryId;
   surahStart: boolean;
@@ -35,7 +35,7 @@ const quranDocument = new Schema<QuranDocument>(
       ref: 'Surah',
       required: true,
     },
-    ayat: {
+    ayah: {
       type: String,
       required: true,
     },

@@ -37,10 +37,10 @@ const initializeQuranVerses = async (juzMap: any, surahMap: any) => {
   const existing = await QuranModel.countDocuments();
   if (existing === 0) {
     const rawQuran = loadQuran();
-    const mappedQuran = rawQuran.map((ayat) => ({
-      ...ayat,
-      surahId: surahMap.get(ayat.surahId),
-      juzId: juzMap.get(ayat.juzId),
+    const mappedQuran = rawQuran.map((ayah) => ({
+      ...ayah,
+      surahId: surahMap.get(ayah.surahId),
+      juzId: juzMap.get(ayah.juzId),
     }));
     await QuranModel.insertMany(mappedQuran);
     log.success('Quran initialized successfully.');
