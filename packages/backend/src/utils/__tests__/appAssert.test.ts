@@ -13,7 +13,7 @@ import {
   NOT_FOUND,
   UNAUTHORIZED,
 } from '../../constants/http';
-import AppErrorCode from '../../constants/enums_types/appErrorCode';
+import AppErrorCode from '../../constants/types/appErrorCode';
 
 describe('appAssert', () => {
   describe('when condition is true', () => {

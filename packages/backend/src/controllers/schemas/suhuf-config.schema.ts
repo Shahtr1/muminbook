@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import FileType from '../../constants/enums_types/fileType';
-import Direction from '../../constants/enums_types/direction';
+import FileType from '../../constants/types/fileType';
+import Direction from '../../constants/types/direction';
 
 export const readingLayoutSchema = z.object({
   id: z.string().min(1),

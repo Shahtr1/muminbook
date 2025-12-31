@@ -1,5 +1,5 @@
-import RevelationPlace from '../constants/enums_types/quran/revelationPlace';
-import { Surah } from '../constants/enums_types/quran/surah.type';
+import RevelationPlace from '../constants/types/quran/revelationPlace';
+import { Surah } from '../constants/types/quran/surah.type';
 
 export const surahsApi: Surah[] = [
   {

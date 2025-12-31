@@ -1,7 +1,7 @@
 import catchErrors from '../utils/catchErrors';
 import { CREATED, OK } from '../constants/http';
 import { assertUserAndSession } from '../utils/assertUserRoleSession';
-import ResourceType from '../constants/enums_types/resourceType';
+import ResourceType from '../constants/types/resourceType';
 import {
   copyResource,
   createResource,

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import WindowType from '../constants/enums_types/windowType';
+import WindowType from '../constants/types/windowType';
 import { PrimaryId } from '../constants/primaryId';
 import './suhuf.model';
 

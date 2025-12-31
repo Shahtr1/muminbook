@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import ResourceType from '../constants/enums_types/resourceType';
+import ResourceType from '../constants/types/resourceType';
 import { PrimaryId } from '../constants/primaryId';
 
 export interface ResourceDocument extends mongoose.Document {

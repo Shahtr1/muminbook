@@ -29,12 +29,12 @@ import {
 import { APP_ORIGIN } from '../constants/env';
 import { hashValue } from '../utils/bcrypt';
 import RoleModel, { RoleDocument } from '../models/role.model';
-import RoleType from '../constants/enums_types/roleType';
+import RoleType from '../constants/types/roleType';
 import UserRoleModel from '../models/user-role.model';
 import VerificationCodeModel from '../models/verification-code.model';
-import VerificationCodeType from '../constants/enums_types/verificationCodeType';
+import VerificationCodeType from '../constants/types/verificationCodeType';
 import ResourceModel from '../models/resource.model';
-import ResourceType from '../constants/enums_types/resourceType';
+import ResourceType from '../constants/types/resourceType';
 
 export type CreateAccountParams = {
   firstname: string;

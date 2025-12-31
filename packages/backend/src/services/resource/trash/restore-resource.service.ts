@@ -1,5 +1,5 @@
 import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/enums_types/resourceType';
+import ResourceType from '../../../constants/types/resourceType';
 import { PrimaryId } from '../../../constants/primaryId';
 import appAssert from '../../../utils/appAssert';
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../../constants/http';

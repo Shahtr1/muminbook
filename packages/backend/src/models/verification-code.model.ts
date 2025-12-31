@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import VerificationCodeType from '../constants/enums_types/verificationCodeType';
+import VerificationCodeType from '../constants/types/verificationCodeType';
 import { PrimaryId } from '../constants/primaryId';
 
 export interface VerificationCodeDocument extends mongoose.Document {

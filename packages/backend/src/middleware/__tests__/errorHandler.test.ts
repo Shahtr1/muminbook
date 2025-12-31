@@ -15,7 +15,7 @@ import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { errorHandler } from '../errorHandler';
 import AppError from '../../utils/AppError';
-import AppErrorCode from '../../constants/enums_types/appErrorCode';
+import AppErrorCode from '../../constants/types/appErrorCode';
 import {
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,

@@ -13,7 +13,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
 import { moveResource } from '../move-resource.service';
 import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/enums_types/resourceType';
+import ResourceType from '../../../constants/types/resourceType';
 import { PrimaryId } from '../../../constants/primaryId';
 import AppError from '../../../utils/AppError';
 import { NOT_FOUND, BAD_REQUEST, CONFLICT } from '../../../constants/http';
