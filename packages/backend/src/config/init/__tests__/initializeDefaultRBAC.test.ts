@@ -163,13 +163,13 @@ describe('initializeDefaultRBAC', () => {
         pinned: true,
       });
 
-      // Verify success messages
+      // Verify success messages (match current log wording)
       expect(consoleLogSpy).toHaveBeenCalledWith(
         '🔐 Initializing default RBAC...'
       );
-      expect(consoleLogSpy).toHaveBeenCalledWith('✅ Created User role');
-      expect(consoleLogSpy).toHaveBeenCalledWith('✅ Created Admin role');
-      expect(consoleLogSpy).toHaveBeenCalledWith('✅ Created admin user');
+      expect(consoleLogSpy).toHaveBeenCalledWith('✅ user role created');
+      expect(consoleLogSpy).toHaveBeenCalledWith('✅ admin role created');
+      expect(consoleLogSpy).toHaveBeenCalledWith('✅ Admin user created');
       expect(consoleLogSpy).toHaveBeenCalledWith(
         '✅ Assigned Admin role to admin user'
       );
@@ -177,10 +177,10 @@ describe('initializeDefaultRBAC', () => {
         '✅ Also assigned User role to admin user'
       );
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        '✅ Created root resource folder for admin'
+        '✅ Root resource folder for admin created'
       );
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        '🎉 Default RBAC initialized successfully.'
+        '✅ Default RBAC initialized successfully.'
       );
     });
   });
@@ -220,20 +220,18 @@ describe('initializeDefaultRBAC', () => {
       expect(ResourceModel.create).not.toHaveBeenCalled();
 
       // Verify appropriate messages
+      expect(consoleLogSpy).toHaveBeenCalledWith('ℹ️ user role already exists');
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        'ℹ️  User role already exists'
+        'ℹ️ admin role already exists'
       );
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        'ℹ️  Admin role already exists'
+        'ℹ️ Admin user already exists'
       );
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        'ℹ️  Admin user already exists'
+        'ℹ️ Resource folder already exists'
       );
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        'ℹ️  Resource folder already exists'
-      );
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        '🎉 Default RBAC initialized successfully.'
+        '✅ Default RBAC initialized successfully.'
       );
     });
 
@@ -306,7 +304,7 @@ describe('initializeDefaultRBAC', () => {
       // Verify only folder was created
       expect(ResourceModel.create).toHaveBeenCalledTimes(1);
       expect(consoleLogSpy).toHaveBeenCalledWith(
-        '✅ Created root resource folder for admin'
+        '✅ Root resource folder for admin created'
       );
     });
   });
