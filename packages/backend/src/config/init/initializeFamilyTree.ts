@@ -1,12 +1,7 @@
 import FamilyTreeModel from '../../models/family-tree.model';
 import { familyTreeApi, FamilyTreeEntry } from '../../data/familyTreeApi';
 import { PrimaryId } from '../../constants/primaryId';
-
-const log = {
-  info: (msg: string) => console.log(`ℹ️ ${msg}`),
-  debug: (msg: string) => console.log(msg),
-  error: (msg: string, err?: unknown) => console.error(`❌ ${msg}`, err),
-};
+import { log } from '../../utils/log';
 
 /**
  * Return document count of FamilyTree collection.
