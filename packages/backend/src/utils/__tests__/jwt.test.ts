@@ -16,7 +16,7 @@ import {
   AccessTokenPayload,
   RefreshTokenPayload,
 } from '../jwt';
-import RoleType from '../../constants/enums/roleType';
+import RoleType from '../../constants/enums_types/roleType';
 import { Types } from 'mongoose';
 
 // Test data constants
