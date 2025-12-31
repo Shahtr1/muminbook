@@ -1,5 +1,5 @@
 import RoleModel from '../../models/role.model';
-import RoleType from '../../constants/enums/roleType';
+import RoleType from '../../constants/enums_types/roleType';
 import UserModel from '../../models/user.model';
 import {
   ADMIN_DATE_OF_BIRTH,
@@ -11,7 +11,7 @@ import {
 } from '../../constants/env';
 import UserRoleModel from '../../models/user-role.model';
 import ResourceModel from '../../models/resource.model';
-import ResourceType from '../../constants/enums/resourceType';
+import ResourceType from '../../constants/enums_types/resourceType';
 import { log } from '../../utils/log';
 
 const ensureRole = async (type: RoleType, description: string) => {

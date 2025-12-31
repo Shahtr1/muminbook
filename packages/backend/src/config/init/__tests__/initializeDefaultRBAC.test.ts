@@ -57,8 +57,8 @@ import RoleModel from '../../../models/role.model';
 import UserModel from '../../../models/user.model';
 import UserRoleModel from '../../../models/user-role.model';
 import ResourceModel from '../../../models/resource.model';
-import RoleType from '../../../constants/enums/roleType';
-import ResourceType from '../../../constants/enums/resourceType';
+import RoleType from '../../../constants/enums_types/roleType';
+import ResourceType from '../../../constants/enums_types/resourceType';
 
 // Import Types separately to avoid hoisting issues
 import { Types } from 'mongoose';
