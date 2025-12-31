@@ -20,8 +20,8 @@ import SuhufModel from '../../models/suhuf.model';
 import * as assertUserRoleSession from '../../utils/assertUserRoleSession';
 import * as getUserIdUtil from '../../utils/getUserId';
 import { CREATED, OK } from '../../constants/http';
-import FileType from '../../constants/enums/fileType';
-import Direction from '../../constants/enums/direction';
+import FileType from '../../constants/enums_types/fileType';
+import Direction from '../../constants/enums_types/direction';
 
 vi.mock('../../services/suhuf/create-suhuf.service');
 vi.mock('../../services/suhuf/rename-suhuf.service');

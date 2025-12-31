@@ -13,7 +13,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
 import { moveToTrashResource } from '../moveToTrash-resource.service';
 import ResourceModel from '../../../../models/resource.model';
-import ResourceType from '../../../../constants/enums/resourceType';
+import ResourceType from '../../../../constants/enums_types/resourceType';
 import { PrimaryId } from '../../../../constants/primaryId';
 import AppError from '../../../../utils/AppError';
 import { NOT_FOUND, BAD_REQUEST } from '../../../../constants/http';
@@ -627,7 +627,7 @@ describe('moveToTrashResource', () => {
       expect(ResourceModel.deleteMany).toHaveBeenCalledTimes(2);
     });
 
-    it('should handle getAllDescendants returning different resource types', async () => {
+    it('should handle getAllDescendants returning different resource quran-division', async () => {
       const folder = createMockResource({
         type: ResourceType.Folder,
         path: '/mixed',

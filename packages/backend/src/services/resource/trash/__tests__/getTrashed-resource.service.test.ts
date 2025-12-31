@@ -12,7 +12,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
 import { getTrashedResources } from '../getTrashed-resource.service';
 import ResourceModel from '../../../../models/resource.model';
-import ResourceType from '../../../../constants/enums/resourceType';
+import ResourceType from '../../../../constants/enums_types/resourceType';
 import { PrimaryId } from '../../../../constants/primaryId';
 
 vi.mock('../../../../models/resource.model', () => {

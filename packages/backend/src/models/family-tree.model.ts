@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import LineageType from '../constants/enums/lineageType';
+import LineageType from '../constants/enums_types/lineageType';
 import { PrimaryId } from '../constants/primaryId';
 
 export interface FamilyTreeDocument extends Document {

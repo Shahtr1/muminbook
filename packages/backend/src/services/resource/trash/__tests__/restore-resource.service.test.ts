@@ -16,7 +16,7 @@ import {
   restoreAllResources,
 } from '../restore-resource.service';
 import ResourceModel from '../../../../models/resource.model';
-import ResourceType from '../../../../constants/enums/resourceType';
+import ResourceType from '../../../../constants/enums_types/resourceType';
 import { PrimaryId } from '../../../../constants/primaryId';
 import AppError from '../../../../utils/AppError';
 import { NOT_FOUND, BAD_REQUEST, CONFLICT } from '../../../../constants/http';

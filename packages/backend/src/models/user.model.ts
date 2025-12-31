@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { compareValue, hashValue } from '../utils/bcrypt';
-import GenderType from '../constants/enums/genderType';
+import GenderType from '../constants/enums_types/genderType';
 
 export interface UserDocument extends mongoose.Document {
   firstname: string;

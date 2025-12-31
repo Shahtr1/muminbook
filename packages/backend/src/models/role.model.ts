@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import RoleType from '../constants/enums/roleType';
+import RoleType from '../constants/enums_types/roleType';
 
 export interface RoleDocument extends mongoose.Document {
   type: RoleType;

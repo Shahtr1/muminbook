@@ -15,7 +15,7 @@ import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { errorHandler } from '../errorHandler';
 import AppError from '../../utils/AppError';
-import AppErrorCode from '../../constants/enums/appErrorCode';
+import AppErrorCode from '../../constants/enums_types/appErrorCode';
 import {
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,
@@ -697,7 +697,7 @@ describe('Error Handler Middleware', () => {
       expect(consoleErrorSpy).toHaveBeenCalledWith('PATH /test', error);
     });
 
-    it('should log with correct path for all error types', () => {
+    it('should log with correct path for all error quran-division', () => {
       const testCases = [
         { error: new Error('Generic'), path: '/generic' },
         { error: new AppError(NOT_FOUND, 'Not found'), path: '/notfound' },

@@ -1,6 +1,6 @@
 import { PrimaryId } from '../../../constants/primaryId';
 import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/enums/resourceType';
+import ResourceType from '../../../constants/enums_types/resourceType';
 
 export const getTrashedResources = async (userId: PrimaryId) => {
   const resources = await ResourceModel.find({

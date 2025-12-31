@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import RevelationPlace from '../constants/enums/revelationPlace';
+import RevelationPlace from '../constants/enums_types/quran/revelationPlace';
 
 export interface SurahDocument extends Document {
   uuid: number;

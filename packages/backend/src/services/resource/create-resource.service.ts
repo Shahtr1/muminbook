@@ -1,4 +1,4 @@
-import ResourceType from '../../constants/enums/resourceType';
+import ResourceType from '../../constants/enums_types/resourceType';
 import { PrimaryId } from '../../constants/primaryId';
 import ResourceModel from '../../models/resource.model';
 import appAssert from '../../utils/appAssert';

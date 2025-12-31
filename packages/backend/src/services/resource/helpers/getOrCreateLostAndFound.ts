@@ -1,6 +1,6 @@
 import ResourceModel from '../../../models/resource.model';
 import { PrimaryId } from '../../../constants/primaryId';
-import ResourceType from '../../../constants/enums/resourceType';
+import ResourceType from '../../../constants/enums_types/resourceType';
 import appAssert from '../../../utils/appAssert';
 import { NOT_FOUND } from '../../../constants/http';
 

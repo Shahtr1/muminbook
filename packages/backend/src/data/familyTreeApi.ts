@@ -1,4 +1,4 @@
-import LineageType from '../constants/enums/lineageType';
+import LineageType from '../constants/enums_types/lineageType';
 
 export interface FamilyTreeEntry {
   id: string;

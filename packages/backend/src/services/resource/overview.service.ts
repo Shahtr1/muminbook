@@ -1,6 +1,6 @@
 import { PrimaryId } from '../../constants/primaryId';
 import ResourceModel from '../../models/resource.model';
-import ResourceType from '../../constants/enums/resourceType';
+import ResourceType from '../../constants/enums_types/resourceType';
 import appAssert from '../../utils/appAssert';
 import { BAD_REQUEST, NOT_FOUND } from '../../constants/http';
 import { fiveMinutes } from '../../utils/date';
