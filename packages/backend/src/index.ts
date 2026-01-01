@@ -4,10 +4,12 @@ import connectToDatabase from './config/db';
 import { NODE_ENV, PORT } from './constants/env';
 
 import app from './app';
+import { log } from './utils/log';
+
 import initDefaultRBAC from './config/init/initDefaultRBAC';
 import initFamilyTree from './config/init/initFamilyTree';
 import initQuran from './config/init/initQuran';
-import { log } from './utils/log';
+import initReadings from './config/init/initReadings';
 
 const initServer = async () => {
   app.listen(Number(PORT), '0.0.0.0', async () => {
@@ -17,6 +19,7 @@ const initServer = async () => {
     );
     await initDefaultRBAC();
     await initFamilyTree();
+    await initReadings();
     await initQuran();
   });
 };

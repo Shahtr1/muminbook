@@ -1,11 +1,9 @@
 import SurahModel from '../../models/surah.model';
 import JuzModel from '../../models/juz.model';
 import QuranModel from '../../models/quran.model';
-import ReadingModel from '../../models/reading.model';
 import { surahsApi } from '../../data/surahsApi';
 import { loadQuran } from '../../utils/loadQuran';
 import { juzListApi } from '../../data/juzListApi';
-import { readingsApi } from '../../data/readingsApi';
 import { log } from '../../utils/log';
 
 const initJuz = async () => {
@@ -49,25 +47,13 @@ const initQuranVerses = async (juzMap: any, surahMap: any) => {
   }
 };
 
-const initReadings = async () => {
-  const existing = await ReadingModel.countDocuments();
-  if (existing === 0) {
-    await ReadingModel.insertMany(readingsApi);
-    log.success('Readings initialized successfully.');
-  } else {
-    log.info(`Readings already initialized (${existing} entries found).`);
-  }
-};
-
 const initQuran = async () => {
   try {
     const juzMap = await initJuz();
     const surahMap = await initSurahs();
     await initQuranVerses(juzMap, surahMap);
-    await initReadings();
-    log.success('Initialization complete.');
   } catch (error) {
-    log.error('Error initializing :', error);
+    log.error('Error initializing Quran :', error);
     process.exit(1);
   }
 };
