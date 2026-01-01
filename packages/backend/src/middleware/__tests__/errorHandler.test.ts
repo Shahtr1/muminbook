@@ -24,6 +24,7 @@ import {
   CONFLICT,
 } from '../../constants/http';
 import { REFRESH_PATH } from '../../utils/cookies';
+import { log } from '../../utils/log';
 
 describe('Error Handler Middleware', () => {
   let mockRequest: Partial<Request>;
@@ -38,8 +39,8 @@ describe('Error Handler Middleware', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    // Mock console.error to prevent test output pollution
-    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    // Mock log.error to prevent test output pollution
+    consoleErrorSpy = vi.spyOn(log, 'error').mockImplementation(() => {});
 
     jsonMock = vi.fn();
     sendMock = vi.fn();
