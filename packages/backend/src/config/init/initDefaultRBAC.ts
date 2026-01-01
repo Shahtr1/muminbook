@@ -78,7 +78,7 @@ const ensureAdminFolder = async (adminId: unknown) => {
   }
 };
 
-const initializeDefaultRBAC = async (): Promise<void> => {
+const initDefaultRBAC = async (): Promise<void> => {
   try {
     log.debug('🔐 Initializing default RBAC...');
 
@@ -114,4 +114,4 @@ const initializeDefaultRBAC = async (): Promise<void> => {
   }
 };
 
-export default initializeDefaultRBAC;
+export default initDefaultRBAC;

@@ -68,7 +68,7 @@ const linkParents = async (
 /**
  * Initialize family tree: insert members then link parents.
  */
-const initializeFamilyTree = async (): Promise<void> => {
+const initFamilyTree = async (): Promise<void> => {
   try {
     log.debug('🌳 Initializing Family Tree...');
 
@@ -94,4 +94,4 @@ const initializeFamilyTree = async (): Promise<void> => {
   }
 };
 
-export default initializeFamilyTree;
+export default initFamilyTree;

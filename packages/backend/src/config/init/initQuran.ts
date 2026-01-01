@@ -8,7 +8,7 @@ import { juzListApi } from '../../data/juzListApi';
 import { readingsApi } from '../../data/readingsApi';
 import { log } from '../../utils/log';
 
-const initializeJuz = async () => {
+const initJuz = async () => {
   const existing = await JuzModel.countDocuments();
   if (existing === 0) {
     const inserted = await JuzModel.insertMany(juzListApi);
@@ -20,7 +20,7 @@ const initializeJuz = async () => {
   return new Map(existingJuz.map((juz) => [juz.uuid, juz._id]));
 };
 
-const initializeSurahs = async () => {
+const initSurahs = async () => {
   const existing = await SurahModel.countDocuments();
   if (existing === 0) {
     const inserted = await SurahModel.insertMany(surahsApi);
@@ -32,7 +32,7 @@ const initializeSurahs = async () => {
   return new Map(existingSurahs.map((surah) => [surah.uuid, surah._id]));
 };
 
-const initializeQuranVerses = async (juzMap: any, surahMap: any) => {
+const initQuranVerses = async (juzMap: any, surahMap: any) => {
   // await QuranModel.deleteMany({});
   const existing = await QuranModel.countDocuments();
   if (existing === 0) {
@@ -49,7 +49,7 @@ const initializeQuranVerses = async (juzMap: any, surahMap: any) => {
   }
 };
 
-const initializeReadings = async () => {
+const initReadings = async () => {
   const existing = await ReadingModel.countDocuments();
   if (existing === 0) {
     await ReadingModel.insertMany(readingsApi);
@@ -59,12 +59,12 @@ const initializeReadings = async () => {
   }
 };
 
-const initializeQuran = async () => {
+const initQuran = async () => {
   try {
-    const juzMap = await initializeJuz();
-    const surahMap = await initializeSurahs();
-    await initializeQuranVerses(juzMap, surahMap);
-    await initializeReadings();
+    const juzMap = await initJuz();
+    const surahMap = await initSurahs();
+    await initQuranVerses(juzMap, surahMap);
+    await initReadings();
     log.success('Initialization complete.');
   } catch (error) {
     log.error('Error initializing :', error);
@@ -72,4 +72,4 @@ const initializeQuran = async () => {
   }
 };
 
-export default initializeQuran;
+export default initQuran;

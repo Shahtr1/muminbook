@@ -52,7 +52,7 @@ vi.mock('../../../constants/env', () => ({
 }));
 
 // Now import after mocks
-import initializeDefaultRBAC from '../initializeDefaultRBAC';
+import initDefaultRBAC from '../initDefaultRBAC';
 import RoleModel from '../../../models/role.model';
 import UserModel from '../../../models/user.model';
 import UserRoleModel from '../../../models/user-role.model';
@@ -63,7 +63,7 @@ import ResourceType from '../../../constants/types/resourceType';
 // Import Types separately to avoid hoisting issues
 import { Types } from 'mongoose';
 
-describe('initializeDefaultRBAC', () => {
+describe('initDefaultRBAC', () => {
   // Mock console methods to test logging
   let consoleLogSpy: any;
   let consoleErrorSpy: any;
@@ -120,7 +120,7 @@ describe('initializeDefaultRBAC', () => {
       vi.mocked(ResourceModel.findOne).mockResolvedValueOnce(null);
       vi.mocked(ResourceModel.create).mockResolvedValueOnce({} as any);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       // Verify role creation
       expect(RoleModel.create).toHaveBeenCalledWith({
@@ -211,7 +211,7 @@ describe('initializeDefaultRBAC', () => {
         name: 'my-files',
       } as any);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       // Verify nothing was created
       expect(RoleModel.create).not.toHaveBeenCalled();
@@ -264,7 +264,7 @@ describe('initializeDefaultRBAC', () => {
         name: 'my-files',
       } as any);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       // Verify role assignments were created
       expect(UserRoleModel.create).toHaveBeenCalledTimes(2);
@@ -299,7 +299,7 @@ describe('initializeDefaultRBAC', () => {
       vi.mocked(ResourceModel.findOne).mockResolvedValueOnce(null);
       vi.mocked(ResourceModel.create).mockResolvedValueOnce({} as any);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       // Verify only folder was created
       expect(ResourceModel.create).toHaveBeenCalledTimes(1);
@@ -314,7 +314,7 @@ describe('initializeDefaultRBAC', () => {
       const error = new Error('Database connection failed');
       vi.mocked(RoleModel.findOne).mockRejectedValueOnce(error);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         '❌ Error while initializing default RBAC configuration:',
@@ -334,7 +334,7 @@ describe('initializeDefaultRBAC', () => {
       const error = new Error('Failed to create admin user');
       vi.mocked(UserModel.findOne).mockRejectedValueOnce(error);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         '❌ Error while initializing default RBAC configuration:',
@@ -359,7 +359,7 @@ describe('initializeDefaultRBAC', () => {
       const error = new Error('Failed to assign role');
       vi.mocked(UserRoleModel.findOne).mockRejectedValueOnce(error);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         '❌ Error while initializing default RBAC configuration:',
@@ -388,7 +388,7 @@ describe('initializeDefaultRBAC', () => {
       const error = new Error('Failed to create resource folder');
       vi.mocked(ResourceModel.findOne).mockRejectedValueOnce(error);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         '❌ Error while initializing default RBAC configuration:',
@@ -409,7 +409,7 @@ describe('initializeDefaultRBAC', () => {
       const error = new Error('Stop test');
       vi.mocked(RoleModel.findOne).mockRejectedValueOnce(error);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       expect(RoleModel.create).toHaveBeenCalledWith({
         type: RoleType.User,
@@ -432,7 +432,7 @@ describe('initializeDefaultRBAC', () => {
       const error = new Error('Stop test');
       vi.mocked(UserModel.findOne).mockRejectedValueOnce(error);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       expect(RoleModel.create).toHaveBeenCalledWith({
         type: RoleType.Admin,
@@ -457,7 +457,7 @@ describe('initializeDefaultRBAC', () => {
       const error = new Error('Stop test');
       vi.mocked(UserRoleModel.findOne).mockRejectedValueOnce(error);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       expect(UserModel.create).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -487,7 +487,7 @@ describe('initializeDefaultRBAC', () => {
       vi.mocked(ResourceModel.findOne).mockResolvedValueOnce(null);
       vi.mocked(ResourceModel.create).mockResolvedValueOnce({} as any);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       expect(ResourceModel.create).toHaveBeenCalledWith({
         name: 'my-files',
@@ -526,7 +526,7 @@ describe('initializeDefaultRBAC', () => {
         name: 'my-files',
       } as any);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       expect(UserRoleModel.create).toHaveBeenNthCalledWith(1, {
         userId: mockAdminUserId,
@@ -562,7 +562,7 @@ describe('initializeDefaultRBAC', () => {
         name: 'my-files',
       } as any);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       // Should only create User role assignment
       expect(UserRoleModel.create).toHaveBeenCalledTimes(1);
@@ -595,7 +595,7 @@ describe('initializeDefaultRBAC', () => {
         name: 'my-files',
       } as any);
 
-      await initializeDefaultRBAC();
+      await initDefaultRBAC();
 
       // Should only create Admin role assignment
       expect(UserRoleModel.create).toHaveBeenCalledTimes(1);
