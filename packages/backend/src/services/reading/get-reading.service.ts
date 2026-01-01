@@ -9,7 +9,7 @@ import {
 
 import SurahModel from '../../models/surah.model';
 import JuzModel from '../../models/juz.model';
-import QuranDivisionType from '../../constants/enums/quranDivisionType';
+import QuranDivisionType from '../../constants/types/quran/quranDivisionType';
 
 async function getPaginatedCollection(query: any) {
   const {

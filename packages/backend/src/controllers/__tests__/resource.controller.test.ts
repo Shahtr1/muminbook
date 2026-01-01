@@ -33,7 +33,7 @@ import * as resourceIsTrashEmptyService from '../../services/resource/trash/isTr
 import * as assertUserRoleSession from '../../utils/assertUserRoleSession';
 import * as getUserIdUtil from '../../utils/getUserId';
 import { CREATED, OK } from '../../constants/http';
-import ResourceType from '../../constants/enums/resourceType';
+import ResourceType from '../../constants/types/resourceType';
 
 vi.mock('../../services/resource');
 vi.mock('../../services/resource/isMyFilesEmpty-resource.service');

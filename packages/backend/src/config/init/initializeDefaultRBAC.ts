@@ -1,5 +1,5 @@
 import RoleModel from '../../models/role.model';
-import RoleType from '../../constants/enums/roleType';
+import RoleType from '../../constants/types/roleType';
 import UserModel from '../../models/user.model';
 import {
   ADMIN_DATE_OF_BIRTH,
@@ -11,104 +11,105 @@ import {
 } from '../../constants/env';
 import UserRoleModel from '../../models/user-role.model';
 import ResourceModel from '../../models/resource.model';
-import ResourceType from '../../constants/enums/resourceType';
+import ResourceType from '../../constants/types/resourceType';
+import { log } from '../../utils/log';
 
-const initializeDefaultRBAC = async () => {
-  try {
-    console.log('🔐 Initializing default RBAC...');
+const ensureRole = async (type: RoleType, description: string) => {
+  let role = await RoleModel.findOne({ type });
+  if (!role) {
+    role = await RoleModel.create({ type, description });
+    log.success(`${type} role created`);
+  } else {
+    log.info(`${type} role already exists`);
+  }
+  return role;
+};
 
-    let userRole = await RoleModel.findOne({ type: RoleType.User });
-    if (!userRole) {
-      userRole = await RoleModel.create({
-        type: RoleType.User,
-        description: 'This is the role assigned to user',
-      });
-      console.log('✅ Created User role');
-    } else {
-      console.log('ℹ️  User role already exists');
-    }
-
-    let adminRole = await RoleModel.findOne({ type: RoleType.Admin });
-    if (!adminRole) {
-      adminRole = await RoleModel.create({
-        type: RoleType.Admin,
-        description: 'This is the role assigned to admin',
-      });
-      console.log('✅ Created Admin role');
-    } else {
-      console.log('ℹ️  Admin role already exists');
-    }
-
-    let admin = await UserModel.findOne({ email: ADMIN_EMAIL });
-    if (!admin) {
-      admin = await UserModel.create({
-        firstname: ADMIN_FIRSTNAME,
-        lastname: ADMIN_LASTNAME,
-        dateOfBirth: ADMIN_DATE_OF_BIRTH,
-        gender: ADMIN_GENDER,
-        email: ADMIN_EMAIL,
-        password: ADMIN_PASSWORD,
-        verified: true,
-      });
-      console.log('✅ Created admin user');
-    } else {
-      console.log('ℹ️  Admin user already exists');
-    }
-
-    const adminId = admin._id;
-
-    const adminUserRole = await UserRoleModel.findOne({
-      userId: adminId,
-      roleId: adminRole._id,
+const ensureAdminUser = async () => {
+  let admin = await UserModel.findOne({ email: ADMIN_EMAIL });
+  if (!admin) {
+    admin = await UserModel.create({
+      firstname: ADMIN_FIRSTNAME,
+      lastname: ADMIN_LASTNAME,
+      dateOfBirth: ADMIN_DATE_OF_BIRTH,
+      gender: ADMIN_GENDER,
+      email: ADMIN_EMAIL,
+      password: ADMIN_PASSWORD,
+      verified: true,
     });
+    log.success('Admin user created');
+  } else {
+    log.info('Admin user already exists');
+  }
+  return admin;
+};
 
-    if (!adminUserRole) {
-      await UserRoleModel.create({
-        userId: adminId,
-        roleId: adminRole._id,
-      });
-      console.log('✅ Assigned Admin role to admin user');
-    }
+const assignRoleToUserIfMissing = async (
+  userId: unknown,
+  roleId: unknown,
+  messageOnAssign: string
+) => {
+  const exists = await UserRoleModel.findOne({ userId, roleId });
+  if (!exists) {
+    await UserRoleModel.create({ userId, roleId });
+    log.success(messageOnAssign);
+  }
+};
 
-    const adminHasUserRole = await UserRoleModel.findOne({
-      userId: adminId,
-      roleId: userRole._id,
-    });
+const ensureAdminFolder = async (adminId: unknown) => {
+  const folder = await ResourceModel.findOne({
+    userId: adminId,
+    name: 'my-files',
+    type: ResourceType.Folder,
+  });
 
-    if (!adminHasUserRole) {
-      await UserRoleModel.create({
-        userId: adminId,
-        roleId: userRole._id,
-      });
-      console.log('✅ Also assigned User role to admin user');
-    }
-
-    const adminFolder = await ResourceModel.findOne({
-      userId: adminId,
+  if (!folder) {
+    await ResourceModel.create({
       name: 'my-files',
       type: ResourceType.Folder,
+      path: 'my-files',
+      parent: null,
+      userId: adminId,
+      pinned: true,
     });
+    log.success('Root resource folder for admin created');
+  } else {
+    log.info('Resource folder already exists');
+  }
+};
 
-    if (!adminFolder) {
-      await ResourceModel.create({
-        name: 'my-files',
-        type: ResourceType.Folder,
-        path: 'my-files',
-        parent: null,
-        userId: adminId,
-        pinned: true,
-      });
-      console.log('✅ Created root resource folder for admin');
-    } else {
-      console.log('ℹ️  Resource folder already exists');
-    }
+const initializeDefaultRBAC = async (): Promise<void> => {
+  try {
+    log.debug('🔐 Initializing default RBAC...');
 
-    console.log('🎉 Default RBAC initialized successfully.');
-  } catch (error) {
-    console.error(
-      '❌ Error while initializing default RBAC configuration:',
-      error
+    const userRole = await ensureRole(
+      RoleType.User,
+      'This is the role assigned to user'
     );
+    const adminRole = await ensureRole(
+      RoleType.Admin,
+      'This is the role assigned to admin'
+    );
+
+    const admin = await ensureAdminUser();
+    const adminId = admin._id;
+
+    await assignRoleToUserIfMissing(
+      adminId,
+      adminRole._id,
+      'Assigned Admin role to admin user'
+    );
+    await assignRoleToUserIfMissing(
+      adminId,
+      userRole._id,
+      'Also assigned User role to admin user'
+    );
+
+    await ensureAdminFolder(adminId);
+
+    log.success('Default RBAC initialized successfully.');
+  } catch (error) {
+    log.error('Error while initializing default RBAC configuration:', error);
     process.exit(1);
   }
 };

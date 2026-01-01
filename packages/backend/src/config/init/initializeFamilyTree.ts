@@ -1,76 +1,95 @@
 import FamilyTreeModel from '../../models/family-tree.model';
-import { familyTreeApi } from '../../data/familyTreeApi';
+import { familyTreeApi, FamilyTreeEntry } from '../../data/familyTreeApi';
 import { PrimaryId } from '../../constants/primaryId';
+import { log } from '../../utils/log';
 
-const initializeFamilyTree = async () => {
+/**
+ * Return document count of FamilyTree collection.
+ */
+const countExisting = async (): Promise<number> => {
+  return FamilyTreeModel.countDocuments();
+};
+
+/**
+ * Insert all members from API into DB and return a map of api id -> inserted _id.
+ */
+const insertMembers = async (
+  members: FamilyTreeEntry[]
+): Promise<Map<string, PrimaryId>> => {
+  const map = new Map<string, PrimaryId>();
+
+  for (const member of members) {
+    const doc = new FamilyTreeModel({
+      uuid: member.uuid,
+      biblicalName: member.biblicalName ?? null,
+      islamicName: member.islamicName ?? null,
+      arabicName: member.arabicName ?? null,
+      lineages: member.lineages,
+      label: member.label ?? null,
+    });
+
+    const saved = await doc.save();
+    map.set(member.id, saved._id as PrimaryId);
+  }
+
+  return map;
+};
+
+/**
+ * Link parents for members using the inserted id map. Returns number of members processed for linking.
+ */
+const linkParents = async (
+  members: FamilyTreeEntry[],
+  idMap: Map<string, PrimaryId>
+): Promise<number> => {
+  let linkedCount = 0;
+
+  for (const member of members) {
+    if (!member.parents) continue;
+
+    const parentsArray: PrimaryId[] = Array.isArray(member.parents)
+      ? member.parents
+          .map((pid) => idMap.get(pid))
+          .filter((p): p is PrimaryId => p !== undefined)
+      : idMap.get(member.parents)
+        ? [idMap.get(member.parents) as PrimaryId]
+        : [];
+
+    await FamilyTreeModel.findOneAndUpdate(
+      { uuid: member.uuid },
+      { parents: parentsArray }
+    );
+    linkedCount++;
+  }
+
+  return linkedCount;
+};
+
+/**
+ * Initialize family tree: insert members then link parents.
+ */
+const initializeFamilyTree = async (): Promise<void> => {
   try {
-    console.log('🌳 Initializing Family Tree...');
+    log.debug('🌳 Initializing Family Tree...');
 
-    const existingRecords = await FamilyTreeModel.countDocuments();
-    if (existingRecords > 0) {
-      console.log(
-        `ℹ️ Family Tree already initialized with ${existingRecords} entries.`
-      );
+    const existing = await countExisting();
+    if (existing > 0) {
+      log.info(`Family Tree already initialized with ${existing} entries.`);
       return;
     }
 
-    const insertedMembers = new Map<string, PrimaryId>();
+    const insertedMap = await insertMembers(familyTreeApi as FamilyTreeEntry[]);
+    log.info(`Inserted ${insertedMap.size} family tree members.`);
 
-    // First pass: insert members
-    for (const member of familyTreeApi) {
-      const {
-        id,
-        uuid,
-        biblicalName,
-        islamicName,
-        arabicName,
-        lineages,
-        label,
-      } = member;
+    const linked = await linkParents(
+      familyTreeApi as FamilyTreeEntry[],
+      insertedMap
+    );
+    log.info(`Linked parent relationships for ${linked} members.`);
 
-      const newMember = new FamilyTreeModel({
-        uuid,
-        biblicalName: biblicalName || null,
-        islamicName: islamicName || null,
-        arabicName: arabicName || null,
-        lineages,
-        label: label || null,
-      });
-
-      const savedMember = await newMember.save();
-      insertedMembers.set(id, savedMember._id as PrimaryId);
-    }
-
-    console.log(`✅ Inserted ${insertedMembers.size} family tree members.`);
-
-    // Second pass: link parents
-    let linkedCount = 0;
-
-    for (const member of familyTreeApi) {
-      if (member.parents) {
-        let parentsArray: PrimaryId[] = [];
-
-        if (Array.isArray(member.parents)) {
-          parentsArray = member.parents
-            .map((parentId) => insertedMembers.get(parentId))
-            .filter((parent) => parent !== undefined) as PrimaryId[];
-        } else {
-          const parentObjectId = insertedMembers.get(member.parents);
-          if (parentObjectId) parentsArray.push(parentObjectId);
-        }
-
-        await FamilyTreeModel.findOneAndUpdate(
-          { uuid: member.uuid },
-          { parents: parentsArray }
-        );
-        linkedCount++;
-      }
-    }
-
-    console.log(`🔗 Linked parent relationships for ${linkedCount} members.`);
     console.log('🎉 Family Tree initialized successfully.');
-  } catch (error) {
-    console.error('❌ Error while initializing Family Tree:', error);
+  } catch (err) {
+    log.error('Error while initializing Family Tree:', err);
     process.exit(1);
   }
 };

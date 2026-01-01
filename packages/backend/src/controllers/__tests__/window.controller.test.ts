@@ -14,7 +14,7 @@ import * as assertUserRoleSession from '../../utils/assertUserRoleSession';
 import * as getUserIdUtil from '../../utils/getUserId';
 import * as deleteWindowService from '../../services/window/delete-window.service';
 import { OK, NOT_FOUND } from '../../constants/http';
-import WindowType from '../../constants/enums/windowType';
+import WindowType from '../../constants/types/windowType';
 import AppError from '../../utils/AppError';
 
 vi.mock('../../models/window.model');

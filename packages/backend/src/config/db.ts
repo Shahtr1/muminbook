@@ -1,15 +1,16 @@
 import mongoose from 'mongoose';
 import { MONGO_URI } from '../constants/env';
+import { log } from '../utils/log';
 
 const connectToDatabase = async () => {
   try {
-    console.log('🛠️ Connecting to MongoDB...');
+    log.info('Connecting to MongoDB...');
 
     await mongoose.connect(MONGO_URI);
 
-    console.log('✅ Database connected successfully.');
+    log.success('Database connected successfully.');
   } catch (e) {
-    console.error('❌ Could not connect to Database:', e);
+    log.error('Could not connect to Database:', e);
     process.exit(1);
   }
 };

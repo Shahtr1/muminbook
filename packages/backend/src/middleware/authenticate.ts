@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
 import appAssert from '../utils/appAssert';
 import { FORBIDDEN, UNAUTHORIZED } from '../constants/http';
-import AppErrorCode from '../constants/enums/appErrorCode';
+import AppErrorCode from '../constants/types/appErrorCode';
 import { AccessTokenPayload, verifyToken } from '../utils/jwt';
-import RoleType from '../constants/enums/roleType';
+import RoleType from '../constants/types/roleType';
 import { PrimaryId } from '../constants/primaryId';
 
 const authenticate = (isAdmin: boolean = false): RequestHandler => {

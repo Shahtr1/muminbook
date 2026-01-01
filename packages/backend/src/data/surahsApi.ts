@@ -1,5 +1,5 @@
-import RevelationPlace from '../constants/enums/revelationPlace';
-import { Surah } from '../constants/types/reading.type';
+import RevelationPlace from '../constants/types/quran/revelationPlace';
+import { Surah } from '../constants/types/quran/surah.type';
 
 export const surahsApi: Surah[] = [
   {
@@ -8,7 +8,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Fātiḥah',
     meaning: 'The Opening',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 7,
+    totalAyat: 7,
   },
   {
     uuid: 2,
@@ -16,7 +16,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Baqarah',
     meaning: 'The Cow',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 286,
+    totalAyat: 286,
   },
   {
     uuid: 3,
@@ -24,7 +24,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Āl ʿImrān',
     meaning: 'The Family of Imran',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 200,
+    totalAyat: 200,
   },
   {
     uuid: 4,
@@ -32,7 +32,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'An-Nisāʾ',
     meaning: 'The Women',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 176,
+    totalAyat: 176,
   },
   {
     uuid: 5,
@@ -40,7 +40,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Māʾidah',
     meaning: 'The Table Spread',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 120,
+    totalAyat: 120,
   },
   {
     uuid: 6,
@@ -48,7 +48,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Anʿām',
     meaning: 'The Cattle',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 165,
+    totalAyat: 165,
   },
   {
     uuid: 7,
@@ -56,7 +56,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Aʿrāf',
     meaning: 'The Heights',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 206,
+    totalAyat: 206,
   },
   {
     uuid: 8,
@@ -64,7 +64,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Anfāl',
     meaning: 'The Spoils of War',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 75,
+    totalAyat: 75,
   },
   {
     uuid: 9,
@@ -72,7 +72,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'At-Tawbah',
     meaning: 'The Repentance',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 129,
+    totalAyat: 129,
   },
   {
     uuid: 10,
@@ -80,7 +80,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Yūnus',
     meaning: 'Jonah',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 109,
+    totalAyat: 109,
   },
   {
     uuid: 11,
@@ -88,7 +88,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Hūd',
     meaning: 'Hud',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 123,
+    totalAyat: 123,
   },
   {
     uuid: 12,
@@ -96,7 +96,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Yūsuf',
     meaning: 'Joseph',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 111,
+    totalAyat: 111,
   },
   {
     uuid: 13,
@@ -104,7 +104,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ar-Raʿd',
     meaning: 'The Thunder',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 43,
+    totalAyat: 43,
   },
   {
     uuid: 14,
@@ -112,7 +112,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ibrāhīm',
     meaning: 'Abraham',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 52,
+    totalAyat: 52,
   },
   {
     uuid: 15,
@@ -120,7 +120,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Ḥijr',
     meaning: 'The Rocky Tract',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 99,
+    totalAyat: 99,
   },
   {
     uuid: 16,
@@ -128,7 +128,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'An-Naḥl',
     meaning: 'The Bee',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 128,
+    totalAyat: 128,
   },
   {
     uuid: 17,
@@ -136,7 +136,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Isrāʾ',
     meaning: 'The Night Journey',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 111,
+    totalAyat: 111,
   },
   {
     uuid: 18,
@@ -144,7 +144,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Kahf',
     meaning: 'The Cave',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 110,
+    totalAyat: 110,
   },
   {
     uuid: 19,
@@ -152,7 +152,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Maryam',
     meaning: 'Mary',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 98,
+    totalAyat: 98,
   },
   {
     uuid: 20,
@@ -160,7 +160,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ṭā-Hā',
     meaning: 'Ta-Ha',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 135,
+    totalAyat: 135,
   },
   {
     uuid: 21,
@@ -168,7 +168,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Anbiyāʾ',
     meaning: 'The Prophets',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 112,
+    totalAyat: 112,
   },
   {
     uuid: 22,
@@ -176,7 +176,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Ḥajj',
     meaning: 'The Pilgrimage',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 78,
+    totalAyat: 78,
   },
   {
     uuid: 23,
@@ -184,7 +184,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Muʾminūn',
     meaning: 'The Believers',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 118,
+    totalAyat: 118,
   },
   {
     uuid: 24,
@@ -192,7 +192,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'An-Nūr',
     meaning: 'The Light',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 64,
+    totalAyat: 64,
   },
   {
     uuid: 25,
@@ -200,7 +200,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Furqān',
     meaning: 'The Criterion',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 77,
+    totalAyat: 77,
   },
   {
     uuid: 26,
@@ -208,7 +208,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ash-Shuʿarāʾ',
     meaning: 'The Poets',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 227,
+    totalAyat: 227,
   },
   {
     uuid: 27,
@@ -216,7 +216,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'An-Naml',
     meaning: 'The Ant',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 93,
+    totalAyat: 93,
   },
   {
     uuid: 28,
@@ -224,7 +224,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Qaṣaṣ',
     meaning: 'The Stories',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 88,
+    totalAyat: 88,
   },
   {
     uuid: 29,
@@ -232,7 +232,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-ʿAnkabūt',
     meaning: 'The Spider',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 69,
+    totalAyat: 69,
   },
   {
     uuid: 30,
@@ -240,7 +240,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ar-Rūm',
     meaning: 'The Romans',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 60,
+    totalAyat: 60,
   },
   {
     uuid: 31,
@@ -248,7 +248,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Luqmān',
     meaning: 'Luqman',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 34,
+    totalAyat: 34,
   },
   {
     uuid: 32,
@@ -256,7 +256,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'As-Sajdah',
     meaning: 'The Prostration',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 30,
+    totalAyat: 30,
   },
   {
     uuid: 33,
@@ -264,7 +264,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Aḥzāb',
     meaning: 'The Combined Forces',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 73,
+    totalAyat: 73,
   },
   {
     uuid: 34,
@@ -272,7 +272,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Sabaʾ',
     meaning: 'Sheba',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 54,
+    totalAyat: 54,
   },
   {
     uuid: 35,
@@ -280,7 +280,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Fāṭir',
     meaning: 'The Originator',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 45,
+    totalAyat: 45,
   },
   {
     uuid: 36,
@@ -288,7 +288,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Yā-Sīn',
     meaning: 'Ya-Sin',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 83,
+    totalAyat: 83,
   },
   {
     uuid: 37,
@@ -296,7 +296,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'As-Ṣāffāt',
     meaning: 'Those who set the Ranks',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 182,
+    totalAyat: 182,
   },
   {
     uuid: 38,
@@ -304,7 +304,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ṣād',
     meaning: 'The Letter Sad',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 88,
+    totalAyat: 88,
   },
   {
     uuid: 39,
@@ -312,7 +312,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Az-Zumar',
     meaning: 'The Groups',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 75,
+    totalAyat: 75,
   },
   {
     uuid: 40,
@@ -320,7 +320,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ghāfir',
     meaning: 'The Forgiver',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 85,
+    totalAyat: 85,
   },
   {
     uuid: 41,
@@ -328,7 +328,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Fuṣṣilat',
     meaning: 'Explained in Detail',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 54,
+    totalAyat: 54,
   },
   {
     uuid: 42,
@@ -336,7 +336,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ash-Shūrā',
     meaning: 'The Consultation',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 53,
+    totalAyat: 53,
   },
   {
     uuid: 43,
@@ -344,7 +344,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Az-Zukhruf',
     meaning: 'The Ornaments of Gold',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 89,
+    totalAyat: 89,
   },
   {
     uuid: 44,
@@ -352,7 +352,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ad-Dukhān',
     meaning: 'The Smoke',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 59,
+    totalAyat: 59,
   },
   {
     uuid: 45,
@@ -360,7 +360,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Jāthiyah',
     meaning: 'The Crouching',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 37,
+    totalAyat: 37,
   },
   {
     uuid: 46,
@@ -368,7 +368,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Aḥqāf',
     meaning: 'The Wind-Curved Sandhills',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 35,
+    totalAyat: 35,
   },
   {
     uuid: 47,
@@ -376,7 +376,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Muḥammad',
     meaning: 'Muhammad',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 38,
+    totalAyat: 38,
   },
   {
     uuid: 48,
@@ -384,7 +384,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Fatḥ',
     meaning: 'The Victory',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 29,
+    totalAyat: 29,
   },
   {
     uuid: 49,
@@ -392,7 +392,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Ḥujurāt',
     meaning: 'The Rooms',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 18,
+    totalAyat: 18,
   },
   {
     uuid: 50,
@@ -400,7 +400,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Qāf',
     meaning: 'The Letter Qaf',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 45,
+    totalAyat: 45,
   },
   {
     uuid: 51,
@@ -408,7 +408,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Adh-Dhāriyāt',
     meaning: 'The Winnowing Winds',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 60,
+    totalAyat: 60,
   },
   {
     uuid: 52,
@@ -416,7 +416,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Aṭ-Ṭūr',
     meaning: 'The Mount',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 49,
+    totalAyat: 49,
   },
   {
     uuid: 53,
@@ -424,7 +424,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'An-Najm',
     meaning: 'The Star',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 62,
+    totalAyat: 62,
   },
   {
     uuid: 54,
@@ -432,7 +432,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Qamar',
     meaning: 'The Moon',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 55,
+    totalAyat: 55,
   },
   {
     uuid: 55,
@@ -440,7 +440,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ar-Raḥmān',
     meaning: 'The Beneficent',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 78,
+    totalAyat: 78,
   },
   {
     uuid: 56,
@@ -448,7 +448,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Wāqiʿah',
     meaning: 'The Inevitable',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 96,
+    totalAyat: 96,
   },
   {
     uuid: 57,
@@ -456,7 +456,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Ḥadīd',
     meaning: 'The Iron',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 29,
+    totalAyat: 29,
   },
   {
     uuid: 58,
@@ -464,7 +464,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Mujādilah',
     meaning: 'The Pleading Woman',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 22,
+    totalAyat: 22,
   },
   {
     uuid: 59,
@@ -472,7 +472,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Ḥashr',
     meaning: 'The Exile',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 24,
+    totalAyat: 24,
   },
   {
     uuid: 60,
@@ -480,7 +480,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Mumtaḥanah',
     meaning: 'She that is to be examined',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 13,
+    totalAyat: 13,
   },
   {
     uuid: 61,
@@ -488,7 +488,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Aṣ-Ṣaff',
     meaning: 'The Ranks',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 14,
+    totalAyat: 14,
   },
   {
     uuid: 62,
@@ -496,7 +496,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Jumuʿah',
     meaning: 'The Congregation',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 11,
+    totalAyat: 11,
   },
   {
     uuid: 63,
@@ -504,7 +504,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Munāfiqūn',
     meaning: 'The Hypocrites',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 11,
+    totalAyat: 11,
   },
   {
     uuid: 64,
@@ -512,7 +512,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'At-Taghābun',
     meaning: 'The Mutual Disillusion',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 18,
+    totalAyat: 18,
   },
   {
     uuid: 65,
@@ -520,7 +520,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Aṭ-Ṭalāq',
     meaning: 'The Divorce',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 12,
+    totalAyat: 12,
   },
   {
     uuid: 66,
@@ -528,7 +528,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'At-Taḥrīm',
     meaning: 'The Prohibition',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 12,
+    totalAyat: 12,
   },
   {
     uuid: 67,
@@ -536,7 +536,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Mulk',
     meaning: 'The Sovereignty',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 30,
+    totalAyat: 30,
   },
   {
     uuid: 68,
@@ -544,7 +544,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Qalam',
     meaning: 'The Pen',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 52,
+    totalAyat: 52,
   },
   {
     uuid: 69,
@@ -552,7 +552,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Ḥāqqah',
     meaning: 'The Reality',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 52,
+    totalAyat: 52,
   },
   {
     uuid: 70,
@@ -560,7 +560,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Maʿārij',
     meaning: 'The Ascending Stairways',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 44,
+    totalAyat: 44,
   },
   {
     uuid: 71,
@@ -568,7 +568,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Nūḥ',
     meaning: 'Noah',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 28,
+    totalAyat: 28,
   },
   {
     uuid: 72,
@@ -576,7 +576,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Jinn',
     meaning: 'The Jinn',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 28,
+    totalAyat: 28,
   },
   {
     uuid: 73,
@@ -584,7 +584,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Muzzammil',
     meaning: 'The Enshrouded One',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 20,
+    totalAyat: 20,
   },
   {
     uuid: 74,
@@ -592,7 +592,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Muddaththir',
     meaning: 'The Cloaked One',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 56,
+    totalAyat: 56,
   },
   {
     uuid: 75,
@@ -600,7 +600,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Qiyāmah',
     meaning: 'The Resurrection',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 40,
+    totalAyat: 40,
   },
   {
     uuid: 76,
@@ -608,7 +608,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Insān',
     meaning: 'Man',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 31,
+    totalAyat: 31,
   },
   {
     uuid: 77,
@@ -616,7 +616,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Mursalāt',
     meaning: 'The Emissaries',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 50,
+    totalAyat: 50,
   },
   {
     uuid: 78,
@@ -624,7 +624,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'An-Nabaʾ',
     meaning: 'The Tidings',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 40,
+    totalAyat: 40,
   },
   {
     uuid: 79,
@@ -632,7 +632,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'An-Nāziʿāt',
     meaning: 'Those who drag forth',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 46,
+    totalAyat: 46,
   },
   {
     uuid: 80,
@@ -640,7 +640,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'ʿAbasa',
     meaning: 'He frowned',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 42,
+    totalAyat: 42,
   },
   {
     uuid: 81,
@@ -648,7 +648,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'At-Takwīr',
     meaning: 'The Overthrowing',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 29,
+    totalAyat: 29,
   },
   {
     uuid: 82,
@@ -656,7 +656,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Infiṭār',
     meaning: 'The Cleaving',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 19,
+    totalAyat: 19,
   },
   {
     uuid: 83,
@@ -664,7 +664,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Muṭaffifīn',
     meaning: 'Defrauding',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 36,
+    totalAyat: 36,
   },
   {
     uuid: 84,
@@ -672,7 +672,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Inshiqāq',
     meaning: 'The Splitting Open',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 25,
+    totalAyat: 25,
   },
   {
     uuid: 85,
@@ -680,7 +680,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Burūj',
     meaning: 'The Mansions of the Stars',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 22,
+    totalAyat: 22,
   },
   {
     uuid: 86,
@@ -688,7 +688,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Aṭ-Ṭāriq',
     meaning: 'The Morning Star',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 17,
+    totalAyat: 17,
   },
   {
     uuid: 87,
@@ -696,7 +696,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Aʿlā',
     meaning: 'The Most High',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 19,
+    totalAyat: 19,
   },
   {
     uuid: 88,
@@ -704,7 +704,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Ghāshiyah',
     meaning: 'The Overwhelming',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 26,
+    totalAyat: 26,
   },
   {
     uuid: 89,
@@ -712,7 +712,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Fajr',
     meaning: 'The Dawn',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 30,
+    totalAyat: 30,
   },
   {
     uuid: 90,
@@ -720,7 +720,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Balad',
     meaning: 'The City',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 20,
+    totalAyat: 20,
   },
   {
     uuid: 91,
@@ -728,7 +728,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ash-Shams',
     meaning: 'The Sun',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 15,
+    totalAyat: 15,
   },
   {
     uuid: 92,
@@ -736,7 +736,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Layl',
     meaning: 'The Night',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 21,
+    totalAyat: 21,
   },
   {
     uuid: 93,
@@ -744,7 +744,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Aḍ-Ḍuḥā',
     meaning: 'The Morning Hours',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 11,
+    totalAyat: 11,
   },
   {
     uuid: 94,
@@ -752,7 +752,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Ash-Sharḥ',
     meaning: 'The Relief',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 8,
+    totalAyat: 8,
   },
   {
     uuid: 95,
@@ -760,7 +760,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'At-Tīn',
     meaning: 'The Fig',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 8,
+    totalAyat: 8,
   },
   {
     uuid: 96,
@@ -768,7 +768,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-ʿAlaq',
     meaning: 'The Clot',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 19,
+    totalAyat: 19,
   },
   {
     uuid: 97,
@@ -776,7 +776,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Qadr',
     meaning: 'The Power',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 5,
+    totalAyat: 5,
   },
   {
     uuid: 98,
@@ -784,7 +784,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Bayyinah',
     meaning: 'The Clear Proof',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 8,
+    totalAyat: 8,
   },
   {
     uuid: 99,
@@ -792,7 +792,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Az-Zalzalah',
     meaning: 'The Earthquake',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 8,
+    totalAyat: 8,
   },
   {
     uuid: 100,
@@ -800,7 +800,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-ʿĀdiyāt',
     meaning: 'The Courser',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 11,
+    totalAyat: 11,
   },
   {
     uuid: 101,
@@ -808,7 +808,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Qāriʿah',
     meaning: 'The Calamity',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 11,
+    totalAyat: 11,
   },
   {
     uuid: 102,
@@ -816,7 +816,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'At-Takāthur',
     meaning: 'The Rivalry in world increase',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 8,
+    totalAyat: 8,
   },
   {
     uuid: 103,
@@ -824,7 +824,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-ʿAṣr',
     meaning: 'The Declining Day',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 3,
+    totalAyat: 3,
   },
   {
     uuid: 104,
@@ -832,7 +832,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Humazah',
     meaning: 'The Traducer',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 9,
+    totalAyat: 9,
   },
   {
     uuid: 105,
@@ -840,7 +840,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Fīl',
     meaning: 'The Elephant',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 5,
+    totalAyat: 5,
   },
   {
     uuid: 106,
@@ -848,7 +848,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Quraysh',
     meaning: 'Quraysh',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 4,
+    totalAyat: 4,
   },
   {
     uuid: 107,
@@ -856,7 +856,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Māʿūn',
     meaning: 'The Small Kindnesses',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 7,
+    totalAyat: 7,
   },
   {
     uuid: 108,
@@ -864,7 +864,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Kawthar',
     meaning: 'The Abundance',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 3,
+    totalAyat: 3,
   },
   {
     uuid: 109,
@@ -872,7 +872,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Kāfirūn',
     meaning: 'The Disbelievers',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 6,
+    totalAyat: 6,
   },
   {
     uuid: 110,
@@ -880,7 +880,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'An-Naṣr',
     meaning: 'The Divine Support',
     revelationPlace: RevelationPlace.Medina,
-    totalAyats: 3,
+    totalAyat: 3,
   },
   {
     uuid: 111,
@@ -888,7 +888,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Masad',
     meaning: 'The Palm Fiber',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 5,
+    totalAyat: 5,
   },
   {
     uuid: 112,
@@ -896,7 +896,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Ikhlāṣ',
     meaning: 'The Sincerity',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 4,
+    totalAyat: 4,
   },
   {
     uuid: 113,
@@ -904,7 +904,7 @@ export const surahsApi: Surah[] = [
     transliteration: 'Al-Falaq',
     meaning: 'The Daybreak',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 5,
+    totalAyat: 5,
   },
   {
     uuid: 114,
@@ -912,6 +912,6 @@ export const surahsApi: Surah[] = [
     transliteration: 'An-Nās',
     meaning: 'Mankind',
     revelationPlace: RevelationPlace.Mecca,
-    totalAyats: 6,
+    totalAyat: 6,
   },
 ];

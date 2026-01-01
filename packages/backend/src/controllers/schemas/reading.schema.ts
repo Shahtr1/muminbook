@@ -1,5 +1,5 @@
 import z from 'zod';
-import QuranDivisionType from '../../constants/enums/quranDivisionType';
+import QuranDivisionType from '../../constants/types/quran/quranDivisionType';
 
 export const getReadingQuerySchema = z.object({
   page: z

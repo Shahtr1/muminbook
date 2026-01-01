@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import RevelationPlace from '../constants/enums/revelationPlace';
+import RevelationPlace from '../constants/types/quran/revelationPlace';
 
 export interface SurahDocument extends Document {
   uuid: number;
@@ -7,7 +7,7 @@ export interface SurahDocument extends Document {
   transliteration: string;
   meaning: string;
   revelationPlace: RevelationPlace;
-  totalAyats: number;
+  totalAyat: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -35,7 +35,7 @@ const surahSchema = new Schema<SurahDocument>(
       enum: Object.values(RevelationPlace),
       required: true,
     },
-    totalAyats: {
+    totalAyat: {
       type: Number,
       required: true,
     },

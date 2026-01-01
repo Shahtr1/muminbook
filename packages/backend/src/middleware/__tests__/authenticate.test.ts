@@ -14,8 +14,8 @@ import authenticate from '../authenticate';
 import { verifyToken } from '../../utils/jwt';
 import AppError from '../../utils/AppError';
 import { UNAUTHORIZED, FORBIDDEN } from '../../constants/http';
-import AppErrorCode from '../../constants/enums/appErrorCode';
-import RoleType from '../../constants/enums/roleType';
+import AppErrorCode from '../../constants/types/appErrorCode';
+import RoleType from '../../constants/types/roleType';
 import { Types } from 'mongoose';
 
 vi.mock('../../utils/jwt');

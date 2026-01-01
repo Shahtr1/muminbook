@@ -4,17 +4,16 @@
  * Tests the custom assertion utility that throws AppError when conditions fail.
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import appAssert from '../appAssert';
 import AppError from '../AppError';
 import {
   BAD_REQUEST,
   FORBIDDEN,
-  HttpStatusCode,
   NOT_FOUND,
   UNAUTHORIZED,
 } from '../../constants/http';
-import AppErrorCode from '../../constants/enums/appErrorCode';
+import AppErrorCode from '../../constants/types/appErrorCode';
 
 describe('appAssert', () => {
   describe('when condition is true', () => {

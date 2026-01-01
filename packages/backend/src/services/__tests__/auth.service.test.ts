@@ -23,7 +23,7 @@ import VerificationCodeModel from '../../models/verification-code.model';
 import { signToken, verifyToken } from '../../utils/jwt';
 import { hashValue } from '../../utils/bcrypt';
 import { Types } from 'mongoose';
-import RoleType from '../../constants/enums/roleType';
+import RoleType from '../../constants/types/roleType';
 import AppError from '../../utils/AppError';
 
 vi.mock('../../models/user.model');
