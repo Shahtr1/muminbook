@@ -3,7 +3,7 @@ enum QuranDivisionType {
   Juz = 'juz',
   Manzil = 'manzil',
   Ruku = 'ruku',
-  HizbQuarter = 'hizbQuarter',
+  Hizb = 'hizb',
 }
 
 export default QuranDivisionType;
