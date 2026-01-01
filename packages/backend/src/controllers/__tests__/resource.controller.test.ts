@@ -5,32 +5,31 @@
  * Covers CRUD operations, trash management, and resource operations.
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import {
-  getResourceHandler,
+  copyResourceHandler,
   createResourceHandler,
   deleteResourceHandler,
-  moveToTrashResourceHandler,
-  restoreResourceHandler,
-  restoreAllResourceHandler,
-  getTrashedResourcesHandler,
   emptyTrashHandler,
-  renameResourceHandler,
-  moveResourceHandler,
-  copyResourceHandler,
-  isMyFilesEmptyHandler,
   getOverviewHandler,
+  getResourceHandler,
+  getTrashedResourcesHandler,
+  isMyFilesEmptyHandler,
+  isTrashEmptyHandler,
+  moveResourceHandler,
+  moveToTrashResourceHandler,
+  renameResourceHandler,
+  restoreAllResourceHandler,
+  restoreResourceHandler,
   togglePinResourceHandler,
   updateAccessedAtHandler,
-  isTrashEmptyHandler,
 } from '../resource.controller';
 import * as resourceService from '../../services/resource';
 import * as resourceIsMyFilesEmptyService from '../../services/resource/isMyFilesEmpty-resource.service';
 import * as resourceOverviewService from '../../services/resource/overview.service';
 import * as resourceIsTrashEmptyService from '../../services/resource/trash/isTrashEmpty-resource.service';
-import * as assertUserRoleSession from '../../utils/assertUserRoleSession';
 import * as getUserIdUtil from '../../utils/getUserId';
 import { CREATED, OK } from '../../constants/http';
 import ResourceType from '../../constants/types/resourceType';
@@ -39,7 +38,6 @@ vi.mock('../../services/resource');
 vi.mock('../../services/resource/isMyFilesEmpty-resource.service');
 vi.mock('../../services/resource/overview.service');
 vi.mock('../../services/resource/trash/isTrashEmpty-resource.service');
-vi.mock('../../utils/assertUserRoleSession');
 vi.mock('../../utils/getUserId');
 
 describe('Resource Controller', () => {
@@ -70,10 +68,6 @@ describe('Resource Controller', () => {
 
     mockNext = vi.fn();
 
-    // Default mocks for common utilities
-    vi.mocked(assertUserRoleSession.assertUserAndSession).mockReturnValue(
-      undefined
-    );
     vi.mocked(getUserIdUtil.getUserId).mockResolvedValue(mockUserId);
   });
 
@@ -107,9 +101,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.getResourceChildren).toHaveBeenCalledWith(
         mockPath,
@@ -164,9 +155,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.createResource).toHaveBeenCalledWith(
         {
@@ -343,9 +331,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.deleteResource).toHaveBeenCalledWith(
         mockResourceId,
@@ -372,9 +357,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.moveToTrashResource).toHaveBeenCalledWith(
         mockResourceId,
@@ -454,9 +436,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.restoreResource).toHaveBeenCalledWith(
         mockResourceId,
@@ -483,9 +462,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.restoreAllResources).toHaveBeenCalledWith(
         mockUserId
@@ -555,9 +531,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.getTrashedResources).toHaveBeenCalledWith(
         mockUserId
@@ -591,9 +564,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(
         resourceService.permanentlyDeleteTrashedResources
@@ -627,9 +597,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.renameResource).toHaveBeenCalledWith(
         mockResourceId,
@@ -759,9 +726,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.moveResource).toHaveBeenCalledWith(
         mockResourceId,
@@ -825,9 +789,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceService.copyResource).toHaveBeenCalledWith(
         mockResourceId,
@@ -931,9 +892,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceIsMyFilesEmptyService.isMyFilesEmpty).toHaveBeenCalledWith(
         mockUserId
@@ -986,9 +944,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceOverviewService.getOverview).toHaveBeenCalledWith(
         mockUserId
@@ -1037,9 +992,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceOverviewService.togglePinResource).toHaveBeenCalledWith(
         mockUserId,
@@ -1092,9 +1044,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceOverviewService.updateAccessedAt).toHaveBeenCalledWith(
         mockUserId,
@@ -1152,9 +1101,6 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(resourceIsTrashEmptyService.isTrashEmpty).toHaveBeenCalledWith(
         mockUserId

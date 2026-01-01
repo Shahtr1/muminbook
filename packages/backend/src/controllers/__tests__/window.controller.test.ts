@@ -5,20 +5,18 @@
  * Covers window retrieval, deletion, validation, and error handling scenarios.
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { getWindowsHandler, deleteWindowHandler } from '../window.controller';
+import { deleteWindowHandler, getWindowsHandler } from '../window.controller';
 import WindowModel from '../../models/window.model';
-import * as assertUserRoleSession from '../../utils/assertUserRoleSession';
 import * as getUserIdUtil from '../../utils/getUserId';
 import * as deleteWindowService from '../../services/window/delete-window.service';
-import { OK, NOT_FOUND } from '../../constants/http';
+import { NOT_FOUND, OK } from '../../constants/http';
 import WindowType from '../../constants/types/windowType';
 import AppError from '../../utils/AppError';
 
 vi.mock('../../models/window.model');
-vi.mock('../../utils/assertUserRoleSession');
 vi.mock('../../utils/getUserId');
 vi.mock('../../services/window/delete-window.service');
 
@@ -52,10 +50,6 @@ describe('Window Controller', () => {
 
     mockNext = vi.fn();
 
-    // Default mocks
-    vi.mocked(assertUserRoleSession.assertUserAndSession).mockReturnValue(
-      undefined
-    );
     vi.mocked(getUserIdUtil.getUserId).mockResolvedValue(mockUserId);
   });
 
@@ -99,9 +93,6 @@ describe('Window Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(WindowModel.find).toHaveBeenCalledWith({ userId: mockUserId });
       expect(mockQuery.sort).toHaveBeenCalledWith({ updatedAt: -1 });
@@ -155,47 +146,6 @@ describe('Window Controller', () => {
 
       expect(mockResponse.status).toHaveBeenCalledWith(OK);
       expect(mockResponse.json).toHaveBeenCalledWith(mockWindows);
-    });
-
-    it('should throw error when user is not authenticated', async () => {
-      vi.mocked(assertUserRoleSession.assertUserAndSession).mockImplementation(
-        () => {
-          throw new AppError(NOT_FOUND, 'User not found');
-        }
-      );
-
-      await getWindowsHandler(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
-
-      expect(mockNext).toHaveBeenCalled();
-      const error = mockNext.mock.calls[0][0];
-      expect(error).toBeInstanceOf(AppError);
-      expect(error.statusCode).toBe(NOT_FOUND);
-      expect(error.message).toBe('User not found');
-      expect(WindowModel.find).not.toHaveBeenCalled();
-    });
-
-    it('should throw error when session is not found', async () => {
-      vi.mocked(assertUserRoleSession.assertUserAndSession).mockImplementation(
-        () => {
-          throw new AppError(NOT_FOUND, 'Session not found');
-        }
-      );
-
-      await getWindowsHandler(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
-
-      expect(mockNext).toHaveBeenCalled();
-      const error = mockNext.mock.calls[0][0];
-      expect(error).toBeInstanceOf(AppError);
-      expect(error.statusCode).toBe(NOT_FOUND);
-      expect(WindowModel.find).not.toHaveBeenCalled();
     });
 
     it('should throw error when getUserId fails', async () => {
@@ -268,9 +218,6 @@ describe('Window Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(deleteWindowService.deleteWindow).toHaveBeenCalledWith(
         mockWindowId.toString(),
@@ -315,45 +262,6 @@ describe('Window Controller', () => {
       const error = mockNext.mock.calls[0][0];
       expect(error).toBeInstanceOf(AppError);
       expect(error.statusCode).toBe(NOT_FOUND);
-    });
-
-    it('should throw error when user is not authenticated', async () => {
-      vi.mocked(assertUserRoleSession.assertUserAndSession).mockImplementation(
-        () => {
-          throw new AppError(NOT_FOUND, 'User not found');
-        }
-      );
-
-      await deleteWindowHandler(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
-
-      expect(mockNext).toHaveBeenCalled();
-      const error = mockNext.mock.calls[0][0];
-      expect(error).toBeInstanceOf(AppError);
-      expect(error.statusCode).toBe(NOT_FOUND);
-      expect(deleteWindowService.deleteWindow).not.toHaveBeenCalled();
-    });
-
-    it('should throw error when session is not found', async () => {
-      vi.mocked(assertUserRoleSession.assertUserAndSession).mockImplementation(
-        () => {
-          throw new AppError(NOT_FOUND, 'Session not found');
-        }
-      );
-
-      await deleteWindowHandler(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
-
-      expect(mockNext).toHaveBeenCalled();
-      const error = mockNext.mock.calls[0][0];
-      expect(error).toBeInstanceOf(AppError);
-      expect(deleteWindowService.deleteWindow).not.toHaveBeenCalled();
     });
 
     it('should handle invalid window ID format', async () => {
@@ -472,25 +380,6 @@ describe('Window Controller', () => {
         expect(mockResponse.json).toHaveBeenCalledWith(largeWindowList);
       });
 
-      it('should handle null userId gracefully', async () => {
-        mockRequest.userId = undefined;
-
-        vi.mocked(
-          assertUserRoleSession.assertUserAndSession
-        ).mockImplementation(() => {
-          throw new AppError(NOT_FOUND, 'User not found');
-        });
-
-        await getWindowsHandler(
-          mockRequest as Request,
-          mockResponse as Response,
-          mockNext
-        );
-
-        expect(mockNext).toHaveBeenCalled();
-        expect(WindowModel.find).not.toHaveBeenCalled();
-      });
-
       it('should handle malformed window data from database', async () => {
         const malformedWindows = [
           {
@@ -588,68 +477,6 @@ describe('Window Controller', () => {
 
         expect(mockNext).toHaveBeenCalledTimes(2);
       });
-    });
-  });
-
-  describe('Authentication and Authorization', () => {
-    it('should reject request without userId', async () => {
-      mockRequest.userId = undefined;
-
-      vi.mocked(assertUserRoleSession.assertUserAndSession).mockImplementation(
-        () => {
-          throw new AppError(NOT_FOUND, 'User not found');
-        }
-      );
-
-      await getWindowsHandler(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
-
-      expect(mockNext).toHaveBeenCalled();
-      const error = mockNext.mock.calls[0][0];
-      expect(error).toBeInstanceOf(AppError);
-    });
-
-    it('should reject request without sessionId', async () => {
-      mockRequest.sessionId = undefined;
-
-      vi.mocked(assertUserRoleSession.assertUserAndSession).mockImplementation(
-        () => {
-          throw new AppError(NOT_FOUND, 'Session not found');
-        }
-      );
-
-      await deleteWindowHandler(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
-
-      expect(mockNext).toHaveBeenCalled();
-      const error = mockNext.mock.calls[0][0];
-      expect(error).toBeInstanceOf(AppError);
-    });
-
-    it('should reject request without role', async () => {
-      mockRequest.role = undefined;
-
-      vi.mocked(assertUserRoleSession.assertUserAndSession).mockImplementation(
-        () => {
-          throw new AppError(NOT_FOUND, 'Role not found');
-        }
-      );
-
-      await getWindowsHandler(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
-
-      expect(mockNext).toHaveBeenCalled();
-      const error = mockNext.mock.calls[0][0];
-      expect(error).toBeInstanceOf(AppError);
     });
   });
 

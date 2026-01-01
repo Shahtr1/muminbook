@@ -1,5 +1,4 @@
 import catchErrors from '../utils/catchErrors';
-import { assertUserAndSession } from '../utils/assertUserRoleSession';
 import SessionModel from '../models/session.model';
 import { NOT_FOUND, OK } from '../constants/http';
 import { z } from 'zod';
@@ -7,8 +6,6 @@ import appAssert from '../utils/appAssert';
 import { UserDocument } from '../models/user.model';
 
 export const getSessionsHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const sessions = await SessionModel.find(
     {
       expiresAt: { $gt: new Date() },
@@ -31,8 +28,6 @@ export const getSessionsHandler = catchErrors(async (req, res) => {
 });
 
 export const deleteSessionHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const sessionId = z.string().parse(req.params.id);
   const deleted = await SessionModel.findOneAndDelete({
     _id: sessionId,

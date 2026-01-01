@@ -1,6 +1,5 @@
 import catchErrors from '../utils/catchErrors';
 import { CREATED, OK } from '../constants/http';
-import { assertUserAndSession } from '../utils/assertUserRoleSession';
 import ResourceType from '../constants/types/resourceType';
 import {
   copyResource,
@@ -28,8 +27,6 @@ import { dstPathSchema, resourceSchema } from './schemas/resource.schema';
 import { renameSchema } from './schemas/common.schema';
 
 export const getResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const userId = await getUserId(req);
 
   const folderPath = req.query.path as string;
@@ -40,8 +37,6 @@ export const getResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const createResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const userId = await getUserId(req);
 
   const parsed = resourceSchema.parse(req.body);
@@ -57,8 +52,6 @@ export const createResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const deleteResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const resourceId = new mongoose.Types.ObjectId(req.params.id);
 
   const userId = await getUserId(req);
@@ -69,8 +62,6 @@ export const deleteResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const moveToTrashResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const resourceId = new mongoose.Types.ObjectId(req.params.id);
 
   const userId = await getUserId(req);
@@ -81,7 +72,6 @@ export const moveToTrashResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const restoreResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
 
   const resourceId = new mongoose.Types.ObjectId(req.params.id);
@@ -91,7 +81,6 @@ export const restoreResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const restoreAllResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
 
   const { message } = await restoreAllResources(userId);
@@ -99,7 +88,6 @@ export const restoreAllResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const getTrashedResourcesHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
 
   const trashed = await getTrashedResources(userId);
@@ -108,7 +96,6 @@ export const getTrashedResourcesHandler = catchErrors(async (req, res) => {
 });
 
 export const emptyTrashHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
 
   await permanentlyDeleteTrashedResources(userId);
@@ -117,7 +104,6 @@ export const emptyTrashHandler = catchErrors(async (req, res) => {
 });
 
 export const renameResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
   const resourceId = new mongoose.Types.ObjectId(req.params.id);
 
@@ -128,7 +114,6 @@ export const renameResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const moveResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
   const resourceId = new mongoose.Types.ObjectId(req.params.id);
   const { destinationPath } = dstPathSchema.parse(req.body);
@@ -138,8 +123,6 @@ export const moveResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const copyResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const userId = await getUserId(req);
   const resourceId = new mongoose.Types.ObjectId(req.params.id);
   const { destinationPath } = dstPathSchema.parse(req.body);
@@ -150,8 +133,6 @@ export const copyResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const isMyFilesEmptyHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const userId = await getUserId(req);
 
   const { empty } = await isMyFilesEmpty(userId);
@@ -160,8 +141,6 @@ export const isMyFilesEmptyHandler = catchErrors(async (req, res) => {
 });
 
 export const getOverviewHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const userId = await getUserId(req);
 
   const overview = await getOverview(userId);
@@ -169,7 +148,6 @@ export const getOverviewHandler = catchErrors(async (req, res) => {
   return res.status(OK).json(overview);
 });
 export const togglePinResourceHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
   const { id } = req.params;
 
@@ -178,7 +156,6 @@ export const togglePinResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const updateAccessedAtHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
   const { id } = req.params;
 
@@ -188,8 +165,6 @@ export const updateAccessedAtHandler = catchErrors(async (req, res) => {
 });
 
 export const isTrashEmptyHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
-
   const userId = await getUserId(req);
 
   const { empty } = await isTrashEmpty(userId);
