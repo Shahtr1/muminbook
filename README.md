@@ -292,7 +292,7 @@ We welcome contributions from the community! Whether you're fixing bugs, adding 
 - Update documentation as needed
 - Ensure all tests pass before submitting PR
 
-### Code of Conduct
+### Code of Conductdsdsdsdsd
 
 Please be respectful and considerate of others. We're building a welcoming community platform for Muslims worldwide.
 
