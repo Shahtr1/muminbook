@@ -45,7 +45,7 @@ const buildRestoreUpdates = async ({
 
   const descendants =
     resource.type === ResourceType.Folder
-      ? await findDescendantsByPath(resource.path, userId, true)
+      ? await findDescendantsByPath(resource.path, userId)
       : [];
 
   for (const desc of descendants) {
