@@ -223,13 +223,13 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(conflictingFolder as any)
         .mockResolvedValueOnce(conflictingFolder as any);
 
-      await expect(
-        restoreResource(mockResourceId, mockUserId)
-      ).rejects.toMatchObject({
-        statusCode: CONFLICT,
-        message:
-          'A folder with this name already exists in the destination path',
-      });
+      expect(restoreResource(mockResourceId, mockUserId)).rejects.toMatchObject(
+        {
+          statusCode: CONFLICT,
+          message:
+            'A folder with this name already exists in the destination path',
+        }
+      );
     });
 
     it('should restore empty folder to original location', async () => {
