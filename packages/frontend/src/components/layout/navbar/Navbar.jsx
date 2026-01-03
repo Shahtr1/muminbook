@@ -53,23 +53,23 @@ export const Navbar = () => {
         px={{ base: 2, sm: 5 }}
       >
         <Flex align="center" height="100%" gap={2} flex={1}>
-          {/*<Image*/}
-          {/*  w={45}*/}
-          {/*  src="/images/logos/logo-image.png"*/}
-          {/*  alt="Muminbook Logo"*/}
-          {/*  cursor="pointer"*/}
-          {/*  display={{ base: 'block', md: 'none' }}*/}
-          {/*  onClick={() => navigate('/')}*/}
-          {/*/>*/}
+          <Image
+            w={45}
+            src="/images/logos/logo-image.png"
+            alt="Muminbook Logo"
+            cursor="pointer"
+            display={{ base: 'block', md: 'none' }}
+            onClick={() => navigate('/')}
+          />
 
-          {/*<Image*/}
-          {/*  w={150}*/}
-          {/*  src="/images/logos/logo-with-image.png"*/}
-          {/*  alt="Muminbook Logo"*/}
-          {/*  cursor="pointer"*/}
-          {/*  display={{ base: 'none', md: 'block' }}*/}
-          {/*  onClick={() => navigate('/')}*/}
-          {/*/>*/}
+          <Image
+            w={150}
+            src="/images/logos/logo-with-image.png"
+            alt="Muminbook Logo"
+            cursor="pointer"
+            display={{ base: 'none', md: 'block' }}
+            onClick={() => navigate('/')}
+          />
           <XSearch
             focused={isFocused}
             onFocusChange={setIsFocused}
