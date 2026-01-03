@@ -704,9 +704,9 @@ describe('moveToTrashResource', () => {
       const dbError = new Error('Database connection failed');
       vi.mocked(ResourceModel.findOne).mockRejectedValue(dbError);
 
-      expect(
-        moveToTrashResource(mockResourceId, mockUserId)
-      ).rejects.toThrow('Database connection failed');
+      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
+        'Database connection failed'
+      );
     });
 
     it('should propagate errors from findDescendantsByPath', async () => {
@@ -720,9 +720,9 @@ describe('moveToTrashResource', () => {
         new Error('Failed to get descendants')
       );
 
-      expect(
-        moveToTrashResource(mockResourceId, mockUserId)
-      ).rejects.toThrow('Failed to get descendants');
+      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
+        'Failed to get descendants'
+      );
     });
 
     it('should propagate errors from bulkWrite', async () => {
