@@ -5,19 +5,18 @@
  * Covers creation, retrieval, renaming, and configuration of Suhuf.
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import {
+  configSuhufHandler,
   createSuhufHandler,
   getSuhufHandler,
   renameSuhufHandler,
-  configSuhufHandler,
 } from '../suhuf.controller';
 import * as createSuhufService from '../../services/suhuf/create-suhuf.service';
 import * as renameSuhufService from '../../services/suhuf/rename-suhuf.service';
 import SuhufModel from '../../models/suhuf.model';
-import * as assertUserRoleSession from '../../utils/assertUserRoleSession';
 import * as getUserIdUtil from '../../utils/getUserId';
 import { CREATED, OK } from '../../constants/http';
 import FileType from '../../constants/types/fileType';
@@ -26,7 +25,6 @@ import Direction from '../../constants/types/direction';
 vi.mock('../../services/suhuf/create-suhuf.service');
 vi.mock('../../services/suhuf/rename-suhuf.service');
 vi.mock('../../models/suhuf.model');
-vi.mock('../../utils/assertUserRoleSession');
 vi.mock('../../utils/getUserId');
 
 describe('Suhuf Controller', () => {
@@ -59,10 +57,6 @@ describe('Suhuf Controller', () => {
 
     mockNext = vi.fn();
 
-    // Default mocks for common utilities
-    vi.mocked(assertUserRoleSession.assertUserAndSession).mockReturnValue(
-      undefined
-    );
     vi.mocked(getUserIdUtil.getUserId).mockResolvedValue(mockUserId);
   });
 
@@ -93,10 +87,6 @@ describe('Suhuf Controller', () => {
         mockRequest as Request,
         mockResponse as Response,
         mockNext
-      );
-
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
       );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(createSuhufService.createSuhuf).toHaveBeenCalledWith({
@@ -213,9 +203,6 @@ describe('Suhuf Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(SuhufModel.findOne).toHaveBeenCalledWith({
         _id: mockSuhufId,
@@ -242,9 +229,6 @@ describe('Suhuf Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(renameSuhufService.renameSuhuf).toHaveBeenCalledWith(
         mockSuhufId.toString(),
@@ -358,9 +342,6 @@ describe('Suhuf Controller', () => {
         mockNext
       );
 
-      expect(assertUserRoleSession.assertUserAndSession).toHaveBeenCalledWith(
-        mockRequest
-      );
       expect(getUserIdUtil.getUserId).toHaveBeenCalledWith(mockRequest);
       expect(SuhufModel.findOneAndUpdate).toHaveBeenCalledWith(
         { _id: mockSuhufId.toString(), userId: mockUserId },

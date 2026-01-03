@@ -12,13 +12,15 @@ export type CreateResourceParams = {
   contentType?: string;
 };
 
+const collapseSlashes = (path: string) => path.replace(/\/+/g, '/');
+
 export const createResource = async (
   data: CreateResourceParams,
   userId: PrimaryId
 ) => {
   const { name, type, path, fileUrl, contentType } = data;
   const parentPath = decodeURIComponent(path);
-  const fullPath = `${decodeURIComponent(path)}/${name}`.replace(/\/+/g, '/');
+  const fullPath = collapseSlashes(`${parentPath}/${name}`);
 
   const parentFolder = await ResourceModel.findOne({
     path: parentPath,

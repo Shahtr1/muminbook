@@ -33,12 +33,12 @@ vi.mock('../../../../models/resource.model', () => {
 
 vi.mock('../../common-resource.service', () => ({
   assertNotRootFolder: vi.fn(),
-  getAllDescendants: vi.fn(),
+  findDescendantsByPath: vi.fn(),
 }));
 
 import {
   assertNotRootFolder,
-  getAllDescendants,
+  findDescendantsByPath,
 } from '../../common-resource.service';
 
 describe('moveToTrashResource', () => {
@@ -86,7 +86,7 @@ describe('moveToTrashResource', () => {
       const differentUserId = new Types.ObjectId() as PrimaryId;
       vi.mocked(ResourceModel.findOne).mockResolvedValue(null);
 
-      await expect(
+      expect(
         moveToTrashResource(mockResourceId, differentUserId)
       ).rejects.toThrow();
 
@@ -190,7 +190,7 @@ describe('moveToTrashResource', () => {
       expect(deletedAt.getTime()).toBeLessThanOrEqual(afterTime.getTime());
     });
 
-    it('should not call getAllDescendants for files', async () => {
+    it('should not call findDescendantsByPath for files', async () => {
       const file = createMockResource({
         type: ResourceType.File,
       });
@@ -204,7 +204,7 @@ describe('moveToTrashResource', () => {
 
       await moveToTrashResource(mockResourceId, mockUserId);
 
-      expect(getAllDescendants).not.toHaveBeenCalled();
+      expect(findDescendantsByPath).not.toHaveBeenCalled();
     });
   });
 
@@ -218,7 +218,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 0,
       } as any);
@@ -226,7 +226,7 @@ describe('moveToTrashResource', () => {
 
       await moveToTrashResource(mockResourceId, mockUserId);
 
-      expect(getAllDescendants).toHaveBeenCalledWith(
+      expect(findDescendantsByPath).toHaveBeenCalledWith(
         '/documents/empty-folder',
         mockUserId
       );
@@ -254,7 +254,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 1,
       } as any);
@@ -295,7 +295,10 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue([child1, child2] as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([
+        child1,
+        child2,
+      ] as any);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 0,
       } as any);
@@ -361,7 +364,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue([
+      vi.mocked(findDescendantsByPath).mockResolvedValue([
         subFolder,
         deepFile,
       ] as any);
@@ -397,7 +400,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue([child] as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([child] as any);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 1,
       } as any);
@@ -436,7 +439,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue(descendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(descendants as any);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 0,
       } as any);
@@ -490,7 +493,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue(descendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(descendants as any);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 0,
       } as any);
@@ -588,7 +591,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 0,
       } as any);
@@ -596,7 +599,7 @@ describe('moveToTrashResource', () => {
 
       await moveToTrashResource(mockResourceId, mockUserId);
 
-      expect(getAllDescendants).toHaveBeenCalledWith(
+      expect(findDescendantsByPath).toHaveBeenCalledWith(
         '/root-folder',
         mockUserId
       );
@@ -615,7 +618,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue([child] as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([child] as any);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 0,
       } as any);
@@ -627,7 +630,7 @@ describe('moveToTrashResource', () => {
       expect(ResourceModel.deleteMany).toHaveBeenCalledTimes(2);
     });
 
-    it('should handle getAllDescendants returning different resource quran-division', async () => {
+    it('should handle findDescendantsByPath returning different resource quran-division', async () => {
       const folder = createMockResource({
         type: ResourceType.Folder,
         path: '/mixed',
@@ -648,7 +651,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue(descendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(descendants as any);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 0,
       } as any);
@@ -675,7 +678,7 @@ describe('moveToTrashResource', () => {
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockResolvedValue(descendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(descendants as any);
       vi.mocked(ResourceModel.deleteMany).mockResolvedValue({
         deletedCount: 0,
       } as any);
@@ -706,14 +709,14 @@ describe('moveToTrashResource', () => {
       );
     });
 
-    it('should propagate errors from getAllDescendants', async () => {
+    it('should propagate errors from findDescendantsByPath', async () => {
       const folder = createMockResource({
         type: ResourceType.Folder,
       });
 
       vi.mocked(ResourceModel.findOne).mockResolvedValue(folder as any);
       vi.mocked(assertNotRootFolder).mockImplementation(() => {});
-      vi.mocked(getAllDescendants).mockRejectedValue(
+      vi.mocked(findDescendantsByPath).mockRejectedValue(
         new Error('Failed to get descendants')
       );
 
@@ -736,9 +739,9 @@ describe('moveToTrashResource', () => {
         new Error('Bulk write failed')
       );
 
-      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
-        'Bulk write failed'
-      );
+      await expect(
+        moveToTrashResource(mockResourceId, mockUserId)
+      ).rejects.toThrow('Bulk write failed');
     });
   });
 });

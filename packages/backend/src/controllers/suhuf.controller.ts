@@ -1,6 +1,5 @@
 import catchErrors from '../utils/catchErrors';
 import { CREATED, NOT_FOUND, OK } from '../constants/http';
-import { assertUserAndSession } from '../utils/assertUserRoleSession';
 import { getUserId } from '../utils/getUserId';
 import z from 'zod';
 import { createSuhuf } from '../services/suhuf/create-suhuf.service';
@@ -20,7 +19,6 @@ export const titleSchema = z.object({
 });
 
 export const createSuhufHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
 
   const parsed = createSuhufSchema.parse(req.body);
@@ -37,7 +35,6 @@ export const createSuhufHandler = catchErrors(async (req, res) => {
 });
 
 export const getSuhufHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
   const suhufId = new mongoose.Types.ObjectId(req.params.id);
 
@@ -49,7 +46,6 @@ export const getSuhufHandler = catchErrors(async (req, res) => {
 });
 
 export const renameSuhufHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
   const { title } = titleSchema.parse(req.body);
   const suhufId = req.params.id;
@@ -59,7 +55,6 @@ export const renameSuhufHandler = catchErrors(async (req, res) => {
 });
 
 export const configSuhufHandler = catchErrors(async (req, res) => {
-  assertUserAndSession(req);
   const userId = await getUserId(req);
   const suhufId = req.params.id;
 
