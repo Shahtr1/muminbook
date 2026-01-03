@@ -5,6 +5,7 @@ import { z } from 'zod';
 import appAssert from '../utils/appAssert';
 import { UserDocument } from '../models/user.model';
 
+// Not checked carefully yet
 export const getSessionsHandler = catchErrors(async (req, res) => {
   const sessions = await SessionModel.find(
     {
