@@ -86,7 +86,7 @@ describe('moveToTrashResource', () => {
       const differentUserId = new Types.ObjectId() as PrimaryId;
       vi.mocked(ResourceModel.findOne).mockResolvedValue(null);
 
-      await expect(
+      expect(
         moveToTrashResource(mockResourceId, differentUserId)
       ).rejects.toThrow();
 
@@ -103,9 +103,9 @@ describe('moveToTrashResource', () => {
         throw new AppError(BAD_REQUEST, 'Cannot modify root folder');
       });
 
-      await expect(
-        moveToTrashResource(mockResourceId, mockUserId)
-      ).rejects.toThrow('Cannot modify root folder');
+      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
+        'Cannot modify root folder'
+      );
 
       expect(assertNotRootFolder).toHaveBeenCalledWith(resource);
     });
