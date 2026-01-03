@@ -30,7 +30,7 @@ import appAssert from '../utils/appAssert';
 export const getResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
 
-  const folderPath = req.query.path as string;
+  const folderPath = req.query.path as string | undefined;
 
   const children = await getResourceChildren(folderPath, userId);
 
