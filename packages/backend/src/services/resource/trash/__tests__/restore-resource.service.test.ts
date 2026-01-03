@@ -1012,7 +1012,7 @@ describe('Restore Resource Service', () => {
       );
     });
 
-    it('should propagate errors from getAllDescendants', async () => {
+    it('should propagate errors from findDescendantsByPath', async () => {
       const folder = createMockResource({
         type: ResourceType.Folder,
       });

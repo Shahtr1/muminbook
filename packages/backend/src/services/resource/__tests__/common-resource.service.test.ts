@@ -3,14 +3,14 @@
  *
  * Tests for common resource service functions:
  * - assertNotRootFolder: Validates that a resource is not the root folder
- * - getAllDescendants: Retrieves all descendant resources of a parent path
+ * - findDescendantsByPath: Retrieves all descendant resources of a parent path
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
 import {
   assertNotRootFolder,
-  getAllDescendants,
+  findDescendantsByPath,
 } from '../common-resource.service';
 import ResourceModel, {
   ResourceDocument,
@@ -216,7 +216,7 @@ describe('Common Resource Service', () => {
     });
   });
 
-  describe('getAllDescendants', () => {
+  describe('findDescendantsByPath', () => {
     describe('Basic functionality', () => {
       it('should return all descendants including deleted by default', async () => {
         const mockDescendants = [
@@ -231,7 +231,7 @@ describe('Common Resource Service', () => {
 
         vi.mocked(ResourceModel.find).mockResolvedValue(mockDescendants as any);
 
-        const result = await getAllDescendants('/parent', mockUserId);
+        const result = await findDescendantsByPath('/parent', mockUserId);
 
         expect(result).toEqual(mockDescendants);
         expect(ResourceModel.find).toHaveBeenCalledWith({
@@ -247,7 +247,11 @@ describe('Common Resource Service', () => {
 
         vi.mocked(ResourceModel.find).mockResolvedValue(mockDescendants as any);
 
-        const result = await getAllDescendants('/parent', mockUserId, false);
+        const result = await findDescendantsByPath(
+          '/parent',
+          mockUserId,
+          false
+        );
 
         expect(result).toEqual(mockDescendants);
         expect(ResourceModel.find).toHaveBeenCalledWith({
@@ -260,7 +264,7 @@ describe('Common Resource Service', () => {
       it('should return empty array when no descendants exist', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        const result = await getAllDescendants('/parent', mockUserId);
+        const result = await findDescendantsByPath('/parent', mockUserId);
 
         expect(result).toEqual([]);
       });
@@ -272,7 +276,7 @@ describe('Common Resource Service', () => {
 
         vi.mocked(ResourceModel.find).mockResolvedValue(mockDescendants as any);
 
-        const result = await getAllDescendants('/parent', mockUserId, true);
+        const result = await findDescendantsByPath('/parent', mockUserId, true);
 
         expect(result).toEqual(mockDescendants);
         expect(ResourceModel.find).toHaveBeenCalledWith({
@@ -286,7 +290,7 @@ describe('Common Resource Service', () => {
       it('should escape special regex characters in path', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path.with.dots', mockUserId);
+        await findDescendantsByPath('/path.with.dots', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/path\\.with\\.dots/'),
@@ -297,7 +301,7 @@ describe('Common Resource Service', () => {
       it('should handle path with asterisk', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path*with*asterisk', mockUserId);
+        await findDescendantsByPath('/path*with*asterisk', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/path\\*with\\*asterisk/'),
@@ -308,7 +312,7 @@ describe('Common Resource Service', () => {
       it('should handle path with plus sign', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/lost+found', mockUserId);
+        await findDescendantsByPath('/lost+found', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/lost\\+found/'),
@@ -319,7 +323,7 @@ describe('Common Resource Service', () => {
       it('should handle path with question mark', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path?with?questions', mockUserId);
+        await findDescendantsByPath('/path?with?questions', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/path\\?with\\?questions/'),
@@ -330,7 +334,7 @@ describe('Common Resource Service', () => {
       it('should handle path with caret and dollar signs', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path^with$special', mockUserId);
+        await findDescendantsByPath('/path^with$special', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/path\\^with\\$special/'),
@@ -341,7 +345,7 @@ describe('Common Resource Service', () => {
       it('should handle path with curly braces', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path{with}braces', mockUserId);
+        await findDescendantsByPath('/path{with}braces', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/path\\{with\\}braces/'),
@@ -352,7 +356,7 @@ describe('Common Resource Service', () => {
       it('should handle path with parentheses', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path(with)parens', mockUserId);
+        await findDescendantsByPath('/path(with)parens', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/path\\(with\\)parens/'),
@@ -363,7 +367,7 @@ describe('Common Resource Service', () => {
       it('should handle path with pipe', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path|with|pipes', mockUserId);
+        await findDescendantsByPath('/path|with|pipes', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/path\\|with\\|pipes/'),
@@ -374,7 +378,7 @@ describe('Common Resource Service', () => {
       it('should handle path with square brackets', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path[with]brackets', mockUserId);
+        await findDescendantsByPath('/path[with]brackets', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/path\\[with\\]brackets/'),
@@ -385,7 +389,7 @@ describe('Common Resource Service', () => {
       it('should handle path with backslash', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path\\with\\backslash', mockUserId);
+        await findDescendantsByPath('/path\\with\\backslash', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/path\\\\with\\\\backslash/'),
@@ -396,7 +400,7 @@ describe('Common Resource Service', () => {
       it('should handle path with multiple special characters', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/path.*+?^${}()|[]\\special', mockUserId);
+        await findDescendantsByPath('/path.*+?^${}()|[]\\special', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp(
@@ -417,7 +421,7 @@ describe('Common Resource Service', () => {
 
         vi.mocked(ResourceModel.find).mockResolvedValue(mockDescendants as any);
 
-        const result = await getAllDescendants('/parent', mockUserId);
+        const result = await findDescendantsByPath('/parent', mockUserId);
 
         expect(result).toHaveLength(3);
         expect(result).toEqual(mockDescendants);
@@ -426,7 +430,7 @@ describe('Common Resource Service', () => {
       it('should not match sibling paths', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/folder1', mockUserId);
+        await findDescendantsByPath('/folder1', mockUserId);
 
         // Regex should be ^/folder1/ which won't match /folder2/...
         const calledRegex = (
@@ -438,7 +442,7 @@ describe('Common Resource Service', () => {
       it('should not match parent path itself', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/parent', mockUserId);
+        await findDescendantsByPath('/parent', mockUserId);
 
         const calledRegex = (
           vi.mocked(ResourceModel.find).mock.calls as any
@@ -449,7 +453,7 @@ describe('Common Resource Service', () => {
       it('should not match paths that only partially match', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/doc', mockUserId);
+        await findDescendantsByPath('/doc', mockUserId);
 
         const calledRegex = (
           vi.mocked(ResourceModel.find).mock.calls as any
@@ -464,7 +468,7 @@ describe('Common Resource Service', () => {
 
         vi.mocked(ResourceModel.find).mockResolvedValue(mockDescendants as any);
 
-        const result = await getAllDescendants('/a', mockUserId);
+        const result = await findDescendantsByPath('/a', mockUserId);
 
         expect(result).toHaveLength(1);
       });
@@ -477,7 +481,7 @@ describe('Common Resource Service', () => {
 
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/parent', userId1);
+        await findDescendantsByPath('/parent', userId1);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: expect.any(RegExp),
@@ -485,7 +489,7 @@ describe('Common Resource Service', () => {
         });
 
         vi.clearAllMocks();
-        await getAllDescendants('/parent', userId2);
+        await findDescendantsByPath('/parent', userId2);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: expect.any(RegExp),
@@ -496,7 +500,7 @@ describe('Common Resource Service', () => {
       it('should not return descendants from different users', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/parent', mockUserId);
+        await findDescendantsByPath('/parent', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -510,7 +514,7 @@ describe('Common Resource Service', () => {
       it('should handle empty parent path', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('', mockUserId);
+        await findDescendantsByPath('', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/'),
@@ -521,7 +525,7 @@ describe('Common Resource Service', () => {
       it('should handle root path', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/', mockUserId);
+        await findDescendantsByPath('/', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^//'),
@@ -532,7 +536,7 @@ describe('Common Resource Service', () => {
       it('should handle path with trailing slash', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/parent/', mockUserId);
+        await findDescendantsByPath('/parent/', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/parent//'),
@@ -543,7 +547,7 @@ describe('Common Resource Service', () => {
       it('should handle path with multiple consecutive slashes', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/parent//subfolder', mockUserId);
+        await findDescendantsByPath('/parent//subfolder', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/parent//subfolder/'),
@@ -555,7 +559,7 @@ describe('Common Resource Service', () => {
         const longPath = '/a'.repeat(100);
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants(longPath, mockUserId);
+        await findDescendantsByPath(longPath, mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalled();
       });
@@ -563,7 +567,7 @@ describe('Common Resource Service', () => {
       it('should handle path with unicode characters', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/folder/文件夹/папка', mockUserId);
+        await findDescendantsByPath('/folder/文件夹/папка', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/folder/文件夹/папка/'),
@@ -574,7 +578,7 @@ describe('Common Resource Service', () => {
       it('should handle path with emojis', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/folder/📁/file', mockUserId);
+        await findDescendantsByPath('/folder/📁/file', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/folder/📁/file/'),
@@ -585,7 +589,7 @@ describe('Common Resource Service', () => {
       it('should handle path with spaces', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-        await getAllDescendants('/folder with spaces', mockUserId);
+        await findDescendantsByPath('/folder with spaces', mockUserId);
 
         expect(ResourceModel.find).toHaveBeenCalledWith({
           path: new RegExp('^/folder with spaces/'),
@@ -604,8 +608,12 @@ describe('Common Resource Service', () => {
           .mockResolvedValueOnce(allDescendants as any)
           .mockResolvedValueOnce(activeDescendants as any);
 
-        const resultAll = await getAllDescendants('/parent', mockUserId, true);
-        const resultActive = await getAllDescendants(
+        const resultAll = await findDescendantsByPath(
+          '/parent',
+          mockUserId,
+          true
+        );
+        const resultActive = await findDescendantsByPath(
           '/parent',
           mockUserId,
           false
@@ -622,7 +630,7 @@ describe('Common Resource Service', () => {
 
         vi.mocked(ResourceModel.find).mockResolvedValue(mockDescendants as any);
 
-        const result = await getAllDescendants('/parent', mockUserId);
+        const result = await findDescendantsByPath('/parent', mockUserId);
 
         expect(result).toHaveLength(1000);
       });
@@ -633,15 +641,15 @@ describe('Common Resource Service', () => {
         const dbError = new Error('Database connection failed');
         vi.mocked(ResourceModel.find).mockRejectedValue(dbError);
 
-        await expect(getAllDescendants('/parent', mockUserId)).rejects.toThrow(
-          'Database connection failed'
-        );
+        await expect(
+          findDescendantsByPath('/parent', mockUserId)
+        ).rejects.toThrow('Database connection failed');
       });
 
       it('should handle null response from database', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue(null as any);
 
-        const result = await getAllDescendants('/parent', mockUserId);
+        const result = await findDescendantsByPath('/parent', mockUserId);
 
         expect(result).toBeNull();
       });
@@ -649,7 +657,7 @@ describe('Common Resource Service', () => {
       it('should handle undefined response from database', async () => {
         vi.mocked(ResourceModel.find).mockResolvedValue(undefined as any);
 
-        const result = await getAllDescendants('/parent', mockUserId);
+        const result = await findDescendantsByPath('/parent', mockUserId);
 
         expect(result).toBeUndefined();
       });

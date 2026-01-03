@@ -190,7 +190,7 @@ describe('moveToTrashResource', () => {
       expect(deletedAt.getTime()).toBeLessThanOrEqual(afterTime.getTime());
     });
 
-    it('should not call getAllDescendants for files', async () => {
+    it('should not call findDescendantsByPath for files', async () => {
       const file = createMockResource({
         type: ResourceType.File,
       });
@@ -630,7 +630,7 @@ describe('moveToTrashResource', () => {
       expect(ResourceModel.deleteMany).toHaveBeenCalledTimes(2);
     });
 
-    it('should handle getAllDescendants returning different resource quran-division', async () => {
+    it('should handle findDescendantsByPath returning different resource quran-division', async () => {
       const folder = createMockResource({
         type: ResourceType.Folder,
         path: '/mixed',
@@ -709,7 +709,7 @@ describe('moveToTrashResource', () => {
       );
     });
 
-    it('should propagate errors from getAllDescendants', async () => {
+    it('should propagate errors from findDescendantsByPath', async () => {
       const folder = createMockResource({
         type: ResourceType.Folder,
       });
