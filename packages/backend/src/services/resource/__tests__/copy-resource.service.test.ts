@@ -37,7 +37,7 @@ vi.mock('../../../models/resource.model', () => {
 
 vi.mock('../common-resource.service', () => ({
   assertNotRootFolder: vi.fn(),
-  getAllDescendants: vi.fn(),
+  findDescendantsByPath: vi.fn(),
 }));
 
 vi.mock('../helpers/copyHelpers', () => ({
@@ -48,7 +48,7 @@ vi.mock('../helpers/copyHelpers', () => ({
 
 import {
   assertNotRootFolder,
-  getAllDescendants,
+  findDescendantsByPath,
 } from '../common-resource.service';
 import {
   generateCopyName,
@@ -288,7 +288,7 @@ describe('Copy Resource Service', () => {
         newId: new Types.ObjectId() as PrimaryId,
         op: { insertOne: { document: {} } },
       });
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await expect(
@@ -314,7 +314,7 @@ describe('Copy Resource Service', () => {
         newId: new Types.ObjectId() as PrimaryId,
         op: { insertOne: { document: {} } },
       });
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await expect(
@@ -492,7 +492,7 @@ describe('Copy Resource Service', () => {
         newId: mockNewId,
         op: mockInsertOp,
       });
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await copyResource(
@@ -502,7 +502,7 @@ describe('Copy Resource Service', () => {
       );
 
       expect(result).toEqual({ message: 'Copied successfully' });
-      expect(getAllDescendants).toHaveBeenCalledWith(
+      expect(findDescendantsByPath).toHaveBeenCalledWith(
         'my-files/documents/empty-folder',
         mockUserId,
         false
@@ -560,7 +560,9 @@ describe('Copy Resource Service', () => {
         newId: mockNewId,
         op: mockRootOp,
       });
-      vi.mocked(getAllDescendants).mockResolvedValue(mockDescendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(
+        mockDescendants as any
+      );
       vi.mocked(buildClonedDescendants).mockReturnValue(mockDescendantOps);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
@@ -571,7 +573,7 @@ describe('Copy Resource Service', () => {
       );
 
       expect(result).toEqual({ message: 'Copied successfully' });
-      expect(getAllDescendants).toHaveBeenCalledWith(
+      expect(findDescendantsByPath).toHaveBeenCalledWith(
         'my-files/documents/project',
         mockUserId,
         false
@@ -610,7 +612,7 @@ describe('Copy Resource Service', () => {
         newId: new Types.ObjectId() as PrimaryId,
         op: { insertOne: { document: {} } },
       });
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await copyResource(mockResourceId, 'my-files/target', mockUserId);
@@ -656,7 +658,9 @@ describe('Copy Resource Service', () => {
         newId: mockNewId,
         op: { insertOne: { document: {} } },
       });
-      vi.mocked(getAllDescendants).mockResolvedValue(mockDescendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(
+        mockDescendants as any
+      );
       vi.mocked(buildClonedDescendants).mockReturnValue(mockDescendantOps);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 

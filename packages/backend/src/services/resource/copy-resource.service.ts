@@ -10,7 +10,7 @@ import {
 } from './helpers/copyHelpers';
 import {
   assertNotRootFolder,
-  getAllDescendants,
+  findDescendantsByPath,
 } from './common-resource.service';
 
 export const copyResource = async (
@@ -63,7 +63,11 @@ export const copyResource = async (
   ops.push(rootInsertOp);
 
   if (resource.type === ResourceType.Folder) {
-    const descendants = await getAllDescendants(resource.path, userId, false);
+    const descendants = await findDescendantsByPath(
+      resource.path,
+      userId,
+      false
+    );
     if (descendants.length > 0) {
       const descendantOps = buildClonedDescendants(
         descendants,

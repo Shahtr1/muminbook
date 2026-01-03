@@ -37,12 +37,12 @@ vi.mock('../../../models/resource.model', () => {
 
 vi.mock('../common-resource.service', () => ({
   assertNotRootFolder: vi.fn(),
-  getAllDescendants: vi.fn(),
+  findDescendantsByPath: vi.fn(),
 }));
 
 import {
   assertNotRootFolder,
-  getAllDescendants,
+  findDescendantsByPath,
 } from '../common-resource.service';
 
 describe('Move Resource Service', () => {
@@ -270,7 +270,7 @@ describe('Move Resource Service', () => {
         .mockResolvedValueOnce(similarDestination as any)
         .mockResolvedValueOnce(null); // No conflict
 
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await expect(
@@ -294,7 +294,7 @@ describe('Move Resource Service', () => {
         .mockResolvedValueOnce(destination as any)
         .mockResolvedValueOnce(null); // No conflict
 
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await expect(
@@ -548,7 +548,7 @@ describe('Move Resource Service', () => {
         .mockResolvedValueOnce(destination as any)
         .mockResolvedValueOnce(null); // No conflict
 
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await moveResource(
@@ -558,7 +558,7 @@ describe('Move Resource Service', () => {
       );
 
       expect(result).toEqual({ message: 'Moved successfully' });
-      expect(getAllDescendants).toHaveBeenCalledWith(
+      expect(findDescendantsByPath).toHaveBeenCalledWith(
         'my-files/documents/empty-folder',
         mockUserId,
         false
@@ -615,7 +615,9 @@ describe('Move Resource Service', () => {
         .mockResolvedValueOnce(destination as any)
         .mockResolvedValueOnce(null); // No conflict
 
-      vi.mocked(getAllDescendants).mockResolvedValue(mockDescendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(
+        mockDescendants as any
+      );
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await moveResource(
@@ -625,7 +627,7 @@ describe('Move Resource Service', () => {
       );
 
       expect(result).toEqual({ message: 'Moved successfully' });
-      expect(getAllDescendants).toHaveBeenCalledWith(
+      expect(findDescendantsByPath).toHaveBeenCalledWith(
         'my-files/documents/project',
         mockUserId,
         false
@@ -705,7 +707,9 @@ describe('Move Resource Service', () => {
         .mockResolvedValueOnce(destination as any)
         .mockResolvedValueOnce(null); // No conflict
 
-      vi.mocked(getAllDescendants).mockResolvedValue(mockDescendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(
+        mockDescendants as any
+      );
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await moveResource(mockResourceId, 'my-files/new', mockUserId);
@@ -770,7 +774,9 @@ describe('Move Resource Service', () => {
         .mockResolvedValueOnce(destination as any)
         .mockResolvedValueOnce(null); // No conflict
 
-      vi.mocked(getAllDescendants).mockResolvedValue(mockDescendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(
+        mockDescendants as any
+      );
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await moveResource(
@@ -898,7 +904,7 @@ describe('Move Resource Service', () => {
         .mockResolvedValueOnce(destination as any)
         .mockResolvedValueOnce(null); // No conflict
 
-      vi.mocked(getAllDescendants).mockResolvedValue([
+      vi.mocked(findDescendantsByPath).mockResolvedValue([
         mockDescendants[0],
       ] as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
@@ -951,7 +957,9 @@ describe('Move Resource Service', () => {
         .mockResolvedValueOnce(destination as any)
         .mockResolvedValueOnce(null); // No conflict
 
-      vi.mocked(getAllDescendants).mockResolvedValue(mockDescendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(
+        mockDescendants as any
+      );
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await moveResource(mockResourceId, 'my-files/new', mockUserId);

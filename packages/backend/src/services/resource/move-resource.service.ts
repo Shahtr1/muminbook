@@ -5,7 +5,7 @@ import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../constants/http';
 import ResourceType from '../../constants/types/resourceType';
 import {
   assertNotRootFolder,
-  getAllDescendants,
+  findDescendantsByPath,
 } from './common-resource.service';
 
 export const moveResource = async (
@@ -50,7 +50,11 @@ export const moveResource = async (
   const updates: any[] = [];
 
   if (resource.type === ResourceType.Folder) {
-    const descendants = await getAllDescendants(resource.path, userId, false);
+    const descendants = await findDescendantsByPath(
+      resource.path,
+      userId,
+      false
+    );
 
     for (const doc of descendants) {
       const updatedPath = doc.path.replace(resource.path, newPath);

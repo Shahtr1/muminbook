@@ -5,7 +5,7 @@ import { NOT_FOUND } from '../../../constants/http';
 import ResourceType from '../../../constants/types/resourceType';
 import {
   assertNotRootFolder,
-  getAllDescendants,
+  findDescendantsByPath,
 } from '../common-resource.service';
 
 export const moveToTrashResource = async (
@@ -29,7 +29,7 @@ export const moveToTrashResource = async (
 
   // Step 2: Handle folder descendants
   if (resource.type === ResourceType.Folder) {
-    const descendants = await getAllDescendants(resource.path, userId);
+    const descendants = await findDescendantsByPath(resource.path, userId);
 
     for (const child of descendants) {
       // Remove conflicting trashed child path if exists

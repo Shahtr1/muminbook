@@ -6,7 +6,7 @@ import ResourceType from '../../constants/types/resourceType';
 import { thirtyDaysAgo } from '../../utils/date';
 import {
   assertNotRootFolder,
-  getAllDescendants,
+  findDescendantsByPath,
 } from './common-resource.service';
 
 export const deleteResource = async (
@@ -19,7 +19,7 @@ export const deleteResource = async (
   assertNotRootFolder(resource);
 
   if (resource.type === ResourceType.Folder) {
-    const descendants = await getAllDescendants(resource.path, userId);
+    const descendants = await findDescendantsByPath(resource.path, userId);
 
     await ResourceModel.bulkWrite([
       ...descendants.map((child) => ({

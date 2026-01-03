@@ -15,7 +15,8 @@ export const assertNotRootFolder = (
   appAssert(!isRoot, BAD_REQUEST, message);
 };
 
-export const getAllDescendants = async (
+// Renamed for clarity: returns all descendant resources under a given path for a user
+export const findDescendantsByPath = async (
   parentPath: string,
   userId: PrimaryId,
   includeDeleted = true
@@ -34,3 +35,6 @@ export const getAllDescendants = async (
 
   return ResourceModel.find(filter);
 };
+
+// Backwards-compatible alias for code that still imports the old name
+export const getAllDescendants = findDescendantsByPath;

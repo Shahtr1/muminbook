@@ -35,14 +35,14 @@ vi.mock('../../../../models/resource.model', () => {
 });
 
 vi.mock('../../common-resource.service', () => ({
-  getAllDescendants: vi.fn(),
+  findDescendantsByPath: vi.fn(),
 }));
 
 vi.mock('../helpers/getOrCreateLostAndFound', () => ({
   getOrCreateLostAndFound: vi.fn(),
 }));
 
-import { getAllDescendants } from '../../common-resource.service';
+import { findDescendantsByPath } from '../../common-resource.service';
 
 describe('Restore Resource Service', () => {
   const mockUserId = new Types.ObjectId() as PrimaryId;
@@ -251,13 +251,13 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await restoreResource(mockResourceId, mockUserId);
 
       expect(result).toEqual({ message: 'Restored successfully' });
-      expect(getAllDescendants).toHaveBeenCalledWith(
+      expect(findDescendantsByPath).toHaveBeenCalledWith(
         '/documents/empty-folder',
         mockUserId,
         true
@@ -300,7 +300,10 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(getAllDescendants).mockResolvedValue([child1, child2] as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([
+        child1,
+        child2,
+      ] as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreResource(mockResourceId, mockUserId);
@@ -381,7 +384,7 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(getAllDescendants).mockResolvedValue([
+      vi.mocked(findDescendantsByPath).mockResolvedValue([
         subFolder,
         deepFile,
       ] as any);
@@ -472,7 +475,7 @@ describe('Restore Resource Service', () => {
       vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
         lostAndFound as any
       );
-      vi.mocked(getAllDescendants).mockResolvedValue([]);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await restoreResource(mockResourceId, mockUserId);
@@ -525,7 +528,7 @@ describe('Restore Resource Service', () => {
       vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
         lostAndFound as any
       );
-      vi.mocked(getAllDescendants).mockResolvedValue([child] as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([child] as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreResource(mockResourceId, mockUserId);
@@ -783,7 +786,7 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(getAllDescendants).mockResolvedValue([child] as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([child] as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreAllResources(mockUserId);
@@ -871,7 +874,7 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(getAllDescendants).mockResolvedValue(descendants as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue(descendants as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreResource(mockResourceId, mockUserId);
@@ -975,7 +978,7 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(getAllDescendants).mockResolvedValue([
+      vi.mocked(findDescendantsByPath).mockResolvedValue([
         subFolder,
         deepFile,
       ] as any);
@@ -1025,7 +1028,7 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(getAllDescendants).mockRejectedValue(
+      vi.mocked(findDescendantsByPath).mockRejectedValue(
         new Error('Failed to get descendants')
       );
 
