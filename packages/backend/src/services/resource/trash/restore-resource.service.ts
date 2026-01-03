@@ -1,3 +1,14 @@
+/**
+ * @fileoverview Restore Resource Service
+ *
+ * Service for restoring resources from trash:
+ * - restoreResource: Restores a single resource from trash
+ * - restoreAllResources: Restores all possible resources from trash
+ * - Handles parent validation and lost+found restoration
+ * - Manages conflict detection
+ * - Updates descendants paths and deleted status
+ */
+
 import ResourceModel from '../../../models/resource.model';
 import ResourceType from '../../../constants/types/resourceType';
 import { PrimaryId } from '../../../constants/primaryId';
