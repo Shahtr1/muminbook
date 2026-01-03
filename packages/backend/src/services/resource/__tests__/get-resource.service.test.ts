@@ -5,6 +5,7 @@ import * as svc from '../get-resource.service';
 import ResourceModel from '../../../models/resource.model';
 import ResourceType from '../../../constants/types/resourceType';
 import { NOT_FOUND } from '../../../constants/http';
+import { ResourcePreview } from '../get-resource.service';
 
 const oid = () => new mongoose.Types.ObjectId();
 
@@ -37,19 +38,19 @@ describe('getResourceChildren', () => {
     const folderId = oid();
     findOneSpy.mockResolvedValue({ _id: folderId });
 
-    const lostFound = {
+    const lostFound: ResourcePreview = {
       _id: oid(),
       name: 'lost+found',
       type: ResourceType.Folder,
       pinned: false,
     };
-    const otherFolder = {
+    const otherFolder: ResourcePreview = {
       _id: oid(),
       name: 'z-folder',
       type: ResourceType.Folder,
       pinned: false,
     };
-    const file = {
+    const file: ResourcePreview = {
       _id: oid(),
       name: 'a.txt',
       type: ResourceType.File,

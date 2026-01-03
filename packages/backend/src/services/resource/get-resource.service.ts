@@ -4,7 +4,7 @@ import ResourceType from '../../constants/types/resourceType';
 import appAssert from '../../utils/appAssert';
 import { NOT_FOUND } from '../../constants/http';
 
-type ResourcePreview = Pick<
+export type ResourcePreview = Pick<
   ResourceDocument,
   '_id' | 'name' | 'type' | 'pinned'
 > & {
