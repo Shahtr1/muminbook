@@ -1,5 +1,5 @@
 import catchErrors from '../utils/catchErrors';
-import { CREATED, OK } from '../constants/http';
+import { CREATED, NOT_FOUND, OK } from '../constants/http';
 import ResourceType from '../constants/types/resourceType';
 import {
   copyResource,
@@ -25,6 +25,7 @@ import {
 import { isTrashEmpty } from '../services/resource/trash/isTrashEmpty-resource.service';
 import { dstPathSchema, resourceSchema } from './schemas/resource.schema';
 import { renameSchema } from './schemas/common.schema';
+import appAssert from '../utils/appAssert';
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
@@ -52,7 +53,11 @@ export const createResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const deleteResourceHandler = catchErrors(async (req, res) => {
-  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+  const { id } = req.params;
+
+  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
+
+  const resourceId = new mongoose.Types.ObjectId(id);
 
   const userId = await getUserId(req);
 
@@ -62,7 +67,11 @@ export const deleteResourceHandler = catchErrors(async (req, res) => {
 });
 
 export const moveToTrashResourceHandler = catchErrors(async (req, res) => {
-  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+  const { id } = req.params;
+
+  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
+
+  const resourceId = new mongoose.Types.ObjectId(id);
 
   const userId = await getUserId(req);
 
@@ -74,7 +83,11 @@ export const moveToTrashResourceHandler = catchErrors(async (req, res) => {
 export const restoreResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
 
-  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+  const { id } = req.params;
+
+  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
+
+  const resourceId = new mongoose.Types.ObjectId(id);
   const { message } = await restoreResource(resourceId, userId);
 
   return res.status(OK).json({ message });
@@ -105,7 +118,12 @@ export const emptyTrashHandler = catchErrors(async (req, res) => {
 
 export const renameResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
-  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+
+  const { id } = req.params;
+
+  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
+
+  const resourceId = new mongoose.Types.ObjectId(id);
 
   const { name } = renameSchema.parse(req.body);
   const response = await renameResource(resourceId, name, userId);
@@ -115,7 +133,12 @@ export const renameResourceHandler = catchErrors(async (req, res) => {
 
 export const moveResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
-  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+
+  const { id } = req.params;
+
+  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
+
+  const resourceId = new mongoose.Types.ObjectId(id);
   const { destinationPath } = dstPathSchema.parse(req.body);
 
   const result = await moveResource(resourceId, destinationPath, userId);
@@ -124,7 +147,12 @@ export const moveResourceHandler = catchErrors(async (req, res) => {
 
 export const copyResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
-  const resourceId = new mongoose.Types.ObjectId(req.params.id);
+
+  const { id } = req.params;
+
+  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
+
+  const resourceId = new mongoose.Types.ObjectId(id);
   const { destinationPath } = dstPathSchema.parse(req.body);
 
   const result = await copyResource(resourceId, destinationPath, userId);
