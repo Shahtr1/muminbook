@@ -18,7 +18,7 @@ export const moveResource = async (
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, 'Resource not found');
 
-  assertNotRootFolder(resource);
+  assertNotRootFolder(resource, 'Cannot move root folder');
 
   const destinationFolder = await ResourceModel.findOne({
     path: destinationPath,
