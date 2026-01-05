@@ -16,6 +16,7 @@ import appAssert from '../../../utils/appAssert';
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../../constants/http';
 import { findOrCreateLostAndFound } from '../utils/findOrCreateLostAndFound';
 import { findDescendantsByPath } from '../common-resource.service';
+import { normalizeSlashes } from '../utils/normalizeSlashes';
 
 const hasConflict = async (path: string, userId: PrimaryId) => {
   return ResourceModel.findOne({
@@ -61,7 +62,7 @@ const buildRestoreUpdates = async ({
 
   for (const desc of descendants) {
     const relativePath = desc.path.replace(resource.path, '');
-    const newPath = `${newBasePath}${relativePath}`.replace(/\/+/g, '/');
+    const newPath = normalizeSlashes(`${newBasePath}${relativePath}`);
 
     updates.push({
       updateOne: {
