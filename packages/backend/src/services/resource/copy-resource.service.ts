@@ -12,6 +12,9 @@ import {
   assertNotRootFolder,
   findDescendantsByPath,
 } from './common-resource.service';
+import { normalizeSlashes } from './utils/normalizeSlashes';
+
+const removeTrailingSlash = (path: string) => path.replace(/\/+$/, '');
 
 export const copyResource = async (
   resourceId: PrimaryId,
@@ -21,6 +24,7 @@ export const copyResource = async (
   destinationPath = decodeURIComponent(destinationPath);
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, 'Resource not found');
+
   assertNotRootFolder(resource, 'Cannot copy root folder');
 
   const destinationFolder = await ResourceModel.findOne({
@@ -32,13 +36,13 @@ export const copyResource = async (
   appAssert(destinationFolder, NOT_FOUND, 'Destination folder not found');
 
   // Define and normalize both paths before comparison
-  const sourcePath = resource.path.replace(/\/+$/, ''); // remove trailing slash
-  const destPath = destinationPath.replace(/\/+$/, '');
+  const sourcePath = removeTrailingSlash(resource.path);
+  const normDestPath = removeTrailingSlash(destinationPath);
 
   appAssert(
     !(
       resource.type === ResourceType.Folder &&
-      (destPath === sourcePath || destPath.startsWith(sourcePath + '/'))
+      (normDestPath === sourcePath || normDestPath.startsWith(sourcePath + '/'))
     ),
     BAD_REQUEST,
     'Cannot copy a folder into itself or its subfolders.'
@@ -49,7 +53,7 @@ export const copyResource = async (
     destinationPath,
     userId
   );
-  const baseNewPath = `${destinationPath}/${copyName}`.replace(/\/+/g, '/');
+  const baseNewPath = normalizeSlashes(`${destinationPath}/${copyName}`);
 
   const ops: any[] = [];
 
