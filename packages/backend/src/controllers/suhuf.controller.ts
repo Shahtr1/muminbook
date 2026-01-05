@@ -1,22 +1,13 @@
 import catchErrors from '../utils/catchErrors';
 import { CREATED, NOT_FOUND, OK } from '../constants/http';
 import { getUserId } from '../utils/getUserId';
-import z from 'zod';
 import { createSuhuf } from '../services/suhuf/create-suhuf.service';
 import mongoose from 'mongoose';
 import SuhufModel from '../models/suhuf.model';
 import appAssert from '../utils/appAssert';
 import { renameSuhuf } from '../services/suhuf/rename-suhuf.service';
-import { nameSchema } from './schemas/common.schema';
 import { suhufConfigSchema } from './schemas/suhuf-config.schema';
-
-export const createSuhufSchema = z.object({
-  title: z.string().min(1).max(100).optional(),
-});
-
-export const titleSchema = z.object({
-  title: nameSchema,
-});
+import { createSuhufSchema, titleSchema } from './schemas/suhuf.schema';
 
 export const createSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
