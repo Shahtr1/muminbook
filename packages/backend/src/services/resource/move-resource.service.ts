@@ -7,6 +7,7 @@ import {
   assertNotRootFolder,
   findDescendantsByPath,
 } from './common-resource.service';
+import { normalizeSlashes } from './utils/normalizeSlashes';
 
 export const moveResource = async (
   resourceId: PrimaryId,
@@ -16,6 +17,7 @@ export const moveResource = async (
   destinationPath = decodeURIComponent(destinationPath);
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, 'Resource not found');
+
   assertNotRootFolder(resource);
 
   const destinationFolder = await ResourceModel.findOne({
@@ -35,7 +37,7 @@ export const moveResource = async (
     'Cannot copy a folder into itself or its subfolders.'
   );
 
-  const newPath = `${destinationPath}/${resource.name}`.replace(/\/+/g, '/');
+  const newPath = normalizeSlashes(`${destinationPath}/${resource.name}`);
 
   const conflict = await ResourceModel.findOne({
     path: newPath,
