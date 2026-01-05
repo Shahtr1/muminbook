@@ -175,6 +175,7 @@ export const getOverviewHandler = catchErrors(async (req, res) => {
 
   return res.status(OK).json(overview);
 });
+
 export const togglePinResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
   const { id } = req.params;
