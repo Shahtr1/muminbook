@@ -14,7 +14,7 @@ import ResourceType from '../../../constants/types/resourceType';
 import { PrimaryId } from '../../../constants/primaryId';
 import appAssert from '../../../utils/appAssert';
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../../constants/http';
-import { getOrCreateLostAndFound } from '../helpers/getOrCreateLostAndFound';
+import { findOrCreateLostAndFound } from '../utils/findOrCreateLostAndFound';
 import { findDescendantsByPath } from '../common-resource.service';
 
 const hasConflict = async (path: string, userId: PrimaryId) => {
@@ -107,7 +107,7 @@ export const restoreResource = async (
   appAssert(resource.deleted, BAD_REQUEST, 'Resource is not in trash');
 
   if (await shouldRestoreAsLostAndFound(resource, userId)) {
-    const lostAndFound = await getOrCreateLostAndFound(userId);
+    const lostAndFound = await findOrCreateLostAndFound(userId);
     const newBasePath = `${lostAndFound.path}/${resource.name}`.replace(
       /\/+/g,
       '/'
@@ -155,7 +155,7 @@ export const restoreAllResources = async (userId: PrimaryId) => {
     }
 
     const lostAndFound = isLostAndFound
-      ? await getOrCreateLostAndFound(userId)
+      ? await findOrCreateLostAndFound(userId)
       : null;
 
     const newBasePath = isLostAndFound

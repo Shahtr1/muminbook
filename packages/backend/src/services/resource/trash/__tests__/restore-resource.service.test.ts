@@ -38,8 +38,8 @@ vi.mock('../../common-resource.service', () => ({
   findDescendantsByPath: vi.fn(),
 }));
 
-vi.mock('../helpers/getOrCreateLostAndFound', () => ({
-  getOrCreateLostAndFound: vi.fn(),
+vi.mock('../helpers/findOrCreateLostAndFound', () => ({
+  findOrCreateLostAndFound: vi.fn(),
 }));
 
 import { findDescendantsByPath } from '../../common-resource.service';
@@ -427,7 +427,7 @@ describe('Restore Resource Service', () => {
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(file as any) // Get resource
         .mockResolvedValueOnce(null) // Parent does not exist
-        .mockResolvedValueOnce(rootFolder as any); // Root folder for getOrCreateLostAndFound
+        .mockResolvedValueOnce(rootFolder as any); // Root folder for findOrCreateLostAndFound
 
       vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
         lostAndFound as any
@@ -1039,7 +1039,7 @@ describe('Restore Resource Service', () => {
       );
     });
 
-    it('should propagate errors from getOrCreateLostAndFound', async () => {
+    it('should propagate errors from findOrCreateLostAndFound', async () => {
       const file = createMockResource({
         path: '/deleted/file.pdf',
       });
@@ -1047,7 +1047,7 @@ describe('Restore Resource Service', () => {
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(file as any)
         .mockResolvedValueOnce(null)
-        .mockRejectedValueOnce(new Error('Root folder not found')); // getOrCreateLostAndFound needs root folder
+        .mockRejectedValueOnce(new Error('Root folder not found')); // findOrCreateLostAndFound needs root folder
 
       await expect(restoreResource(mockResourceId, mockUserId)).rejects.toThrow(
         'Root folder not found'
