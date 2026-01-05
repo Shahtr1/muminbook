@@ -73,7 +73,7 @@ describe('createResource service', () => {
   it('should throw NOT_FOUND if parent folder does not exist', async () => {
     vi.mocked(ResourceModel.findOne).mockResolvedValueOnce(null);
 
-    expect(
+    await expect(
       createResource(
         {
           name: 'child',
@@ -104,7 +104,7 @@ describe('createResource service', () => {
       .mockResolvedValueOnce(parentFolder as any)
       .mockResolvedValueOnce({ type: ResourceType.File } as any);
 
-    expect(
+    await expect(
       createResource(
         {
           name: 'file.txt',
@@ -123,7 +123,7 @@ describe('createResource service', () => {
       .mockResolvedValueOnce(parentFolder as any)
       .mockResolvedValueOnce({ type: ResourceType.Folder } as any);
 
-    expect(
+    await expect(
       createResource(
         {
           name: 'docs',

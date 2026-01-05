@@ -24,8 +24,8 @@ describe('getDbOrAssertCollection', () => {
   it('throws INTERNAL_SERVER_ERROR when mongoose.connection.db is not set', async () => {
     (mongoose.connection as any).db = undefined;
 
-    expect(getDbOrAssertCollection()).rejects.toBeInstanceOf(AppError);
-    expect(getDbOrAssertCollection()).rejects.toMatchObject({
+    await expect(getDbOrAssertCollection()).rejects.toBeInstanceOf(AppError);
+    await expect(getDbOrAssertCollection()).rejects.toMatchObject({
       statusCode: INTERNAL_SERVER_ERROR,
     });
   });
@@ -33,8 +33,10 @@ describe('getDbOrAssertCollection', () => {
   it('throws NOT_FOUND when collectionName is provided but does not exist', async () => {
     (mongoose.connection as any).db = makeFakeDb(['users', 'books']);
 
-    expect(getDbOrAssertCollection('quran')).rejects.toBeInstanceOf(AppError);
-    expect(getDbOrAssertCollection('quran')).rejects.toMatchObject({
+    await expect(getDbOrAssertCollection('quran')).rejects.toBeInstanceOf(
+      AppError
+    );
+    await expect(getDbOrAssertCollection('quran')).rejects.toMatchObject({
       statusCode: NOT_FOUND,
     });
   });

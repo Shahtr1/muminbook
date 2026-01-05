@@ -82,11 +82,11 @@ describe('Move Resource Service', () => {
     it('should throw NOT_FOUND error when resource does not exist', async () => {
       vi.mocked(ResourceModel.findOne).mockResolvedValue(null);
 
-      expect(
+      await expect(
         moveResource(mockResourceId, 'my-files/target', mockUserId)
       ).rejects.toThrow(AppError);
 
-      expect(
+      await expect(
         moveResource(mockResourceId, 'my-files/target', mockUserId)
       ).rejects.toMatchObject({
         statusCode: NOT_FOUND,
@@ -103,7 +103,7 @@ describe('Move Resource Service', () => {
       const differentUserId = new Types.ObjectId() as PrimaryId;
       vi.mocked(ResourceModel.findOne).mockResolvedValue(null);
 
-      expect(
+      await expect(
         moveResource(mockResourceId, 'my-files/target', differentUserId)
       ).rejects.toThrow();
     });
