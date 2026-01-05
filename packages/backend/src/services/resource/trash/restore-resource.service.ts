@@ -109,9 +109,8 @@ export const restoreResource = async (
 
   if (await shouldRestoreAsLostAndFound(resource, userId)) {
     const lostAndFound = await findOrCreateLostAndFound(userId);
-    const newBasePath = `${lostAndFound.path}/${resource.name}`.replace(
-      /\/+/g,
-      '/'
+    const newBasePath = normalizeSlashes(
+      `${lostAndFound.path}/${resource.name}`
     );
     const updates = await buildRestoreUpdates({
       resource,
@@ -160,7 +159,7 @@ export const restoreAllResources = async (userId: PrimaryId) => {
       : null;
 
     const newBasePath = isLostAndFound
-      ? `${lostAndFound!.path}/${resource.name}`.replace(/\/+/g, '/')
+      ? normalizeSlashes(`${lostAndFound!.path}/${resource.name}`)
       : resource.path;
 
     const newParentId = (
