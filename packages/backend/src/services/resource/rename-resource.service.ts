@@ -7,6 +7,7 @@ import {
   assertNotRootFolder,
   findDescendantsByPath,
 } from './common-resource.service';
+import { normalizeSlashes } from './utils/normalizeSlashes';
 
 export const renameResource = async (
   resourceId: PrimaryId,
@@ -25,7 +26,7 @@ export const renameResource = async (
 
   const oldPath = resource.path;
   const parentPath = oldPath.split('/').slice(0, -1).join('/');
-  const newPath = `${parentPath}/${newName}`.replace(/\/+/g, '/');
+  const newPath = normalizeSlashes(`${parentPath}/${newName}`);
 
   const conflict = await ResourceModel.findOne({
     path: newPath,
@@ -45,7 +46,7 @@ export const renameResource = async (
     const descendants = await findDescendantsByPath(oldPath, userId, false);
 
     for (const desc of descendants) {
-      const updatedPath = desc.path.replace(oldPath, newPath);
+      const updatedPath = normalizeSlashes(desc.path.replace(oldPath, newPath));
       ops.push({
         updateOne: {
           filter: { _id: desc._id },
