@@ -1,9 +1,11 @@
 import { useToast } from '@chakra-ui/react';
 import { useRef } from 'react';
+import { useRetryToast } from './useRetryToast.jsx';
 
 export const useXToast = () => {
   const toast = useToast();
   const toastIdRef = useRef();
+  const retryToast = useRetryToast();
 
   const success = (message) => {
     stopLoading();
@@ -34,6 +36,12 @@ export const useXToast = () => {
     });
   };
 
+  // Show a retry toast with a single Retry action
+  const errorWithRetry = (message, onRetry, status = 'error') => {
+    stopLoading();
+    return retryToast(message, onRetry, status);
+  };
+
   const startLoading = (message = 'Processing...') => {
     if (!toastIdRef.current) {
       toastIdRef.current = toast({
@@ -61,6 +69,7 @@ export const useXToast = () => {
   return {
     success,
     error,
+    errorWithRetry,
     startLoading,
     stopLoading,
     notify,

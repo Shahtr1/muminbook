@@ -9,6 +9,7 @@ let getQueryDataMock;
 // Mock react-router navigation
 vi.mock('react-router-dom', () => ({
   useNavigate: () => navigateMock,
+  useLocation: () => ({ pathname: '/' }),
 }));
 
 // Mock react-query's useQueryClient

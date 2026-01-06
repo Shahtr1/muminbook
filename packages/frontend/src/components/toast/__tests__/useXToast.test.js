@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useXToast } from '../useXToast.js';
+import { useXToast } from '../useXToast.jsx';
 
 // Mock Chakra UI useToast
 const mockToast = vi.fn();
@@ -11,6 +11,11 @@ vi.mock('@chakra-ui/react', () => ({
     mockToast.close = mockClose;
     return mockToast;
   },
+}));
+
+// Mock react-router's useLocation so hooks that call it work in tests
+vi.mock('react-router-dom', () => ({
+  useLocation: () => ({ pathname: '/' }),
 }));
 
 describe('useXToast', () => {
@@ -509,6 +514,13 @@ describe('useXToast', () => {
       expect(typeof result.current.startLoading).toBe('function');
       expect(typeof result.current.stopLoading).toBe('function');
       expect(typeof result.current.notify).toBe('function');
+    });
+
+    it('should return errorWithRetry for error toast', () => {
+      const { result } = renderHook(() => useXToast());
+
+      expect(result.current).toHaveProperty('errorWithRetry');
+      expect(typeof result.current.errorWithRetry).toBe('function');
     });
   });
 });

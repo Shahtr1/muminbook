@@ -24,6 +24,12 @@ export const useOpenFile = (fileId, isReading = false) => {
     setCreatedSuhufId(suhufId);
   });
 
+  // NOTE: the context object ({ initialFileId, isReading }) is passed to
+  // `useOpenSuhuf` for future fallback behaviors (for example: "Open existing"
+  // or retry flows that need to know which file the user intended to open).
+  const openSuhufWithContext = () =>
+    openSuhuf({ initialFileId: fileId, isReading });
+
   // Read the cached suhuf data from react-query (synchronous, cached read)
   const suhuf = queryClient.getQueryData(['suhuf', createdSuhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(createdSuhufId);
@@ -48,11 +54,10 @@ export const useOpenFile = (fileId, isReading = false) => {
     );
 
     // Only call the mutation if something actually changed
-    // using lodash's isEqual for deep comparison
     if (!isEqual(updatedPanels, panels)) {
       updateConfig({ panels: updatedPanels });
     }
   }, [suhuf, createdSuhufId, fileId, isReading, updateConfig]);
 
-  return openSuhuf;
+  return openSuhufWithContext;
 };

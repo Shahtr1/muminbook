@@ -62,8 +62,10 @@ describe('useOpenFile', () => {
     );
 
     // Trigger openSuhuf which will call the callback and set the createdSuhufId inside the hook
-    act(async () => {
-      openFn();
+    // ensure openFn is set
+    expect(typeof openFn).toBe('function');
+    await act(async () => {
+      await openFn();
     });
 
     // Wait for the mutation to be called
@@ -88,8 +90,9 @@ describe('useOpenFile', () => {
       />
     );
 
-    act(async () => {
-      openFn();
+    expect(typeof openFn).toBe('function');
+    await act(async () => {
+      await openFn();
     });
 
     // Give a small tick for effects; mutate should not be called

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useXToast } from '@/hooks/useXToast.js';
+import { useXToast } from '@/components/toast/useXToast.jsx';
 import { deleteResource } from '@/services/index.js';
 
 export const useDeleteResource = () => {

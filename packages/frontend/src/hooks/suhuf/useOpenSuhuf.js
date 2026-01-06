@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCreateSuhuf } from '@/hooks/suhuf/useCreateSuhuf.js';
+import { useXToast } from '@/components/toast/useXToast.jsx';
 
 /**
  * Generate a unique title from a base title by appending a counter in parentheses
@@ -28,13 +29,16 @@ const generateUniqueTitle = (baseTitle, openTitles) => {
  * - Returns a function that creates a new "Suhuf" window + entity.
  * - Ensures the new Suhuf title doesn't collide with currently open Suhuf titles.
  * - Navigates to the created suhuf and calls onSuccess(suhufId) if provided.
+ *
+ * The returned function accepts an optional opts object: { initialFileId, isReading }
  */
 export const useOpenSuhuf = (onSuccess) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const toast = useXToast();
   const { mutate: createSuhuf } = useCreateSuhuf();
 
-  return () => {
+  return (_opts = {}) => {
     // Read currently open windows from the cache (synchronous)
     const windows = queryClient.getQueryData(['windows']) || [];
     const baseTitle = 'Untitled Suhuf';
@@ -47,15 +51,24 @@ export const useOpenSuhuf = (onSuccess) => {
     // Compute a non-colliding title
     const newTitle = generateUniqueTitle(baseTitle, openTitles);
 
-    // Create the Suhuf and on success navigate + call callback
-    createSuhuf(
-      { title: newTitle },
-      {
-        onSuccess: ({ suhufId }) => {
-          navigate(`/suhuf/${suhufId}`);
-          if (typeof onSuccess === 'function') onSuccess(suhufId);
-        },
-      }
-    );
+    const doCreate = () => {
+      createSuhuf(
+        { title: newTitle },
+        {
+          onSuccess: ({ suhufId }) => {
+            navigate(`/suhuf/${suhufId}`);
+            if (typeof onSuccess === 'function') onSuccess(suhufId);
+          },
+          onError: () => {
+            toast.errorWithRetry('Failed to create suhuf', () => {
+              // re-attempt creation
+              doCreate();
+            });
+          },
+        }
+      );
+    };
+
+    doCreate();
   };
 };
