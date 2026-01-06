@@ -31,6 +31,21 @@ import { ReadingLayout } from '@/pages/reading/ReadingLayout.jsx';
 import { setNavigate } from '@/services/index.js';
 import { Suhuf } from '@/pages/Suhuf.jsx';
 
+export function getPageTitleFromPath(pathname) {
+  // Normalize non-string inputs
+  if (typeof pathname !== 'string') {
+    if (pathname == null) pathname = '';
+    else pathname = String(pathname);
+  }
+
+  // Split and filter out empty segments (handle multiple/trailing slashes)
+  const pathSegments = pathname.split('/').filter(Boolean);
+  const mainPath = pathSegments.length > 0 ? pathSegments[0] : 'home';
+
+  // Capitalize first letter and return
+  return `${mainPath.charAt(0).toUpperCase() + mainPath.slice(1)}`;
+}
+
 function App() {
   const navigate = useNavigate();
   setNavigate(navigate);
@@ -38,10 +53,8 @@ function App() {
   const location = useLocation();
 
   const getPageTitle = () => {
-    const pathSegments = location.pathname.split('/').filter(Boolean);
-    const mainPath = pathSegments.length > 0 ? pathSegments[0] : 'home';
-
-    return `${mainPath.charAt(0).toUpperCase() + mainPath.slice(1)}`;
+    // Use the exported helper
+    return getPageTitleFromPath(location.pathname);
   };
 
   return (
