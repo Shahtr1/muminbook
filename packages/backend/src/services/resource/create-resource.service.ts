@@ -3,6 +3,7 @@ import { PrimaryId } from '../../constants/primaryId';
 import ResourceModel from '../../models/resource.model';
 import appAssert from '../../utils/appAssert';
 import { CONFLICT, NOT_FOUND } from '../../constants/http';
+import { normalizeSlashes } from './utils/normalizeSlashes';
 
 export type CreateResourceParams = {
   name: string;
@@ -12,15 +13,13 @@ export type CreateResourceParams = {
   contentType?: string;
 };
 
-const collapseSlashes = (path: string) => path.replace(/\/+/g, '/');
-
 export const createResource = async (
   data: CreateResourceParams,
   userId: PrimaryId
 ) => {
   const { name, type, path, fileUrl, contentType } = data;
   const parentPath = decodeURIComponent(path);
-  const fullPath = collapseSlashes(`${parentPath}/${name}`);
+  const fullPath = normalizeSlashes(`${parentPath}/${name}`);
 
   const parentFolder = await ResourceModel.findOne({
     path: parentPath,

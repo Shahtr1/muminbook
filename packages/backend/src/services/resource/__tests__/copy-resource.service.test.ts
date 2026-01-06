@@ -40,7 +40,7 @@ vi.mock('../common-resource.service', () => ({
   findDescendantsByPath: vi.fn(),
 }));
 
-vi.mock('../helpers/copyHelpers', () => ({
+vi.mock('../utils/copyUtils', () => ({
   generateCopyName: vi.fn(),
   buildClonedRootResource: vi.fn(),
   buildClonedDescendants: vi.fn(),
@@ -54,7 +54,7 @@ import {
   generateCopyName,
   buildClonedRootResource,
   buildClonedDescendants,
-} from '../helpers/copyHelpers';
+} from '../utils/copyUtils';
 
 describe('Copy Resource Service', () => {
   const mockUserId = new Types.ObjectId() as PrimaryId;
@@ -93,11 +93,11 @@ describe('Copy Resource Service', () => {
     it('should throw NOT_FOUND error when resource does not exist', async () => {
       vi.mocked(ResourceModel.findOne).mockResolvedValue(null);
 
-      expect(
+      await expect(
         copyResource(mockResourceId, 'my-files/target', mockUserId)
       ).rejects.toThrow(AppError);
 
-      expect(
+      await expect(
         copyResource(mockResourceId, 'my-files/target', mockUserId)
       ).rejects.toMatchObject({
         statusCode: NOT_FOUND,
@@ -114,7 +114,7 @@ describe('Copy Resource Service', () => {
       const differentUserId = new Types.ObjectId() as PrimaryId;
       vi.mocked(ResourceModel.findOne).mockResolvedValue(null);
 
-      expect(
+      await expect(
         copyResource(mockResourceId, 'my-files/target', differentUserId)
       ).rejects.toThrow();
     });

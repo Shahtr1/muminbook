@@ -46,7 +46,7 @@ export const ReadingList = () => {
   if (isError) return <SomethingWentWrong />;
 
   return (
-    <Flex gap={gapSize} flexWrap="wrap" px={8} py={2}>
+    <Flex gap={gapSize} flexWrap="wrap" px={8} py={2} align="center">
       <Folder
         onClick={() => navigate('my-files')}
         width={itemWidth}

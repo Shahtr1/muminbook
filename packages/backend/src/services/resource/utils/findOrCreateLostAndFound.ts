@@ -4,7 +4,7 @@ import ResourceType from '../../../constants/types/resourceType';
 import appAssert from '../../../utils/appAssert';
 import { NOT_FOUND } from '../../../constants/http';
 
-export const getOrCreateLostAndFound = async (userId: PrimaryId) => {
+export const findOrCreateLostAndFound = async (userId: PrimaryId) => {
   const rootFolder = await ResourceModel.findOne({
     path: 'my-files',
     type: ResourceType.Folder,

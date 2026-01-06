@@ -65,18 +65,18 @@ describe('moveToTrashResource', () => {
     it('should throw NOT_FOUND error when resource does not exist', async () => {
       vi.mocked(ResourceModel.findOne).mockResolvedValue(null);
 
-      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
-        AppError
-      );
+      await expect(
+        moveToTrashResource(mockResourceId, mockUserId)
+      ).rejects.toThrow(AppError);
 
-      expect(
+      await expect(
         moveToTrashResource(mockResourceId, mockUserId)
       ).rejects.toMatchObject({
         statusCode: NOT_FOUND,
         message: 'Resource not found',
       });
 
-      expect(ResourceModel.findOne).toHaveBeenCalledWith({
+      await expect(ResourceModel.findOne).toHaveBeenCalledWith({
         _id: mockResourceId,
         userId: mockUserId,
       });
@@ -86,11 +86,11 @@ describe('moveToTrashResource', () => {
       const differentUserId = new Types.ObjectId() as PrimaryId;
       vi.mocked(ResourceModel.findOne).mockResolvedValue(null);
 
-      expect(
+      await expect(
         moveToTrashResource(mockResourceId, differentUserId)
       ).rejects.toThrow();
 
-      expect(ResourceModel.findOne).toHaveBeenCalledWith({
+      await expect(ResourceModel.findOne).toHaveBeenCalledWith({
         _id: mockResourceId,
         userId: differentUserId,
       });
@@ -704,9 +704,9 @@ describe('moveToTrashResource', () => {
       const dbError = new Error('Database connection failed');
       vi.mocked(ResourceModel.findOne).mockRejectedValue(dbError);
 
-      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
-        'Database connection failed'
-      );
+      await expect(
+        moveToTrashResource(mockResourceId, mockUserId)
+      ).rejects.toThrow('Database connection failed');
     });
 
     it('should propagate errors from findDescendantsByPath', async () => {
@@ -720,9 +720,9 @@ describe('moveToTrashResource', () => {
         new Error('Failed to get descendants')
       );
 
-      expect(moveToTrashResource(mockResourceId, mockUserId)).rejects.toThrow(
-        'Failed to get descendants'
-      );
+      await expect(
+        moveToTrashResource(mockResourceId, mockUserId)
+      ).rejects.toThrow('Failed to get descendants');
     });
 
     it('should propagate errors from bulkWrite', async () => {

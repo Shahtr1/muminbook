@@ -84,8 +84,8 @@ describe('getResourceChildren', () => {
     findOneSpy.mockResolvedValue(null);
 
     // AppError exposes `statusCode` (not `status`), assert accordingly
-    expect(svc.getResourceChildren('nope', oid() as any)).rejects.toMatchObject(
-      { statusCode: NOT_FOUND }
-    );
+    await expect(
+      svc.getResourceChildren('nope', oid() as any)
+    ).rejects.toMatchObject({ statusCode: NOT_FOUND });
   });
 });

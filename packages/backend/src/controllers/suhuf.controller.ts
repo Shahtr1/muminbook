@@ -1,22 +1,13 @@
 import catchErrors from '../utils/catchErrors';
 import { CREATED, NOT_FOUND, OK } from '../constants/http';
 import { getUserId } from '../utils/getUserId';
-import z from 'zod';
 import { createSuhuf } from '../services/suhuf/create-suhuf.service';
 import mongoose from 'mongoose';
 import SuhufModel from '../models/suhuf.model';
 import appAssert from '../utils/appAssert';
 import { renameSuhuf } from '../services/suhuf/rename-suhuf.service';
-import { nameSchema } from './schemas/common.schema';
 import { suhufConfigSchema } from './schemas/suhuf-config.schema';
-
-export const createSuhufSchema = z.object({
-  title: z.string().min(1).max(100).optional(),
-});
-
-export const titleSchema = z.object({
-  title: nameSchema,
-});
+import { createSuhufSchema, titleSchema } from './schemas/suhuf.schema';
 
 export const createSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
@@ -36,7 +27,10 @@ export const createSuhufHandler = catchErrors(async (req, res) => {
 
 export const getSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
-  const suhufId = new mongoose.Types.ObjectId(req.params.id);
+
+  const { id } = req.params;
+
+  const suhufId = new mongoose.Types.ObjectId(id);
 
   const suhuf = await SuhufModel.findOne({ _id: suhufId, userId });
 
@@ -48,15 +42,17 @@ export const getSuhufHandler = catchErrors(async (req, res) => {
 export const renameSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
   const { title } = titleSchema.parse(req.body);
-  const suhufId = req.params.id;
-  const { message } = await renameSuhuf(suhufId, userId, title);
+
+  const { id } = req.params;
+
+  const { message } = await renameSuhuf(id, userId, title);
 
   return res.status(OK).json({ message });
 });
 
 export const configSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
-  const suhufId = req.params.id;
+  const { id } = req.params;
 
   const { layout, panels } = suhufConfigSchema.parse(req.body);
 
@@ -65,7 +61,7 @@ export const configSuhufHandler = catchErrors(async (req, res) => {
   if (panels) update['config.panels'] = panels;
 
   const updated = await SuhufModel.findOneAndUpdate(
-    { _id: suhufId, userId },
+    { _id: id, userId },
     { $set: update },
     { new: true }
   );

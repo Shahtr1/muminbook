@@ -8,7 +8,7 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
-import { generateCopyName, buildClonedDescendants } from '../copyHelpers';
+import { generateCopyName, buildClonedDescendants } from '../copyUtils';
 import ResourceModel, {
   ResourceDocument,
 } from '../../../../models/resource.model';

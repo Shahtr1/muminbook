@@ -14,8 +14,9 @@ import ResourceType from '../../../constants/types/resourceType';
 import { PrimaryId } from '../../../constants/primaryId';
 import appAssert from '../../../utils/appAssert';
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../../constants/http';
-import { getOrCreateLostAndFound } from '../helpers/getOrCreateLostAndFound';
+import { findOrCreateLostAndFound } from '../utils/findOrCreateLostAndFound';
 import { findDescendantsByPath } from '../common-resource.service';
+import { normalizeSlashes } from '../utils/normalizeSlashes';
 
 const hasConflict = async (path: string, userId: PrimaryId) => {
   return ResourceModel.findOne({
@@ -61,7 +62,7 @@ const buildRestoreUpdates = async ({
 
   for (const desc of descendants) {
     const relativePath = desc.path.replace(resource.path, '');
-    const newPath = `${newBasePath}${relativePath}`.replace(/\/+/g, '/');
+    const newPath = normalizeSlashes(`${newBasePath}${relativePath}`);
 
     updates.push({
       updateOne: {
@@ -107,10 +108,9 @@ export const restoreResource = async (
   appAssert(resource.deleted, BAD_REQUEST, 'Resource is not in trash');
 
   if (await shouldRestoreAsLostAndFound(resource, userId)) {
-    const lostAndFound = await getOrCreateLostAndFound(userId);
-    const newBasePath = `${lostAndFound.path}/${resource.name}`.replace(
-      /\/+/g,
-      '/'
+    const lostAndFound = await findOrCreateLostAndFound(userId);
+    const newBasePath = normalizeSlashes(
+      `${lostAndFound.path}/${resource.name}`
     );
     const updates = await buildRestoreUpdates({
       resource,
@@ -155,11 +155,11 @@ export const restoreAllResources = async (userId: PrimaryId) => {
     }
 
     const lostAndFound = isLostAndFound
-      ? await getOrCreateLostAndFound(userId)
+      ? await findOrCreateLostAndFound(userId)
       : null;
 
     const newBasePath = isLostAndFound
-      ? `${lostAndFound!.path}/${resource.name}`.replace(/\/+/g, '/')
+      ? normalizeSlashes(`${lostAndFound!.path}/${resource.name}`)
       : resource.path;
 
     const newParentId = (
