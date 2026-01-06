@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
 import { SidebarItem } from '@/components/layout/sidebar/SidebarItem.jsx';
-import { useQuery } from '@tanstack/react-query';
+import { useWindows } from '@/hooks/resource/useWindows.js';
 
 export const Sidebar = ({ items = [], label, closeable = true }) => {
   const location = useLocation();
@@ -22,9 +22,7 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
   const [isOpen, setIsOpen] = useState(!isMediumScreen);
   const [isReady, setIsReady] = useState(false);
 
-  const { data: windows = [] } = useQuery({
-    queryKey: ['windows'],
-  });
+  const { windows = [] } = useWindows();
 
   useEffect(() => {
     setIsOpen(!isMediumScreen);
