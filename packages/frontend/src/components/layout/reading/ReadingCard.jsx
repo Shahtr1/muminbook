@@ -42,7 +42,7 @@ export const ReadingCard = ({
 
   return (
     <Flex
-      h={isSmallScreen ? '90px' : '200px'}
+      h={isSmallScreen ? '90px' : '250px'}
       w={width}
       borderRadius="lg"
       shadow="md"
@@ -106,7 +106,7 @@ export const ReadingCard = ({
             position={isSmallScreen ? 'relative' : 'absolute'}
             bgColor={bgColor}
             zIndex="1010"
-            top={isSmallScreen ? 'unset' : '52px'}
+            top={isSmallScreen ? 'unset' : '77px'}
             left={isSmallScreen ? 'unset' : '10px'}
           >
             {svg}
