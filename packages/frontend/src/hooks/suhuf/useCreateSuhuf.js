@@ -9,7 +9,7 @@ export const useCreateSuhuf = () => {
   return useMutation({
     mutationFn: async (data) => {
       toast.startLoading('Creating Suhuf...');
-      return await createSuhuf(data);
+      return createSuhuf(data);
     },
     onSuccess: (data) => {
       toast.success('Suhuf created.');
