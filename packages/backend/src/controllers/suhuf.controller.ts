@@ -27,7 +27,10 @@ export const createSuhufHandler = catchErrors(async (req, res) => {
 
 export const getSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
-  const suhufId = new mongoose.Types.ObjectId(req.params.id);
+
+  const { id } = req.params;
+
+  const suhufId = new mongoose.Types.ObjectId(id);
 
   const suhuf = await SuhufModel.findOne({ _id: suhufId, userId });
 
@@ -39,15 +42,17 @@ export const getSuhufHandler = catchErrors(async (req, res) => {
 export const renameSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
   const { title } = titleSchema.parse(req.body);
-  const suhufId = req.params.id;
-  const { message } = await renameSuhuf(suhufId, userId, title);
+
+  const { id } = req.params;
+
+  const { message } = await renameSuhuf(id, userId, title);
 
   return res.status(OK).json({ message });
 });
 
 export const configSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
-  const suhufId = req.params.id;
+  const { id } = req.params;
 
   const { layout, panels } = suhufConfigSchema.parse(req.body);
 
@@ -56,7 +61,7 @@ export const configSuhufHandler = catchErrors(async (req, res) => {
   if (panels) update['config.panels'] = panels;
 
   const updated = await SuhufModel.findOneAndUpdate(
-    { _id: suhufId, userId },
+    { _id: id, userId },
     { $set: update },
     { new: true }
   );

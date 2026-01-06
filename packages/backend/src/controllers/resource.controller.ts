@@ -55,8 +55,6 @@ export const createResourceHandler = catchErrors(async (req, res) => {
 export const deleteResourceHandler = catchErrors(async (req, res) => {
   const { id } = req.params;
 
-  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
-
   const resourceId = new mongoose.Types.ObjectId(id);
 
   const userId = await getUserId(req);
@@ -68,8 +66,6 @@ export const deleteResourceHandler = catchErrors(async (req, res) => {
 
 export const moveToTrashResourceHandler = catchErrors(async (req, res) => {
   const { id } = req.params;
-
-  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
 
   const resourceId = new mongoose.Types.ObjectId(id);
 
@@ -84,8 +80,6 @@ export const restoreResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
 
   const { id } = req.params;
-
-  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
 
   const resourceId = new mongoose.Types.ObjectId(id);
   const { message } = await restoreResource(resourceId, userId);
@@ -121,8 +115,6 @@ export const renameResourceHandler = catchErrors(async (req, res) => {
 
   const { id } = req.params;
 
-  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
-
   const resourceId = new mongoose.Types.ObjectId(id);
 
   const { name } = renameSchema.parse(req.body);
@@ -136,8 +128,6 @@ export const moveResourceHandler = catchErrors(async (req, res) => {
 
   const { id } = req.params;
 
-  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
-
   const resourceId = new mongoose.Types.ObjectId(id);
   const { destinationPath } = dstPathSchema.parse(req.body);
 
@@ -149,8 +139,6 @@ export const copyResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
 
   const { id } = req.params;
-
-  appAssert(id, NOT_FOUND, 'Missing resource ID in params');
 
   const resourceId = new mongoose.Types.ObjectId(id);
   const { destinationPath } = dstPathSchema.parse(req.body);

@@ -13,8 +13,6 @@ export const getAllReadingsHandler = catchErrors(async (req, res) => {
 export const getReadingHandler = catchErrors(async (req, res) => {
   const { id } = req.params;
 
-  appAssert(id, NOT_FOUND, 'Missing reading ID in params');
-
   const query = readingSchema.parse(req.query);
   const result = await getReading(id, query);
   return res.status(OK).json(result);

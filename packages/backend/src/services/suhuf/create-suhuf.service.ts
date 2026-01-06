@@ -25,7 +25,7 @@ export const createSuhuf = async ({
     userId,
     type: WindowType.Suhuf,
     typeId: suhuf._id,
-  }).catch(async (err) => {
+  }).catch(async () => {
     await SuhufModel.findByIdAndDelete(suhuf._id);
     appAssert(
       false,
