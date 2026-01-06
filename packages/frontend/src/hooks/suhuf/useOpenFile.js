@@ -2,11 +2,20 @@ import { useEffect, useState } from 'react';
 import { useOpenSuhuf } from '@/hooks/suhuf/useOpenSuhuf.js';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { useQueryClient } from '@tanstack/react-query';
+import isEqual from 'lodash/isEqual';
 
-const deepEqual = (a, b) => {
-  return JSON.stringify(a) === JSON.stringify(b);
-};
-
+/**
+ * Hook: useOpenFile
+ * - Ensures that when a suhuf (editor instance) is opened, the currently active panel
+ *   is updated with the provided fileId and fileType (reading/user-files).
+ *
+ * Inputs:
+ * - fileId: id of the file to open in the active panel
+ * - isReading: boolean to choose fileType ('reading' when true, otherwise 'user-files')
+ *
+ * Returns:
+ * - openSuhuf: function returned from useOpenSuhuf to open/create a suhuf
+ */
 export const useOpenFile = (fileId, isReading = false) => {
   const queryClient = useQueryClient();
   const [createdSuhufId, setCreatedSuhufId] = useState(null);
@@ -15,16 +24,19 @@ export const useOpenFile = (fileId, isReading = false) => {
     setCreatedSuhufId(suhufId);
   });
 
+  // Read the cached suhuf data from react-query (synchronous, cached read)
   const suhuf = queryClient.getQueryData(['suhuf', createdSuhufId]);
   const { mutate: updateConfig } = useUpdateSuhufConfig(createdSuhufId);
 
   useEffect(() => {
+    // We only proceed when we have both the suhuf object and its id
     if (!suhuf || !createdSuhufId) return;
 
     const panels = suhuf?.config?.panels || [];
     const activeIndex = panels.findIndex((p) => p.active);
-    if (activeIndex === -1) return;
+    if (activeIndex === -1) return; // no active panel to update
 
+    // Create a new panels array where only the active panel is replaced
     const updatedPanels = panels.map((panel, i) =>
       i === activeIndex
         ? {
@@ -35,7 +47,9 @@ export const useOpenFile = (fileId, isReading = false) => {
         : panel
     );
 
-    if (!deepEqual(updatedPanels, panels)) {
+    // Only call the mutation if something actually changed
+    // using lodash's isEqual for deep comparison
+    if (!isEqual(updatedPanels, panels)) {
       updateConfig({ panels: updatedPanels });
     }
   }, [suhuf, createdSuhufId, fileId, isReading, updateConfig]);
