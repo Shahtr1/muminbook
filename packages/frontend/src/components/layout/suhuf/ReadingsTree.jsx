@@ -37,7 +37,7 @@ const TreeNode = ({ onSelect }) => {
         <Icon
           as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
           mr={2}
-          fontSize="12px"
+          fontSize="13px"
           onClick={(e) => {
             e.stopPropagation();
             toggle();
@@ -45,11 +45,11 @@ const TreeNode = ({ onSelect }) => {
           color={defaultTextColor}
         />
         <Flex align="center" gap="5px" overflow="hidden">
-          <FolderSVG dimensions="12px" />
+          <FolderSVG dimensions="13px" />
           <Tooltip label="Readings" placement="auto-end" variant="inverted">
             <Text
               whiteSpace="nowrap"
-              fontSize={'11px'}
+              fontSize={'12px'}
               _groupHover={{ color: 'brand.600' }}
             >
               Readings
@@ -82,7 +82,7 @@ const TreeNode = ({ onSelect }) => {
                     variant="inverted"
                   >
                     <Text
-                      fontSize="11px"
+                      fontSize="12px"
                       whiteSpace="nowrap"
                       _groupHover={{ color: 'brand.600' }}
                     >
