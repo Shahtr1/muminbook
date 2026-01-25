@@ -11,10 +11,8 @@ import { useParams } from 'react-router-dom';
 import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
 import { useSafeBreakpointValue } from '@/hooks/useSafeBreakpointValue.js';
 
-export const SuhufPanel = () => {
-  const { id: suhufId } = useParams();
-  const { data: suhuf } = useSuhuf(suhufId);
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+export const SuhufPanel = ({ suhuf }) => {
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
   const isSmallScreen =
     useSafeBreakpointValue({ base: true, sm: false }) || false;

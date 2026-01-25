@@ -26,8 +26,6 @@ export const DefaultPanel = ({ suhuf }) => {
 
   const toggleTab = (tabKey) => {
     const isSame = activeTab === tabKey;
-    console.log('activeTab', activeTab);
-    console.log('tabKey', tabKey);
 
     updateConfig({
       layout: {

@@ -7,10 +7,8 @@ import { SuhufBottomPanelHeader } from '@/components/layout/suhuf/bottomPanel/Su
 import { useParams } from 'react-router-dom';
 import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
 
-export const SuhufLayout = ({ readings }) => {
+export const SuhufLayout = ({ readings, suhuf }) => {
   const { colorMode } = useColorMode();
-  const { id: suhufId } = useParams();
-  const { data: suhuf } = useSuhuf(suhufId);
 
   const layout = suhuf?.config?.layout || {};
   const isBottomOpen = layout?.isBottomTabOpen;
@@ -39,7 +37,7 @@ export const SuhufLayout = ({ readings }) => {
         >
           {/* Main Panel */}
           <Flex overflowY="auto" position="relative">
-            <SuhufPanel />
+            <SuhufPanel suhuf={suhuf} />
           </Flex>
 
           {isBottomOpen ? (

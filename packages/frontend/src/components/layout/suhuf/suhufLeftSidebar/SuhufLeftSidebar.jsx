@@ -12,8 +12,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const SuhufLeftSidebar = ({ suhuf }) => {
-  const { id: suhufId } = useParams();
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
   const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
   const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
