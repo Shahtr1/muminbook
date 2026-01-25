@@ -28,8 +28,8 @@ export const Suhuf = () => {
   const { setNavbarChildren } = useWindowNavbar();
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
 
-  const tokenKey = useColorModeValue('wn.bold.light', 'wn.bold.dark');
-  const [iconActiveColor] = useToken('colors', [tokenKey]);
+  const iconColorKey = useColorModeValue('wn.bold.light', 'wn.bold.dark');
+  const [iconActiveColor] = useToken('colors', [iconColorKey]);
   const theme = useTheme();
 
   const {
