@@ -12,8 +12,9 @@ import { useState } from 'react';
 import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
 import { FileSVG } from '@/components/svgs/FileSVG.jsx';
 import { useReadings } from '@/hooks/reading/useReadings.js';
+import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
 
-const TreeNode = ({ onSelect }) => {
+export const ReadingsTree = ({ onSelect }) => {
   const defaultTextColor = useColorModeValue('text.primary', 'whiteAlpha.900');
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -30,7 +31,6 @@ const TreeNode = ({ onSelect }) => {
         align="center"
         p={1}
         cursor="pointer"
-        // onClick={() => onSelect?.(path)}
         borderRadius="sm"
         role="group"
       >
@@ -61,16 +61,19 @@ const TreeNode = ({ onSelect }) => {
       <Collapse in={isExpanded}>
         {!isPending &&
           readings?.map((res) => {
+            const fileId = res._id;
             return (
-              <Box key={res._id} pl={2}>
+              <Box key={fileId} pl={2}>
                 <Flex
                   align="center"
                   p={1}
                   cursor="pointer"
                   gap="5px"
-                  onClick={() => {
-                    // TODO: handle file click (intentionally left empty)
-                  }}
+                  onClick={
+                    typeof onSelect === 'function'
+                      ? () => onSelect(fileId)
+                      : undefined
+                  }
                   borderRadius="sm"
                   role="group"
                 >
@@ -96,8 +99,4 @@ const TreeNode = ({ onSelect }) => {
       </Collapse>
     </Box>
   );
-};
-
-export const ReadingsTree = ({ onSelect }) => {
-  return <TreeNode onSelect={onSelect} />;
 };

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -10,7 +9,6 @@ import {
 import { CardSVG } from '@/components/svgs/CardSVG.jsx';
 import { ItemToolbar } from '@/components/layout/reading/toolbar/ItemToolbar.jsx';
 import { ActionItems } from '@/components/layout/reading/ActionItems.jsx';
-import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
 
 export const ReadingCard = ({
   label,
@@ -20,13 +18,10 @@ export const ReadingCard = ({
   width,
   svg,
 }) => {
-  const navigate = useNavigate();
   const bgColor = useColorModeValue('white', 'gray.800');
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const [hasMounted, setHasMounted] = useState(false);
-
-  const openFile = useOpenFile(uuid, true);
 
   useEffect(() => {
     setHasMounted(true);
@@ -61,7 +56,9 @@ export const ReadingCard = ({
         flexDir={isSmallScreen ? 'row-reverse' : 'column'}
         justify={isSmallScreen ? 'normal' : 'end'}
         align={isSmallScreen ? 'center' : 'normal'}
-        onClick={openFile}
+        onClick={() => {
+          //   TODO: Add on click reading here
+        }}
       >
         <Flex
           w="100%"
