@@ -13,7 +13,6 @@ export const SuhufBottomPanelHeader = ({
   const { data: suhuf } = useQuery({
     queryKey: ['suhuf', suhufId],
     queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
-    staleTime: 0,
   });
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 

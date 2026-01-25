@@ -38,11 +38,13 @@ export const Suhuf = () => {
     isError: isSuhufError,
     isSuccess: isSuhufSuccess,
   } = useSuhuf(suhufId);
+
   const {
     readings,
     isPending: isReadingsLoading,
     isError: isReadingsError,
   } = useReadings();
+
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const layout = suhuf?.config?.layout || {};
