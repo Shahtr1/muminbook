@@ -8,16 +8,12 @@ import { DefaultPanel } from '@/components/layout/suhuf/DefaultPanel.jsx';
 import Split from 'react-split';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { useParams } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
 import { useSafeBreakpointValue } from '@/hooks/useSafeBreakpointValue.js';
 
 export const SuhufPanel = () => {
   const { id: suhufId } = useParams();
-  const queryClient = useQueryClient();
-  const { data: suhuf } = useQuery({
-    queryKey: ['suhuf', suhufId],
-    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
-  });
+  const { data: suhuf } = useSuhuf(suhufId);
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const isSmallScreen =
@@ -91,7 +87,7 @@ export const SuhufPanel = () => {
     }
 
     return elements;
-  }, [isSecondPanelOpen, activePanelIndex]);
+  }, [isSecondPanelOpen, activePanelIndex, panels, suhuf]);
 
   const isSplitReady =
     !isSecondPanelOpen ||

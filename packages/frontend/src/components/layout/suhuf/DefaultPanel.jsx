@@ -6,7 +6,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { SuhufSVG } from '@/components/svgs/SuhufSVG.jsx';
-import { sidebarMenuData } from '@/data/sidebarMenuData.jsx';
+import { sidebarMenuData } from '@/data/sidebarMenuData.js';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 
 export const DefaultPanel = ({ suhuf }) => {
@@ -26,6 +26,9 @@ export const DefaultPanel = ({ suhuf }) => {
 
   const toggleTab = (tabKey) => {
     const isSame = activeTab === tabKey;
+    console.log('activeTab', activeTab);
+    console.log('tabKey', tabKey);
+
     updateConfig({
       layout: {
         ...layout,
