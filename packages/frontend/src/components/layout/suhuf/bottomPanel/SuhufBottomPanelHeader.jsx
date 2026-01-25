@@ -8,19 +8,18 @@ export const SuhufBottomPanelHeader = ({
   readings = [],
   suhuf,
 }) => {
-  const { id: suhufId } = useParams();
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
   const layout = suhuf?.config?.layout || {};
   const isOpen = layout?.isBottomTabOpen || false;
 
   const toggleBottomTab = () => {
-    const newOpen = !isOpen;
+    const tabState = !isOpen;
 
     updateConfig({
       layout: {
         ...layout,
-        isBottomTabOpen: newOpen,
+        isBottomTabOpen: tabState,
       },
     });
   };

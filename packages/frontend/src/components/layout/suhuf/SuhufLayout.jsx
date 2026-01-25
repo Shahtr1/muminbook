@@ -41,7 +41,7 @@ export const SuhufLayout = ({ readings, suhuf }) => {
           </Flex>
 
           {isBottomOpen ? (
-            <SuhufBottomPanelWithHeader readings={readings} />
+            <SuhufBottomPanelWithHeader readings={readings} suhuf={suhuf} />
           ) : (
             <div />
           )}
