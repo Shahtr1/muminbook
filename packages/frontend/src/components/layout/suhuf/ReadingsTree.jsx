@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
 import { FileSVG } from '@/components/svgs/FileSVG.jsx';
 import { useReadings } from '@/hooks/reading/useReadings.js';
-import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
 
 export const ReadingsTree = ({ onSelect }) => {
   const defaultTextColor = useColorModeValue('text.primary', 'whiteAlpha.900');
@@ -61,7 +60,7 @@ export const ReadingsTree = ({ onSelect }) => {
       <Collapse in={isExpanded}>
         {!isPending &&
           readings?.map((res) => {
-            const fileId = res._id;
+            const fileId = res.uuid;
             return (
               <Box key={fileId} pl={2}>
                 <Flex
