@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCreateSuhuf } from '@/hooks/suhuf/useCreateSuhuf.js';
-import { useXToast } from '@/components/toast/useXToast.jsx';
+import { useXToast } from '@/components/layout/toast/useXToast.jsx';
 
 /**
  * Generate a unique title from a base title by appending a counter in parentheses

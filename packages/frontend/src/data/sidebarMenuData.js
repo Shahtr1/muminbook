@@ -1,6 +1,6 @@
 import { BsFiles, BsSearch } from 'react-icons/bs';
-import { ExplorerPanel } from '@/components/layout/suhuf/suhufLeftSidebar/panels/ExplorerPanel.jsx';
-import { SearchPanel } from '@/components/layout/suhuf/suhufLeftSidebar/panels/SearchPanel.jsx';
+import { ExplorerPanel } from '@/components/suhuf/leftSidebar/ExplorerPanel.jsx';
+import { SearchPanel } from '@/components/suhuf/leftSidebar/SearchPanel.jsx';
 
 export const sidebarMenuData = [
   {

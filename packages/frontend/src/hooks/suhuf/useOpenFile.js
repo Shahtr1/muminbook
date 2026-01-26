@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { useQueryClient } from '@tanstack/react-query';
-import { useXToast } from '@/components/toast/useXToast.jsx';
+import { useXToast } from '@/components/layout/toast/useXToast.jsx';
 
 export const useOpenFile = (suhufId) => {
   const toast = useXToast();

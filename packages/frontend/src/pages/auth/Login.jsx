@@ -16,8 +16,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
 import { XEyeIcon } from '@/components/form/XEyeIcon.jsx';
-import { XAlert } from '@/components/layout/xcomp/XAlert.jsx';
-import { XDivider } from '@/components/layout/xcomp/XDivider.jsx';
+import { XAlert } from '@/components/layout/x/XAlert.jsx';
+import { XDivider } from '@/components/layout/x/XDivider.jsx';
 import { login } from '@/services/index.js';
 
 const Login = () => {

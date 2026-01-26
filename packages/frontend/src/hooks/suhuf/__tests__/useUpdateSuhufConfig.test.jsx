@@ -3,14 +3,14 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useUpdateSuhufConfig } from '../useUpdateSuhufConfig.js';
 import * as services from '@/services/index.js';
-import { useXToast } from '@/components/toast/useXToast.jsx';
+import { useXToast } from '@/components/layout/toast/useXToast.jsx';
 import React from 'react';
 
 vi.mock('@/services/index.js', () => ({
   updateSuhufConfig: vi.fn(),
 }));
 
-vi.mock('@/components/toast/useXToast.jsx', () => ({
+vi.mock('@/components/layout/toast/useXToast.jsx', () => ({
   useXToast: vi.fn(),
 }));
 

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import queryClient from '@/config/queryClient.js';
-import { useXToast } from '@/components/toast/useXToast.jsx';
+import { useXToast } from '@/components/layout/toast/useXToast.jsx';
 import { createResource } from '@/services/index.js';
 
 export const useCreateResource = () => {

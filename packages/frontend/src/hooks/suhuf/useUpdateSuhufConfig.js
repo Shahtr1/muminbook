@@ -1,4 +1,4 @@
-import { useXToast } from '@/components/toast/useXToast.jsx';
+import { useXToast } from '@/components/layout/toast/useXToast.jsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateSuhufConfig } from '@/services/index.js';
 
