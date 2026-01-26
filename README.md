@@ -156,6 +156,7 @@ This repository includes additional documentation in the `docs/` folder. Please 
 ## Technology stack (high level)
 
 Backend: Node.js + Express + TypeScript + Mongoose + Zod + JWT + Resend (email)
+
 Frontend: React + Vite + Chakra UI + React Router + React Query + Monaco Editor + React Flow
 
 See individual `package.json` files for current dependency versions.
