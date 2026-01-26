@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex, useBreakpointValue } from '@chakra-ui/react';
 import { useSurahs } from '@/hooks/quran/useSurahs.js';
-import { useCachedQuery } from '@/hooks/useCachedQuery.js';
+import { useCachedQueryIfPresent } from '@/hooks/useCachedQueryIfPresent.js';
 import { useJuz } from '@/hooks/quran/useJuz.js';
 import { RdWrapperUI } from '@/components/layout/reading/ui/RdWrapperUI.jsx';
 import { useReadingInfinite } from '@/hooks/reading/useReadings.js';
@@ -13,13 +13,13 @@ export const QuranUI = ({ fileId }) => {
     data: surahs,
     isPending: isSurahsPending,
     isError: isSurahsError,
-  } = useCachedQuery(['surahs'], useSurahs);
+  } = useCachedQueryIfPresent(['surahs'], useSurahs);
 
   const {
     data: juzList,
     isPending: isJuzListPending,
     isError: isJuzListError,
-  } = useCachedQuery(['juzList'], useJuz);
+  } = useCachedQueryIfPresent(['juzList'], useJuz);
 
   const startValue = 114;
 

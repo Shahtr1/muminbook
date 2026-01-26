@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 
-export const useCachedQuery = (queryKey, useQueryHook) => {
+export const useCachedQueryIfPresent = (queryKey, useQueryHook) => {
   const queryClient = useQueryClient();
   const cached = queryClient.getQueryData(queryKey);
 
