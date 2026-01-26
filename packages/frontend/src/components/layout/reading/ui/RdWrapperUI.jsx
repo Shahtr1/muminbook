@@ -39,8 +39,6 @@ export const RdWrapperUI = forwardRef(
     const { label, description } = reading;
 
     const closeReading = () => {
-      console.log(panels);
-      console.log(direction);
       const updatedPanels = panels.map((panel) => {
         if (panel.fileId === fileId && panel.direction === direction) {
           return {
