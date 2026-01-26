@@ -88,7 +88,7 @@ const TreeNode = ({
             >
               <Text
                 whiteSpace="nowrap"
-                fontSize={windowMode ? '11px' : '13px'}
+                fontSize={windowMode ? '12px' : '13px'}
                 _groupHover={{ color: isActive ? 'brand.500' : 'brand.600' }}
                 color={isActive ? 'brand.500' : defaultTextColor}
               >
@@ -142,7 +142,7 @@ const TreeNode = ({
                     role="group"
                   >
                     <FileSVG
-                      dimensions={windowMode ? '12px' : '15px'}
+                      dimensions={windowMode ? '13px' : '15px'}
                       activeColor="brand.500"
                     />
 
@@ -153,7 +153,7 @@ const TreeNode = ({
                       variant={windowMode ? 'inverted' : undefined}
                     >
                       <Text
-                        fontSize={windowMode ? '11px' : '13px'}
+                        fontSize={windowMode ? '12px' : '13px'}
                         whiteSpace="nowrap"
                         _groupHover={{ color: 'brand.600' }}
                       >

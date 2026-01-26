@@ -4,29 +4,21 @@ import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { FaComments, FaList } from 'react-icons/fa';
 import { BsHighlights } from 'react-icons/bs';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { SurahsList } from '@/components/layout/reading/ui/wrapper/list/SurahsList.jsx';
+import { DivisionList } from '@/components/layout/reading/ui/wrapper/list/DivisionList.jsx';
 import { CommentsList } from '@/components/layout/reading/ui/wrapper/list/CommentsList.jsx';
 import { HighlightsList } from '@/components/layout/reading/ui/wrapper/list/HighlightsList.jsx';
-import { VscFilterFilled } from 'react-icons/vsc';
-import { FilterAyatList } from '@/components/layout/reading/ui/wrapper/list/FilterAyatList.jsx';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
 
 const readingSidebarData = [
   { label: 'List', id: 'list', icon: FaList },
-  { label: 'Filter ayats', id: 'filter', icon: VscFilterFilled },
   { label: 'Comments', id: 'comments', icon: FaComments },
   { label: 'Highlights', id: 'highlights', icon: BsHighlights },
 ];
 
 export const RdWrapperSidebar = ({ fileId }) => {
-  const queryClient = useQueryClient();
   const { id: suhufId } = useParams();
 
-  const { data: suhuf } = useQuery({
-    queryKey: ['suhuf', suhufId],
-    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
-    staleTime: 0,
-  });
+  const { data: suhuf } = useSuhuf(suhufId);
 
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
@@ -159,8 +151,7 @@ export const RdWrapperSidebar = ({ fileId }) => {
       >
         {isOpen && activeTab === 'highlights' && <HighlightsList />}
         {isOpen && activeTab === 'comments' && <CommentsList />}
-        {isOpen && activeTab === 'list' && <SurahsList />}
-        {isOpen && activeTab === 'filter' && <FilterAyatList />}
+        {isOpen && activeTab === 'list' && <DivisionList />}
       </Flex>
     </Flex>
   );

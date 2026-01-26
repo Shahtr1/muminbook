@@ -1,44 +1,58 @@
-import { useEffect, useState } from 'react';
-import { useOpenSuhuf } from '@/hooks/suhuf/useOpenSuhuf.js';
+import { useCallback } from 'react';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { useQueryClient } from '@tanstack/react-query';
+import { useXToast } from '@/components/toast/useXToast.jsx';
 
-const deepEqual = (a, b) => {
-  return JSON.stringify(a) === JSON.stringify(b);
-};
-
-export const useOpenFile = (fileId, isReading = false) => {
+export const useOpenFile = (suhufId) => {
+  const toast = useXToast();
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
   const queryClient = useQueryClient();
-  const [createdSuhufId, setCreatedSuhufId] = useState(null);
 
-  const openSuhuf = useOpenSuhuf((suhufId) => {
-    setCreatedSuhufId(suhufId);
-  });
+  return useCallback(
+    (fileId) => {
+      if (!suhufId) {
+        toast.error({ message: 'No suhuf selected' });
+        return;
+      }
 
-  const suhuf = queryClient.getQueryData(['suhuf', createdSuhufId]);
-  const { mutate: updateConfig } = useUpdateSuhufConfig(createdSuhufId);
+      if (!fileId) {
+        toast.error({ message: 'No file ID present' });
+        return;
+      }
 
-  useEffect(() => {
-    if (!suhuf || !createdSuhufId) return;
+      const suhuf = queryClient.getQueryData(['suhuf', suhufId]);
 
-    const panels = suhuf?.config?.panels || [];
-    const activeIndex = panels.findIndex((p) => p.active);
-    if (activeIndex === -1) return;
+      if (!suhuf || !suhuf.config) {
+        toast.error({ message: 'No suhuf found with the given ID' });
+        return;
+      }
 
-    const updatedPanels = panels.map((panel, i) =>
-      i === activeIndex
-        ? {
-            ...panel,
-            fileId,
-            fileType: isReading ? 'reading' : 'user',
-          }
-        : panel
-    );
+      const panels = suhuf.config.panels ?? [];
 
-    if (!deepEqual(updatedPanels, panels)) {
+      if (!panels.length) {
+        toast.error({ message: 'No panels configured' });
+        return;
+      }
+
+      const hasActivePanel = panels.some((panel) => panel.active);
+
+      if (!hasActivePanel) {
+        toast.error({ message: 'No active panel selected' });
+        return;
+      }
+
+      const updatedPanels = panels.map((panel) =>
+        panel.active
+          ? {
+              ...panel,
+              fileId,
+              fileType: 'reading',
+            }
+          : panel
+      );
+
       updateConfig({ panels: updatedPanels });
-    }
-  }, [suhuf, createdSuhufId, fileId, isReading, updateConfig]);
-
-  return openSuhuf;
+    },
+    [suhufId, queryClient, toast, updateConfig]
+  );
 };

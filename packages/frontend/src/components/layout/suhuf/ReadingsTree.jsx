@@ -13,7 +13,7 @@ import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
 import { FileSVG } from '@/components/svgs/FileSVG.jsx';
 import { useReadings } from '@/hooks/reading/useReadings.js';
 
-const TreeNode = ({ onSelect }) => {
+export const ReadingsTree = ({ onSelect }) => {
   const defaultTextColor = useColorModeValue('text.primary', 'whiteAlpha.900');
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -30,14 +30,13 @@ const TreeNode = ({ onSelect }) => {
         align="center"
         p={1}
         cursor="pointer"
-        // onClick={() => onSelect?.(path)}
         borderRadius="sm"
         role="group"
       >
         <Icon
           as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
           mr={2}
-          fontSize="12px"
+          fontSize="13px"
           onClick={(e) => {
             e.stopPropagation();
             toggle();
@@ -45,11 +44,11 @@ const TreeNode = ({ onSelect }) => {
           color={defaultTextColor}
         />
         <Flex align="center" gap="5px" overflow="hidden">
-          <FolderSVG dimensions="12px" />
+          <FolderSVG dimensions="13px" />
           <Tooltip label="Readings" placement="auto-end" variant="inverted">
             <Text
               whiteSpace="nowrap"
-              fontSize={'11px'}
+              fontSize={'12px'}
               _groupHover={{ color: 'brand.600' }}
             >
               Readings
@@ -61,16 +60,19 @@ const TreeNode = ({ onSelect }) => {
       <Collapse in={isExpanded}>
         {!isPending &&
           readings?.map((res) => {
+            const fileId = res.uuid;
             return (
-              <Box key={res._id} pl={2}>
+              <Box key={fileId} pl={2}>
                 <Flex
                   align="center"
                   p={1}
                   cursor="pointer"
                   gap="5px"
-                  onClick={() => {
-                    // TODO: handle file click (intentionally left empty)
-                  }}
+                  onClick={
+                    typeof onSelect === 'function'
+                      ? () => onSelect(fileId)
+                      : undefined
+                  }
                   borderRadius="sm"
                   role="group"
                 >
@@ -82,7 +84,7 @@ const TreeNode = ({ onSelect }) => {
                     variant="inverted"
                   >
                     <Text
-                      fontSize="11px"
+                      fontSize="12px"
                       whiteSpace="nowrap"
                       _groupHover={{ color: 'brand.600' }}
                     >
@@ -96,8 +98,4 @@ const TreeNode = ({ onSelect }) => {
       </Collapse>
     </Box>
   );
-};
-
-export const ReadingsTree = ({ onSelect }) => {
-  return <TreeNode onSelect={onSelect} />;
 };

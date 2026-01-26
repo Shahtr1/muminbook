@@ -1,21 +1,14 @@
 import { Flex, useColorMode } from '@chakra-ui/react';
 import Split from 'react-split';
 import { SuhufPanel } from './SuhufPanel.jsx';
-import { SuhufLeftSidebar } from '@/components/layout/suhuf/SuhufLeftSidebar.jsx';
-import { SuhufBottomPanel } from '@/components/layout/suhuf/bottomPanel/SuhufBottomPanel.jsx';
+import { SuhufLeftSidebar } from '@/components/layout/suhuf/suhufLeftSidebar/SuhufLeftSidebar.jsx';
+import { SuhufBottomPanelWithHeader } from '@/components/layout/suhuf/bottomPanel/SuhufBottomPanelWithHeader.jsx';
 import { SuhufBottomPanelHeader } from '@/components/layout/suhuf/bottomPanel/SuhufBottomPanelHeader.jsx';
 import { useParams } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
 
-export const SuhufLayout = ({ readings }) => {
+export const SuhufLayout = ({ readings, suhuf }) => {
   const { colorMode } = useColorMode();
-  const { id: suhufId } = useParams();
-  const queryClient = useQueryClient();
-  const { data: suhuf } = useQuery({
-    queryKey: ['suhuf', suhufId],
-    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
-    staleTime: 0,
-  });
 
   const layout = suhuf?.config?.layout || {};
   const isBottomOpen = layout?.isBottomTabOpen;
@@ -24,12 +17,12 @@ export const SuhufLayout = ({ readings }) => {
 
   return (
     <Flex h="100%" w="100%" pos="relative" zIndex={1}>
-      <SuhufLeftSidebar />
+      <SuhufLeftSidebar suhuf={suhuf} />
 
       {/* Main Content Area */}
       <Flex flex="1" display="flex" flexDirection="column" overflow="auto">
         <Split
-          key={`bottom-open-${isBottomOpen}`}
+          key={`with-bottom-open-${isBottomOpen}`}
           direction="vertical"
           sizes={sizes}
           minSize={isBottomOpen ? [200, 100] : [200]}
@@ -44,12 +37,19 @@ export const SuhufLayout = ({ readings }) => {
         >
           {/* Main Panel */}
           <Flex overflowY="auto" position="relative">
-            <SuhufPanel />
+            <SuhufPanel suhuf={suhuf} />
           </Flex>
 
-          {isBottomOpen ? <SuhufBottomPanel readings={readings} /> : <div />}
+          {isBottomOpen ? (
+            <SuhufBottomPanelWithHeader readings={readings} suhuf={suhuf} />
+          ) : (
+            <div />
+          )}
         </Split>
-        {!isBottomOpen && <SuhufBottomPanelHeader readings={readings} />}
+        {/* TODO: A workaround for now, to toggle SuhufBottomPanel Body, fix it, when pro people will work on this */}
+        {!isBottomOpen && (
+          <SuhufBottomPanelHeader readings={readings} suhuf={suhuf} />
+        )}
       </Flex>
     </Flex>
   );

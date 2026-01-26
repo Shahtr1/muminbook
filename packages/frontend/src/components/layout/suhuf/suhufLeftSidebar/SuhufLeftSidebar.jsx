@@ -6,20 +6,13 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { sidebarMenuData } from '@/data/sidebarMenuData.jsx';
+import { sidebarMenuData } from '@/data/sidebarMenuData.js';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-export const SuhufLeftSidebar = () => {
-  const { id: suhufId } = useParams();
-  const queryClient = useQueryClient();
-  const { data: suhuf } = useQuery({
-    queryKey: ['suhuf', suhufId],
-    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
-    staleTime: 0,
-  });
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
+export const SuhufLeftSidebar = ({ suhuf }) => {
+  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
   const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
   const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
@@ -56,14 +49,15 @@ export const SuhufLeftSidebar = () => {
   };
 
   const activeTabData = sidebarMenuData.find((tab) => tab.key === activeTab);
+  const ActiveComponent = activeTabData?.component;
   const activeContent =
-    isOpen && activeTabData ? (
+    isOpen && activeTabData && ActiveComponent ? (
       <Flex flexDir="column" w="100%" overflow="auto">
         <Text fontSize="xs" fontWeight="bold" mb={2}>
           {activeTabData.label}
         </Text>
         <Flex overflow="auto" pr={1}>
-          {activeTabData.renderContent()}
+          <ActiveComponent />
         </Flex>
       </Flex>
     ) : null;

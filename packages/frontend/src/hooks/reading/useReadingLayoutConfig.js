@@ -1,11 +1,9 @@
 import { useBreakpointValue, useTheme } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { useWindows } from '@/hooks/resource/useWindows.js';
 
 export const useReadingLayoutConfig = () => {
   const theme = useTheme();
-  const { data: windows = [] } = useQuery({
-    queryKey: ['windows'],
-  });
+  const { windows = [] } = useWindows();
 
   const navbarHeight = parseInt(theme.space['navbar-height']);
   const breadcrumbHeight = 40;

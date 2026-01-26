@@ -4,14 +4,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { useRenameResource } from '../useRenameResource.js';
 import * as services from '@/services/index.js';
-import { useXToast } from '@/hooks/useXToast.js';
+import { useXToast } from '@/components/toast/useXToast.jsx';
 import React from 'react';
 
 vi.mock('@/services/index.js', () => ({
   renameResource: vi.fn(),
 }));
 
-vi.mock('@/hooks/useXToast.js', () => ({
+vi.mock('@/components/toast/useXToast.jsx', () => ({
   useXToast: vi.fn(),
 }));
 

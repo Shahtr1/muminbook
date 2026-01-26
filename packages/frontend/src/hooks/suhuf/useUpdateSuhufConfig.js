@@ -1,4 +1,4 @@
-import { useXToast } from '@/hooks/useXToast.js';
+import { useXToast } from '@/components/toast/useXToast.jsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateSuhufConfig } from '@/services/index.js';
 
@@ -12,9 +12,10 @@ export const useUpdateSuhufConfig = (suhufId) => {
     },
 
     onMutate: async (configUpdate) => {
+      // Cancel any pending queries for this suhuf to avoid race conditions
       await queryClient.cancelQueries(['suhuf', suhufId]);
 
-      const previousSuhuf = queryClient.getQueryData(['suhuf', suhufId]);
+      const cachedSuhuf = queryClient.getQueryData(['suhuf', suhufId]);
 
       queryClient.setQueryData(['suhuf', suhufId], (old) => ({
         ...old,
@@ -24,12 +25,12 @@ export const useUpdateSuhufConfig = (suhufId) => {
         },
       }));
 
-      return { previousSuhuf };
+      return { cachedSuhuf };
     },
 
     onError: (error, _, context) => {
-      if (context?.previousSuhuf) {
-        queryClient.setQueryData(['suhuf', suhufId], context.previousSuhuf);
+      if (context?.cachedSuhuf) {
+        queryClient.setQueryData(['suhuf', suhufId], context.cachedSuhuf);
       }
       toast.error(error);
     },

@@ -7,7 +7,6 @@ import { RdWrapperUI } from '@/components/layout/reading/ui/RdWrapperUI.jsx';
 import { useReadingInfinite } from '@/hooks/reading/useReadings.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { UiHeaderInfo } from '@/components/layout/reading/ui/UiHeaderInfo.jsx';
 
 export const QuranUI = ({ fileId }) => {
   const {
@@ -41,8 +40,6 @@ export const QuranUI = ({ fileId }) => {
     limit: 150,
   });
 
-  const flatData = data?.pages.flatMap((page) => page.data);
-
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const marginX = isSmallScreen ? 1 : 2;
 
@@ -60,9 +57,7 @@ export const QuranUI = ({ fileId }) => {
             whiteSpace="normal"
             wordBreak="break-word"
             textAlign="right"
-          >
-            <UiHeaderInfo />
-          </Box>
+          ></Box>
         </Flex>
       </Flex>
     </RdWrapperUI>

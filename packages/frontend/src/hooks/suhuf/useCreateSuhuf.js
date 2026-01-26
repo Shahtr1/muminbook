@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useXToast } from '@/hooks/useXToast.js';
+import { useXToast } from '@/components/toast/useXToast.jsx';
 import { createSuhuf } from '@/services/suhuf.service.js';
 
 export const useCreateSuhuf = () => {
@@ -9,7 +9,7 @@ export const useCreateSuhuf = () => {
   return useMutation({
     mutationFn: async (data) => {
       toast.startLoading('Creating Suhuf...');
-      return await createSuhuf(data);
+      return createSuhuf(data);
     },
     onSuccess: (data) => {
       toast.success('Suhuf created.');

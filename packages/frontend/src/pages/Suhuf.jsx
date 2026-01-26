@@ -28,8 +28,8 @@ export const Suhuf = () => {
   const { setNavbarChildren } = useWindowNavbar();
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
 
-  const tokenKey = useColorModeValue('wn.bold.light', 'wn.bold.dark');
-  const [iconActiveColor] = useToken('colors', [tokenKey]);
+  const iconColorKey = useColorModeValue('wn.bold.light', 'wn.bold.dark');
+  const [iconActiveColor] = useToken('colors', [iconColorKey]);
   const theme = useTheme();
 
   const {
@@ -38,11 +38,13 @@ export const Suhuf = () => {
     isError: isSuhufError,
     isSuccess: isSuhufSuccess,
   } = useSuhuf(suhufId);
+
   const {
     readings,
     isPending: isReadingsLoading,
     isError: isReadingsError,
   } = useReadings();
+
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
 
   const layout = suhuf?.config?.layout || {};
@@ -158,7 +160,7 @@ export const Suhuf = () => {
     >
       {(isSuhufLoading || isReadingsLoading) && <Loader />}
       {(isSuhufError || isReadingsError) && <SomethingWentWrong />}
-      {isSuhufSuccess && <SuhufLayout readings={readings} />}
+      {isSuhufSuccess && <SuhufLayout readings={readings} suhuf={suhuf} />}
     </Flex>
   );
 };
