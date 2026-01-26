@@ -4,7 +4,7 @@ import { FaComment, FaHighlighter } from 'react-icons/fa';
 import { FaArrowPointer } from 'react-icons/fa6';
 import { RiFullscreenExitFill, RiFullscreenFill } from 'react-icons/ri';
 
-export const RdWrapperToolbar = ({ onToolSelect }) => {
+export const ReadingToolbar = ({ onToolSelect }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');

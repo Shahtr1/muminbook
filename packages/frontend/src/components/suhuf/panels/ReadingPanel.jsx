@@ -12,8 +12,8 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { RdWrapperSidebar } from '@/components/suhuf/reading/RdWrapperSidebar.jsx';
-import { RdWrapperToolbar } from '@/components/suhuf/reading/RdWrapperToolbar.jsx';
+import { ReadingSidebar } from '@/components/suhuf/reading/ReadingSidebar.jsx';
+import { ReadingToolbar } from '@/components/suhuf/reading/ReadingToolbar.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { RiCloseCircleFill, RiInformationFill } from 'react-icons/ri';
 import { useQueryClient } from '@tanstack/react-query';
@@ -61,7 +61,7 @@ export const ReadingPanel = ({ id, suhuf, direction }) => {
   const renderUI = () => {
     switch (id.toLowerCase()) {
       case 'quran':
-        return <QuranUI fileId={id} direction={direction} />;
+        return <QuranUI />;
       default:
         console.error(`No UI for reading type ${id}`);
         return <SomethingWentWrong />;
@@ -122,7 +122,7 @@ export const ReadingPanel = ({ id, suhuf, direction }) => {
       </Flex>
 
       <Flex h={`calc(100% - ${panelNavHeight})`} w="100%">
-        <RdWrapperSidebar fileId={id} direction={direction} />
+        <ReadingSidebar fileId={id} direction={direction} />
         <Flex
           flex={1}
           w="100%"
@@ -132,7 +132,7 @@ export const ReadingPanel = ({ id, suhuf, direction }) => {
         >
           {renderUI()}
         </Flex>
-        <RdWrapperToolbar
+        <ReadingToolbar
           onToolSelect={(id) => console.log('Tool selected: ', id)}
         />
       </Flex>

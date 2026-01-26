@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AddMenu } from '@/components/explorer/toolbar/AddMenu.jsx';
 import { useCreateResource } from '@/hooks/resource/useCreateResource.js';
 
-export const ReadingToolbar = () => {
+export const ExplorerToolbar = () => {
   const bgColor = useColorModeValue('bg.light', 'bg.dark');
   const boxShadowColor = useColorModeValue(
     'rgba(0, 0, 0, 0.1)',

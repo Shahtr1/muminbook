@@ -7,7 +7,7 @@ import { LuMenu } from 'react-icons/lu';
 import { useState } from 'react';
 import { useReadingLayoutConfig } from '@/hooks/reading/useReadingLayoutConfig.js';
 
-export const ReadingSidebar = ({ overview }) => {
+export const ExplorerSidebar = ({ overview }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const borderColor = useColorModeValue('gray.300', 'whiteAlpha.300');

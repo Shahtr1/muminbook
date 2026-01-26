@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { ReadingHeader } from '@/components/explorer/ReadingHeader.jsx';
-import { ReadingToolbar } from '@/components/explorer/toolbar/ReadingToolbar.jsx';
-import { ReadingSidebar } from '@/components/explorer/ReadingSidebar.jsx';
+import { ExplorerHeader } from '@/components/explorer/ExplorerHeader.jsx';
+import { ExplorerToolbar } from '@/components/explorer/toolbar/ExplorerToolbar.jsx';
+import { ExplorerSidebar } from '@/components/explorer/ExplorerSidebar.jsx';
 import { Flex } from '@chakra-ui/react';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { useOverviewResource } from '@/hooks/resource/useOverviewResource.js';
@@ -30,10 +30,10 @@ export const ReadingLayout = () => {
 
       {!isPending && !isError && (
         <>
-          <ReadingHeader isFolderView={isFolderView} />
-          <ReadingToolbar />
+          <ExplorerHeader isFolderView={isFolderView} />
+          <ExplorerToolbar />
           <Flex h="100%">
-            {isFolderView && <ReadingSidebar overview={overview} />}
+            {isFolderView && <ExplorerSidebar overview={overview} />}
             <Outlet />
           </Flex>
         </>

@@ -10,7 +10,7 @@ import { CardSVG } from '@/components/svgs/CardSVG.jsx';
 import { ItemToolbar } from '@/components/explorer/toolbar/ItemToolbar.jsx';
 import { ActionItems } from '@/components/explorer/ActionItems.jsx';
 
-export const ReadingCard = ({
+export const ExplorerCard = ({
   label,
   color,
   description,

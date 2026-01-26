@@ -7,15 +7,14 @@ import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { useCachedQueryIfPresent } from '@/hooks/useCachedQueryIfPresent.js';
-import { VscFilter, VscFilterFilled } from 'react-icons/vsc';
+import { VscFilterFilled } from 'react-icons/vsc';
 
 export const DivisionList = () => {
   const {
-    data: surahs,
-    isPending,
-    isError,
-  } = useCachedQueryIfPresent(['surahs'], useSurahs);
+    surahs,
+    isPending: isSurahsPending,
+    isError: isSurahsError,
+  } = useSurahs();
 
   const bgContentColor = useColorModeValue(
     'wn.bg_content.light',
@@ -89,8 +88,8 @@ export const DivisionList = () => {
     );
   };
 
-  if (isPending) return <Loader />;
-  if (isError) return <SomethingWentWrong transparent />;
+  if (isSurahsPending) return <Loader />;
+  if (isSurahsError) return <SomethingWentWrong transparent />;
 
   return (
     <Flex

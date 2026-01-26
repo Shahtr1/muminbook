@@ -1,26 +1,10 @@
 import React from 'react';
-import { Box, Flex, useBreakpointValue } from '@chakra-ui/react';
-import { useSurahs } from '@/hooks/quran/useSurahs.js';
-import { useCachedQueryIfPresent } from '@/hooks/useCachedQueryIfPresent.js';
-import { useJuz } from '@/hooks/quran/useJuz.js';
-import { RdWrapperUI } from '@/components/suhuf/reading/RdWrapperUI.jsx';
+import { Box } from '@chakra-ui/react';
 import { useReadingInfinite } from '@/hooks/reading/useReadings.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 
-export const QuranUI = ({ fileId, direction }) => {
-  const {
-    data: surahs,
-    isPending: isSurahsPending,
-    isError: isSurahsError,
-  } = useCachedQueryIfPresent(['surahs'], useSurahs);
-
-  const {
-    data: juzList,
-    isPending: isJuzListPending,
-    isError: isJuzListError,
-  } = useCachedQueryIfPresent(['juzList'], useJuz);
-
+export const QuranUI = () => {
   const startValue = 114;
 
   const {
@@ -40,10 +24,8 @@ export const QuranUI = ({ fileId, direction }) => {
     limit: 150,
   });
 
-  if (isReadingPending || isSurahsPending || isJuzListPending)
-    return <Loader />;
-  if (isReadingError || isSurahsError || isJuzListError)
-    return <SomethingWentWrong />;
+  if (isReadingPending) return <Loader />;
+  if (isReadingError) return <SomethingWentWrong />;
 
   return (
     <Box

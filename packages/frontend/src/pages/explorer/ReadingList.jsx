@@ -1,6 +1,6 @@
 import { Flex, useBreakpointValue } from '@chakra-ui/react';
 import { Folder } from '@/components/explorer/components/Folder.jsx';
-import { ReadingCard } from '@/components/explorer/ReadingCard.jsx';
+import { ExplorerCard } from '@/components/explorer/ExplorerCard.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useIsMyFilesEmpty } from '@/hooks/resource/useIsMyFilesEmpty.js';
 import { Loader } from '@/components/layout/Loader.jsx';
@@ -56,7 +56,7 @@ export const ReadingList = () => {
       {readings.map((item) => {
         const SvgIcon = readingSvgMap[item.uuid] || BookSVG;
         return (
-          <ReadingCard
+          <ExplorerCard
             key={item._id}
             {...item}
             svg={<SvgIcon dimensions="50px" activeColor={item.color} />}

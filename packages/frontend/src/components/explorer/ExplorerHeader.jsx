@@ -1,6 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
 
-export const ReadingHeader = ({ isFolderView }) => {
+export const ExplorerHeader = ({ isFolderView }) => {
   return (
     <>
       <Flex

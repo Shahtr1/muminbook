@@ -15,7 +15,7 @@ const readingSidebarData = [
   { label: 'Highlights', id: 'highlights', icon: BsHighlights },
 ];
 
-export const RdWrapperSidebar = ({ fileId, direction }) => {
+export const ReadingSidebar = ({ fileId, direction }) => {
   const { id: suhufId } = useParams();
 
   const { data: suhuf } = useSuhuf(suhufId);
