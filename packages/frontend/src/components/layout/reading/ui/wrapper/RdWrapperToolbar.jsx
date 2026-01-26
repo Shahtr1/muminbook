@@ -23,7 +23,7 @@ export const RdWrapperToolbar = ({ onToolSelect }) => {
 
   const fullScreenTool = isFullscreen
     ? {
-        label: 'Exit full Screen',
+        label: 'Exit full screen',
         id: 'exitFullScreen',
         icon: RiFullscreenExitFill,
       }
