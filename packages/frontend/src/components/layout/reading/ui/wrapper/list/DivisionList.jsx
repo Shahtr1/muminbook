@@ -109,7 +109,6 @@ export const DivisionList = () => {
           expand={false}
           placeholder="Surahs"
         />
-        <VscFilter size={20} />
         <VscFilterFilled size={20} />
       </Flex>
 
