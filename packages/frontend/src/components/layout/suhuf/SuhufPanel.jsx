@@ -58,10 +58,13 @@ export const SuhufPanel = ({ suhuf }) => {
     updateConfig({ panels: updatedPanels });
   };
 
-  const renderPanelContent = (panel) => {
+  const renderPanelContent = (panel, index) => {
+    const direction = index === 0 ? 'left' : 'right';
     switch (panel?.fileType) {
       case 'reading':
-        return <ReadingPanel id={panel.fileId} panel={panel} />;
+        return (
+          <ReadingPanel id={panel.fileId} panel={panel} direction={direction} />
+        );
       case 'user':
         return <EditorPanel />;
       default:
@@ -83,7 +86,7 @@ export const SuhufPanel = ({ suhuf }) => {
           borderColor="brand.500"
           onClick={() => handlePanelClick(index)}
         >
-          {renderPanelContent(panel)}
+          {renderPanelContent(panel, index)}
         </Box>
       );
     };

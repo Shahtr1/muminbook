@@ -8,7 +8,7 @@ import { useReadingInfinite } from '@/hooks/reading/useReadings.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 
-export const QuranUI = ({ fileId }) => {
+export const QuranUI = ({ fileId, direction }) => {
   const {
     data: surahs,
     isPending: isSurahsPending,
@@ -49,7 +49,7 @@ export const QuranUI = ({ fileId }) => {
     return <SomethingWentWrong />;
 
   return (
-    <RdWrapperUI fileId={fileId}>
+    <RdWrapperUI fileId={fileId} direction={direction}>
       <Flex gap={1} direction="column" position="relative">
         <Flex flex={1} px={marginX} direction="column">
           <Box
