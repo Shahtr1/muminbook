@@ -1,366 +1,241 @@
-<div align="center">
-
-# 📖 Muminbook
+![Muminbook logo](./packages/frontend/public/images/logos/logo-with-image.png 'Muminbook')
 
 **A Modern Islamic Community Platform**
 
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![CI Pipeline](https://github.com/Shahtr1/muminbook/actions/workflows/ci.yml/badge.svg)](https://github.com/Shahtr1/muminbook/actions/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-188%20passing-success)](https://github.com/Shahtr1/muminbook/actions)
 
 _Empowering Muslims worldwide to share knowledge, study Quran & Hadith collaboratively, and connect through live study rooms_
 
-[Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](#-contributing) • [Support](#-support)
+[Features](#features) • [Quick Start](#quick-start) • [Documentation](#documentation) • [Contributing](#contributing) • [Support](#support)
 
 ---
 
-</div>
+## About Muminbook
 
-## 🌟 About Muminbook
+Muminbook is a full-stack MERN monorepo (npm workspaces) that provides a community platform for Islamic learning and collaboration. The project contains two primary packages:
 
-Muminbook is a full-stack MERN application designed to serve as a comprehensive community platform for Muslims. Whether you're a student seeking knowledge, a teacher sharing wisdom, or a community member looking to connect, Muminbook provides the tools and environment to foster Islamic learning and collaboration.
+- `packages/backend` — Node.js + Express + TypeScript API server
+- `packages/frontend` — React + Vite single-page application
 
-### 🎯 Key Features
+This README has been updated to reflect the current repository state (scripts, environment variables, and documentation links). For deeper technical documentation see the `docs/` folder (linked below).
 
-- **📚 Collaborative Quran Study** - Read, study, and discuss Quranic verses with the community
-- **📜 Hadith Collections** - Access and share authentic Hadith literature
-- **🏫 Live Study Rooms** - Connect with teachers and students in real-time
-- **👥 Community Features** - Share knowledge, ask questions, and engage with fellow Muslims
-- **🌳 Family Tree Visualization** - Explore Islamic historical connections
-- **📂 Resource Library** - Store and organize Islamic learning materials
-- **🔐 Secure Authentication** - Protected user accounts with email verification
+## Features
 
-## 🔗 Project Links
+- Collaborative study rooms and live sessions
+- User authentication with JWT access and refresh tokens
+- Role-based access control for admins and contributors
+- REST API backend with TypeScript, Mongoose schemas and validation (Zod)
+- Rich editor and flow-based UI in the frontend (Monaco + React Flow)
+- Email sending via Resend and background jobs (cron)
+- Tests with Vitest for both frontend and backend
 
-| Resource             | Link                                                                                                            |
-| -------------------- | --------------------------------------------------------------------------------------------------------------- |
-| **📋 Task Board**    | [Notion Board](https://www.notion.so/1f87449dbc4780c088e9d60174e52db2?v=1f87449dbc4780a78a05000c04e67009&pvs=4) |
-| **🎨 Design System** | [Figma Designs](https://www.figma.com/design/SYiIw3zJ5Qr3mrUcMGBysb/muminbook?node-id=0-1&t=8g78x9ge92aUWwK0-1) |
-| **🐛 Issues**        | [GitHub Issues](https://github.com/Shahtr1/muminbook/issues)                                                    |
-| **💬 Discussions**   | [GitHub Discussions](https://github.com/Shahtr1/muminbook/discussions)                                          |
+## Requirements
 
-## 🛠️ Technology Stack
+- Node.js >= 18.0.0
+- npm >= 9.0.0
+- MongoDB (local or Atlas)
+- Git
 
-### Backend
+(These are enforced via `package.json` engines and the backend expects a MongoDB connection for normal operation.)
 
-| Technology     | Purpose              | Version   |
-| -------------- | -------------------- | --------- |
-| **Node.js**    | Runtime environment  | >= 18.0.0 |
-| **Express.js** | REST API framework   | ^4.21.2   |
-| **TypeScript** | Type-safe JavaScript | ^5.7.3    |
-| **MongoDB**    | NoSQL database       | ^6.12.0   |
-| **Mongoose**   | MongoDB ODM          | ^8.9.5    |
-| **Zod**        | Schema validation    | ^3.24.1   |
-| **JWT**        | Authentication       | ^9.0.2    |
-| **Bcrypt**     | Password hashing     | ^5.1.1    |
-| **Resend**     | Email service        | ^4.1.1    |
+## Quick Start
 
-### Frontend
-
-| Technology        | Purpose                 | Version  |
-| ----------------- | ----------------------- | -------- |
-| **React**         | UI library              | ^18.3.1  |
-| **Vite**          | Build tool              | ^6.0.5   |
-| **TypeScript**    | Type safety             | Latest   |
-| **Chakra UI**     | Component library       | ^2.10.6  |
-| **React Query**   | Server state management | ^5.65.1  |
-| **React Router**  | Navigation              | ^7.1.3   |
-| **Monaco Editor** | Code editing            | ^4.7.0   |
-| **React Flow**    | Diagram visualization   | ^11.11.4 |
-| **Axios**         | HTTP client             | ^1.7.9   |
-
-### DevOps & Tools
-
-- **NPM Workspaces** - Monorepo management
-- **ESLint** - Code linting
-- **Concurrently** - Run multiple scripts
-- **Node Cron** - Scheduled jobs
-
-### 🏗️ Architecture Patterns
-
-- **MVC Pattern** - Backend follows Model-View-Controller architecture
-- **Component-Based** - Frontend uses modular React components
-- **Service Layer** - Business logic separated from controllers
-- **Middleware Chain** - Authentication, error handling, validation
-- **Type Safety** - TypeScript across the entire stack
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-Ensure you have the following installed:
-
-- **Node.js** >= 18.0.0 ([Download](https://nodejs.org/))
-- **npm** >= 9.0.0 (comes with Node.js)
-- **MongoDB** ([Local](https://www.mongodb.com/docs/manual/installation/) or [Atlas](https://www.mongodb.com/cloud/atlas))
-- **Git** ([Download](https://git-scm.com/))
-
-### Installation
+1. Clone the repository
 
 ```bash
-# 1. Clone the repository
 git clone https://github.com/Shahtr1/muminbook.git
 cd muminbook
-
-# 2. Install all dependencies (both backend & frontend)
-npm install
-
-# 3. Set up environment variables (see Environment Setup below)
 ```
 
-### Environment Configuration
-
-#### Backend Environment (`packages/backend/.env`)
+2. Install dependencies (root workspace installs both packages)
 
 ```bash
-# Copy the sample file
+npm install
+```
+
+3. Create environment files
+
+- Backend: copy the sample file
+
+```bash
 cp packages/backend/sample.env packages/backend/.env
 ```
 
-Then configure the following variables:
-
-```env
-# Server
-NODE_ENV=development
-PORT=5000
-
-# Database
-MONGO_URI=mongodb://localhost:27017/muminbook
-
-# JWT Secrets
-JWT_ACCESS_SECRET=your_access_secret_here
-JWT_REFRESH_SECRET=your_refresh_secret_here
-
-# Email Service (Resend)
-RESEND_API_KEY=your_resend_api_key
-EMAIL_SENDER=noreply@yourdomain.com
-
-# Frontend URL
-APP_ORIGIN=http://localhost:5173
-```
-
-#### Frontend Environment (`packages/frontend/.env`)
+- Frontend: copy the sample file
 
 ```bash
-# Copy the sample file
 cp packages/frontend/sample.env packages/frontend/.env
 ```
 
-```env
-# API Configuration
-VITE_API_URL=http://localhost:5000
-```
+Edit the `.env` files with appropriate values (see notes below).
 
-### Running the Application
+4. Run both backend and frontend concurrently (development)
 
 ```bash
-# 🚀 Run both backend and frontend concurrently (RECOMMENDED)
 npm run dev
-
-# 🔧 Or run them separately:
-npm run backend     # Start backend only (http://localhost:5000)
-npm run frontend    # Start frontend only (http://localhost:5173)
 ```
 
-**Access the application:**
-
-- **Frontend:** http://localhost:5173
-- **Backend API:** http://localhost:5000
-- **Health Check:** http://localhost:5000/
-
-### 🏗️ Building for Production
+Or run them individually:
 
 ```bash
-# Build both packages
+npm run backend    # runs backend in workspace @muminbook/backend
+npm run frontend   # runs frontend dev server in workspace @muminbook/frontend
+```
+
+Access the apps in your browser:
+
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:5000
+- Health check: http://localhost:5000/
+
+## 📁 Workspace scripts (summary)
+
+The root `package.json` exposes helpful workspace scripts. Key scripts (run from repo root):
+
+- `npm run dev` — runs backend and frontend concurrently
+- `npm run backend` — run backend scripts in its workspace
+- `npm run frontend` — run frontend dev server in its workspace
+- `npm run build` — build all workspaces (if present)
+- `npm run build:backend` — build backend (TypeScript)
+- `npm run build:frontend` — build frontend (Vite)
+- `npm run start:backend` — start production backend (runs backend `start` script)
+- `npm run preview:frontend` — preview production frontend build
+- `npm run lint` — run lint across workspaces (if configured)
+- `npm run format` / `npm run format:check` — run Prettier formatting
+- `npm run clean` — remove node_modules folders (note: uses `rm -rf`, run in bash-compatible shells)
+- `npm run test` — run tests across workspaces (if present)
+
+For package-specific scripts see `packages/backend/package.json` and `packages/frontend/package.json`.
+
+## 🔧 Environment variables (important)
+
+Backend environment variables live in `packages/backend/.env` (copy from `packages/backend/sample.env`). Important keys you should set:
+
+- NODE_ENV (development | production | test)
+- PORT (default: 5000)
+- APP_ORIGIN (frontend origin, e.g. http://localhost:5173)
+- MONGO_URI (mongodb://localhost:27017/muminbook or Atlas URI)
+- JWT_SECRET — access token secret (note: this repository previously referenced `JWT_ACCESS_SECRET`; current code uses `JWT_SECRET`)
+- JWT_REFRESH_SECRET — refresh token secret
+- JWT_ACCESS_EXPIRES_IN (optional, default in code)
+- JWT_REFRESH_EXPIRES_IN (optional)
+- RESEND_API_KEY — API key for Resend email service
+- EMAIL_SENDER — verified sender address
+
+Note: If you have an older `.env` referencing `JWT_ACCESS_SECRET`, rename it to `JWT_SECRET` or update the code accordingly.
+
+Frontend environment variables live in `packages/frontend/.env` (copy from `packages/frontend/sample.env`). Typical value:
+
+- VITE_API_URL — backend API base URL (e.g. http://localhost:5000)
+
+## Testing
+
+- Frontend tests: `cd packages/frontend && npm run test` (or `npm run test:frontend` from repo root)
+- Backend tests: `cd packages/backend && npm run test` (or `npm run test:backend` from repo root)
+
+Note: The project uses Vitest for testing in both packages.
+
+## Documentation
+
+This repository includes additional documentation in the `docs/` folder. Please refer to these for deep dives, architecture, deployment and CI/CD details:
+
+- docs/API.md — API endpoints and schemas
+- docs/ARCHITECTURE.md — architecture overview
+- docs/CI-CD.md — CI/CD pipeline notes
+- docs/DEPLOYMENT.md — deployment instructions
+- docs/DEV-TOOLS.md — local development utilities and tips
+- docs/DEVELOPMENT.md — developer onboarding and guidelines
+- docs/DOCKER.md — Docker & docker-compose notes
+- docs/SETUP.md — environment & project setup guide
+- docs/TESTING.md — testing guide and commands
+
+(Keep these documents up-to-date as you change behavior or environment variables.)
+
+## Technology stack (high level)
+
+Backend: Node.js + Express + TypeScript + Mongoose + Zod + JWT + Resend (email)
+Frontend: React + Vite + Chakra UI + React Router + React Query + Monaco Editor + React Flow
+
+See individual `package.json` files for current dependency versions.
+
+## Quality & Developer tooling
+
+- ESLint & Prettier for code style
+- Husky + Commitlint + Commitizen for commit conventions
+- Vitest for unit tests
+- Concurrently to run backend & frontend in development
+
+## Building for production
+
+Build both packages:
+
+```bash
 npm run build
-
-# Or build individually
-npm run build:backend    # Compiles TypeScript
-npm run build:frontend   # Creates optimized bundle
-
-# Run production builds
-npm run start:backend    # Start production API server
-npm run preview:frontend # Preview production frontend
 ```
 
-## 📦 Workspace Packages
-
-### @muminbook/backend
-
-**Node.js/Express REST API Server**
-
-- **Port:** 5000 (configurable)
-- **Language:** TypeScript
-- **Database:** MongoDB with Mongoose ODM
-- **Authentication:** JWT-based with refresh tokens
-- **Email:** Resend integration for transactional emails
-- **Jobs:** Node-cron for scheduled tasks (trash cleanup, etc.)
-- **Location:** `packages/backend/`
-
-**Key Features:**
-
-- User authentication & authorization
-- Role-based access control (Admin/User)
-- Quran & Hadith API endpoints
-- Family tree management
-- Resource file management
-- Reading progress tracking
-- Email verification system
-- Session management
-
-### @muminbook/frontend
-
-**React/Vite Single Page Application**
-
-- **Port:** 5173 (default Vite)
-- **Language:** JavaScript (JSX)
-- **UI Framework:** Chakra UI
-- **State Management:** React Query + Context API
-- **Routing:** React Router v7
-- **Code Editor:** Monaco Editor
-- **Diagrams:** React Flow
-- **Location:** `packages/frontend/`
-
-**Key Features:**
-
-- Responsive design for all devices
-- Dark/light mode support
-- Interactive Quran reader
-- Family tree visualization
-- Resource library with file management
-- Live study rooms interface
-- User dashboard & admin panel
-- Real-time data synchronization
-
-## 🔧 Available Scripts
-
-| Command                    | Description                                     |
-| -------------------------- | ----------------------------------------------- |
-| `npm run dev`              | Run both backend & frontend in development mode |
-| `npm run backend`          | Start backend server only                       |
-| `npm run frontend`         | Start frontend dev server only                  |
-| `npm run build`            | Build both packages for production              |
-| `npm run build:backend`    | Build backend TypeScript                        |
-| `npm run build:frontend`   | Build optimized frontend bundle                 |
-| `npm run start:backend`    | Run production backend server                   |
-| `npm run preview:frontend` | Preview production frontend build               |
-| `npm run lint`             | Run ESLint on all packages                      |
-| `npm run clean`            | Remove all node_modules directories             |
-| `npm install`              | Install/update all dependencies                 |
-
-## 🧪 Testing
+Build individually:
 
 ```bash
-# Frontend tests (Vitest)
-cd packages/frontend
-npm run test
-
-# Backend tests (coming soon)
-cd packages/backend
-npm run test
+npm run build:backend
+npm run build:frontend
 ```
 
-## 📚 Documentation
+Start production backend:
 
-- **[API Documentation]** - REST API endpoints and schemas
-- **[User Guide]** - How to use Muminbook features
-- **[Developer Guide]** - Architecture and development guidelines
-- **[Contributing Guide]** - How to contribute to the project
-- **[Deployment Guide]** - Production deployment instructions
+```bash
+npm run start:backend
+```
 
-_Note: Documentation is currently being developed_
+Preview frontend production bundle:
 
-## 🤝 Contributing
+```bash
+npm run preview:frontend
+```
 
-We welcome contributions from the community! Whether you're fixing bugs, adding features, improving documentation, or spreading the word, your help is appreciated.
+## Cleaning up
 
-### How to Contribute
+To remove installed node modules (works in bash-compatible shells):
 
-1. **Fork the repository**
-2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Commit your changes** (`git commit -m 'Add some amazing feature'`)
-4. **Push to the branch** (`git push origin feature/amazing-feature`)
-5. **Open a Pull Request**
+```bash
+npm run clean
+```
 
-### Contribution Guidelines
+To clean and reinstall:
 
-- Follow the existing code style and conventions
-- Write clear, descriptive commit messages
-- Add tests for new features
-- Update documentation as needed
-- Ensure all tests pass before submitting PR
+```bash
+npm run clean:install
+```
 
-### Code of Conduct
+## Contributing
 
-Please be respectful and considerate of others. We're building a welcoming community platform for Muslims worldwide.
+We welcome contributions. See `CONTRIBUTING.md` for contribution guidelines and `CODE_OF_CONDUCT.md` for behavior expectations.
 
-## 🐛 Bug Reports & Feature Requests
+Typical workflow:
 
-- **Found a bug?** [Open an issue](https://github.com/Shahtr1/muminbook/issues/new?template=bug_report.md)
-- **Have an idea?** [Request a feature](https://github.com/Shahtr1/muminbook/issues/new?template=feature_request.md)
-- **Need help?** [Start a discussion](https://github.com/Shahtr1/muminbook/discussions)
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/awesome`
+3. Commit and push your changes
+4. Open a Pull Request
 
-## 🔒 Security
+## License
 
-If you discover a security vulnerability, please email [security contact] instead of using the issue tracker. All security vulnerabilities will be promptly addressed.
+This project is licensed under the ISC License. See the `LICENSE` file for details.
 
-## 📜 License
+## Support
 
-This project is licensed under the **ISC License** - see the [LICENSE](LICENSE) file for details.
+If you need help or want to report an issue please:
 
-## 🙏 Acknowledgments
+- Open an issue on the repository
+- For quick questions, check `docs/SETUP.md` and `docs/DEVELOPMENT.md`
 
-- **Quran Data** - Thanks to the open-source Quran projects
-- **Islamic Resources** - Community contributors for authentic Islamic content
-- **Open Source Libraries** - All the amazing packages that make this possible
-- **Contributors** - Everyone who has contributed to making Muminbook better
-
-## 📞 Support & Contact
-
-- **GitHub Issues:** [Report bugs or request features](https://github.com/Shahtr1/muminbook/issues)
-- **GitHub Discussions:** [Ask questions or share ideas](https://github.com/Shahtr1/muminbook/discussions)
-- **Project Maintainer:** [@Shahtr1](https://github.com/Shahtr1)
-
-## 🗺️ Roadmap
-
-### Current Version (v1.0.0)
-
-- ✅ User authentication & authorization
-- ✅ Quran & Hadith reading features
-- ✅ Family tree visualization
-- ✅ Resource management system
-- ✅ Basic admin panel
-
-### Upcoming Features
-
-- 🔄 Real-time study rooms with WebSocket
-- 🔄 Mobile application (React Native)
-- 🔄 Advanced search capabilities
-- 🔄 Multi-language support (Arabic, Urdu, French, etc.)
-- 🔄 Audio recitation integration
-- 🔄 Community forums
-- 🔄 Progress tracking & achievements
-- 🔄 API rate limiting & caching
-- 🔄 Comprehensive test coverage
-
-### Long-term Goals
-
-- 📅 Integration with Islamic calendar
-- 📅 Prayer time notifications
-- 📅 Tafsir (Quranic commentary) library
-- 📅 Hadith authenticity checker
-- 📅 Collaborative translation platform
+If you'd like to contribute, see `CONTRIBUTING.md` for the workflow and `CODE_OF_CONDUCT.md` for expectations.
 
 ---
 
-<div align="center">
-
 **Made with ❤️ for the Muslim Ummah**
 
-_"Read! In the Name of your Lord, Who has created" - Quran 96:1_
+"Read! In the Name of your Lord, Who has created" - Quran 96:1
 
-[⬆ Back to Top](#-muminbook)
-
-</div>
+[⬆ Back to Top](#muminbook)
