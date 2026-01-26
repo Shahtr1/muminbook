@@ -8,8 +8,9 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { useCachedQuery } from '@/hooks/useCachedQuery.js';
+import { VscFilter, VscFilterFilled } from 'react-icons/vsc';
 
-export const SurahsList = () => {
+export const DivisionList = () => {
   const {
     data: surahs,
     isPending,
@@ -101,13 +102,15 @@ export const SurahsList = () => {
       gap={1}
       position="relative"
     >
-      <Flex direction="column" gap={1}>
+      <Flex gap={1} align="center">
         <XSearch
           bgColor={bgContentColor}
           size="xs"
           expand={false}
           placeholder="Surahs"
         />
+        <VscFilter size={20} />
+        <VscFilterFilled size={20} />
       </Flex>
 
       <Flex flex={1}>
