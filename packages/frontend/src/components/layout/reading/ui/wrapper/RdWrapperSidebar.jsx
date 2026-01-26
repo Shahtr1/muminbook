@@ -9,7 +9,7 @@ import { CommentsList } from '@/components/layout/reading/ui/wrapper/list/Commen
 import { HighlightsList } from '@/components/layout/reading/ui/wrapper/list/HighlightsList.jsx';
 import { VscFilterFilled } from 'react-icons/vsc';
 import { FilterAyatList } from '@/components/layout/reading/ui/wrapper/list/FilterAyatList.jsx';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 const readingSidebarData = [
   { label: 'List', id: 'list', icon: FaList },
@@ -19,13 +19,11 @@ const readingSidebarData = [
 ];
 
 export const RdWrapperSidebar = ({ fileId }) => {
-  const queryClient = useQueryClient();
   const { id: suhufId } = useParams();
 
   const { data: suhuf } = useQuery({
     queryKey: ['suhuf', suhufId],
-    queryFn: () => queryClient.getQueryData(['suhuf', suhufId]),
-    staleTime: 0,
+    enabled: false,
   });
 
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);

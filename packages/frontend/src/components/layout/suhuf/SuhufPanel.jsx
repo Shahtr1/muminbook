@@ -7,13 +7,22 @@ import { EditorPanel } from '@/components/layout/suhuf/EditorPanel.jsx';
 import { DefaultPanel } from '@/components/layout/suhuf/DefaultPanel.jsx';
 import Split from 'react-split';
 import { Loader } from '@/components/layout/Loader.jsx';
-import { useParams } from 'react-router-dom';
-import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
 import { useSafeBreakpointValue } from '@/hooks/useSafeBreakpointValue.js';
 
 export const SuhufPanel = ({ suhuf }) => {
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
+  /**
+   * We use useSafeBreakpointValue instead of Chakra's useBreakpointValue directly
+   * to avoid layout flickering or mismatch during the first render.
+   *
+   * The split direction (vertical or horizontal) depends on screen size.
+   * If the value changes immediately after mount, the Split component
+   * can reinitialize and reset panel sizes.
+   *
+   * This hook ensures the breakpoint value is only applied after the
+   * component has mounted, keeping the layout stable.
+   */
   const isSmallScreen =
     useSafeBreakpointValue({ base: true, sm: false }) || false;
 
