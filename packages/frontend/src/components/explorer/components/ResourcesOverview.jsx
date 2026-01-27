@@ -1,6 +1,6 @@
 import { Box, Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
 import { BsPinAngle, BsPinAngleFill } from 'react-icons/bs';
-import { useTogglePinResource } from '@/hooks/resource/useTogglePinResource.js';
+import { useTogglePinResource } from '@/hooks/explorer/useTogglePinResource.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const OverviewItem = ({ item, isPinned }) => {

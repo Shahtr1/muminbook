@@ -9,8 +9,8 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { XModal } from '@/components/layout/modals/XModal.jsx';
-import { useCopyResource } from '@/hooks/resource/useCopyResource.js';
-import { useMoveResource } from '@/hooks/resource/useMoveResource.js';
+import { useCopyResource } from '@/hooks/explorer/useCopyResource.js';
+import { useMoveResource } from '@/hooks/explorer/useMoveResource.js';
 import { ResourcesTree } from '@/components/explorer/components/ResourcesTree.jsx';
 import { useLocation } from 'react-router-dom';
 

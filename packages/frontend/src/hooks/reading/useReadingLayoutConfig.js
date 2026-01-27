@@ -1,5 +1,5 @@
 import { useBreakpointValue, useTheme } from '@chakra-ui/react';
-import { useWindows } from '@/hooks/resource/useWindows.js';
+import { useWindows } from '@/hooks/useWindows.js';
 
 export const useReadingLayoutConfig = () => {
   const theme = useTheme();

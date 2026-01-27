@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
-import { useResources } from '@/hooks/resource/useResources.js';
+import { useResources } from '@/hooks/explorer/useResources.js';
 import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
 import { FileSVG } from '@/components/svgs/FileSVG.jsx';
 

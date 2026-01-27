@@ -11,8 +11,8 @@ import { Folder } from '@/components/explorer/components/Folder.jsx';
 import { File } from '@/components/explorer/components/File.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
-import { useResources } from '@/hooks/resource/useResources.js';
-import { useTrashResource } from '@/hooks/resource/trash/useTrashResource.js';
+import { useResources } from '@/hooks/explorer/useResources.js';
+import { useTrashResource } from '@/hooks/explorer/trash/useTrashResource.js';
 
 export const FolderView = () => {
   const location = useLocation();

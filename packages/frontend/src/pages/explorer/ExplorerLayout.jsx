@@ -4,7 +4,7 @@ import { ExplorerToolbar } from '@/components/explorer/toolbar/ExplorerToolbar.j
 import { ExplorerSidebar } from '@/components/explorer/ExplorerSidebar.jsx';
 import { Flex } from '@chakra-ui/react';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { useOverviewResource } from '@/hooks/resource/useOverviewResource.js';
+import { useOverviewResource } from '@/hooks/explorer/useOverviewResource.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import React from 'react';
 

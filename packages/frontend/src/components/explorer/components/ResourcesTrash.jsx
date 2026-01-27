@@ -12,9 +12,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { HiDotsVertical } from 'react-icons/hi';
 import { ActionItems } from '@/components/explorer/ActionItems.jsx';
 import ConfirmationModal from '@/components/layout/modals/ConfirmationModal.jsx';
-import { useEmptyTrashResource } from '@/hooks/resource/trash/useEmptyTrashResource.js';
-import { useIsTrashEmpty } from '@/hooks/resource/trash/useIsTrashEmpty.js';
-import { useRestoreAllResource } from '@/hooks/resource/trash/useRestoreAllResource.js';
+import { useEmptyTrashResource } from '@/hooks/explorer/trash/useEmptyTrashResource.js';
+import { useIsTrashEmpty } from '@/hooks/explorer/trash/useIsTrashEmpty.js';
+import { useRestoreAllResource } from '@/hooks/explorer/trash/useRestoreAllResource.js';
 import { useState } from 'react';
 
 export const ResourcesTrash = () => {

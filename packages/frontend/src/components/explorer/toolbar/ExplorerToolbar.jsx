@@ -11,7 +11,7 @@ import { ChevronDownIcon, ChevronUpIcon, StarIcon } from '@chakra-ui/icons';
 import { XSearch } from '@/components/layout/x/XSearch.jsx';
 import { useEffect, useRef, useState } from 'react';
 import { AddMenu } from '@/components/explorer/toolbar/AddMenu.jsx';
-import { useCreateResource } from '@/hooks/resource/useCreateResource.js';
+import { useCreateResource } from '@/hooks/explorer/useCreateResource.js';
 
 export const ExplorerToolbar = () => {
   const bgColor = useColorModeValue('bg.light', 'bg.dark');

@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
 import { SidebarItem } from '@/components/layout/sidebar/SidebarItem.jsx';
-import { useWindows } from '@/hooks/resource/useWindows.js';
+import { useWindows } from '@/hooks/useWindows.js';
 
 export const Sidebar = ({ items = [], label, closeable = true }) => {
   const location = useLocation();

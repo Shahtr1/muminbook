@@ -2,7 +2,7 @@ import { Flex, useBreakpointValue } from '@chakra-ui/react';
 import { Folder } from '@/components/explorer/components/Folder.jsx';
 import { ExplorerCard } from '@/components/explorer/ExplorerCard.jsx';
 import { useNavigate } from 'react-router-dom';
-import { useIsMyFilesEmpty } from '@/hooks/resource/useIsMyFilesEmpty.js';
+import { useIsMyFilesEmpty } from '@/hooks/explorer/useIsMyFilesEmpty.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { useReadings } from '@/hooks/reading/useReadings.js';

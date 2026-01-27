@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { ItemToolbar } from '@/components/explorer/toolbar/ItemToolbar.jsx';
 import { ResourcesActionItems } from '@/components/explorer/components/ResourcesActionItems.jsx';
-import { useAccessTracker } from '@/hooks/resource/useAccessTracker.js';
+import { useAccessTracker } from '@/hooks/explorer/useAccessTracker.js';
 
 export const Folder = ({ onClick, width, folderPath, resource }) => {
   const { updateAccessedAt } = useAccessTracker();

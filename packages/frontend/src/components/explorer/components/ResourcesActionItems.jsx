@@ -4,11 +4,11 @@ import { ActionItems } from '@/components/explorer/ActionItems.jsx';
 import RenameResourceModal from '@/components/layout/modals/RenameResourceModal.jsx';
 import TransferResourceModal from '@/components/layout/modals/TransferResourceModal.jsx';
 import ConfirmationModal from '@/components/layout/modals/ConfirmationModal.jsx';
-import { useMoveToTrashResource } from '@/hooks/resource/trash/useMoveToTrashResource.js';
-import { useRestoreFromTrashResource } from '@/hooks/resource/trash/useRestoreFromTrashResource.js';
-import { useDeleteResource } from '@/hooks/resource/trash/useDeleteResource.js';
-import { useTogglePinResource } from '@/hooks/resource/useTogglePinResource.js';
-import { useCachedResource } from '@/hooks/resource/useCachedResource.js';
+import { useMoveToTrashResource } from '@/hooks/explorer/trash/useMoveToTrashResource.js';
+import { useRestoreFromTrashResource } from '@/hooks/explorer/trash/useRestoreFromTrashResource.js';
+import { useDeleteResource } from '@/hooks/explorer/trash/useDeleteResource.js';
+import { useTogglePinResource } from '@/hooks/explorer/useTogglePinResource.js';
+import { useCachedResource } from '@/hooks/explorer/useCachedResource.js';
 
 export const ResourcesActionItems = ({ resource, pathFromUrl }) => {
   const cachedResource = useCachedResource(resource._id, pathFromUrl);
