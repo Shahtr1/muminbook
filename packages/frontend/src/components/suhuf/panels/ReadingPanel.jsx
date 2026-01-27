@@ -1,4 +1,4 @@
-import { QuranUI } from '@/components/suhuf/reading/QuranUI.jsx';
+import { Quran } from '@/components/suhuf/reading/Quran.jsx';
 import {
   Box,
   Flex,
@@ -18,6 +18,8 @@ import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { RiCloseCircleFill, RiInformationFill } from 'react-icons/ri';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
+import { ReadingWrapper } from '@/components/suhuf/reading/ReadingWrapper.jsx';
+import QuranDivisionType from '@/constants/QuranDivisionType.js';
 
 export const ReadingPanel = ({ id, suhuf, direction }) => {
   const bgContentColor = useColorModeValue(
@@ -28,8 +30,6 @@ export const ReadingPanel = ({ id, suhuf, direction }) => {
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
 
-  const marginX = isSmallScreen ? 1 : 2;
-
   const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
   const borderColor = useColorModeValue('gray.300', 'whiteAlpha.300');
   const panelNavHeight = '22px';
@@ -38,6 +38,13 @@ export const ReadingPanel = ({ id, suhuf, direction }) => {
 
   const readings = queryClient.getQueryData(['readings']) || [];
   const reading = readings.find((r) => r.uuid === id);
+
+  const readingRegistry = {
+    quran: {
+      divisionType: QuranDivisionType.Surah,
+      component: Quran,
+    },
+  };
 
   const panels = suhuf?.config?.panels || [];
 
@@ -59,13 +66,22 @@ export const ReadingPanel = ({ id, suhuf, direction }) => {
   const { label, description } = reading;
 
   const renderUI = () => {
-    switch (id.toLowerCase()) {
-      case 'quran':
-        return <QuranUI />;
-      default:
-        console.error(`No UI for reading type ${id}`);
-        return <SomethingWentWrong />;
+    const config = readingRegistry[id?.toLowerCase()];
+
+    if (!config) {
+      console.error(`No UI for reading type ${id}`);
+      return <SomethingWentWrong />;
     }
+
+    const { divisionType, component: Component } = config;
+
+    return (
+      <ReadingWrapper
+        uuid={id}
+        divisionType={divisionType}
+        render={(data) => <Component data={data} />}
+      />
+    );
   };
 
   return (
