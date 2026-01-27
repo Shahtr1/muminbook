@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { IoCloseOutline, IoRemoveOutline } from 'react-icons/io5';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
 import { WindowMenu } from '@/components/layout/navbar/menus/WindowMenu.jsx';
-import { XSearch } from '@/components/layout/xcomp/XSearch.jsx';
+import { XSearch } from '@/components/layout/x/XSearch.jsx';
 
 export const WindowNavbar = ({ children, onClose, onMinimize }) => {
   const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');

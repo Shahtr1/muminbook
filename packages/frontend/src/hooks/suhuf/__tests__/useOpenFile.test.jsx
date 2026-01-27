@@ -21,7 +21,7 @@ vi.mock('@/hooks/suhuf/useUpdateSuhufConfig.js', () => ({
 }));
 
 // Mock toast hook
-vi.mock('@/components/toast/useXToast.jsx', () => ({
+vi.mock('@/components/layout/toast/useXToast.jsx', () => ({
   useXToast: () => ({
     error: toastErrorMock,
   }),

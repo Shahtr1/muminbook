@@ -23,7 +23,7 @@ import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
 import { XDate } from '@/components/form/XDate.jsx';
 import { XRadio } from '@/components/form/XRadio.jsx';
 import { XEyeIcon } from '@/components/form/XEyeIcon.jsx';
-import { XAlert } from '@/components/layout/xcomp/XAlert.jsx';
+import { XAlert } from '@/components/layout/x/XAlert.jsx';
 import { register } from '@/services/index.js';
 
 const Register = () => {

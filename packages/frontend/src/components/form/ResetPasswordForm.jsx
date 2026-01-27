@@ -13,7 +13,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { XEyeIcon } from '@/components/form/XEyeIcon.jsx';
-import { XAlert } from '@/components/layout/xcomp/XAlert.jsx';
+import { XAlert } from '@/components/layout/x/XAlert.jsx';
 import { resetPassword } from '@/services/index.js';
 
 export const ResetPasswordForm = ({ code }) => {

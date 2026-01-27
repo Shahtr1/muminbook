@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { RiCheckboxFill, RiCloseCircleFill } from 'react-icons/ri';
-import { useWindows } from '@/hooks/resource/useWindows.js';
+import { useWindows } from '@/hooks/useWindows.js';
 import { useDeleteWindow } from '@/hooks/useDeleteWindow.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { BsPencilFill } from 'react-icons/bs';

@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { XModal } from '@/components/layout/modals/XModal.jsx';
-import { useRenameResource } from '@/hooks/resource/useRenameResource.js';
+import { useRenameResource } from '@/hooks/explorer/useRenameResource.js';
 
 const RenameResourceModal = ({ isOpen, onClose, id, type, name }) => {
   name = type === 'file' ? name.replace(/\.txt$/, '') : name;

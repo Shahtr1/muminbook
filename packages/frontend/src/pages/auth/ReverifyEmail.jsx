@@ -16,7 +16,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
-import { XAlert } from '@/components/layout/xcomp/XAlert.jsx';
+import { XAlert } from '@/components/layout/x/XAlert.jsx';
 import { reverifyEmail } from '@/services/index.js';
 
 const ReverifyEmail = () => {

@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import FileType from '../../constants/types/fileType';
 import Direction from '../../constants/types/direction';
+import SuhufSidebar from '../../constants/types/suhufSidebar';
 
 export const readingLayoutSchema = z.object({
-  id: z.string().min(1),
-  sidebar: z.string().optional(),
+  direction: z.nativeEnum(Direction),
+  sidebar: z.nativeEnum(SuhufSidebar),
   sidebarOpen: z.boolean().optional(),
 });
 

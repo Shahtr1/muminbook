@@ -10,7 +10,7 @@ import Register from './pages/auth/Register.jsx';
 import VerifyEmail from './pages/auth/VerifyEmail.jsx';
 import ForgotPassword from './pages/auth/ForgotPassword.jsx';
 import { ResetPassword } from './pages/auth/ResetPassword.jsx';
-import { AppContainer } from './components/layout/AppContainer.jsx';
+import { AppContainer } from './pages/AppContainer.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
 import { Helmet } from 'react-helmet-async';
 import { Terms } from '@/pages/company/Terms.jsx';
@@ -18,16 +18,16 @@ import { Cookies } from '@/pages/company/Cookies.jsx';
 import { PrivacyPolicy } from '@/pages/company/PrivacyPolicy.jsx';
 import ReverifyEmail from '@/pages/auth/ReverifyEmail.jsx';
 import { Forbidden } from '@/pages/auth/Forbidden.jsx';
-import { Features } from '@/pages/Features.jsx';
-import { FamilyTree } from '@/components/layout/features/FamilyTree.jsx';
+import { Features } from '@/pages/features/Features.jsx';
+import { FamilyTree } from '@/pages/features/FamilyTree.jsx';
 import AdminGuard from '@/AdminGuard.jsx';
 import { Admin } from '@/pages/Admin.jsx';
-import { SuperBoard } from '@/components/layout/admin/SuperBoard.jsx';
-import { AdminFamilyTree } from '@/components/layout/admin/AdminFamilyTree.jsx';
-import { FolderView } from '@/pages/reading/FolderView.jsx';
-import { ReadingList } from '@/components/layout/reading/ReadingList.jsx';
+import { SuperBoard } from '@/components/admin/SuperBoard.jsx';
+import { AdminFamilyTree } from '@/components/admin/AdminFamilyTree.jsx';
+import { FolderView } from '@/pages/explorer/FolderView.jsx';
+import { ExplorerList } from '@/pages/explorer/ExplorerList.jsx';
 import { RemoveTrailingSlash } from '@/utils/RemoveTrailingSlash.jsx';
-import { ReadingLayout } from '@/pages/reading/ReadingLayout.jsx';
+import { ExplorerLayout } from '@/pages/explorer/ExplorerLayout.jsx';
 import { setNavigate } from '@/services/index.js';
 import { Suhuf } from '@/pages/Suhuf.jsx';
 
@@ -74,11 +74,11 @@ function App() {
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />}></Route>
 
-          <Route path="reading" element={<ReadingLayout />}>
+          <Route path="reading" element={<ExplorerLayout />}>
             {/*/////////////////////////////////////////*/}
             {/* READING ROUTES */}
             {/*/////////////////////////////////////////*/}
-            <Route index element={<ReadingList />} />
+            <Route index element={<ExplorerList />} />
             <Route path="my-files/*" element={<FolderView />} />
             <Route path="trash/*" element={<FolderView />} />
           </Route>

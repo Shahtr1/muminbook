@@ -6,13 +6,13 @@ import { AUTH } from '@/hooks/useAuth.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Search2Icon } from '@chakra-ui/icons';
-import { XDivider } from '@/components/layout/xcomp/XDivider.jsx';
+import { XDivider } from '@/components/layout/x/XDivider.jsx';
 import { NavMenuItem } from '@/components/layout/navbar/NavMenuItem.jsx';
 import { NotificationMenu } from '@/components/layout/navbar/menus/NotificationMenu.jsx';
 import { UserMenu } from '@/components/layout/navbar/menus/UserMenu.jsx';
 import { FeaturesMenu } from '@/components/layout/navbar/menus/FeaturesMenu.jsx';
 import { navItems } from '@/data/navbarData.js';
-import { XSearch } from '@/components/layout/xcomp/XSearch.jsx';
+import { XSearch } from '@/components/layout/x/XSearch.jsx';
 
 export const Navbar = () => {
   const queryClient = useQueryClient();

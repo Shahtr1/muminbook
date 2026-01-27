@@ -13,10 +13,10 @@ import {
 } from '@chakra-ui/react';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { SuhufLayout } from '@/components/layout/suhuf/SuhufLayout.jsx';
+import { SuhufLayout } from '@/components/suhuf/SuhufLayout.jsx';
 import { SidebarLeftSVG } from '@/components/svgs/sidebar/SidebarLeftSVG.jsx';
 import { SidebarBottomSVG } from '@/components/svgs/sidebar/SidebarBottomSVG.jsx';
-import { SuhufMenu } from '@/components/layout/suhuf/SuhufMenu.jsx';
+import { SuhufMenu } from '@/components/suhuf/SuhufMenu.jsx';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { SplitHorizontalSVG } from '@/components/svgs/sidebar/SplitHorizontalSVG.jsx';
 import { SplitVerticalSVG } from '@/components/svgs/sidebar/SplitVerticalSVG.jsx';
@@ -43,6 +43,7 @@ export const Suhuf = () => {
     readings,
     isPending: isReadingsLoading,
     isError: isReadingsError,
+    isSuccess: isReadingsSuccess,
   } = useReadings();
 
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
@@ -160,7 +161,9 @@ export const Suhuf = () => {
     >
       {(isSuhufLoading || isReadingsLoading) && <Loader />}
       {(isSuhufError || isReadingsError) && <SomethingWentWrong />}
-      {isSuhufSuccess && <SuhufLayout readings={readings} suhuf={suhuf} />}
+      {isSuhufSuccess && isReadingsSuccess && (
+        <SuhufLayout readings={readings} suhuf={suhuf} />
+      )}
     </Flex>
   );
 };
