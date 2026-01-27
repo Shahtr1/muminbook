@@ -39,15 +39,15 @@ export const ExplorerToolbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isMyFilesView = location.pathname.includes('/explorer/my-files');
-  const isTrashView = location.pathname.includes('/explorer/trash');
+  const isMyFilesView = location.pathname.includes('/reading/my-files');
+  const isTrashView = location.pathname.includes('/reading/trash');
 
   const { mutate: createResource } = useCreateResource();
 
   const addNew = ({ type, name }) => {
     let path = location.pathname;
 
-    if (path.startsWith('/explorer')) {
+    if (path.startsWith('/reading')) {
       path = path.replace('/reading/', '');
     }
 

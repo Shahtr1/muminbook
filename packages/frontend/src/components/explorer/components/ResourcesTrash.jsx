@@ -26,7 +26,7 @@ export const ResourcesTrash = () => {
   const { mutate: emptyTrashResource } = useEmptyTrashResource();
   const { mutate: restoreAllResource } = useRestoreAllResource();
 
-  const isTrashView = location.pathname.includes('/explorer/trash');
+  const isTrashView = location.pathname.includes('/reading/trash');
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [actionType, setActionType] = useState(null);

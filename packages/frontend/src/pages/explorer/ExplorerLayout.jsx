@@ -8,12 +8,12 @@ import { useOverviewResource } from '@/hooks/resource/useOverviewResource.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import React from 'react';
 
-export const ReadingLayout = () => {
+export const ExplorerLayout = () => {
   const location = useLocation();
   const { overview, isPending, isError } = useOverviewResource();
   const isFolderView =
-    location.pathname.includes('/explorer/my-files') ||
-    location.pathname.includes('/explorer/trash');
+    location.pathname.includes('/reading/my-files') ||
+    location.pathname.includes('/reading/trash');
 
   return (
     <Flex

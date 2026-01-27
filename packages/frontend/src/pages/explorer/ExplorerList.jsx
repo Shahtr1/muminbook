@@ -11,7 +11,7 @@ import { ArabicEnglishSVG } from '@/components/svgs/ArabicEnglishSVG.jsx';
 import { BookSVG } from '@/components/svgs/BookSVG.jsx';
 import { StorySVG } from '@/components/svgs/StorySVG.jsx';
 
-export const ReadingList = () => {
+export const ExplorerList = () => {
   const readingSvgMap = {
     quran: QuranSVG,
     'sealed-nectar': StorySVG,

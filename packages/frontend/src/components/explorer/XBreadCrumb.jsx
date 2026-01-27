@@ -29,10 +29,10 @@ export const XBreadCrumb = () => {
   const theme = useTheme();
   const originalPath = location.state?.originalPath;
 
-  const isTrashView = location.pathname.includes('/explorer/trash');
+  const isTrashView = location.pathname.includes('/reading/trash');
 
   const isFolderView =
-    location.pathname.includes('/explorer/my-files') || isTrashView;
+    location.pathname.includes('/reading/my-files') || isTrashView;
 
   const segments = location.pathname.split('/').filter(Boolean);
   const [canGoBack, setCanGoBack] = useState(false);
@@ -64,7 +64,7 @@ export const XBreadCrumb = () => {
       const newSegments = segments.slice(0, -1);
       navigate(`/${newSegments.join('/')}`);
     } else {
-      navigate('/explorer');
+      navigate('/reading');
     }
   };
 

@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { readingData } from '@/data/readingData.js';
 
-export const ReadingView = () => {
+export const ExplorerView = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {

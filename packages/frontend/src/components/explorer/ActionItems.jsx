@@ -31,9 +31,9 @@ export const ActionItems = ({
 }) => {
   const bg = useColorModeValue('gray.100', 'gray.700');
   const location = useLocation();
-  const isTrashView = location.pathname.includes('/explorer/trash');
+  const isTrashView = location.pathname.includes('/reading/trash');
   const isLostAndFound = location.pathname.includes(
-    '/explorer/my-files/lost%2Bfound'
+    '/reading/my-files/lost%2Bfound'
   );
   const currentIsTrash = isTrashView && variant === 'resources';
 

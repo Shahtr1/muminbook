@@ -18,9 +18,9 @@ export const Folder = ({ onClick, width, folderPath, resource }) => {
   const myFiles = resource.name === 'my-files' || !resource.name;
   const showItemToolbar = !lostAndFound && !myFiles;
 
-  const isTrashView = location.pathname.includes('/explorer/trash');
+  const isTrashView = location.pathname.includes('/reading/trash');
   const isFolderView =
-    location.pathname.includes('/explorer/my-files') || isTrashView;
+    location.pathname.includes('/reading/my-files') || isTrashView;
 
   const bgColor = useColorModeValue('white', 'gray.800');
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });

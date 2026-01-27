@@ -19,8 +19,8 @@ export const ItemToolbar = ({
   const location = useLocation();
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const isFolderView =
-    location.pathname.includes('/explorer/my-files') ||
-    location.pathname.includes('/explorer/trash');
+    location.pathname.includes('/reading/my-files') ||
+    location.pathname.includes('/reading/trash');
 
   return (
     <Flex

@@ -25,9 +25,9 @@ import { Admin } from '@/pages/Admin.jsx';
 import { SuperBoard } from '@/components/admin/SuperBoard.jsx';
 import { AdminFamilyTree } from '@/components/admin/AdminFamilyTree.jsx';
 import { FolderView } from '@/pages/explorer/FolderView.jsx';
-import { ReadingList } from '@/pages/explorer/ReadingList.jsx';
+import { ExplorerList } from '@/pages/explorer/ExplorerList.jsx';
 import { RemoveTrailingSlash } from '@/utils/RemoveTrailingSlash.jsx';
-import { ReadingLayout } from '@/pages/explorer/ReadingLayout.jsx';
+import { ExplorerLayout } from '@/pages/explorer/ExplorerLayout.jsx';
 import { setNavigate } from '@/services/index.js';
 import { Suhuf } from '@/pages/Suhuf.jsx';
 
@@ -74,11 +74,11 @@ function App() {
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />}></Route>
 
-          <Route path="reading" element={<ReadingLayout />}>
+          <Route path="reading" element={<ExplorerLayout />}>
             {/*/////////////////////////////////////////*/}
             {/* READING ROUTES */}
             {/*/////////////////////////////////////////*/}
-            <Route index element={<ReadingList />} />
+            <Route index element={<ExplorerList />} />
             <Route path="my-files/*" element={<FolderView />} />
             <Route path="trash/*" element={<FolderView />} />
           </Route>

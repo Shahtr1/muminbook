@@ -22,7 +22,7 @@ export const FolderView = () => {
 
   const pathSegments = location.pathname.split('/').filter(Boolean);
 
-  const isTrashView = location.pathname.includes('/explorer/trash');
+  const isTrashView = location.pathname.includes('/reading/trash');
   const baseSegment = isTrashView ? 'trash' : 'my-files';
   const folderPathIndex = pathSegments.indexOf(baseSegment);
   const folderPath = pathSegments.slice(folderPathIndex).join('/');
