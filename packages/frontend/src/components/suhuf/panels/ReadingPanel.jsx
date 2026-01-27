@@ -122,7 +122,7 @@ export const ReadingPanel = ({ id, suhuf, direction }) => {
       </Flex>
 
       <Flex h={`calc(100% - ${panelNavHeight})`} w="100%">
-        <ReadingSidebar fileId={id} direction={direction} />
+        <ReadingSidebar direction={direction} />
         <Flex
           flex={1}
           w="100%"

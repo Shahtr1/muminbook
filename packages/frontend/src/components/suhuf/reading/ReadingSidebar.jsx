@@ -15,7 +15,7 @@ const readingSidebarData = [
   { label: 'Highlights', id: 'highlights', icon: BsHighlights },
 ];
 
-export const ReadingSidebar = ({ fileId, direction }) => {
+export const ReadingSidebar = ({ direction }) => {
   const { id: suhufId } = useParams();
 
   const { data: suhuf } = useSuhuf(suhufId);
@@ -38,42 +38,42 @@ export const ReadingSidebar = ({ fileId, direction }) => {
   );
   const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
 
-  if (!fileId) {
-    console.error('No file id found in explorer layout.');
-    return <SomethingWentWrong />;
-  }
-
-  const readingState = readingLayouts.find((r) => r.id === fileId);
+  const readingState = readingLayouts.find((r) => r.direction === direction);
   const activeTab = readingState?.sidebar;
   const isOpen = readingState?.sidebarOpen ?? false;
 
   const toggleTab = (tabKey) => {
-    const isSame = tabKey === activeTab;
-    const updatedReadingLayouts = readingLayouts.map((r) =>
-      r.id === fileId
-        ? {
-            ...r,
-            sidebar: tabKey,
-            sidebarOpen: isSame ? !isOpen : true,
-          }
-        : r
-    );
-
-    const fileExists = readingLayouts.some((r) => r.id === fileId);
-    if (!fileExists) {
-      updatedReadingLayouts.push({
-        id: fileId,
+    const entry = readingLayouts.find((r) => r.direction === direction);
+    if (!entry) {
+      // If no entry exists for this direction, create one
+      const newEntry = {
+        direction,
         sidebar: tabKey,
         sidebarOpen: true,
+      };
+      const newReadingLayouts = [...readingLayouts, newEntry];
+      updateConfig({
+        layout: {
+          ...layout,
+          reading: newReadingLayouts,
+        },
+      });
+    } else {
+      // If the clicked tab is already active, toggle the sidebar open state
+      const newSidebarOpen =
+        entry.sidebar === tabKey ? !entry.sidebarOpen : true;
+      const newReadingLayouts = readingLayouts.map((r) =>
+        r.direction === direction
+          ? { ...r, sidebar: tabKey, sidebarOpen: newSidebarOpen }
+          : r
+      );
+      updateConfig({
+        layout: {
+          ...layout,
+          reading: newReadingLayouts,
+        },
       });
     }
-
-    updateConfig({
-      layout: {
-        ...layout,
-        reading: updatedReadingLayouts,
-      },
-    });
   };
 
   return (
