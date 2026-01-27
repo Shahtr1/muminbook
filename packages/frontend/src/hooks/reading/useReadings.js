@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getReading, getReadings } from '@/services/index.js';
 import { useMemo } from 'react';
+import QuranDivisionType from '@/constants/QuranDivisionType.js';
 
 export const useReadings = () => {
   const { data = [], ...rest } = useQuery({
@@ -15,42 +16,47 @@ export const useReadings = () => {
   return { readings: data, ...rest };
 };
 
-export const useReadingInfinite = (
-  { fileId, startType = 'surah', startValue, limit = 20 },
-  options = {}
-) => {
+export const useReadingInfinite = ({
+  uuid,
+  divisionType,
+  position,
+  limit = 30,
+}) => {
   const queryKey = useMemo(() => {
-    return ['reading', fileId, startType, startValue];
-  }, [fileId, startType, startValue]);
+    return ['reading', uuid, divisionType, position, limit];
+  }, [uuid, divisionType, position, limit]);
 
   return useInfiniteQuery({
     queryKey,
-    queryFn: async ({ pageParam }) => {
-      const params = {
-        startType,
-        startValue,
+
+    queryFn: async ({ pageParam = 1 }) => {
+      return await getReading(uuid, {
+        divisionType,
+        position,
         limit,
-        ...pageParam,
-      };
-
-      return await getReading(fileId, params);
+        page: pageParam,
+      });
     },
-    initialPageParam: {},
 
-    getNextPageParam: (lastPage) =>
-      lastPage?.nextCursor !== null
-        ? { after: lastPage.nextCursor }
-        : undefined,
+    initialPageParam: 1,
 
-    getPreviousPageParam: (firstPage) =>
-      firstPage?.prevCursor !== null
-        ? { before: firstPage.prevCursor }
-        : undefined,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.hasNextPage) {
+        return lastPage.page + 1;
+      }
+      return undefined;
+    },
+
+    getPreviousPageParam: (firstPage) => {
+      if (firstPage.hasPreviousPage) {
+        return firstPage.page - 1;
+      }
+      return undefined;
+    },
 
     staleTime: Infinity,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
     retry: false,
-    enabled: options.enabled !== false,
   });
 };

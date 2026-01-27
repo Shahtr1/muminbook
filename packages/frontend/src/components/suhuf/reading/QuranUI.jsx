@@ -3,29 +3,25 @@ import { Box } from '@chakra-ui/react';
 import { useReadingInfinite } from '@/hooks/reading/useReadings.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import QuranDivisionType from '@/constants/QuranDivisionType.js';
 
 export const QuranUI = () => {
-  const startValue = 114;
-
   const {
     data,
     fetchNextPage,
-    fetchPreviousPage,
     hasNextPage,
-    hasPreviousPage,
     isFetchingNextPage,
-    isFetchingPreviousPage,
-    isPending: isReadingPending,
-    isError: isReadingError,
+    isPending,
+    isError,
   } = useReadingInfinite({
-    fileId: 'quran',
-    startType: 'surah',
-    startValue: startValue,
-    limit: 150,
+    uuid: 'quran',
+    divisionType: QuranDivisionType.Surah,
+    position: 1,
+    limit: 30,
   });
 
-  if (isReadingPending) return <Loader />;
-  if (isReadingError) return <SomethingWentWrong />;
+  if (isPending) return <Loader />;
+  if (isError) return <SomethingWentWrong />;
 
   return (
     <Box
@@ -33,6 +29,16 @@ export const QuranUI = () => {
       whiteSpace="normal"
       wordBreak="break-word"
       textAlign="right"
-    ></Box>
+    >
+      {data?.pages.map((page) =>
+        page.data.map((dt) => <Box key={dt._id}>{dt.ayah}</Box>)
+      )}
+
+      {hasNextPage && (
+        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+          {isFetchingNextPage ? 'Loading...' : 'Load More'}
+        </button>
+      )}
+    </Box>
   );
 };
