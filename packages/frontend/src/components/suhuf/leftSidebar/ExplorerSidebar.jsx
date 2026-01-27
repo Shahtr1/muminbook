@@ -5,7 +5,7 @@ import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
 import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-export const ExplorerPanel = () => {
+export const ExplorerSidebar = () => {
   const { id: suhufId } = useParams();
 
   const openFile = useOpenFile(suhufId);
