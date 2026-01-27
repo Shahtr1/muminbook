@@ -312,8 +312,8 @@ describe('Suhuf Controller', () => {
           isBottomTabOpen: false,
           reading: [
             {
-              id: 'reading-1',
-              sidebar: 'translation',
+              direction: 'left',
+              sidebar: 'list',
               sidebarOpen: true,
             },
           ],
