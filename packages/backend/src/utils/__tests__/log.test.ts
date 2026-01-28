@@ -16,29 +16,76 @@ describe('log util', () => {
     consoleErrorSpy.mockRestore();
   });
 
+  /* ---------------------------------- */
+  /* INFO */
+  /* ---------------------------------- */
+
   it('info should prefix message with info emoji', () => {
     log.info('test message');
     expect(consoleLogSpy).toHaveBeenCalledWith('ℹ️ test message');
   });
+
+  /* ---------------------------------- */
+  /* SUCCESS */
+  /* ---------------------------------- */
 
   it('success should prefix message with check emoji', () => {
     log.success('yay');
     expect(consoleLogSpy).toHaveBeenCalledWith('✅ yay');
   });
 
+  /* ---------------------------------- */
+  /* DEBUG */
+  /* ---------------------------------- */
+
   it('debug should log message as-is', () => {
     log.debug('raw debug');
     expect(consoleLogSpy).toHaveBeenCalledWith('raw debug');
   });
 
-  it('error should call console.error with error prefix and error object', () => {
+  /* ---------------------------------- */
+  /* ERROR WITH ERROR OBJECT */
+  /* ---------------------------------- */
+
+  it('error should log prefix, message and stack when Error provided', () => {
     const err = new Error('boom');
+
     log.error('something bad', err);
-    expect(consoleErrorSpy).toHaveBeenCalledWith('❌ something bad', err);
+
+    expect(consoleErrorSpy).toHaveBeenNthCalledWith(1, '❌ something bad');
+
+    expect(consoleErrorSpy).toHaveBeenNthCalledWith(2, err.message);
+
+    expect(consoleErrorSpy).toHaveBeenNthCalledWith(3, err.stack);
   });
 
-  it('error should still call console.error when no error object provided', () => {
+  /* ---------------------------------- */
+  /* ERROR WITHOUT ERROR OBJECT */
+  /* ---------------------------------- */
+
+  it('error should log prefix and stringify when non-error provided', () => {
+    log.error('no object', { test: true });
+
+    expect(consoleErrorSpy).toHaveBeenNthCalledWith(1, '❌ no object');
+
+    expect(consoleErrorSpy).toHaveBeenNthCalledWith(
+      2,
+      JSON.stringify({ test: true }, null, 2)
+    );
+  });
+
+  /* ---------------------------------- */
+  /* ERROR WITH NO SECOND ARG */
+  /* ---------------------------------- */
+
+  it('error should log prefix and stringify undefined when no error provided', () => {
     log.error('no object');
-    expect(consoleErrorSpy).toHaveBeenCalledWith('❌ no object', undefined);
+
+    expect(consoleErrorSpy).toHaveBeenNthCalledWith(1, '❌ no object');
+
+    expect(consoleErrorSpy).toHaveBeenNthCalledWith(
+      2,
+      JSON.stringify(undefined, null, 2)
+    );
   });
 });
