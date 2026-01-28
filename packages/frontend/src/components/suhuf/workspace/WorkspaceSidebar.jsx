@@ -7,10 +7,10 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useMemo, useCallback } from 'react';
 import { sidebarMenuData } from '@/data/sidebarMenuData.js';
-import { useSuhufContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
 export const WorkspaceSidebar = () => {
-  const { layout, updateLayout } = useSuhufContext();
+  const { layout, updateLayout } = useSuhufWorkspaceContext();
 
   const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
   const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');

@@ -58,7 +58,7 @@ export const SuhufProvider = ({ suhuf, children }) => {
   );
 };
 
-export const useSuhufContext = () => {
+export const useSuhufWorkspaceContext = () => {
   const ctx = useContext(SuhufWorkspaceContext);
   if (!ctx)
     throw new Error('useSuhufContext must be used inside SuhufProvider');

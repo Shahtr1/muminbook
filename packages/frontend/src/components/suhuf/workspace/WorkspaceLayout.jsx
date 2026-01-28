@@ -4,14 +4,12 @@ import { WorkspaceSplitView } from './WorkspaceSplitView.jsx';
 import { WorkspaceSidebar } from '@/components/suhuf/workspace/WorkspaceSidebar.jsx';
 import { BottomPanelWithHeader } from '@/components/suhuf/workspace/BottomPanelWithHeader.jsx';
 import { BottomPanelHeader } from '@/components/suhuf/workspace/BottomPanelHeader.jsx';
-import { useParams } from 'react-router-dom';
-import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
-import { useSuhufContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
 export const WorkspaceLayout = ({ readings }) => {
   const { colorMode } = useColorMode();
 
-  const { layout } = useSuhufContext();
+  const { layout } = useSuhufWorkspaceContext();
 
   const isBottomOpen = layout?.isBottomTabOpen;
 

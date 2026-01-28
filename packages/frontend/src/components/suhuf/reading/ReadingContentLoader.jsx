@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 import { Box } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
-export const ReadingWrapper = ({ uuid, divisionType, render }) => {
+export const ReadingContentLoader = ({ uuid, divisionType, render }) => {
   const [page, setPage] = useState(1);
+
   const { data, isPending, isError } = useReadingPage({
     uuid,
     divisionType,
@@ -20,17 +21,13 @@ export const ReadingWrapper = ({ uuid, divisionType, render }) => {
 
   return (
     <>
-      <Box
-        width="100%"
-        height={10}
-        onClick={() => setPage((p) => Math.max(1, p - 1))}
-      >
+      <Box h={10} onClick={() => setPage((p) => Math.max(1, p - 1))}>
         <ChevronUpIcon fontSize="20px" />
       </Box>
 
       {render(data.data)}
 
-      <Box width="100%" height={10} onClick={() => setPage((p) => p + 1)}>
+      <Box h={10} onClick={() => setPage((p) => p + 1)}>
         <ChevronDownIcon fontSize="20px" />
       </Box>
     </>

@@ -1,4 +1,3 @@
-import { Quran } from '@/components/suhuf/reading/Quran.jsx';
 import {
   Box,
   Flex,
@@ -9,74 +8,62 @@ import {
   PopoverTrigger,
   Text,
   Tooltip,
-  useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { ReadingSidebar } from '@/components/suhuf/reading/ReadingSidebar.jsx';
-import { ReadingToolbar } from '@/components/suhuf/reading/ReadingToolbar.jsx';
-import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { RiCloseCircleFill, RiInformationFill } from 'react-icons/ri';
 import { useQueryClient } from '@tanstack/react-query';
-import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
-import { ReadingWrapper } from '@/components/suhuf/reading/ReadingWrapper.jsx';
+import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import QuranDivisionType from '@/constants/QuranDivisionType.js';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { QuranContent } from '@/components/suhuf/reading/QuranContent.jsx';
+import { ReadingContentLoader } from '@/components/suhuf/reading/ReadingContentLoader.jsx';
+import { ReadingSidebarPanel } from '@/components/suhuf/reading/ReadingSidebarPanel.jsx';
+import { ReadingToolSidebar } from '@/components/suhuf/reading/ReadingToolSidebar.jsx';
 
-export const ReadingViewPanel = ({ id, suhuf, direction }) => {
+export const ReadingViewPanel = ({ id, direction }) => {
+  const { panels, updatePanels } = useSuhufWorkspaceContext();
+  const queryClient = useQueryClient();
+
   const bgContentColor = useColorModeValue(
     'wn.bg_content.light',
     'wn.bg_content.dark'
   );
-  const queryClient = useQueryClient();
-
-  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
-
   const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
   const borderColor = useColorModeValue('gray.300', 'whiteAlpha.300');
+
   const panelNavHeight = '22px';
-
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
-
   const readings = queryClient.getQueryData(['readings']) || [];
   const reading = readings.find((r) => r.uuid === id);
+
+  const closeReading = () => {
+    const updatedPanels = panels.map((panel) =>
+      panel.fileId === id && panel.direction === direction
+        ? { ...panel, fileId: undefined, fileType: 'none' }
+        : panel
+    );
+
+    updatePanels(updatedPanels);
+  };
+
+  if (!reading) return <SomethingWentWrong />;
+
+  const { label, description } = reading;
 
   const readingRegistry = {
     quran: {
       divisionType: QuranDivisionType.Surah,
-      component: Quran,
+      component: QuranContent,
     },
   };
 
-  const panels = suhuf?.config?.panels || [];
-
-  const closeReading = () => {
-    const updatedPanels = panels.map((panel) => {
-      if (panel.fileId === id && panel.direction === direction) {
-        return {
-          ...panel,
-          fileId: undefined,
-          fileType: 'none',
-        };
-      }
-      return panel;
-    });
-
-    updateConfig({ panels: updatedPanels });
-  };
-
-  const { label, description } = reading;
-
-  const renderUI = () => {
+  const renderContent = () => {
     const config = readingRegistry[id?.toLowerCase()];
-
-    if (!config) {
-      console.error(`No UI for reading type ${id}`);
-      return <SomethingWentWrong />;
-    }
+    if (!config) return <SomethingWentWrong />;
 
     const { divisionType, component: Component } = config;
 
     return (
-      <ReadingWrapper
+      <ReadingContentLoader
         uuid={id}
         divisionType={divisionType}
         render={(data) => <Component data={data} />}
@@ -123,6 +110,7 @@ export const ReadingViewPanel = ({ id, suhuf, direction }) => {
               <PopoverBody bgColor={bgColor}>{description}</PopoverBody>
             </PopoverContent>
           </Popover>
+
           <Tooltip variant="inverted" placement="bottom" label="Close file">
             <Box
               as="button"
@@ -138,7 +126,8 @@ export const ReadingViewPanel = ({ id, suhuf, direction }) => {
       </Flex>
 
       <Flex h={`calc(100% - ${panelNavHeight})`} w="100%">
-        <ReadingSidebar direction={direction} />
+        <ReadingSidebarPanel direction={direction} />
+
         <Flex
           flex={1}
           w="100%"
@@ -146,11 +135,10 @@ export const ReadingViewPanel = ({ id, suhuf, direction }) => {
           overflow="auto"
           scrollBehavior="smooth"
         >
-          {renderUI()}
+          {renderContent()}
         </Flex>
-        <ReadingToolbar
-          onToolSelect={(id) => console.log('Tool selected: ', id)}
-        />
+
+        <ReadingToolSidebar />
       </Flex>
     </Flex>
   );

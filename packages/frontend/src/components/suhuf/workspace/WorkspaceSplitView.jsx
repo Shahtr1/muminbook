@@ -8,11 +8,11 @@ import { EditorViewPanel } from '@/components/suhuf/panels/EditorViewPanel.jsx';
 import { WelcomePanel } from '@/components/suhuf/panels/WelcomePanel.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { useSafeBreakpointValue } from '@/hooks/useSafeBreakpointValue.js';
-import { useSuhufContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
 export const WorkspaceSplitView = () => {
   const { suhuf, layout, panels, updatePanels, updateLayout } =
-    useSuhufContext();
+    useSuhufWorkspaceContext();
 
   const isSmallScreen =
     useSafeBreakpointValue({ base: true, sm: false }) || false;

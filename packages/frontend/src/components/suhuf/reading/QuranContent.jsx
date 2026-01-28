@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
 
-export const Quran = ({ data }) => {
+export const QuranContent = ({ data }) => {
   return (
     <Box
       fontFamily="ArabicFont"
