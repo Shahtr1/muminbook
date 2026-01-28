@@ -3,14 +3,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Split from 'react-split';
 
 import { useHandleSplitPanelSizes } from '@/hooks/suhuf/useHandleSplitPanelSizes.js';
-import { ReadingPanel } from '@/components/suhuf/panels/ReadingPanel.jsx';
-import { EditorPanel } from '@/components/suhuf/panels/EditorPanel.jsx';
-import { DefaultPanel } from '@/components/suhuf/panels/DefaultPanel.jsx';
+import { ReadingViewPanel } from '@/components/suhuf/panels/ReadingViewPanel.jsx';
+import { EditorViewPanel } from '@/components/suhuf/panels/EditorViewPanel.jsx';
+import { WelcomePanel } from '@/components/suhuf/panels/WelcomePanel.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { useSafeBreakpointValue } from '@/hooks/useSafeBreakpointValue.js';
-import { useSuhufContext } from '@/context/SuhufContext.jsx';
+import { useSuhufContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-export const SuhufPanel = () => {
+export const WorkspaceSplitView = () => {
   const { suhuf, layout, panels, updatePanels, updateLayout } =
     useSuhufContext();
 
@@ -68,7 +68,7 @@ export const SuhufPanel = () => {
     switch (panel?.fileType) {
       case 'reading':
         return (
-          <ReadingPanel
+          <ReadingViewPanel
             id={panel.fileId}
             panel={panel}
             direction={direction}
@@ -77,10 +77,10 @@ export const SuhufPanel = () => {
         );
 
       case 'user':
-        return <EditorPanel />;
+        return <EditorViewPanel />;
 
       default:
-        return <DefaultPanel suhuf={suhuf} />;
+        return <WelcomePanel suhuf={suhuf} />;
     }
   };
 

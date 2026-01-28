@@ -13,15 +13,15 @@ import {
 } from '@chakra-ui/react';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { SuhufLayout } from '@/components/suhuf/SuhufLayout.jsx';
+import { WorkspaceLayout } from '@/components/suhuf/workspace/WorkspaceLayout.jsx';
 import { SidebarLeftSVG } from '@/components/svgs/sidebar/SidebarLeftSVG.jsx';
 import { SidebarBottomSVG } from '@/components/svgs/sidebar/SidebarBottomSVG.jsx';
-import { SuhufMenu } from '@/components/suhuf/SuhufMenu.jsx';
+import { WorkspaceMenu } from '@/components/suhuf/workspace/WorkspaceMenu.jsx';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { SplitHorizontalSVG } from '@/components/svgs/sidebar/SplitHorizontalSVG.jsx';
 import { SplitVerticalSVG } from '@/components/svgs/sidebar/SplitVerticalSVG.jsx';
 import { useReadings } from '@/hooks/reading/useReadings.js';
-import { SuhufProvider } from '@/context/SuhufContext.jsx';
+import { SuhufProvider } from '@/context/SuhufWorkspaceContext.jsx';
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
@@ -86,7 +86,7 @@ export const Suhuf = () => {
   const navbarContent = useMemo(
     () => (
       <Flex width="100%" justify="space-between">
-        <SuhufMenu suhuf={suhuf} />
+        <WorkspaceMenu suhuf={suhuf} />
         <Flex gap={1} align="center">
           <Tooltip
             label="Toggle left tab"
@@ -164,7 +164,7 @@ export const Suhuf = () => {
       {(isSuhufError || isReadingsError) && <SomethingWentWrong />}
       {isSuhufSuccess && isReadingsSuccess && (
         <SuhufProvider suhuf={suhuf}>
-          <SuhufLayout readings={readings} />
+          <WorkspaceLayout readings={readings} />
         </SuhufProvider>
       )}
     </Flex>

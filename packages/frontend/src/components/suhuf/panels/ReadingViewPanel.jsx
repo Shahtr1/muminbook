@@ -21,7 +21,7 @@ import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { ReadingWrapper } from '@/components/suhuf/reading/ReadingWrapper.jsx';
 import QuranDivisionType from '@/constants/QuranDivisionType.js';
 
-export const ReadingPanel = ({ id, suhuf, direction }) => {
+export const ReadingViewPanel = ({ id, suhuf, direction }) => {
   const bgContentColor = useColorModeValue(
     'wn.bg_content.light',
     'wn.bg_content.dark'

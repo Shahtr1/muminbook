@@ -1,14 +1,14 @@
 import { Flex, useColorMode } from '@chakra-ui/react';
 import Split from 'react-split';
-import { SuhufPanel } from './panels/SuhufPanel.jsx';
-import { SuhufLeftSidebar } from '@/components/suhuf/leftSidebar/SuhufLeftSidebar.jsx';
-import { SuhufBottomPanelWithHeader } from '@/components/suhuf/bottomPanel/SuhufBottomPanelWithHeader.jsx';
-import { SuhufBottomPanelHeader } from '@/components/suhuf/bottomPanel/SuhufBottomPanelHeader.jsx';
+import { WorkspaceSplitView } from './WorkspaceSplitView.jsx';
+import { WorkspaceSidebar } from '@/components/suhuf/workspace/WorkspaceSidebar.jsx';
+import { BottomPanelWithHeader } from '@/components/suhuf/workspace/BottomPanelWithHeader.jsx';
+import { BottomPanelHeader } from '@/components/suhuf/workspace/BottomPanelHeader.jsx';
 import { useParams } from 'react-router-dom';
 import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
-import { useSuhufContext } from '@/context/SuhufContext.jsx';
+import { useSuhufContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-export const SuhufLayout = ({ readings }) => {
+export const WorkspaceLayout = ({ readings }) => {
   const { colorMode } = useColorMode();
 
   const { layout } = useSuhufContext();
@@ -19,7 +19,7 @@ export const SuhufLayout = ({ readings }) => {
 
   return (
     <Flex h="100%" w="100%" pos="relative" zIndex={1}>
-      <SuhufLeftSidebar />
+      <WorkspaceSidebar />
 
       {/* Main Content Area */}
       <Flex flex="1" display="flex" flexDirection="column" overflow="auto">
@@ -39,17 +39,17 @@ export const SuhufLayout = ({ readings }) => {
         >
           {/* Main Panel */}
           <Flex overflowY="auto" position="relative">
-            <SuhufPanel />
+            <WorkspaceSplitView />
           </Flex>
 
           {isBottomOpen ? (
-            <SuhufBottomPanelWithHeader readings={readings} />
+            <BottomPanelWithHeader readings={readings} />
           ) : (
             <div />
           )}
         </Split>
         {/* TODO: A workaround for now, to toggle SuhufBottomPanel Body, fix it, when pro people will work on this */}
-        {!isBottomOpen && <SuhufBottomPanelHeader readings={readings} />}
+        {!isBottomOpen && <BottomPanelHeader readings={readings} />}
       </Flex>
     </Flex>
   );

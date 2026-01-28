@@ -3,7 +3,7 @@ import { Editor, useMonaco } from '@monaco-editor/react';
 import { useEffect, useState } from 'react';
 import { defineMbTheme } from '@/theme/monacoTheme.js';
 
-export const EditorPanel = ({ value, onValueChange }) => {
+export const EditorViewPanel = ({ value, onValueChange }) => {
   const { colorMode } = useColorMode();
   const monaco = useMonaco();
   const [themeReady, setThemeReady] = useState(false);

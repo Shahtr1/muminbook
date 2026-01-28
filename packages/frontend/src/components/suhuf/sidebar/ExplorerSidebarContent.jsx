@@ -1,9 +1,9 @@
 import { Flex } from '@chakra-ui/react';
 import { ReadingsTree } from '@/components/suhuf/reading/ReadingsTree.jsx';
 import { ResourcesTree } from '@/components/explorer/components/ResourcesTree.jsx';
-import { useSuhufContext } from '@/context/SuhufContext.jsx';
+import { useSuhufContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-export const ExplorerSidebar = () => {
+export const ExplorerSidebarContent = () => {
   const { openFile } = useSuhufContext();
 
   return (

@@ -2,7 +2,7 @@ import { createContext, useContext, useMemo } from 'react';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig';
 import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
 
-const SuhufContext = createContext(null);
+const SuhufWorkspaceContext = createContext(null);
 
 export const SuhufProvider = ({ suhuf, children }) => {
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
@@ -52,12 +52,14 @@ export const SuhufProvider = ({ suhuf, children }) => {
   );
 
   return (
-    <SuhufContext.Provider value={value}>{children}</SuhufContext.Provider>
+    <SuhufWorkspaceContext.Provider value={value}>
+      {children}
+    </SuhufWorkspaceContext.Provider>
   );
 };
 
 export const useSuhufContext = () => {
-  const ctx = useContext(SuhufContext);
+  const ctx = useContext(SuhufWorkspaceContext);
   if (!ctx)
     throw new Error('useSuhufContext must be used inside SuhufProvider');
   return ctx;

@@ -7,9 +7,9 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useMemo, useCallback } from 'react';
 import { sidebarMenuData } from '@/data/sidebarMenuData.js';
-import { useSuhufContext } from '@/context/SuhufContext.jsx';
+import { useSuhufContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-export const SuhufLeftSidebar = () => {
+export const WorkspaceSidebar = () => {
   const { layout, updateLayout } = useSuhufContext();
 
   const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');

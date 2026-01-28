@@ -9,7 +9,7 @@ import { SuhufSVG } from '@/components/svgs/SuhufSVG.jsx';
 import { sidebarMenuData } from '@/data/sidebarMenuData.js';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 
-export const DefaultPanel = ({ suhuf }) => {
+export const WelcomePanel = ({ suhuf }) => {
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
 
   const secondaryColor = useColorModeValue('wn.gutter.light', 'wn.gutter.dark');

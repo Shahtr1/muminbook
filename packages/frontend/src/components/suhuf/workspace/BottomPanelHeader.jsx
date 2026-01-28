@@ -1,12 +1,9 @@
 import { Flex, Icon, Text, useColorModeValue } from '@chakra-ui/react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { useCallback } from 'react';
-import { useSuhufContext } from '@/context/SuhufContext.jsx';
+import { useSuhufContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-export const SuhufBottomPanelHeader = ({
-  hasBorder = false,
-  readings = [],
-}) => {
+export const BottomPanelHeader = ({ hasBorder = false, readings = [] }) => {
   const { layout, updateLayout } = useSuhufContext();
 
   const isOpen = layout?.isBottomTabOpen || false;

@@ -4,9 +4,9 @@ import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { FaComments, FaList } from 'react-icons/fa';
 import { BsHighlights } from 'react-icons/bs';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { DivisionList } from '@/components/suhuf/list/DivisionList.jsx';
-import { CommentsList } from '@/components/suhuf/list/CommentsList.jsx';
-import { HighlightsList } from '@/components/suhuf/list/HighlightsList.jsx';
+import { QuranDivisionListContent } from '@/components/suhuf/sidebar/QuranDivisionListContent.jsx';
+import { CommentsListContent } from '@/components/suhuf/sidebar/CommentsListContent.jsx';
+import { HighlightsListContent } from '@/components/suhuf/sidebar/HighlightsListContent.jsx';
 import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
 
 const readingSidebarData = [
@@ -149,9 +149,9 @@ export const ReadingSidebar = ({ direction }) => {
         transform={isOpen ? 'translateX(0)' : 'translateX(-160px)'}
         zIndex={1}
       >
-        {isOpen && activeTab === 'highlights' && <HighlightsList />}
-        {isOpen && activeTab === 'comments' && <CommentsList />}
-        {isOpen && activeTab === 'list' && <DivisionList />}
+        {isOpen && activeTab === 'highlights' && <HighlightsListContent />}
+        {isOpen && activeTab === 'comments' && <CommentsListContent />}
+        {isOpen && activeTab === 'list' && <QuranDivisionListContent />}
       </Flex>
     </Flex>
   );
