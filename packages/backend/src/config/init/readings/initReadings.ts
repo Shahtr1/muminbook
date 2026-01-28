@@ -1,6 +1,6 @@
-import ReadingModel from '../../models/reading/reading.model';
-import { readingsApi } from '../../data/readingsApi';
-import { log } from '../../utils/log';
+import ReadingModel from '../../../models/reading/reading.model';
+import { readingsApi } from '../../../data/readingsApi';
+import { log } from '../../../utils/log';
 
 const initReadings = async () => {
   try {

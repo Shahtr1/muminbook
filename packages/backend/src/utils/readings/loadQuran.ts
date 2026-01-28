@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export const loadQuran = (): any[] => {
-  const ayatDir = path.join(__dirname, '../data/surahs');
+  const ayatDir = path.join(__dirname, '../../data/quran');
   const files = fs.readdirSync(ayatDir);
 
   let allAyat: any[] = [];

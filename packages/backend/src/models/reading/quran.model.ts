@@ -20,7 +20,7 @@ export interface QuranDocument extends Document {
   updatedAt: Date;
 }
 
-const quranDocument = new Schema<QuranDocument>(
+const quranSchema = new Schema<QuranDocument>(
   {
     uuid: {
       type: Number,
@@ -72,16 +72,12 @@ const quranDocument = new Schema<QuranDocument>(
   { timestamps: true }
 );
 
-quranDocument.index({ uuid: 1 }, { unique: true });
-quranDocument.index({ surahId: 1 });
-quranDocument.index({ juzId: 1 });
-quranDocument.index({ ruku: 1 });
-quranDocument.index({ hizbQuarter: 1 });
+quranSchema.index({ uuid: 1 }, { unique: true });
+quranSchema.index({ surahId: 1 });
+quranSchema.index({ juzId: 1 });
+quranSchema.index({ ruku: 1 });
+quranSchema.index({ hizbQuarter: 1 });
 
-const QuranModel = mongoose.model<QuranDocument>(
-  'Quran',
-  quranDocument,
-  'quran'
-);
+const QuranModel = mongoose.model<QuranDocument>('Quran', quranSchema, 'quran');
 
 export default QuranModel;
