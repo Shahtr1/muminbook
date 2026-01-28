@@ -1,13 +1,15 @@
 import { getDbOrAssertCollection } from '../../utils/dbHelper';
 
-export const getReading = async (uuid: string, query: any = {}) => {
-  const db = await getDbOrAssertCollection(uuid);
+export const getReading = async (collectionParam: string, query: any = {}) => {
+  const { db, collectionName } = await getDbOrAssertCollection(collectionParam);
 
-  const { limit, page } = query;
+  // Safe pagination defaults
+  const limit = Math.max(parseInt(query.limit) || 10, 1);
+  const page = Math.max(parseInt(query.page) || 1, 1);
 
   const skip = (page - 1) * limit;
 
-  const collection = db.collection(uuid);
+  const collection = db.collection(collectionName!);
 
   const data = await collection
     .find({})

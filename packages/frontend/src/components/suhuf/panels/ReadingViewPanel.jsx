@@ -15,10 +15,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import QuranDivisionType from '@/constants/QuranDivisionType.js';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
-import { QuranContent } from '@/components/suhuf/reading/QuranContent.jsx';
+import { QuranContent } from '@/components/suhuf/reading/content/QuranContent.jsx';
 import { ReadingContentLoader } from '@/components/suhuf/reading/ReadingContentLoader.jsx';
 import { ReadingSidebarPanel } from '@/components/suhuf/reading/ReadingSidebarPanel.jsx';
 import { ReadingToolSidebar } from '@/components/suhuf/reading/ReadingToolSidebar.jsx';
+import { EnglishContent } from '@/components/suhuf/reading/content/EnglishContent.jsx';
 
 export const ReadingViewPanel = ({ id, direction }) => {
   const { panels, updatePanels } = useSuhufWorkspaceContext();
@@ -53,6 +54,10 @@ export const ReadingViewPanel = ({ id, direction }) => {
     quran: {
       divisionType: QuranDivisionType.Surah,
       component: QuranContent,
+    },
+    'sahih-international': {
+      divisionType: QuranDivisionType.Surah,
+      component: EnglishContent,
     },
   };
 

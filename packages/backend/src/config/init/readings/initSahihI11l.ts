@@ -52,9 +52,11 @@ const initSahihI11lVerses = async () => {
 
     await SahihI11lModel.insertMany(mapped);
 
-    log.success('SahihI11l initialized successfully.');
+    log.success('Sahih International initialized successfully.');
   } else {
-    log.info(`SahihI11l already initialized (${existing} entries found).`);
+    log.info(
+      `Sahih International already initialized (${existing} entries found).`
+    );
   }
 };
 
