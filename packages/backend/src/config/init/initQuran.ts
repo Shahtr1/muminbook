@@ -1,6 +1,6 @@
-import SurahModel from '../../models/surah.model';
-import JuzModel from '../../models/juz.model';
-import QuranModel from '../../models/quran.model';
+import SurahModel from '../../models/reading/surah.model';
+import JuzModel from '../../models/reading/juz.model';
+import QuranModel from '../../models/reading/quran.model';
 import { surahsApi } from '../../data/surahsApi';
 import { loadQuran } from '../../utils/loadQuran';
 import { juzListApi } from '../../data/juzListApi';

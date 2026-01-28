@@ -1,6 +1,6 @@
 import catchErrors from '../utils/catchErrors';
 import { OK } from '../constants/http';
-import JuzModel from '../models/juz.model';
+import JuzModel from '../models/reading/juz.model';
 
 export const getJuzHandler = catchErrors(async (req, res) => {
   const juz = await JuzModel.find().sort({ uuid: 1 });

@@ -21,7 +21,7 @@ import {
   registerSchema,
   resetPasswordSchema,
   verificationCodeSchema,
-} from './schemas/auth.schema';
+} from '../schemas/auth.schema';
 import { verifyToken } from '../utils/jwt';
 import SessionModel from '../models/session.model';
 import appAssert from '../utils/appAssert';

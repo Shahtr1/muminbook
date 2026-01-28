@@ -6,8 +6,8 @@ import mongoose from 'mongoose';
 import SuhufModel from '../models/suhuf.model';
 import appAssert from '../utils/appAssert';
 import { renameSuhuf } from '../services/suhuf/rename-suhuf.service';
-import { suhufConfigSchema } from './schemas/suhuf-config.schema';
-import { createSuhufSchema, titleSchema } from './schemas/suhuf.schema';
+import { suhufConfigSchema } from '../schemas/suhuf-config.schema';
+import { createSuhufSchema, titleSchema } from '../schemas/suhuf.schema';
 
 export const createSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);

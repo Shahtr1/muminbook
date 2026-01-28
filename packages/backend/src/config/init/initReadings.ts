@@ -1,4 +1,4 @@
-import ReadingModel from '../../models/reading.model';
+import ReadingModel from '../../models/reading/reading.model';
 import { readingsApi } from '../../data/readingsApi';
 import { log } from '../../utils/log';
 

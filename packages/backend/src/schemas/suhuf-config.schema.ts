@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import FileType from '../../constants/types/fileType';
-import Direction from '../../constants/types/direction';
-import SuhufSidebar from '../../constants/types/suhufSidebar';
+import FileType from '../constants/types/fileType';
+import Direction from '../constants/types/direction';
+import SuhufSidebar from '../constants/types/suhufSidebar';
 
 export const readingLayoutSchema = z.object({
   direction: z.nativeEnum(Direction),
