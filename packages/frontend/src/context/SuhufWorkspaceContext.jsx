@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo, useCallback } from 'react';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig';
 import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
 
@@ -11,32 +11,48 @@ export const SuhufProvider = ({ suhuf, children }) => {
   const layout = suhuf?.config?.layout || {};
   const panels = suhuf?.config?.panels || [];
 
-  const updateLayout = (newLayout) => {
-    updateConfig({ layout: { ...layout, ...newLayout } });
-  };
+  const updateLayout = useCallback(
+    (partial) => {
+      updateConfig({
+        layout: { ...layout, ...partial },
+      });
+    },
+    [layout, updateConfig]
+  );
 
-  const updatePanels = (newPanels) => {
-    updateConfig({ panels: newPanels });
-  };
+  const updatePanels = useCallback(
+    (newPanels) => {
+      updateConfig({ panels: newPanels });
+    },
+    [updateConfig]
+  );
 
-  const toggleSplit = () => {
-    const isSplit = !layout.isSplit;
+  const toggleSplit = useCallback(() => {
+    const next = !layout.isSplit;
 
-    if (!isSplit && panels.length) {
+    if (!next && panels.length) {
       const resetPanels = panels.map((p, i) => ({
         ...p,
         active: i === 0,
       }));
 
       updateConfig({
-        layout: { ...layout, isSplit },
+        layout: { ...layout, isSplit: next },
         panels: resetPanels,
       });
       return;
     }
 
-    updateLayout({ isSplit });
-  };
+    updateLayout({ isSplit: next });
+  }, [layout, panels, updateLayout, updateConfig]);
+
+  const toggleLeftSidebar = useCallback(() => {
+    updateLayout({ isLeftTabOpen: !layout.isLeftTabOpen });
+  }, [layout.isLeftTabOpen, updateLayout]);
+
+  const toggleBottomPanel = useCallback(() => {
+    updateLayout({ isBottomTabOpen: !layout.isBottomTabOpen });
+  }, [layout.isBottomTabOpen, updateLayout]);
 
   const value = useMemo(
     () => ({
@@ -46,9 +62,21 @@ export const SuhufProvider = ({ suhuf, children }) => {
       updateLayout,
       updatePanels,
       toggleSplit,
+      toggleLeftSidebar,
+      toggleBottomPanel,
       openFile,
     }),
-    [suhuf, layout, panels]
+    [
+      suhuf,
+      layout,
+      panels,
+      updateLayout,
+      updatePanels,
+      toggleSplit,
+      toggleLeftSidebar,
+      toggleBottomPanel,
+      openFile,
+    ]
   );
 
   return (
@@ -61,6 +89,8 @@ export const SuhufProvider = ({ suhuf, children }) => {
 export const useSuhufWorkspaceContext = () => {
   const ctx = useContext(SuhufWorkspaceContext);
   if (!ctx)
-    throw new Error('useSuhufContext must be used inside SuhufProvider');
+    throw new Error(
+      'useSuhufWorkspaceContext must be used inside SuhufProvider'
+    );
   return ctx;
 };
