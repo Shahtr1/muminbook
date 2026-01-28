@@ -1,37 +1,29 @@
 import { Box } from '@chakra-ui/react';
-import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import Split from 'react-split';
+
 import { useHandleSplitPanelSizes } from '@/hooks/suhuf/useHandleSplitPanelSizes.js';
 import { ReadingPanel } from '@/components/suhuf/panels/ReadingPanel.jsx';
 import { EditorPanel } from '@/components/suhuf/panels/EditorPanel.jsx';
 import { DefaultPanel } from '@/components/suhuf/panels/DefaultPanel.jsx';
-import Split from 'react-split';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { useSafeBreakpointValue } from '@/hooks/useSafeBreakpointValue.js';
+import { useSuhufContext } from '@/context/SuhufContext.jsx';
 
-export const SuhufPanel = ({ suhuf }) => {
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
+export const SuhufPanel = () => {
+  const { suhuf, layout, panels, updatePanels, updateLayout } =
+    useSuhufContext();
 
-  /**
-   * We use useSafeBreakpointValue instead of Chakra's useBreakpointValue directly
-   * to avoid layout flickering or mismatch during the first render.
-   *
-   * The split direction (vertical or horizontal) depends on screen size.
-   * If the value changes immediately after mount, the Split component
-   * can reinitialize and reset panel sizes.
-   *
-   * This hook ensures the breakpoint value is only applied after the
-   * component has mounted, keeping the layout stable.
-   */
   const isSmallScreen =
     useSafeBreakpointValue({ base: true, sm: false }) || false;
 
-  const layout = suhuf?.config?.layout || {};
-  const panels = suhuf?.config?.panels || [];
-  const isSecondPanelOpen = layout.isSplit;
+  const isSecondPanelOpen = layout?.isSplit;
 
   const [activePanelIndex, setActivePanelIndex] = useState(0);
 
+  /**
+   * Sync active index from server state
+   */
   useEffect(() => {
     const activeIndex = panels.findIndex((p) => p.active);
     if (activeIndex >= 0) {
@@ -39,27 +31,40 @@ export const SuhufPanel = ({ suhuf }) => {
     }
   }, [panels]);
 
+  /**
+   * Handle split sizes using layout from context
+   */
   const { sizes, handleResize } = useHandleSplitPanelSizes({
     layout,
     isSecondPanelOpen,
-    onUpdateLayout: updateConfig,
+    onUpdateLayout: updateLayout,
   });
 
-  const handlePanelClick = (index) => {
-    if (index === activePanelIndex) return;
+  /**
+   * Activate panel
+   */
+  const handlePanelClick = useCallback(
+    (index) => {
+      if (index === activePanelIndex) return;
 
-    setActivePanelIndex(index);
+      setActivePanelIndex(index);
 
-    const updatedPanels = panels.map((panel, i) => ({
-      ...panel,
-      active: i === index,
-    }));
+      const updatedPanels = panels.map((panel, i) => ({
+        ...panel,
+        active: i === index,
+      }));
 
-    updateConfig({ panels: updatedPanels });
-  };
+      updatePanels(updatedPanels);
+    },
+    [activePanelIndex, panels, updatePanels]
+  );
 
+  /**
+   * Render content
+   */
   const renderPanelContent = (panel, index) => {
     const direction = index === 0 ? 'left' : 'right';
+
     switch (panel?.fileType) {
       case 'reading':
         return (
@@ -70,14 +75,21 @@ export const SuhufPanel = ({ suhuf }) => {
             suhuf={suhuf}
           />
         );
+
       case 'user':
         return <EditorPanel />;
+
       default:
         return <DefaultPanel suhuf={suhuf} />;
     }
   };
 
+  /**
+   * Memoized panel elements
+   */
   const panelElements = useMemo(() => {
+    if (!panels.length) return [];
+
     const renderPanel = (index) => {
       const panel = panels[index];
       const isActive = index === activePanelIndex;
@@ -97,13 +109,17 @@ export const SuhufPanel = ({ suhuf }) => {
     };
 
     const elements = [renderPanel(0)];
+
     if (isSecondPanelOpen && panels.length > 1) {
       elements.push(renderPanel(1));
     }
 
     return elements;
-  }, [isSecondPanelOpen, activePanelIndex, panels, suhuf]);
+  }, [panels, activePanelIndex, isSecondPanelOpen, handlePanelClick, suhuf]);
 
+  /**
+   * Guard: wait until sizes are ready
+   */
   const isSplitReady =
     !isSecondPanelOpen ||
     (sizes.length === 2 && sizes.every((s) => typeof s === 'number'));
@@ -114,7 +130,9 @@ export const SuhufPanel = ({ suhuf }) => {
 
   return (
     <Split
-      key={`${isSmallScreen ? 'vertical' : 'horizontal'}-${isSecondPanelOpen ? 'two' : 'one'}`}
+      key={`${isSmallScreen ? 'vertical' : 'horizontal'}-${
+        isSecondPanelOpen ? 'two' : 'one'
+      }`}
       direction={isSmallScreen ? 'vertical' : 'horizontal'}
       sizes={isSecondPanelOpen ? sizes : [100]}
       minSize={200}

@@ -21,6 +21,7 @@ import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { SplitHorizontalSVG } from '@/components/svgs/sidebar/SplitHorizontalSVG.jsx';
 import { SplitVerticalSVG } from '@/components/svgs/sidebar/SplitVerticalSVG.jsx';
 import { useReadings } from '@/hooks/reading/useReadings.js';
+import { SuhufProvider } from '@/context/SuhufContext.jsx';
 
 export const Suhuf = () => {
   const { id: suhufId } = useParams();
@@ -140,7 +141,7 @@ export const Suhuf = () => {
     ]
   );
 
-  queryClient.setQueryData(['windowMode'], true);
+  // queryClient.setQueryData(['windowMode'], true);
 
   useEffect(() => {
     queryClient.setQueryData(['windowMode'], true);
@@ -162,7 +163,9 @@ export const Suhuf = () => {
       {(isSuhufLoading || isReadingsLoading) && <Loader />}
       {(isSuhufError || isReadingsError) && <SomethingWentWrong />}
       {isSuhufSuccess && isReadingsSuccess && (
-        <SuhufLayout readings={readings} suhuf={suhuf} />
+        <SuhufProvider suhuf={suhuf}>
+          <SuhufLayout readings={readings} />
+        </SuhufProvider>
       )}
     </Flex>
   );
