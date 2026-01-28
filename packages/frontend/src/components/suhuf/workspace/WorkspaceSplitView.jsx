@@ -31,13 +31,8 @@ export const WorkspaceSplitView = () => {
     }
   }, [panels]);
 
-  /**
-   * Handle split sizes using layout from context
-   */
   const { sizes, handleResize } = useHandleSplitPanelSizes({
-    layout,
     isSecondPanelOpen,
-    onUpdateLayout: updateLayout,
   });
 
   /**

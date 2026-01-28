@@ -57,8 +57,17 @@ export const configSuhufHandler = catchErrors(async (req, res) => {
   const { layout, panels } = suhufConfigSchema.parse(req.body);
 
   const update: any = {};
-  if (layout) update['config.layout'] = layout;
-  if (panels) update['config.panels'] = panels;
+
+  // Merge layout fields instead of replacing entire object
+  if (layout) {
+    Object.entries(layout).forEach(([key, value]) => {
+      update[`config.layout.${key}`] = value;
+    });
+  }
+
+  if (panels) {
+    update['config.panels'] = panels;
+  }
 
   const updated = await SuhufModel.findOneAndUpdate(
     { _id: id, userId },

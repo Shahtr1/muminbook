@@ -12,27 +12,47 @@ export const useUpdateSuhufConfig = (suhufId) => {
     },
 
     onMutate: async (configUpdate) => {
-      // Cancel any pending queries for this suhuf to avoid race conditions
       await queryClient.cancelQueries(['suhuf', suhufId]);
 
-      const cachedSuhuf = queryClient.getQueryData(['suhuf', suhufId]);
+      const previous = queryClient.getQueryData(['suhuf', suhufId]);
 
-      queryClient.setQueryData(['suhuf', suhufId], (old) => ({
-        ...old,
-        config: {
-          ...old?.config,
-          ...configUpdate,
-        },
-      }));
+      queryClient.setQueryData(['suhuf', suhufId], (old) => {
+        if (!old) return old;
 
-      return { cachedSuhuf };
+        const newConfig = { ...old.config };
+
+        // Deep merge layout safely
+        if (configUpdate.layout) {
+          newConfig.layout = {
+            ...old.config?.layout,
+            ...configUpdate.layout,
+          };
+        }
+
+        // Replace panels fully if provided
+        if (configUpdate.panels) {
+          newConfig.panels = configUpdate.panels;
+        }
+
+        return {
+          ...old,
+          config: newConfig,
+        };
+      });
+
+      return { previous };
     },
 
     onError: (error, _, context) => {
-      if (context?.cachedSuhuf) {
-        queryClient.setQueryData(['suhuf', suhufId], context.cachedSuhuf);
+      if (context?.previous) {
+        queryClient.setQueryData(['suhuf', suhufId], context.previous);
       }
       toast.error(error);
+    },
+
+    // Optional but recommended: ensure server truth wins
+    onSettled: () => {
+      queryClient.invalidateQueries(['suhuf', suhufId]);
     },
   });
 };

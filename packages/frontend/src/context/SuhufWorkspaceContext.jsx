@@ -11,13 +11,14 @@ export const SuhufProvider = ({ suhuf, children }) => {
   const layout = suhuf?.config?.layout || {};
   const panels = suhuf?.config?.panels || [];
 
+  // Send only partial layout
   const updateLayout = useCallback(
     (partial) => {
       updateConfig({
-        layout: { ...layout, ...partial },
+        layout: partial,
       });
     },
-    [layout, updateConfig]
+    [updateConfig]
   );
 
   const updatePanels = useCallback(
@@ -37,14 +38,15 @@ export const SuhufProvider = ({ suhuf, children }) => {
       }));
 
       updateConfig({
-        layout: { ...layout, isSplit: next },
+        layout: { isSplit: next },
         panels: resetPanels,
       });
+
       return;
     }
 
     updateLayout({ isSplit: next });
-  }, [layout, panels, updateLayout, updateConfig]);
+  }, [layout.isSplit, panels, updateLayout, updateConfig]);
 
   const toggleLeftSidebar = useCallback(() => {
     updateLayout({ isLeftTabOpen: !layout.isLeftTabOpen });
