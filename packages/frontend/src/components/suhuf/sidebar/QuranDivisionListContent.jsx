@@ -74,11 +74,11 @@ export const QuranDivisionListContent = () => {
               <Tooltip
                 variant="inverted"
                 placement="right"
-                label={`Total ayats: ${surah.totalAyats}`}
+                label={`Total ayat: ${surah.totalAyat}`}
               >
                 <Flex align="center" color={iconColor} fontSize="9px" gap="1px">
                   <MdNumbers size={10} />
-                  <Text color={iconColor}>{surah.totalAyats}</Text>
+                  <Text color={iconColor}>{surah.totalAyat}</Text>
                 </Flex>
               </Tooltip>
             </Flex>
