@@ -1,29 +1,27 @@
 import { Flex, Icon, Tooltip, useColorModeValue } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
-import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { FaComments, FaList } from 'react-icons/fa';
 import { BsHighlights } from 'react-icons/bs';
-import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { DivisionList } from '@/components/suhuf/list/DivisionList.jsx';
-import { CommentsList } from '@/components/suhuf/list/CommentsList.jsx';
-import { HighlightsList } from '@/components/suhuf/list/HighlightsList.jsx';
-import { useSuhuf } from '@/hooks/suhuf/useSuhuf.js';
+import { useCallback } from 'react';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-const readingSidebarData = [
+import { QuranDivisionListContent } from '@/components/suhuf/sidebar/QuranDivisionListContent.jsx';
+import { CommentsListContent } from '@/components/suhuf/sidebar/CommentsListContent.jsx';
+import { HighlightsListContent } from '@/components/suhuf/sidebar/HighlightsListContent.jsx';
+
+const sidebarTabs = [
   { label: 'List', id: 'list', icon: FaList },
   { label: 'Comments', id: 'comments', icon: FaComments },
   { label: 'Highlights', id: 'highlights', icon: BsHighlights },
 ];
 
-export const ReadingSidebar = ({ direction }) => {
-  const { id: suhufId } = useParams();
+export const ReadingSidebarPanel = ({ direction }) => {
+  const { layout, updateLayout } = useSuhufWorkspaceContext();
 
-  const { data: suhuf } = useSuhuf(suhufId);
+  const readingLayouts = layout?.reading || [];
+  const readingState = readingLayouts.find((r) => r.direction === direction);
 
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhufId);
-
-  const layout = suhuf?.config?.layout || {};
-  const readingLayouts = layout.reading || [];
+  const activeTab = readingState?.sidebar;
+  const isOpen = readingState?.sidebarOpen ?? false;
 
   const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
   const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
@@ -38,41 +36,45 @@ export const ReadingSidebar = ({ direction }) => {
   );
   const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
 
-  const readingState = readingLayouts.find((r) => r.direction === direction);
-  const activeTab = readingState?.sidebar;
-  const isOpen = readingState?.sidebarOpen ?? false;
+  const toggleTab = useCallback(
+    (tabKey) => {
+      const entry = readingLayouts.find((r) => r.direction === direction);
 
-  const toggleTab = (tabKey) => {
-    const entry = readingLayouts.find((r) => r.direction === direction);
-    if (!entry) {
-      // If no entry exists for this direction, create one
-      const newEntry = {
-        direction,
-        sidebar: tabKey,
-        sidebarOpen: true,
-      };
-      const newReadingLayouts = [...readingLayouts, newEntry];
-      updateConfig({
-        layout: {
-          ...layout,
-          reading: newReadingLayouts,
-        },
-      });
-    } else {
-      // If the clicked tab is already active, toggle the sidebar open state
-      const newSidebarOpen =
-        entry.sidebar === tabKey ? !entry.sidebarOpen : true;
-      const newReadingLayouts = readingLayouts.map((r) =>
-        r.direction === direction
-          ? { ...r, sidebar: tabKey, sidebarOpen: newSidebarOpen }
-          : r
-      );
-      updateConfig({
-        layout: {
-          ...layout,
-          reading: newReadingLayouts,
-        },
-      });
+      let newReadingLayouts;
+
+      if (!entry) {
+        newReadingLayouts = [
+          ...readingLayouts,
+          { direction, sidebar: tabKey, sidebarOpen: true },
+        ];
+      } else {
+        const newSidebarOpen =
+          entry.sidebar === tabKey ? !entry.sidebarOpen : true;
+
+        newReadingLayouts = readingLayouts.map((r) =>
+          r.direction === direction
+            ? { ...r, sidebar: tabKey, sidebarOpen: newSidebarOpen }
+            : r
+        );
+      }
+
+      updateLayout({ reading: newReadingLayouts });
+    },
+    [readingLayouts, direction, updateLayout]
+  );
+
+  const renderContent = () => {
+    if (!isOpen) return null;
+
+    switch (activeTab) {
+      case 'list':
+        return <QuranDivisionListContent />;
+      case 'comments':
+        return <CommentsListContent />;
+      case 'highlights':
+        return <HighlightsListContent />;
+      default:
+        return null;
     }
   };
 
@@ -98,11 +100,11 @@ export const ReadingSidebar = ({ direction }) => {
         py={2}
         zIndex={2}
       >
-        {readingSidebarData.map((item) => (
+        {sidebarTabs.map((item) => (
           <Tooltip
+            key={item.id}
             variant="inverted"
             label={item.label}
-            key={item.id}
             placement="right"
           >
             <Flex
@@ -129,7 +131,6 @@ export const ReadingSidebar = ({ direction }) => {
         ))}
       </Flex>
 
-      {/* Sliding content panel */}
       <Flex
         position="absolute"
         top={0}
@@ -149,9 +150,7 @@ export const ReadingSidebar = ({ direction }) => {
         transform={isOpen ? 'translateX(0)' : 'translateX(-160px)'}
         zIndex={1}
       >
-        {isOpen && activeTab === 'highlights' && <HighlightsList />}
-        {isOpen && activeTab === 'comments' && <CommentsList />}
-        {isOpen && activeTab === 'list' && <DivisionList />}
+        {renderContent()}
       </Flex>
     </Flex>
   );

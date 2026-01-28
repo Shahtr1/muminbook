@@ -1,28 +1,16 @@
-import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { Flex, Icon, Text, useColorModeValue } from '@chakra-ui/react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import { useParams } from 'react-router-dom';
+import { useCallback } from 'react';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-export const SuhufBottomPanelHeader = ({
-  hasBorder = false,
-  readings = [],
-  suhuf,
-}) => {
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
+export const BottomPanelHeader = ({ hasBorder = false, readings = [] }) => {
+  const { layout, updateLayout } = useSuhufWorkspaceContext();
 
-  const layout = suhuf?.config?.layout || {};
   const isOpen = layout?.isBottomTabOpen || false;
 
-  const toggleBottomTab = () => {
-    const tabState = !isOpen;
-
-    updateConfig({
-      layout: {
-        ...layout,
-        isBottomTabOpen: tabState,
-      },
-    });
-  };
+  const toggleBottomTab = useCallback(() => {
+    updateLayout({ isBottomTabOpen: !isOpen });
+  }, [isOpen, updateLayout]);
 
   const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
   const boldColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
@@ -43,6 +31,7 @@ export const SuhufBottomPanelHeader = ({
         <Text variant="wn" cursor="pointer" fontSize="12px" py={1}>
           Debug
         </Text>
+
         <Text
           variant="wn"
           cursor="pointer"
@@ -55,16 +44,17 @@ export const SuhufBottomPanelHeader = ({
         >
           Terminal
         </Text>
+
         <Text variant="wn" cursor="pointer" fontSize="12px" py={1}>
           Code
         </Text>
       </Flex>
+
       <Icon
         as={isOpen ? IoIosArrowDown : IoIosArrowUp}
         boxSize={5}
         color={boldColor}
         cursor="pointer"
-        onClick={toggleBottomTab}
       />
     </Flex>
   );

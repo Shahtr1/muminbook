@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
 
-export const SearchPanel = () => {
+export const SearchSidebarContent = () => {
   return <Flex>🔍 Search</Flex>;
 };

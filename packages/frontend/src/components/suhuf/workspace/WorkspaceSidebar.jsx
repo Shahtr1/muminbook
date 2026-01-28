@@ -5,14 +5,12 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { sidebarMenuData } from '@/data/sidebarMenuData.js';
-import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
-import { useParams } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-export const SuhufLeftSidebar = ({ suhuf }) => {
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
+export const WorkspaceSidebar = () => {
+  const { layout, updateLayout } = useSuhufWorkspaceContext();
 
   const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
   const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
@@ -21,35 +19,40 @@ export const SuhufLeftSidebar = ({ suhuf }) => {
 
   const width = '150px';
 
-  const layout = suhuf?.config?.layout || {};
-  const activeTab = layout.leftTab;
-  const isOpen = layout.isLeftTabOpen;
+  const activeTab = layout?.leftTab;
+  const isOpen = layout?.isLeftTabOpen;
 
-  // Set default tab if panel is open and no tab selected
+  /**
+   * Ensure default tab when opened
+   */
   useEffect(() => {
     if (isOpen && !activeTab) {
-      updateConfig({
-        layout: {
-          ...layout,
-          leftTab: 'explorer',
-        },
-      });
+      updateLayout({ leftTab: 'explorer' });
     }
-  }, [isOpen, activeTab, layout, updateConfig]);
+  }, [isOpen, activeTab, updateLayout]);
 
-  const toggleTab = (tabKey) => {
-    const isSame = tabKey === activeTab;
-    updateConfig({
-      layout: {
-        ...layout,
+  /**
+   * Toggle sidebar tab
+   */
+  const toggleTab = useCallback(
+    (tabKey) => {
+      const isSame = tabKey === activeTab;
+
+      updateLayout({
         leftTab: tabKey,
         isLeftTabOpen: isSame ? !isOpen : true,
-      },
-    });
-  };
+      });
+    },
+    [activeTab, isOpen, updateLayout]
+  );
 
-  const activeTabData = sidebarMenuData.find((tab) => tab.key === activeTab);
+  const activeTabData = useMemo(
+    () => sidebarMenuData.find((tab) => tab.key === activeTab),
+    [activeTab]
+  );
+
   const ActiveComponent = activeTabData?.component;
+
   const activeContent =
     isOpen && activeTabData && ActiveComponent ? (
       <Flex flexDir="column" w="100%" overflow="auto">
@@ -68,7 +71,6 @@ export const SuhufLeftSidebar = ({ suhuf }) => {
       <Flex
         w="40px"
         bg={bgColor}
-        color="white"
         pt={5}
         pb={2}
         borderRight="1px solid"
@@ -102,7 +104,6 @@ export const SuhufLeftSidebar = ({ suhuf }) => {
       <Flex
         w={width}
         bg={bgColor}
-        color="white"
         py={5}
         borderRight="1px solid"
         borderColor={borderColor}

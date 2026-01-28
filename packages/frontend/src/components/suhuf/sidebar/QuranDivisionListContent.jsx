@@ -9,7 +9,7 @@ import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { VscFilterFilled } from 'react-icons/vsc';
 
-export const DivisionList = () => {
+export const QuranDivisionListContent = () => {
   const {
     surahs,
     isPending: isSurahsPending,

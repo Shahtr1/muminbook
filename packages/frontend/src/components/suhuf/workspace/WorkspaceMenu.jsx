@@ -20,7 +20,7 @@ import { BsPencilFill } from 'react-icons/bs';
 import { useRenameSuhuf } from '@/hooks/suhuf/useRenameSuhuf.js';
 import { IoCheckmarkOutline, IoCloseOutline } from 'react-icons/io5';
 
-export const SuhufMenu = ({ suhuf }) => {
+export const WorkspaceMenu = ({ suhuf }) => {
   const openSuhuf = useOpenSuhuf();
   const { mutate: renameSuhuf } = useRenameSuhuf();
   const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');

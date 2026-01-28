@@ -1,14 +1,11 @@
 import { Flex } from '@chakra-ui/react';
 import { ReadingsTree } from '@/components/suhuf/reading/ReadingsTree.jsx';
 import { ResourcesTree } from '@/components/explorer/components/ResourcesTree.jsx';
-import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
-import { useParams } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-export const ExplorerPanel = () => {
-  const { id: suhufId } = useParams();
+export const ExplorerSidebarContent = () => {
+  const { openFile } = useSuhufWorkspaceContext();
 
-  const openFile = useOpenFile(suhufId);
   return (
     <Flex flexDir="column">
       <ReadingsTree
@@ -16,8 +13,11 @@ export const ExplorerPanel = () => {
           openFile(fileId);
         }}
       />
+
       <ResourcesTree
-        onSelect={(path) => console.log('path', path)}
+        onSelect={(path) => {
+          console.log('path', path);
+        }}
         windowMode
       />
     </Flex>
