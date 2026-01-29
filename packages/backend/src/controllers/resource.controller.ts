@@ -23,8 +23,8 @@ import {
   updateAccessedAt,
 } from '../services/resource/overview.service';
 import { isTrashEmpty } from '../services/resource/trash/isTrashEmpty-resource.service';
-import { dstPathSchema, resourceSchema } from './schemas/resource.schema';
-import { renameSchema } from './schemas/common.schema';
+import { dstPathSchema, resourceSchema } from '../schemas/resource.schema';
+import { renameSchema } from '../schemas/common.schema';
 import appAssert from '../utils/appAssert';
 
 export const getResourceHandler = catchErrors(async (req, res) => {

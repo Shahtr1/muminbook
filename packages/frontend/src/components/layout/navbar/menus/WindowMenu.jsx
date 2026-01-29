@@ -15,9 +15,10 @@ import { userData } from '@/data/userData.js';
 import { notificationsData } from '@/data/notificationsData.js';
 import { featureData } from '@/data/featureData.js';
 import { AUTH } from '@/hooks/useAuth.js';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { IoChevronForwardOutline, IoMenuOutline } from 'react-icons/io5';
 import { navItems } from '@/data/navbarData.js';
+import { logout } from '@/services/index.js';
 
 export const WindowMenu = () => {
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
@@ -31,13 +32,34 @@ export const WindowMenu = () => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
 
+  const { mutate: signOut } = useMutation({
+    mutationFn: logout,
+    onMutate: () => {
+      queryClient.clear();
+    },
+    onSettled: () => {
+      navigate('/login', { replace: true });
+    },
+  });
+
+  const separatorColor = useColorModeValue('gray.300', 'whiteAlpha.300');
+
   const handleActionClick = (item) => {
     if (item.action) item.action();
     else if (item.link) navigate(item.link);
   };
 
+  const userMenuWithLogout = [
+    ...userData,
+    {
+      id: 'logout',
+      label: 'Logout',
+      action: signOut,
+    },
+  ];
+
   const itemMap = {
-    user: userData,
+    user: userMenuWithLogout,
     notifications: notificationsData,
     features: featureData(),
   };
@@ -117,8 +139,17 @@ export const WindowMenu = () => {
                   _hover={{ bg: hoverGray }}
                   w="100%"
                   onClick={() => handleActionClick(it)}
+                  borderTop={it.id === 'logout' ? '1px solid' : undefined}
+                  borderBottom={it.id === 'logout' ? '1px solid' : undefined}
+                  borderColor={it.id === 'logout' ? separatorColor : undefined}
                 >
-                  <Text variant="wn" cursor="pointer" p="3px" fontSize="12px">
+                  <Text
+                    variant="wn"
+                    p="3px"
+                    fontSize="12px"
+                    color={it.id === 'logout' ? 'red.500' : undefined}
+                    fontWeight={it.id === 'logout' ? 'medium' : undefined}
+                  >
                     {it.label}
                   </Text>
                 </MenuItem>

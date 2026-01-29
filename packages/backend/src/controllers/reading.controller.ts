@@ -1,9 +1,9 @@
 import catchErrors from '../utils/catchErrors';
 import { NOT_FOUND, OK } from '../constants/http';
-import ReadingModel from '../models/reading.model';
+import ReadingModel from '../models/reading/reading.model';
 import { getReading } from '../services/reading/get-reading.service';
 import appAssert from '../utils/appAssert';
-import { readingSchema } from './schemas/reading.schema';
+import { readingSchema } from '../schemas/reading.schema';
 
 export const getAllReadingsHandler = catchErrors(async (req, res) => {
   const readings = await ReadingModel.find();

@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import Split from 'react-split';
 
 import { useHandleSplitPanelSizes } from '@/hooks/suhuf/useHandleSplitPanelSizes.js';
@@ -9,75 +9,103 @@ import { WelcomePanel } from '@/components/suhuf/panels/WelcomePanel.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { useSafeBreakpointValue } from '@/hooks/useSafeBreakpointValue.js';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { PanelHeader } from '@/components/suhuf/panels/PanelHeader.jsx';
 
 export const WorkspaceSplitView = () => {
-  const { suhuf, layout, panels, updatePanels, updateLayout } =
-    useSuhufWorkspaceContext();
+  const { suhuf, layout, panels, updatePanels } = useSuhufWorkspaceContext();
 
   const isSmallScreen =
     useSafeBreakpointValue({ base: true, sm: false }) || false;
 
   const isSecondPanelOpen = layout?.isSplit;
 
-  const [activePanelIndex, setActivePanelIndex] = useState(0);
-
-  /**
-   * Sync active index from server state
-   */
-  useEffect(() => {
-    const activeIndex = panels.findIndex((p) => p.active);
-    if (activeIndex >= 0) {
-      setActivePanelIndex(activeIndex);
-    }
-  }, [panels]);
-
   const { sizes, handleResize } = useHandleSplitPanelSizes({
     isSecondPanelOpen,
   });
 
   /**
-   * Activate panel
+   * Derive active index directly from panels
+   * (removes need for local state + sync effect)
+   */
+  const activePanelIndex = useMemo(() => {
+    return panels.findIndex((p) => p.active);
+  }, [panels]);
+
+  /**
+   * Stable click handler
    */
   const handlePanelClick = useCallback(
     (index) => {
       if (index === activePanelIndex) return;
 
-      setActivePanelIndex(index);
+      updatePanels(
+        panels.map((panel, i) => {
+          const shouldBeActive = i === index;
 
-      const updatedPanels = panels.map((panel, i) => ({
-        ...panel,
-        active: i === index,
-      }));
+          // Avoid recreating object if nothing changed
+          if (panel.active === shouldBeActive) {
+            return panel;
+          }
 
-      updatePanels(updatedPanels);
+          return { ...panel, active: shouldBeActive };
+        })
+      );
     },
     [activePanelIndex, panels, updatePanels]
   );
 
   /**
-   * Render content
+   * Panel renderer
    */
-  const renderPanelContent = (panel, index) => {
-    const direction = index === 0 ? 'left' : 'right';
+  const renderPanel = useCallback(
+    (panel, index) => {
+      const direction = index === 0 ? 'left' : 'right';
+      const isActive = index === activePanelIndex;
 
-    switch (panel?.fileType) {
-      case 'reading':
-        return (
-          <ReadingViewPanel
-            id={panel.fileId}
-            panel={panel}
-            direction={direction}
-            suhuf={suhuf}
-          />
-        );
+      const showHeader = panel?.fileType === 'reading' && panel?.fileId;
 
-      case 'user':
-        return <EditorViewPanel />;
+      let content;
 
-      default:
-        return <WelcomePanel suhuf={suhuf} />;
-    }
-  };
+      switch (panel?.fileType) {
+        case 'reading':
+          content = (
+            <ReadingViewPanel
+              id={panel.fileId}
+              panel={panel}
+              direction={direction}
+              suhuf={suhuf}
+            />
+          );
+          break;
+
+        case 'user':
+          content = <EditorViewPanel />;
+          break;
+
+        default:
+          content = <WelcomePanel suhuf={suhuf} />;
+      }
+
+      return (
+        <Box
+          key={`panel-${index}`}
+          h="100%"
+          w="100%"
+          onClick={() => handlePanelClick(index)}
+          borderTop="2px solid"
+          borderTopColor={isActive ? 'brand.500' : 'transparent'}
+          display="flex"
+          flexDirection="column"
+        >
+          {showHeader && (
+            <PanelHeader id={panel.fileId} direction={direction} />
+          )}
+          {content}
+        </Box>
+      );
+    },
+    [activePanelIndex, handlePanelClick, suhuf]
+  );
 
   /**
    * Memoized panel elements
@@ -85,49 +113,26 @@ export const WorkspaceSplitView = () => {
   const panelElements = useMemo(() => {
     if (!panels.length) return [];
 
-    const renderPanel = (index) => {
-      const panel = panels[index];
-      const isActive = index === activePanelIndex;
-
-      return (
-        <Box
-          key={`panel-${index}`}
-          h="100%"
-          w="100%"
-          borderTop={isActive ? '2px solid' : 'none'}
-          borderColor="brand.500"
-          onClick={() => handlePanelClick(index)}
-        >
-          {renderPanelContent(panel, index)}
-        </Box>
-      );
-    };
-
-    const elements = [renderPanel(0)];
+    const elements = [renderPanel(panels[0], 0)];
 
     if (isSecondPanelOpen && panels.length > 1) {
-      elements.push(renderPanel(1));
+      elements.push(renderPanel(panels[1], 1));
     }
 
     return elements;
-  }, [panels, activePanelIndex, isSecondPanelOpen, handlePanelClick, suhuf]);
+  }, [panels, isSecondPanelOpen, renderPanel]);
 
   /**
-   * Guard: wait until sizes are ready
+   * Guard split readiness
    */
   const isSplitReady =
     !isSecondPanelOpen ||
     (sizes.length === 2 && sizes.every((s) => typeof s === 'number'));
 
-  if (!isSplitReady) {
-    return <Loader />;
-  }
+  if (!isSplitReady) return <Loader />;
 
   return (
     <Split
-      key={`${isSmallScreen ? 'vertical' : 'horizontal'}-${
-        isSecondPanelOpen ? 'two' : 'one'
-      }`}
       direction={isSmallScreen ? 'vertical' : 'horizontal'}
       sizes={isSecondPanelOpen ? sizes : [100]}
       minSize={200}
