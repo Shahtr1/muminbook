@@ -1,7 +1,5 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getReading, getReadings } from '@/services/index.js';
-import { useMemo } from 'react';
-import QuranDivisionType from '@/constants/QuranDivisionType.js';
+import { useQuery } from '@tanstack/react-query';
+import { getReading } from '@/services/index.js';
 
 export const useReadingPage = ({
   uuid,
@@ -10,7 +8,7 @@ export const useReadingPage = ({
   page,
   limit = 30,
 }) => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ['reading', uuid, divisionType, position, page, limit],
     queryFn: () =>
       getReading(uuid, {
@@ -19,7 +17,16 @@ export const useReadingPage = ({
         page,
         limit,
       }),
-    keepPreviousData: true,
+    placeholderData: (prev) => prev,
     staleTime: Infinity,
   });
+
+  const hasNextPage = !!query.data?.hasNextPage;
+  const hasPreviousPage = !!query.data?.hasPreviousPage;
+
+  return {
+    ...query,
+    hasNextPage,
+    hasPreviousPage,
+  };
 };
