@@ -16,7 +16,6 @@ function makeFakeDb(collectionNames: string[] = []) {
 
 describe('getDbOrAssertCollection', () => {
   beforeEach(() => {
-    // reset the mongoose.connection.db before each test
     (mongoose.connection as any).db = undefined;
     vi.restoreAllMocks();
   });
@@ -25,35 +24,50 @@ describe('getDbOrAssertCollection', () => {
     (mongoose.connection as any).db = undefined;
 
     await expect(getDbOrAssertCollection()).rejects.toBeInstanceOf(AppError);
+
     await expect(getDbOrAssertCollection()).rejects.toMatchObject({
       statusCode: INTERNAL_SERVER_ERROR,
     });
   });
 
-  it('throws NOT_FOUND when collectionName is provided but does not exist', async () => {
+  it('throws NOT_FOUND when collectionName does not exist', async () => {
     (mongoose.connection as any).db = makeFakeDb(['users', 'books']);
 
     await expect(getDbOrAssertCollection('quran')).rejects.toBeInstanceOf(
       AppError
     );
+
     await expect(getDbOrAssertCollection('quran')).rejects.toMatchObject({
       statusCode: NOT_FOUND,
     });
   });
 
-  it('returns the db when no collectionName is provided and db exists', async () => {
+  it('returns the db when no collectionName is provided', async () => {
     const fakeDb = makeFakeDb(['users']);
     (mongoose.connection as any).db = fakeDb as any;
 
-    const db = await getDbOrAssertCollection();
-    expect(db).toBe(fakeDb);
+    const result = await getDbOrAssertCollection();
+
+    expect(result.db).toBe(fakeDb);
+    expect(result.collectionName).toBeUndefined();
   });
 
-  it('returns the db when collectionName exists (case-insensitive)', async () => {
+  it('returns db and normalized collectionName when collection exists (case-insensitive)', async () => {
     const fakeDb = makeFakeDb(['Quran', 'Users']);
     (mongoose.connection as any).db = fakeDb as any;
 
-    const db = await getDbOrAssertCollection('quran');
-    expect(db).toBe(fakeDb);
+    const result = await getDbOrAssertCollection('quran');
+
+    expect(result.db).toBe(fakeDb);
+    expect(result.collectionName).toBe('quran');
+  });
+
+  it('normalizes dashes to underscores', async () => {
+    const fakeDb = makeFakeDb(['my_collection']);
+    (mongoose.connection as any).db = fakeDb as any;
+
+    const result = await getDbOrAssertCollection('my-collection');
+
+    expect(result.collectionName).toBe('my_collection');
   });
 });
