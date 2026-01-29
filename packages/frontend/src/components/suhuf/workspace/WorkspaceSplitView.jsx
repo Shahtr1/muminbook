@@ -133,6 +133,7 @@ export const WorkspaceSplitView = () => {
 
   return (
     <Split
+      key={isSecondPanelOpen ? 'split-2' : 'split-1'}
       direction={isSmallScreen ? 'vertical' : 'horizontal'}
       sizes={isSecondPanelOpen ? sizes : [100]}
       minSize={200}
