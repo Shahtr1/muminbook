@@ -94,6 +94,8 @@ export const WorkspaceSplitView = () => {
           onClick={() => handlePanelClick(index)}
           borderTop="2px solid"
           borderTopColor={isActive ? 'brand.500' : 'transparent'}
+          display="flex"
+          flexDirection="column"
         >
           {showHeader && (
             <PanelHeader id={panel.fileId} direction={direction} />

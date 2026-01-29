@@ -79,17 +79,12 @@ export const ReadingSidebarPanel = ({ direction }) => {
   };
 
   return (
-    <Flex
-      h="calc(100% - 5px)"
-      m="3px"
-      marginLeft={0}
-      position="relative"
-      zIndex={3}
-    >
-      {/* Tab icons */}
-      <Flex h="100%" w="3px" bgColor={bgContentColor} zIndex={2}></Flex>
+    <Flex m="3px" marginLeft={0} position="relative" zIndex={3}>
+      {/* Sidebar hider - workaround */}
+      <Flex w="3px" bgColor={bgContentColor} zIndex={2}></Flex>
+
+      {/* Icon bar */}
       <Flex
-        h="100%"
         w="30px"
         bgColor={bgColor}
         align="center"
@@ -131,6 +126,7 @@ export const ReadingSidebarPanel = ({ direction }) => {
         ))}
       </Flex>
 
+      {/* Sidebar content */}
       <Flex
         position="absolute"
         top={0}
