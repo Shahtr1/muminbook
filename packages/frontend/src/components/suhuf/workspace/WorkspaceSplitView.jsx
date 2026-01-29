@@ -133,18 +133,28 @@ export const WorkspaceSplitView = () => {
 
   return (
     <Split
-      key={isSecondPanelOpen ? 'split-2' : 'split-1'}
+      key={`${isSmallScreen ? 'vertical' : 'horizontal'}-${
+        isSecondPanelOpen ? '2' : '1'
+      }`}
       direction={isSmallScreen ? 'vertical' : 'horizontal'}
-      sizes={isSecondPanelOpen ? sizes : [100]}
-      minSize={200}
-      gutterSize={3}
+      sizes={
+        isSmallScreen
+          ? isSecondPanelOpen
+            ? [50, 50] // vertical height split
+            : [100]
+          : isSecondPanelOpen
+            ? sizes
+            : [100]
+      }
+      minSize={isSmallScreen ? 0 : 200}
+      gutterSize={isSmallScreen ? 0 : 3}
       style={{
         display: 'flex',
         width: '100%',
         height: '100%',
         flexDirection: isSmallScreen ? 'column' : undefined,
       }}
-      onDragEnd={handleResize}
+      onDragEnd={isSmallScreen ? undefined : handleResize}
     >
       {panelElements}
     </Split>
