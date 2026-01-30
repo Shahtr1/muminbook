@@ -4,7 +4,7 @@ import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
 
 const SuhufWorkspaceContext = createContext(null);
 
-export const SuhufProvider = ({ suhuf, children }) => {
+export const SuhufProvider = ({ suhuf, children, surahs }) => {
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
   const openFile = useOpenFile(suhuf._id);
 
@@ -61,6 +61,7 @@ export const SuhufProvider = ({ suhuf, children }) => {
       suhuf,
       layout,
       panels,
+      surahs,
       updateLayout,
       updatePanels,
       toggleSplit,

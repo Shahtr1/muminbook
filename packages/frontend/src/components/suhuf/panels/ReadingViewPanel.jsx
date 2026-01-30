@@ -48,6 +48,7 @@ export const ReadingViewPanel = ({ id, direction }) => {
         flexDir="column"
         overflow="auto"
         scrollBehavior="smooth"
+        py={1}
       >
         {renderContent()}
       </Flex>
