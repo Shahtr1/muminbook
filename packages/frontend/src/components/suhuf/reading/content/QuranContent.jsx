@@ -21,8 +21,6 @@ export const QuranContent = ({ data }) => {
     'rgba(255,255,255,0.15)'
   );
 
-  console.log('surahs', surahs);
-
   return (
     <Box
       dir="rtl"
