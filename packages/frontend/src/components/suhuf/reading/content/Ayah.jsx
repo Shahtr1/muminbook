@@ -1,6 +1,6 @@
 import { Box, useColorModeValue } from '@chakra-ui/react';
-import { toArabicNumeral } from '@/utils/toArabicNumeral.js';
 import React from 'react';
+import { toArabicNumeral } from '@/utils/toArabicNumeral.js';
 
 export const Ayah = ({ item }) => {
   const svgImage = useColorModeValue(
@@ -19,36 +19,23 @@ export const Ayah = ({ item }) => {
         {item.ayah}&nbsp;
       </Box>
       <Box
-        as="span"
+        width={{ base: '28px', md: '36px' }}
+        height={{ base: '28px', md: '36px' }}
         display="inline-block"
-        width="36px"
-        height="36px"
-        mx={2}
+        backgroundImage={`url(${svgImage})`}
+        backgroundSize="contain"
+        backgroundRepeat="no-repeat"
+        backgroundPosition="center"
+        transform="translateY(8px)"
         position="relative"
-        verticalAlign="middle"
       >
-        {/* Background layer */}
         <Box
+          as="span"
           position="absolute"
-          inset="0"
-          backgroundImage={`url(${svgImage})`}
-          backgroundSize="contain"
-          backgroundRepeat="no-repeat"
-          backgroundPosition="center"
-          transform="translateY(-4px)"
-        />
-
-        {/* Number layer */}
-        <Box
-          position="relative"
-          zIndex={1}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          width="100%"
-          height="100%"
-          fontSize="20px"
-          transform="translateY(-6px)"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -58%)"
+          fontSize={{ base: '20px', md: '24px' }}
         >
           {toArabicNumeral(item.sno)}
         </Box>

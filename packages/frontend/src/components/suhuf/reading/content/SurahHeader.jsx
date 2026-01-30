@@ -16,7 +16,7 @@ export const SurahHeader = ({ name }) => {
         src={surahHeaderFrame}
         alt="Surah Header Frame"
         mx="auto"
-        maxW="230px"
+        maxW={{ base: '210px', md: '230px' }}
         maxH="60px"
       />
       {name && (
