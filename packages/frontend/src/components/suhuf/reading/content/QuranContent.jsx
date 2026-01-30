@@ -27,7 +27,7 @@ export const QuranContent = ({ data }) => {
       fontFamily="ArabicFont"
       textAlign="right"
       lineHeight={{ base: '56px', md: '60px' }}
-      fontSize={{ base: '30px', md: '35px' }}
+      fontSize={{ base: '32px', md: '35px' }}
       wordSpacing="3px"
       position="relative"
       backgroundImage={{
