@@ -8,13 +8,10 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { VscFilterFilled } from 'react-icons/vsc';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
 export const QuranDivisionListContent = () => {
-  const {
-    surahs,
-    isPending: isSurahsPending,
-    isError: isSurahsError,
-  } = useSurahs();
+  const { surahs } = useSuhufWorkspaceContext();
 
   const bgContentColor = useColorModeValue(
     'wn.bg_content.light',
@@ -87,9 +84,6 @@ export const QuranDivisionListContent = () => {
       </div>
     );
   };
-
-  if (isSurahsPending) return <Loader />;
-  if (isSurahsError) return <SomethingWentWrong transparent />;
 
   return (
     <Flex
