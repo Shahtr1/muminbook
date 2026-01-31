@@ -22,7 +22,7 @@ export const ReadingContentLoader = ({ fileId, divisionType, render }) => {
 
   // Reset when file changes
   useEffect(() => {
-    setAnchorUuid(95); // your default anchor
+    setAnchorUuid(1); // your default anchor
     setAfterUuid(undefined);
     setBeforeUuid(undefined);
   }, [fileId]);
