@@ -6,6 +6,8 @@ const common_spacings = {
   'reading-header-lg': '60px',
   'sidebar-width': '200px',
   'win-manager-height': '25px',
+  'ayat-base-height': '55px',
+  'ayat-md-height': '60px',
 };
 
 const spacings = {

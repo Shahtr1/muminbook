@@ -70,7 +70,7 @@ export const WorkspaceSplitView = () => {
         case 'reading':
           content = (
             <ReadingViewPanel
-              id={panel.fileId}
+              fileId={panel.fileId}
               panel={panel}
               direction={direction}
               suhuf={suhuf}
