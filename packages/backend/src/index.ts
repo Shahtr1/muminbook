@@ -8,9 +8,9 @@ import { log } from './utils/log';
 
 import initDefaultRBAC from './config/init/initDefaultRBAC';
 import initFamilyTree from './config/init/initFamilyTree';
-import initQuran from './config/init/readings/initQuran';
 import initReadings from './config/init/readings/initReadings';
-import initSahihI11l from './config/init/readings/initSahihI11l';
+import initContentLayer from './config/init/readings/initContentLayer';
+import initQuran from './config/init/readings/initQuran';
 
 const initServer = async () => {
   app.listen(Number(PORT), '0.0.0.0', async () => {
@@ -22,7 +22,20 @@ const initServer = async () => {
     await initFamilyTree();
     await initReadings();
     await initQuran();
-    await initSahihI11l();
+    await initContentLayer({
+      folder: '../data/quran',
+      category: 'quran',
+      source: 'uthmani',
+      locale: 'ar',
+    });
+
+    await initContentLayer({
+      folder: '../data/sahih-international',
+      category: 'translation',
+      source: 'sahih',
+      locale: 'en',
+      parseFootnotes: true,
+    });
   });
 };
 

@@ -1,71 +1,82 @@
-import { Types } from 'mongoose';
 import SurahModel from '../../../models/reading/surah.model';
 import JuzModel from '../../../models/reading/juz.model';
 import QuranModel from '../../../models/reading/quran.model';
-import { surahsApi } from '../../../data/surahsApi';
-import { loadQuran } from '../../../utils/readings/loadQuran';
-import { juzListApi } from '../../../data/juzListApi';
+import { loadJSONFiles } from '../../../utils/loadJSONFiles';
 import { log } from '../../../utils/log';
+import { UuidMap } from './initCollection';
 
-type UuidMap = Map<string, Types.ObjectId>;
-
-const initCollection = async (
-  Model: any,
-  data: any[],
-  label: string
-): Promise<UuidMap> => {
-  const existingDocs = await Model.find({}, { _id: 1, uuid: 1 }).lean();
-
-  if (existingDocs.length === 0) {
-    const inserted = await Model.insertMany(data);
-    log.success(`${label} initialized successfully.`);
-    return new Map(inserted.map((doc: any) => [doc.uuid, doc._id]));
-  }
-
-  log.info(
-    `${label} already initialized (${existingDocs.length} entries found).`
-  );
-  return new Map(existingDocs.map((doc: any) => [doc.uuid, doc._id]));
-};
-
-const initJuz = async (): Promise<UuidMap> => {
-  return initCollection(JuzModel, juzListApi, 'Juz');
-};
-
-const initSurahs = async (): Promise<UuidMap> => {
-  return initCollection(SurahModel, surahsApi, 'Surahs');
-};
-
-const initQuranVerses = async (
+const initQuranStructure = async (
   juzMap: UuidMap,
   surahMap: UuidMap
 ): Promise<void> => {
-  const exists = await QuranModel.exists({});
-  if (exists) {
-    const count = await QuranModel.countDocuments();
-    log.info(`Quran already initialized (${count} entries found).`);
+  const exists = await QuranModel.countDocuments();
+
+  if (exists > 0) {
+    log.info(`Quran structure already initialized (${exists} entries found).`);
     return;
   }
 
-  const rawQuran = loadQuran();
+  const rawQuran = loadJSONFiles('../data/quran');
 
-  const mappedQuran = rawQuran.map((ayah) => ({
-    ...ayah,
-    surahId: surahMap.get(ayah.surahId),
-    juzId: juzMap.get(ayah.juzId),
-  }));
+  const structuralDocs = rawQuran.map((ayah: any) => {
+    const surahId = surahMap.get(ayah.surahId);
+    const juzId = juzMap.get(ayah.juzId);
 
-  await QuranModel.insertMany(mappedQuran);
-  log.success('Quran initialized successfully.');
+    if (!surahId) {
+      throw new Error(`Missing surahId mapping for uuid ${ayah.uuid}`);
+    }
+
+    if (!juzId) {
+      throw new Error(`Missing juzId mapping for uuid ${ayah.uuid}`);
+    }
+
+    return {
+      uuid: ayah.uuid,
+      surahId,
+      ayahNumber: ayah.sno,
+      juzId,
+      manzil: ayah.manzil,
+      ruku: ayah.ruku,
+      hizbQuarter: ayah.hizbQuarter,
+      surahStart: ayah.surahStart,
+      sajda: ayah.sajda,
+    };
+  });
+
+  await QuranModel.insertMany(structuralDocs);
+
+  const count = await QuranModel.countDocuments();
+
+  if (count !== rawQuran.length) {
+    throw new Error(
+      `Quran structure mismatch after insert. Expected ${rawQuran.length}, got ${count}`
+    );
+  }
+
+  log.success(`Quran structure initialized successfully (${count} ayahs).`);
 };
 
 const initQuran = async (): Promise<void> => {
   try {
-    const [juzMap, surahMap] = await Promise.all([initJuz(), initSurahs()]);
+    // Load surah & juz base tables
+    const surahs = await SurahModel.find({}, { _id: 1, uuid: 1 }).lean();
+    const juzList = await JuzModel.find({}, { _id: 1, uuid: 1 }).lean();
 
-    await initQuranVerses(juzMap, surahMap);
+    if (surahs.length === 0) {
+      throw new Error('Surah collection must be initialized first.');
+    }
+
+    if (juzList.length === 0) {
+      throw new Error('Juz collection must be initialized first.');
+    }
+
+    const surahMap: UuidMap = new Map(surahs.map((s: any) => [s.uuid, s._id]));
+
+    const juzMap: UuidMap = new Map(juzList.map((j: any) => [j.uuid, j._id]));
+
+    await initQuranStructure(juzMap, surahMap);
   } catch (error) {
-    log.error('Error initializing Quran:', error);
+    log.error('Error initializing Quran structure:', error);
     process.exit(1);
   }
 };
