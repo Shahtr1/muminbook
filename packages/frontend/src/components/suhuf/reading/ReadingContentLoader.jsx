@@ -2,37 +2,50 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Box, useColorModeValue } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
-import { useReadingPage } from '@/hooks/reading/useReadingPage.js';
+import { useReadingCursor } from '@/hooks/reading/useReadingCursor.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 
-export const ReadingContentLoader = ({ uuid, divisionType, render }) => {
-  const [page, setPage] = useState(1);
+export const ReadingContentLoader = ({ fileId, divisionType, render }) => {
+  const [anchorUuid, setAnchorUuid] = useState(1);
+  const [afterUuid, setAfterUuid] = useState(undefined);
+  const [beforeUuid, setBeforeUuid] = useState(undefined);
+
   const contentRef = useRef(null);
 
   const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-
   const iconHoverGray = useColorModeValue(
     'wn.icon.hover.light',
     'wn.icon.hover.dark'
   );
-
   const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
 
-  // Reset page when reading changes
+  // Reset when file changes
   useEffect(() => {
-    setPage(1);
-  }, [uuid, divisionType]);
+    setAnchorUuid(95); // your default anchor
+    setAfterUuid(undefined);
+    setBeforeUuid(undefined);
+  }, [fileId]);
 
-  const { data, isPending, isFetching, isError, hasPreviousPage, hasNextPage } =
-    useReadingPage({
-      uuid,
-      divisionType,
-      page,
-      position: 1,
-      limit: 30,
-    });
+  const {
+    data,
+    isPending,
+    isFetching,
+    isError,
+    hasNext,
+    hasPrevious,
+    nextCursor,
+    prevCursor,
+  } = useReadingCursor({
+    fileId,
+    divisionType,
+    uuid: afterUuid || beforeUuid ? undefined : anchorUuid,
+    afterUuid,
+    beforeUuid,
+    limit: 40,
+  });
 
+  // Scroll to top when data changes
   useEffect(() => {
     if (!isFetching && contentRef.current?.parentElement) {
       contentRef.current.parentElement.scrollTop = 0;
@@ -44,9 +57,21 @@ export const ReadingContentLoader = ({ uuid, divisionType, render }) => {
 
   const items = data?.data || [];
 
+  const handleNext = () => {
+    if (!nextCursor) return;
+    setAfterUuid(nextCursor);
+    setBeforeUuid(undefined);
+  };
+
+  const handlePrevious = () => {
+    if (!prevCursor) return;
+    setBeforeUuid(prevCursor);
+    setAfterUuid(undefined);
+  };
+
   return (
     <>
-      {hasPreviousPage && (
+      {hasPrevious && (
         <Box
           h="25px"
           display="flex"
@@ -55,7 +80,7 @@ export const ReadingContentLoader = ({ uuid, divisionType, render }) => {
           cursor="pointer"
           opacity={isFetching ? 0.6 : 1}
           pointerEvents={isFetching ? 'none' : 'auto'}
-          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          onClick={handlePrevious}
           bgColor={bgColor}
           _hover={{ bg: iconHoverGray }}
           border="1px solid"
@@ -69,7 +94,7 @@ export const ReadingContentLoader = ({ uuid, divisionType, render }) => {
         {render(items)}
       </Box>
 
-      {hasNextPage && (
+      {hasNext && (
         <Box
           h="25px"
           display="flex"
@@ -78,7 +103,7 @@ export const ReadingContentLoader = ({ uuid, divisionType, render }) => {
           cursor="pointer"
           opacity={isFetching ? 0.6 : 1}
           pointerEvents={isFetching ? 'none' : 'auto'}
-          onClick={() => setPage((p) => p + 1)}
+          onClick={handleNext}
           bgColor={bgColor}
           _hover={{ bg: iconHoverGray }}
           border="1px solid"

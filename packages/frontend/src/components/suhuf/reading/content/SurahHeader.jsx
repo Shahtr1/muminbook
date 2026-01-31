@@ -1,7 +1,11 @@
-import { Box, Image, useColorModeValue } from '@chakra-ui/react';
+import { Box, Image, useColorModeValue, useTheme } from '@chakra-ui/react';
 import React from 'react';
 
 export const SurahHeader = ({ name }) => {
+  const theme = useTheme();
+
+  const minHeightBase = theme.space['ayat-base-height'];
+  const minHeightMd = theme.space['ayat-md-height'];
   const surahHeaderFrame = useColorModeValue(
     '/images/frames/surah-dark.png',
     '/images/frames/surah-light.png'
@@ -17,7 +21,7 @@ export const SurahHeader = ({ name }) => {
         alt="Surah Header Frame"
         mx="auto"
         maxW={{ base: '210px', md: '230px' }}
-        maxH="60px"
+        minH={{ base: minHeightBase, md: minHeightMd }}
       />
       {name && (
         <Box

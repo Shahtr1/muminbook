@@ -7,7 +7,7 @@ import { ReadingSidebarPanel } from '@/components/suhuf/reading/ReadingSidebarPa
 import { ReadingToolSidebar } from '@/components/suhuf/reading/ReadingToolSidebar.jsx';
 import { EnglishContent } from '@/components/suhuf/reading/content/EnglishContent.jsx';
 
-export const ReadingViewPanel = ({ id, direction }) => {
+export const ReadingViewPanel = ({ fileId, direction }) => {
   const readingRegistry = {
     quran: {
       divisionType: QuranDivisionType.Surah,
@@ -25,14 +25,14 @@ export const ReadingViewPanel = ({ id, direction }) => {
   );
 
   const renderContent = () => {
-    const config = readingRegistry[id?.toLowerCase()];
+    const config = readingRegistry[fileId?.toLowerCase()];
     if (!config) return <SomethingWentWrong />;
 
     const { divisionType, component: Component } = config;
 
     return (
       <ReadingContentLoader
-        uuid={id}
+        fileId={fileId}
         divisionType={divisionType}
         render={(data) => <Component data={data} />}
       />
