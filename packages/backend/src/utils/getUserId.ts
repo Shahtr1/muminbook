@@ -1,4 +1,4 @@
-import { PrimaryId } from '../constants/primaryId';
+import { PrimaryId } from '../constants/ids';
 import UserModel from '../models/user.model';
 import appAssert from './appAssert';
 import { NOT_FOUND } from '../constants/http';

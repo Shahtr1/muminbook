@@ -11,7 +11,7 @@
 
 import ResourceModel from '../../../models/resource.model';
 import ResourceType from '../../../constants/types/resourceType';
-import { PrimaryId } from '../../../constants/primaryId';
+import { PrimaryId } from '../../../constants/ids';
 import appAssert from '../../../utils/appAssert';
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../../constants/http';
 import { findOrCreateLostAndFound } from '../utils/findOrCreateLostAndFound';

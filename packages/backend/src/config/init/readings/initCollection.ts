@@ -1,7 +1,5 @@
 import { log } from '../../../utils/log';
-import { Types } from 'mongoose';
-
-export type UuidMap = Map<number, Types.ObjectId>;
+import { UuidMap } from '../../../constants/ids';
 
 export const initCollection = async (
   Model: any,

@@ -1,4 +1,4 @@
-import { PrimaryId } from '../../constants/primaryId';
+import { PrimaryId } from '../../constants/ids';
 import ResourceModel from '../../models/resource.model';
 import appAssert from '../../utils/appAssert';
 import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../constants/http';

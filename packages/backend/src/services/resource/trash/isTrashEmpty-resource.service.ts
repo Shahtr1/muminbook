@@ -1,4 +1,4 @@
-import { PrimaryId } from '../../../constants/primaryId';
+import { PrimaryId } from '../../../constants/ids';
 import ResourceModel from '../../../models/resource.model';
 
 export const isTrashEmpty = async (userId: PrimaryId) => {

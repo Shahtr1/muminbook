@@ -1,7 +1,7 @@
 import { BAD_REQUEST } from '../../constants/http';
 import appAssert from '../../utils/appAssert';
 import ResourceModel, { ResourceDocument } from '../../models/resource.model';
-import { PrimaryId } from '../../constants/primaryId';
+import { PrimaryId } from '../../constants/ids';
 
 export const assertNotRootFolder = (
   resource: ResourceDocument,

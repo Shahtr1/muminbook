@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import ResourceType from '../constants/types/resourceType';
-import { PrimaryId } from '../constants/primaryId';
+import { PrimaryId } from '../constants/ids';
 
 export interface ResourceDocument extends mongoose.Document {
   userId: PrimaryId;

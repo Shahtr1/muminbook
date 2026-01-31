@@ -1,4 +1,4 @@
-import { PrimaryId } from '../../constants/primaryId';
+import { PrimaryId } from '../../constants/ids';
 import SuhufModel from '../../models/suhuf.model';
 import WindowModel from '../../models/window.model';
 import WindowType from '../../constants/types/windowType';

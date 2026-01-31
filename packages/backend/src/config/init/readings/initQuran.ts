@@ -3,7 +3,7 @@ import JuzModel from '../../../models/reading/juz.model';
 import QuranModel from '../../../models/reading/quran.model';
 import { loadJSONFiles } from '../../../utils/loadJSONFiles';
 import { log } from '../../../utils/log';
-import { UuidMap } from './initCollection';
+import { UuidMap } from '../../../constants/ids';
 
 const initQuranStructure = async (
   juzMap: UuidMap,

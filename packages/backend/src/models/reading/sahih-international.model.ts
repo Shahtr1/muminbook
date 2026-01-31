@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { PrimaryId } from '../../constants/primaryId';
+import { PrimaryId } from '../../constants/ids';
 
 export interface SahihI11lDocument extends Document {
   uuid: number;

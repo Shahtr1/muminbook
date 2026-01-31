@@ -17,7 +17,7 @@ import {
 } from '../restore-resource.service';
 import ResourceModel from '../../../../models/resource.model';
 import ResourceType from '../../../../constants/types/resourceType';
-import { PrimaryId } from '../../../../constants/primaryId';
+import { PrimaryId } from '../../../../constants/ids';
 import AppError from '../../../../utils/AppError';
 import { NOT_FOUND, BAD_REQUEST, CONFLICT } from '../../../../constants/http';
 
