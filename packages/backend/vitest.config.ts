@@ -22,6 +22,7 @@ export default defineConfig({
         'src/routes/**',
         'src/config/**',
         'dist/**',
+        'scripts/**',
       ],
       thresholds: {
         lines: 50,
