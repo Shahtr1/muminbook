@@ -15,10 +15,12 @@ const sidebarTabs = [
 ];
 
 export const ReadingSidebarPanel = ({ direction }) => {
-  const { layout, updateLayout } = useSuhufWorkspaceContext();
+  const { layout, panels, updateLayout } = useSuhufWorkspaceContext();
 
   const readingLayouts = layout?.reading || [];
   const readingState = readingLayouts.find((r) => r.direction === direction);
+
+  const panel = panels.find((r) => r.direction === direction);
 
   const activeTab = readingState?.sidebar;
   const isOpen = readingState?.sidebarOpen ?? false;
@@ -63,12 +65,12 @@ export const ReadingSidebarPanel = ({ direction }) => {
     [readingLayouts, direction, updateLayout]
   );
 
-  const renderContent = () => {
+  const renderListContent = () => {
     if (!isOpen) return null;
 
     switch (activeTab) {
       case 'list':
-        return <QuranDivisionListContent />;
+        return <QuranDivisionListContent panel={panel} />;
       case 'comments':
         return <CommentsListContent />;
       case 'highlights':
@@ -146,7 +148,7 @@ export const ReadingSidebarPanel = ({ direction }) => {
         transform={isOpen ? 'translateX(0)' : 'translateX(-160px)'}
         zIndex={1}
       >
-        {renderContent()}
+        {renderListContent()}
       </Flex>
     </Flex>
   );

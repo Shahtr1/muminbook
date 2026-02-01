@@ -36,13 +36,10 @@ export const WorkspaceSplitView = () => {
    */
   const handlePanelClick = useCallback(
     (index) => {
-      if (index === activePanelIndex) return;
-
-      updatePanels(
-        panels.map((panel, i) => {
+      updatePanels((prevPanels) =>
+        prevPanels.map((panel, i) => {
           const shouldBeActive = i === index;
 
-          // Avoid recreating object if nothing changed
           if (panel.active === shouldBeActive) {
             return panel;
           }
@@ -51,7 +48,7 @@ export const WorkspaceSplitView = () => {
         })
       );
     },
-    [activePanelIndex, panels, updatePanels]
+    [updatePanels]
   );
 
   /**
