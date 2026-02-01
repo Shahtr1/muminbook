@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import { Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
 import { MdNumbers } from 'react-icons/md';
 import { XSearch } from '@/components/layout/x/XSearch.jsx';
 import { FixedSizeList as List } from 'react-window';
@@ -136,11 +136,21 @@ export const QuranDivisionListContent = ({ panel }) => {
                   <Flex
                     align="center"
                     color={iconColor}
-                    fontSize="9px"
-                    gap="1px"
+                    fontSize="10px"
+                    gap="2px"
                   >
-                    <MdNumbers size={10} />
-                    <Text color={iconColor}>{surah.totalAyat}</Text>
+                    <Box display="flex" alignItems="center">
+                      <MdNumbers size={10} />
+                    </Box>
+
+                    <Text
+                      lineHeight="1"
+                      display="flex"
+                      alignItems="center"
+                      color={iconColor}
+                    >
+                      {surah.totalAyat}
+                    </Text>
                   </Flex>
                 </Tooltip>
               </Flex>
