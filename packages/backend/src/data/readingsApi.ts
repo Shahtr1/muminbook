@@ -2,7 +2,7 @@ import { ReadingDocument } from '../models/reading/reading.model';
 
 export const readingsApi: Partial<ReadingDocument>[] = [
   {
-    uuid: 'quran',
+    uuid: 'uthmani',
     label: "The Holy Qur'an",
     color: '#0EB25D',
     description:
@@ -12,7 +12,7 @@ export const readingsApi: Partial<ReadingDocument>[] = [
       'Recited, memorized, and revered by millions across generations.',
   },
   {
-    uuid: 'sahih-international',
+    uuid: 'sahih',
     label: 'Sahih International',
     color: '#0E5DB2',
     description:
