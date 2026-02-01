@@ -60,13 +60,16 @@ export const QuranContent = ({ data }) => {
           {ayah.surahStart && surahMap[ayah.surahId] && (
             <>
               <SurahHeader name={surahMap[ayah.surahId].name} />
-              {ayah.uuid !== 1 && <Ayah text={bismalah} block={true} />}
+              {ayah.uuid !== 1 &&
+                ayah.uuid !== 9 && ( // skip bismalah for Al-Fatiha and At-Tawbah
+                  <Ayah text={bismalah} block={true} />
+                )}
             </>
           )}
           <Ayah
             text={ayah.content.text}
             ayahNumber={ayah.ayahNumber}
-            block={ayah.surahStart && ayah.uuid === 1}
+            block={ayah.surahStart && ayah.uuid === 1} // block if it's the first ayah of a surah
           />
         </Fragment>
       ))}
