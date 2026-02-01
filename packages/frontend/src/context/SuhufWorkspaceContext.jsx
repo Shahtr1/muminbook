@@ -22,15 +22,10 @@ export const SuhufProvider = ({ suhuf, children, surahs }) => {
   );
 
   const updatePanels = useCallback(
-    (updater) => {
-      const currentPanels = suhuf?.config?.panels || [];
-
-      const nextPanels =
-        typeof updater === 'function' ? updater(currentPanels) : updater;
-
-      updateConfig({ panels: nextPanels });
+    (newPanels) => {
+      updateConfig({ panels: newPanels });
     },
-    [suhuf?.config?.panels, updateConfig]
+    [updateConfig]
   );
 
   const toggleSplit = useCallback(() => {
