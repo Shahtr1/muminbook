@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
 import { MdNumbers } from 'react-icons/md';
 import { XSearch } from '@/components/layout/x/XSearch.jsx';
@@ -9,7 +9,12 @@ import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 import QuranDivisionType from '@/constants/QuranDivisionType.js';
 
 export const QuranDivisionListContent = ({ panel }) => {
-  const { surahs = [], panels = [], updatePanels } = useSuhufWorkspaceContext();
+  const {
+    surahs = [],
+    panels = [],
+    layout,
+    updatePanels,
+  } = useSuhufWorkspaceContext();
 
   const bgContentColor = useColorModeValue(
     'wn.bg_content.light',
@@ -22,13 +27,34 @@ export const QuranDivisionListContent = ({ panel }) => {
     'wn.icon.hover.dark'
   );
 
-  if (!panel?.division) {
-    console.info('QuranDivisionListContent: panel division is undefined');
-  }
+  /**
+   * Derive current panel from context.
+   * Ensures reactivity when layout or panels change.
+   */
+  const currentPanel = useMemo(() => {
+    if (!layout?.isSplit) {
+      return panels.find((p) => p.active);
+    }
+    return panels.find((p) => p.direction === panel.direction);
+  }, [panels, layout?.isSplit, panel.direction]);
 
-  const divisionNumber = panel?.division?.divisionNumber || 1;
-  const divisionType = panel?.division?.divisionType || QuranDivisionType.Surah;
+  const divisionNumber = currentPanel?.division?.divisionNumber || 1;
 
+  const divisionType =
+    currentPanel?.division?.divisionType || QuranDivisionType.Surah;
+
+  const listRef = useRef(null);
+
+  /**
+   * Prevent repeated initial scrolling
+   */
+  const hasInitialScrolled = useRef(false);
+
+  const ITEM_SIZE = 50;
+
+  /**
+   * Row renderer
+   */
   const Row = useCallback(
     ({ index, style }) => {
       const surah = surahs[index];
@@ -36,7 +62,7 @@ export const QuranDivisionListContent = ({ panel }) => {
 
       const isSelected =
         divisionType === QuranDivisionType.Surah &&
-        surah.uuid === divisionNumber;
+        String(surah.uuid) === String(divisionNumber);
 
       return (
         <div style={style}>
@@ -51,10 +77,14 @@ export const QuranDivisionListContent = ({ panel }) => {
               w="100%"
               _hover={{ bgColor: iconHoverGray }}
               bgColor={isSelected ? iconHoverGray : 'transparent'}
+              borderRadius="sm"
+              direction="column"
+              p={1}
               onClick={(e) => {
                 e.stopPropagation();
+
                 const newPanels = panels.map((p) =>
-                  p.direction === panel.direction
+                  p.direction === currentPanel?.direction
                     ? {
                         ...p,
                         active: true,
@@ -68,11 +98,9 @@ export const QuranDivisionListContent = ({ panel }) => {
                         active: false,
                       }
                 );
+
                 updatePanels(newPanels);
               }}
-              borderRadius="sm"
-              direction="column"
-              p={1}
             >
               <Flex justify="space-between" align="center">
                 <Text whiteSpace="nowrap" fontSize="10px">
@@ -124,11 +152,12 @@ export const QuranDivisionListContent = ({ panel }) => {
     [
       surahs,
       divisionNumber,
+      divisionType,
       borderColor,
       iconColor,
       iconHoverGray,
       panels,
-      divisionType,
+      currentPanel,
       updatePanels,
     ]
   );
@@ -154,16 +183,42 @@ export const QuranDivisionListContent = ({ panel }) => {
 
       <Flex flex={1}>
         <AutoSizer>
-          {({ height, width }) => (
-            <List
-              height={height}
-              width={width}
-              itemCount={surahs.length}
-              itemSize={50}
-            >
-              {Row}
-            </List>
-          )}
+          {({ height, width }) => {
+            /**
+             * Perform initial scroll once height is known.
+             * react-window ignores scroll commands if height is 0.
+             */
+            if (
+              height > 0 &&
+              listRef.current &&
+              divisionType === QuranDivisionType.Surah &&
+              !hasInitialScrolled.current
+            ) {
+              const index = surahs.findIndex(
+                (s) => String(s.uuid) === String(divisionNumber)
+              );
+
+              if (index >= 0) {
+                hasInitialScrolled.current = true;
+
+                requestAnimationFrame(() => {
+                  listRef.current?.scrollToItem(index, 'smart');
+                });
+              }
+            }
+
+            return (
+              <List
+                ref={listRef}
+                height={height}
+                width={width}
+                itemCount={surahs.length}
+                itemSize={ITEM_SIZE}
+              >
+                {Row}
+              </List>
+            );
+          }}
         </AutoSizer>
       </Flex>
     </Flex>
