@@ -6,8 +6,13 @@ import { useReadingCursor } from '@/hooks/reading/useReadingCursor.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 
-export const ReadingContentLoader = ({ fileId, divisionType, render }) => {
-  const [anchorUuid, setAnchorUuid] = useState(1);
+export const ReadingContentLoader = ({
+  source,
+  divisionType,
+  category,
+  render,
+}) => {
+  const [divisionNumber, setDivisionNumber] = useState(1);
   const [afterUuid, setAfterUuid] = useState(undefined);
   const [beforeUuid, setBeforeUuid] = useState(undefined);
 
@@ -22,10 +27,10 @@ export const ReadingContentLoader = ({ fileId, divisionType, render }) => {
 
   // Reset when file changes
   useEffect(() => {
-    setAnchorUuid(1); // your default anchor
+    setDivisionNumber(1); // your default anchor
     setAfterUuid(undefined);
     setBeforeUuid(undefined);
-  }, [fileId]);
+  }, [source]);
 
   const {
     data,
@@ -37,9 +42,10 @@ export const ReadingContentLoader = ({ fileId, divisionType, render }) => {
     nextCursor,
     prevCursor,
   } = useReadingCursor({
-    fileId,
+    source,
     divisionType,
-    uuid: afterUuid || beforeUuid ? undefined : anchorUuid,
+    divisionNumber: afterUuid || beforeUuid ? undefined : divisionNumber,
+    category,
     afterUuid,
     beforeUuid,
     limit: 40,

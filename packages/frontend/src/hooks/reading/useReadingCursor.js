@@ -2,27 +2,30 @@ import { useQuery } from '@tanstack/react-query';
 import { getReading } from '@/services/index.js';
 
 export const useReadingCursor = ({
-  fileId,
+  source,
   divisionType,
-  uuid, // anchor mode
+  divisionNumber, // Anchor for Surah/Juz/etc
+  category,
   afterUuid, // forward cursor
   beforeUuid, // backward cursor
-  limit = 30,
+  limit = 40,
 }) => {
   const query = useQuery({
     queryKey: [
       'reading',
-      fileId,
+      source,
       divisionType,
-      uuid,
+      divisionNumber,
+      category,
       afterUuid,
       beforeUuid,
       limit,
     ],
     queryFn: () =>
-      getReading(fileId, {
+      getReading(source, {
         divisionType,
-        uuid,
+        divisionNumber,
+        category,
         afterUuid,
         beforeUuid,
         limit,

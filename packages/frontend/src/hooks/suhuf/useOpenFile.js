@@ -9,14 +9,14 @@ export const useOpenFile = (suhufId) => {
   const queryClient = useQueryClient();
 
   return useCallback(
-    (fileId) => {
+    (source) => {
       if (!suhufId) {
         toast.error({ message: 'No suhuf selected' });
         return;
       }
 
-      if (!fileId) {
-        toast.error({ message: 'No file ID present' });
+      if (!source) {
+        toast.error({ message: 'No source present' });
         return;
       }
 
@@ -45,7 +45,7 @@ export const useOpenFile = (suhufId) => {
         panel.active
           ? {
               ...panel,
-              fileId,
+              source,
               fileType: 'reading',
             }
           : panel

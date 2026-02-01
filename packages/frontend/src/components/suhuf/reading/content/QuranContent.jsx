@@ -58,7 +58,7 @@ export const QuranContent = ({ data }) => {
           {ayah.surahStart && surahMap[ayah.surahId] && (
             <SurahHeader name={surahMap[ayah.surahId].name} />
           )}
-          <Ayah item={ayah} />
+          <Ayah ayah={ayah.content.text} ayahNumber={ayah.ayahNumber} />
         </Fragment>
       ))}
     </Box>

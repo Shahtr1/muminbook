@@ -12,7 +12,7 @@ import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 import { PanelHeader } from '@/components/suhuf/panels/PanelHeader.jsx';
 
 export const WorkspaceSplitView = () => {
-  const { suhuf, layout, panels, updatePanels } = useSuhufWorkspaceContext();
+  const { layout, panels, updatePanels } = useSuhufWorkspaceContext();
 
   const isSmallScreen =
     useSafeBreakpointValue({ base: true, sm: false }) || false;
@@ -62,19 +62,14 @@ export const WorkspaceSplitView = () => {
       const direction = index === 0 ? 'left' : 'right';
       const isActive = index === activePanelIndex;
 
-      const showHeader = panel?.fileType === 'reading' && panel?.fileId;
+      const showHeader = panel?.fileType === 'reading' && panel?.source;
 
       let content;
 
       switch (panel?.fileType) {
         case 'reading':
           content = (
-            <ReadingViewPanel
-              fileId={panel.fileId}
-              panel={panel}
-              direction={direction}
-              suhuf={suhuf}
-            />
+            <ReadingViewPanel source={panel.source} direction={direction} />
           );
           break;
 
@@ -83,7 +78,7 @@ export const WorkspaceSplitView = () => {
           break;
 
         default:
-          content = <WelcomePanel suhuf={suhuf} />;
+          content = <WelcomePanel />;
       }
 
       return (
@@ -98,13 +93,13 @@ export const WorkspaceSplitView = () => {
           flexDirection="column"
         >
           {showHeader && (
-            <PanelHeader id={panel.fileId} direction={direction} />
+            <PanelHeader id={panel.source} direction={direction} />
           )}
           {content}
         </Box>
       );
     },
-    [activePanelIndex, handlePanelClick, suhuf]
+    [activePanelIndex, handlePanelClick]
   );
 
   /**

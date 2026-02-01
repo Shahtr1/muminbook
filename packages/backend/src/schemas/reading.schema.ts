@@ -1,14 +1,17 @@
 import z from 'zod';
 import QuranDivisionType from '../constants/types/quran/quranDivisionType';
+import QuranCategoryType from '../constants/types/quran/quranCategoryType';
 
 export const readingSchema = z
   .object({
     limit: z.coerce.number().int().min(1).max(100).default(40),
 
+    category: z.nativeEnum(QuranCategoryType).optional(),
+
     divisionType: z.nativeEnum(QuranDivisionType).optional(),
 
-    // Anchor for starting a division (e.g. Surah 2)
-    uuid: z.coerce.number().int().optional(),
+    // Anchor for Surah/Juz/etc
+    divisionNumber: z.coerce.number().int().optional(),
 
     // Forward cursor
     afterUuid: z.coerce.number().int().optional(),
@@ -17,16 +20,14 @@ export const readingSchema = z
     beforeUuid: z.coerce.number().int().optional(),
   })
   .superRefine((data, ctx) => {
-    // uuid requires divisionType
-    if (data.uuid !== undefined && !data.divisionType) {
+    if (data.divisionNumber !== undefined && !data.divisionType) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'divisionType is required when uuid is provided',
+        message: 'divisionType is required when divisionNumber is provided',
         path: ['divisionType'],
       });
     }
 
-    // Cannot use both cursors at the same time
     if (data.afterUuid !== undefined && data.beforeUuid !== undefined) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -35,15 +36,14 @@ export const readingSchema = z
       });
     }
 
-    // Anchor and cursor cannot be used together
     if (
-      data.uuid !== undefined &&
+      data.divisionNumber !== undefined &&
       (data.afterUuid !== undefined || data.beforeUuid !== undefined)
     ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'Cannot use uuid with afterUuid/beforeUuid',
-        path: ['uuid'],
+        message: 'Cannot use divisionNumber together with afterUuid/beforeUuid',
+        path: ['divisionNumber'],
       });
     }
   });

@@ -22,7 +22,7 @@ export const layoutSchema = z.object({
 });
 
 const panelSchema = z.object({
-  fileId: z.string().min(1).optional(),
+  source: z.string().min(1).optional(),
   fileType: z.nativeEnum(FileType),
   scrollPosition: z.number().min(0).optional(),
   active: z.boolean(),

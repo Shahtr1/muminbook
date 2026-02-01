@@ -60,9 +60,9 @@ export const ReadingsTree = ({ onSelect }) => {
       <Collapse in={isExpanded}>
         {!isPending &&
           readings?.map((res) => {
-            const fileId = res.uuid;
+            const source = res.uuid;
             return (
-              <Box key={fileId} pl={2}>
+              <Box key={source} pl={2}>
                 <Flex
                   align="center"
                   p={1}
@@ -70,7 +70,7 @@ export const ReadingsTree = ({ onSelect }) => {
                   gap="5px"
                   onClick={
                     typeof onSelect === 'function'
-                      ? () => onSelect(fileId)
+                      ? () => onSelect(source)
                       : undefined
                   }
                   borderRadius="sm"

@@ -9,8 +9,8 @@ export const ExplorerSidebarContent = () => {
   return (
     <Flex flexDir="column">
       <ReadingsTree
-        onSelect={(fileId) => {
-          openFile(fileId);
+        onSelect={(source) => {
+          openFile(source);
         }}
       />
 

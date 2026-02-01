@@ -2,7 +2,7 @@ import { Box, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import { toArabicNumeral } from '@/utils/toArabicNumeral.js';
 
-export const Ayah = ({ item }) => {
+export const Ayah = ({ ayah, ayahNumber }) => {
   const svgImage = useColorModeValue(
     '/images/frames/ayat-dark.svg',
     '/images/frames/ayat-light.svg'
@@ -16,7 +16,7 @@ export const Ayah = ({ item }) => {
   return (
     <Box as="span">
       <Box as="span" px={1} _hover={{ bg: hoverGray }} cursor="pointer">
-        {item.ayah}&nbsp;
+        {ayah}&nbsp;
       </Box>
       <Box
         width={{ base: '28px', md: '36px' }}
@@ -37,7 +37,7 @@ export const Ayah = ({ item }) => {
           transform="translate(-50%, -58%)"
           fontSize={{ base: '20px', md: '24px' }}
         >
-          {toArabicNumeral(item.sno)}
+          {toArabicNumeral(ayahNumber)}
         </Box>
       </Box>
     </Box>
