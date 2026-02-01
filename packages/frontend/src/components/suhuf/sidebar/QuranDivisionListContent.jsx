@@ -140,7 +140,7 @@ export const QuranDivisionListContent = ({ panel }) => {
                     gap="1px"
                   >
                     <MdNumbers size={10} />
-                    <Text>{surah.totalAyat}</Text>
+                    <Text color={iconColor}>{surah.totalAyat}</Text>
                   </Flex>
                 </Tooltip>
               </Flex>
