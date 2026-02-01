@@ -4,6 +4,17 @@ import QuranModel from '../../../models/reading/quran.model';
 import { loadJSONFiles } from '../../../utils/loadJSONFiles';
 import { log } from '../../../utils/log';
 import { UuidMap } from '../../../constants/ids';
+import { juzListApi } from '../../../data/juzListApi';
+import { surahsApi } from '../../../data/surahsApi';
+import { initCollection } from './initCollection';
+
+const initJuz = async (): Promise<UuidMap> => {
+  return initCollection(JuzModel, juzListApi, 'Juz');
+};
+
+const initSurahs = async (): Promise<UuidMap> => {
+  return initCollection(SurahModel, surahsApi, 'Surahs');
+};
 
 const initQuranStructure = async (
   juzMap: UuidMap,
@@ -58,21 +69,7 @@ const initQuranStructure = async (
 
 const initQuran = async (): Promise<void> => {
   try {
-    // Load surah & juz base tables
-    const surahs = await SurahModel.find({}, { _id: 1, uuid: 1 }).lean();
-    const juzList = await JuzModel.find({}, { _id: 1, uuid: 1 }).lean();
-
-    if (surahs.length === 0) {
-      throw new Error('Surah collection must be initialized first.');
-    }
-
-    if (juzList.length === 0) {
-      throw new Error('Juz collection must be initialized first.');
-    }
-
-    const surahMap: UuidMap = new Map(surahs.map((s: any) => [s.uuid, s._id]));
-
-    const juzMap: UuidMap = new Map(juzList.map((j: any) => [j.uuid, j._id]));
+    const [juzMap, surahMap] = await Promise.all([initJuz(), initSurahs()]);
 
     await initQuranStructure(juzMap, surahMap);
   } catch (error) {
