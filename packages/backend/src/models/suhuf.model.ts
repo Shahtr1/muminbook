@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { PrimaryId } from '../constants/primaryId';
+import { PrimaryId } from '../constants/ids';
 import FileType from '../constants/types/fileType';
 import Direction from '../constants/types/direction';
 

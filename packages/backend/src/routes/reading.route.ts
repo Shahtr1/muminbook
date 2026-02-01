@@ -8,6 +8,6 @@ const readingRoutes = Router();
 
 // prefix readings
 readingRoutes.get('/', getAllReadingsHandler);
-readingRoutes.get('/:uuid', getReadingHandler);
+readingRoutes.get('/:source', getReadingHandler);
 
 export default readingRoutes;

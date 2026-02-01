@@ -1,4 +1,4 @@
-import { PrimaryId } from '../../constants/primaryId';
+import { PrimaryId } from '../../constants/ids';
 import ResourceModel from '../../models/resource.model';
 import ResourceType from '../../constants/types/resourceType';
 import appAssert from '../../utils/appAssert';

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { thirtyDaysFromNow } from '../utils/date';
-import { PrimaryId } from '../constants/primaryId';
+import { PrimaryId } from '../constants/ids';
 
 export interface SessionDocument extends mongoose.Document {
   userId: PrimaryId;

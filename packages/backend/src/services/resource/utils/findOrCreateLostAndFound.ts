@@ -1,5 +1,5 @@
 import ResourceModel from '../../../models/resource.model';
-import { PrimaryId } from '../../../constants/primaryId';
+import { PrimaryId } from '../../../constants/ids';
 import ResourceType from '../../../constants/types/resourceType';
 import appAssert from '../../../utils/appAssert';
 import { NOT_FOUND } from '../../../constants/http';

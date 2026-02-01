@@ -42,8 +42,6 @@ function TestComponent({ suhufId, onReady }) {
 
 describe('useOpenFile', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
-
     mutateMock = vi.fn();
     toastErrorMock = vi.fn();
     getQueryDataMock = vi.fn();
@@ -65,7 +63,7 @@ describe('useOpenFile', () => {
     expect(mutateMock).not.toHaveBeenCalled();
   });
 
-  it('shows error when fileId is missing', async () => {
+  it('shows error when source is missing', async () => {
     let openFn;
 
     render(<TestComponent suhufId="123" onReady={(fn) => (openFn = fn)} />);
@@ -75,7 +73,7 @@ describe('useOpenFile', () => {
     });
 
     expect(toastErrorMock).toHaveBeenCalledWith({
-      message: 'No file ID present',
+      message: 'No source present',
     });
 
     expect(mutateMock).not.toHaveBeenCalled();
@@ -83,6 +81,26 @@ describe('useOpenFile', () => {
 
   it('shows error when suhuf not found in cache', async () => {
     getQueryDataMock.mockReturnValue(undefined);
+
+    let openFn;
+
+    render(<TestComponent suhufId="123" onReady={(fn) => (openFn = fn)} />);
+
+    await act(async () => {
+      openFn('file-1');
+    });
+
+    expect(getQueryDataMock).toHaveBeenCalledWith(['suhuf', '123']);
+
+    expect(toastErrorMock).toHaveBeenCalledWith({
+      message: 'No suhuf found with the given ID',
+    });
+
+    expect(mutateMock).not.toHaveBeenCalled();
+  });
+
+  it('shows error when suhuf has no config', async () => {
+    getQueryDataMock.mockReturnValue({});
 
     let openFn;
 
@@ -148,8 +166,8 @@ describe('useOpenFile', () => {
     getQueryDataMock.mockReturnValue({
       config: {
         panels: [
-          { id: 1, active: true, fileId: null, fileType: null },
-          { id: 2, active: false, fileId: 'old', fileType: 'reading' },
+          { id: 1, active: true, source: null, fileType: null },
+          { id: 2, active: false, source: 'old', fileType: 'reading' },
         ],
       },
     });
@@ -169,13 +187,13 @@ describe('useOpenFile', () => {
         {
           id: 1,
           active: true,
-          fileId: 'file-99',
+          source: 'file-99',
           fileType: 'reading',
         },
         {
           id: 2,
           active: false,
-          fileId: 'old',
+          source: 'old',
           fileType: 'reading',
         },
       ],

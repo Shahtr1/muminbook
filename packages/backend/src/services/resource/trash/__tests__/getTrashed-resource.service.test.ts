@@ -13,7 +13,7 @@ import { Types } from 'mongoose';
 import { getTrashedResources } from '../getTrashed-resource.service';
 import ResourceModel from '../../../../models/resource.model';
 import ResourceType from '../../../../constants/types/resourceType';
-import { PrimaryId } from '../../../../constants/primaryId';
+import { PrimaryId } from '../../../../constants/ids';
 
 vi.mock('../../../../models/resource.model', () => {
   const MockResourceModel: any = {

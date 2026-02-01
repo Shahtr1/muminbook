@@ -1,6 +1,6 @@
 import FamilyTreeModel from '../../models/family-tree.model';
 import { familyTreeApi, FamilyTreeEntry } from '../../data/familyTreeApi';
-import { PrimaryId } from '../../constants/primaryId';
+import { PrimaryId } from '../../constants/ids';
 import { log } from '../../utils/log';
 
 /**

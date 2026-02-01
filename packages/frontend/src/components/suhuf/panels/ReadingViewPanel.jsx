@@ -7,15 +7,17 @@ import { ReadingSidebarPanel } from '@/components/suhuf/reading/ReadingSidebarPa
 import { ReadingToolSidebar } from '@/components/suhuf/reading/ReadingToolSidebar.jsx';
 import { EnglishContent } from '@/components/suhuf/reading/content/EnglishContent.jsx';
 
-export const ReadingViewPanel = ({ fileId, direction }) => {
+export const ReadingViewPanel = ({ source, direction }) => {
   const readingRegistry = {
-    quran: {
+    uthmani: {
       divisionType: QuranDivisionType.Surah,
       component: QuranContent,
+      category: 'quran',
     },
-    'sahih-international': {
+    sahih: {
       divisionType: QuranDivisionType.Surah,
       component: EnglishContent,
+      category: 'translation',
     },
   };
 
@@ -25,15 +27,19 @@ export const ReadingViewPanel = ({ fileId, direction }) => {
   );
 
   const renderContent = () => {
-    const config = readingRegistry[fileId?.toLowerCase()];
-    if (!config) return <SomethingWentWrong />;
+    const config = readingRegistry[source?.toLowerCase()];
+    if (!config) {
+      console.error('config not present');
+      return <SomethingWentWrong />;
+    }
 
-    const { divisionType, component: Component } = config;
+    const { divisionType, component: Component, category } = config;
 
     return (
       <ReadingContentLoader
-        fileId={fileId}
+        source={source}
         divisionType={divisionType}
+        category={category}
         render={(data) => <Component data={data} />}
       />
     );

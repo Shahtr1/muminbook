@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import WindowType from '../constants/types/windowType';
-import { PrimaryId } from '../constants/primaryId';
+import { PrimaryId } from '../constants/ids';
 import './suhuf.model';
 
 export interface WindowDocument extends mongoose.Document {

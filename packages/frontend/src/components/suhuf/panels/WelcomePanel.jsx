@@ -8,9 +8,10 @@ import {
 import { SuhufSVG } from '@/components/svgs/SuhufSVG.jsx';
 import { sidebarMenuData } from '@/data/sidebarMenuData.js';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
+import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-export const WelcomePanel = ({ suhuf }) => {
-  const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
+export const WelcomePanel = () => {
+  const { layout, updateLayout } = useSuhufWorkspaceContext();
 
   const secondaryColor = useColorModeValue('wn.gutter.light', 'wn.gutter.dark');
   const suhufLogoSize = useBreakpointValue({ base: '90px', sm: '130px' });
@@ -20,20 +21,12 @@ export const WelcomePanel = ({ suhuf }) => {
     'wn.bg_content.dark'
   );
 
-  const layout = suhuf?.config?.layout || {};
   const activeTab = layout.leftTab;
   const isOpen = layout.isLeftTabOpen;
 
   const toggleTab = (tabKey) => {
     const isSame = activeTab === tabKey;
-
-    updateConfig({
-      layout: {
-        ...layout,
-        leftTab: tabKey,
-        isLeftTabOpen: isSame ? !isOpen : true,
-      },
-    });
+    updateLayout({ leftTab: tabKey, isLeftTabOpen: isSame ? !isOpen : true });
   };
 
   return (

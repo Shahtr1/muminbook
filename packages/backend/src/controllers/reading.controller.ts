@@ -11,9 +11,11 @@ export const getAllReadingsHandler = catchErrors(async (req, res) => {
 });
 
 export const getReadingHandler = catchErrors(async (req, res) => {
-  const { uuid } = req.params;
+  const { source } = req.params;
 
   const query = readingSchema.parse(req.query);
-  const result = await getReading(uuid, query);
+
+  const result = await getReading(source, query);
+
   return res.status(OK).json(result);
 });

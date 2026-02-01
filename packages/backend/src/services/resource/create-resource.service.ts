@@ -1,5 +1,5 @@
 import ResourceType from '../../constants/types/resourceType';
-import { PrimaryId } from '../../constants/primaryId';
+import { PrimaryId } from '../../constants/ids';
 import ResourceModel from '../../models/resource.model';
 import appAssert from '../../utils/appAssert';
 import { CONFLICT, NOT_FOUND } from '../../constants/http';

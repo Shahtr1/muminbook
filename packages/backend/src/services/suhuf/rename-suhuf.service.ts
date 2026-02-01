@@ -1,4 +1,4 @@
-import { PrimaryId } from '../../constants/primaryId';
+import { PrimaryId } from '../../constants/ids';
 import SuhufModel from '../../models/suhuf.model';
 import appAssert from '../../utils/appAssert';
 import { CONFLICT, NOT_FOUND } from '../../constants/http';

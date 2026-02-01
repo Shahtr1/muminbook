@@ -33,7 +33,7 @@ export const PanelHeader = ({ id, direction }) => {
     e.stopPropagation();
 
     const updatedPanels = panels.map((panel) =>
-      panel.fileId === id && panel.direction === direction
+      panel.source === id && panel.direction === direction
         ? { ...panel, fileId: undefined, fileType: 'none' }
         : panel
     );
