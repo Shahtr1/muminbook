@@ -12,6 +12,8 @@ import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 export const QuranContent = ({ data }) => {
   const { surahs } = useSuhufWorkspaceContext();
 
+  const bismalah = 'بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ';
+
   const surahMap = useMemo(() => {
     return (
       surahs?.reduce((acc, surah) => {
@@ -56,9 +58,16 @@ export const QuranContent = ({ data }) => {
       {data.map((ayah) => (
         <Fragment key={ayah._id}>
           {ayah.surahStart && surahMap[ayah.surahId] && (
-            <SurahHeader name={surahMap[ayah.surahId].name} />
+            <>
+              <SurahHeader name={surahMap[ayah.surahId].name} />
+              {ayah.uuid !== 1 && <Ayah text={bismalah} block={true} />}
+            </>
           )}
-          <Ayah ayah={ayah.content.text} ayahNumber={ayah.ayahNumber} />
+          <Ayah
+            text={ayah.content.text}
+            ayahNumber={ayah.ayahNumber}
+            block={ayah.surahStart && ayah.uuid === 1}
+          />
         </Fragment>
       ))}
     </Box>
