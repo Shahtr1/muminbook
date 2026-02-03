@@ -23,8 +23,6 @@ export const QuranDivisionFilter = ({ value, onChange }) => {
       p={3}
       border="1px solid"
       borderColor={borderColor}
-      borderRadius="md"
-      shadow="md"
     >
       <Text fontSize="sm" fontWeight="semibold" mb={3}>
         Filter By
