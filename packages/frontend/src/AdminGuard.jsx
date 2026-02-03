@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { AUTH } from '@/hooks/useAuth.js';
+import { AUTH } from '@/hooks/common/useAuth.js';
 
 const AdminGuard = () => {
   const queryClient = useQueryClient();

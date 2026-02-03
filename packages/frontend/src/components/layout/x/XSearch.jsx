@@ -11,6 +11,7 @@ import {
 import { Search2Icon } from '@chakra-ui/icons';
 import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useClickOutside } from '@/hooks/common/useClickOutside.js';
 
 export const XSearch = ({
   focused = false,
@@ -43,8 +44,6 @@ export const XSearch = ({
   const [search, setSearch] = useState('');
   const debounceRef = useRef(null);
 
-  const dropdownBg = useColorModeValue('white', 'gray.800');
-  const dropdownHover = useColorModeValue('gray.100', 'gray.700');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.300');
 
   // Sync focus prop
@@ -57,23 +56,11 @@ export const XSearch = ({
     }
   }, [focused]);
 
-  // Outside click
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target) &&
-        (!dropdownRef.current || !dropdownRef.current.contains(event.target))
-      ) {
-        setIsFocused(false);
-        setSearch('');
-        onFocusChange?.(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [onFocusChange]);
+  useClickOutside([wrapperRef, dropdownRef], () => {
+    setIsFocused(false);
+    setSearch('');
+    onFocusChange?.(false);
+  });
 
   useEffect(() => {
     if (!onSearch) return;

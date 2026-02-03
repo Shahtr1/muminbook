@@ -1,4 +1,4 @@
-import useAuth from '../hooks/useAuth.js';
+import useAuth from '../hooks/common/useAuth.js';
 import { Flex, useColorModeValue, useTheme } from '@chakra-ui/react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Navbar } from '@/components/layout/navbar/Navbar.jsx';

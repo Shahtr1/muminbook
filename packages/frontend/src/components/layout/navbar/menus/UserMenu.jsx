@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AUTH } from '@/hooks/useAuth.js';
+import { AUTH } from '@/hooks/common/useAuth.js';
 import { XDivider } from '@/components/layout/x/XDivider.jsx';
 import { userData } from '@/data/userData.js';
 import { logout } from '@/services/index.js';

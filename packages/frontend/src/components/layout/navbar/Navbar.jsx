@@ -2,7 +2,7 @@ import { Flex, Image, useColorMode, useColorModeValue } from '@chakra-ui/react';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
 import { NavItem } from '@/components/layout/navbar/NavItem.jsx';
 import { useQueryClient } from '@tanstack/react-query';
-import { AUTH } from '@/hooks/useAuth.js';
+import { AUTH } from '@/hooks/common/useAuth.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Search2Icon } from '@chakra-ui/icons';

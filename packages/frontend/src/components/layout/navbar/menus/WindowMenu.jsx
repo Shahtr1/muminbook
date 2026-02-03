@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { userData } from '@/data/userData.js';
 import { notificationsData } from '@/data/notificationsData.js';
 import { featureData } from '@/data/featureData.js';
-import { AUTH } from '@/hooks/useAuth.js';
+import { AUTH } from '@/hooks/common/useAuth.js';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { IoChevronForwardOutline, IoMenuOutline } from 'react-icons/io5';
 import { navItems } from '@/data/navbarData.js';

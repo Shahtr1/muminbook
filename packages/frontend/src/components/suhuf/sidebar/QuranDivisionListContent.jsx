@@ -1,5 +1,12 @@
-import React, { useCallback, useMemo, useRef } from 'react';
-import { Box, Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import {
+  Box,
+  Flex,
+  Text,
+  Tooltip,
+  useColorModeValue,
+  Portal,
+} from '@chakra-ui/react';
 import { MdNumbers } from 'react-icons/md';
 import { XSearch } from '@/components/layout/x/XSearch.jsx';
 import { FixedSizeList as List } from 'react-window';
@@ -7,6 +14,9 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { VscFilterFilled } from 'react-icons/vsc';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 import QuranDivisionType from '@/constants/QuranDivisionType.js';
+import { DivisionFilter } from '@/components/suhuf/sidebar/DivisionFilter.jsx';
+import { useClickOutside } from '@/hooks/common/useClickOutside.js';
+import { useFloatingPosition } from '@/hooks/common/useFloatingPosition.js';
 
 export const QuranDivisionListContent = ({ panel }) => {
   const {
@@ -27,10 +37,6 @@ export const QuranDivisionListContent = ({ panel }) => {
     'wn.icon.hover.dark'
   );
 
-  /**
-   * Derive current panel from context.
-   * Ensures reactivity when layout or panels change.
-   */
   const currentPanel = useMemo(() => {
     if (!layout?.isSplit) {
       return panels.find((p) => p.active);
@@ -39,22 +45,42 @@ export const QuranDivisionListContent = ({ panel }) => {
   }, [panels, layout?.isSplit, panel.direction]);
 
   const divisionNumber = currentPanel?.division?.divisionNumber || 1;
-
   const divisionType =
     currentPanel?.division?.divisionType || QuranDivisionType.Surah;
 
   const listRef = useRef(null);
-
-  /**
-   * Prevent repeated initial scrolling
-   */
   const hasInitialScrolled = useRef(false);
 
   const ITEM_SIZE = 50;
 
-  /**
-   * Row renderer
-   */
+  /* ============================
+     FILTER STATE
+  ============================ */
+
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const filterButtonRef = useRef(null);
+  const filterPanelRef = useRef(null);
+
+  const position = useFloatingPosition({
+    anchorRef: filterButtonRef,
+    isOpen: isFilterOpen,
+    offset: 4,
+    direction: 'right',
+  });
+
+  useClickOutside([filterPanelRef, filterButtonRef], () =>
+    setIsFilterOpen(false)
+  );
+
+  const handleToggleFilter = () => {
+    setIsFilterOpen((prev) => !prev);
+  };
+
+  /* ============================
+     ROW RENDERER
+  ============================ */
+
   const Row = useCallback(
     ({ index, style }) => {
       const surah = surahs[index];
@@ -143,14 +169,7 @@ export const QuranDivisionListContent = ({ panel }) => {
                       <MdNumbers size={10} />
                     </Box>
 
-                    <Text
-                      lineHeight="1"
-                      display="flex"
-                      alignItems="center"
-                      color={iconColor}
-                    >
-                      {surah.totalAyat}
-                    </Text>
+                    <Text lineHeight="1">{surah.totalAyat}</Text>
                   </Flex>
                 </Tooltip>
               </Flex>
@@ -172,65 +191,95 @@ export const QuranDivisionListContent = ({ panel }) => {
     ]
   );
 
+  /* ============================
+     RENDER
+  ============================ */
+
   return (
-    <Flex
-      direction="column"
-      py="1px"
-      w="100%"
-      h="100%"
-      gap={1}
-      position="relative"
-    >
-      <Flex gap={1} align="center">
-        <XSearch
-          bgColor={bgContentColor}
-          size="xs"
-          expand={false}
-          placeholder="Surahs"
-        />
-        <VscFilterFilled size={15} style={{ cursor: 'pointer' }} />
-      </Flex>
+    <>
+      <Flex
+        direction="column"
+        py="1px"
+        w="100%"
+        h="100%"
+        gap={1}
+        position="relative"
+      >
+        <Flex gap={1} align="center">
+          <XSearch
+            bgColor={bgContentColor}
+            size="xs"
+            expand={false}
+            placeholder="Surahs"
+          />
 
-      <Flex flex={1}>
-        <AutoSizer>
-          {({ height, width }) => {
-            /**
-             * Perform initial scroll once height is known.
-             * react-window ignores scroll commands if height is 0.
-             */
-            if (
-              height > 0 &&
-              listRef.current &&
-              divisionType === QuranDivisionType.Surah &&
-              !hasInitialScrolled.current
-            ) {
-              const index = surahs.findIndex(
-                (s) => String(s.uuid) === String(divisionNumber)
-              );
+          <Box
+            ref={filterButtonRef}
+            onClick={handleToggleFilter}
+            cursor="pointer"
+            display="flex"
+            alignItems="center"
+          >
+            <VscFilterFilled size={15} />
+          </Box>
+        </Flex>
 
-              if (index >= 0) {
-                hasInitialScrolled.current = true;
+        <Flex flex={1}>
+          <AutoSizer>
+            {({ height, width }) => {
+              if (
+                height > 0 &&
+                listRef.current &&
+                divisionType === QuranDivisionType.Surah &&
+                !hasInitialScrolled.current
+              ) {
+                const index = surahs.findIndex(
+                  (s) => String(s.uuid) === String(divisionNumber)
+                );
 
-                requestAnimationFrame(() => {
-                  listRef.current?.scrollToItem(index, 'smart');
-                });
+                if (index >= 0) {
+                  hasInitialScrolled.current = true;
+
+                  requestAnimationFrame(() => {
+                    listRef.current?.scrollToItem(index, 'smart');
+                  });
+                }
               }
-            }
 
-            return (
-              <List
-                ref={listRef}
-                height={height}
-                width={width}
-                itemCount={surahs.length}
-                itemSize={ITEM_SIZE}
-              >
-                {Row}
-              </List>
-            );
-          }}
-        </AutoSizer>
+              return (
+                <List
+                  ref={listRef}
+                  height={height}
+                  width={width}
+                  itemCount={surahs.length}
+                  itemSize={ITEM_SIZE}
+                >
+                  {Row}
+                </List>
+              );
+            }}
+          </AutoSizer>
+        </Flex>
       </Flex>
-    </Flex>
+
+      {isFilterOpen && position && (
+        <Portal>
+          <Box
+            ref={filterPanelRef}
+            position="absolute"
+            top={`${position.top}px`}
+            left={`${position.left}px`}
+            zIndex={9999}
+            bg={bgContentColor}
+            border="1px solid"
+            borderColor={borderColor}
+            borderRadius="md"
+            shadow="lg"
+          >
+            <DivisionFilter />
+          </Box>
+        </Portal>
+      )}
+    </>
   );
 };
