@@ -14,7 +14,7 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { VscFilterFilled } from 'react-icons/vsc';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 import QuranDivisionType from '@/constants/QuranDivisionType.js';
-import { DivisionFilter } from '@/components/suhuf/sidebar/DivisionFilter.jsx';
+import { QuranDivisionFilter } from '@/components/suhuf/sidebar/QuranDivisionFilter.jsx';
 import { useClickOutside } from '@/hooks/common/useClickOutside.js';
 import { useFloatingPosition } from '@/hooks/common/useFloatingPosition.js';
 
@@ -169,7 +169,9 @@ export const QuranDivisionListContent = ({ panel }) => {
                       <MdNumbers size={10} />
                     </Box>
 
-                    <Text lineHeight="1">{surah.totalAyat}</Text>
+                    <Text lineHeight="1" color={iconColor}>
+                      {surah.totalAyat}
+                    </Text>
                   </Flex>
                 </Tooltip>
               </Flex>
@@ -276,7 +278,7 @@ export const QuranDivisionListContent = ({ panel }) => {
             borderRadius="md"
             shadow="lg"
           >
-            <DivisionFilter />
+            <QuranDivisionFilter />
           </Box>
         </Portal>
       )}
