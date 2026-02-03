@@ -1,10 +1,18 @@
-import { createContext, useContext, useMemo, useCallback } from 'react';
+import { createContext, useCallback, useContext, useMemo } from 'react';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig';
 import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
 
 const SuhufWorkspaceContext = createContext(null);
 
-export const SuhufProvider = ({ suhuf, children, surahs }) => {
+export const SuhufProvider = ({
+  suhuf,
+  children,
+  surahs,
+  juz,
+  manzil,
+  hizb,
+  ruku,
+}) => {
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
   const openFile = useOpenFile(suhuf._id);
 
@@ -62,6 +70,10 @@ export const SuhufProvider = ({ suhuf, children, surahs }) => {
       layout,
       panels,
       surahs,
+      juz,
+      manzil,
+      hizb,
+      ruku,
       updateLayout,
       updatePanels,
       toggleSplit,

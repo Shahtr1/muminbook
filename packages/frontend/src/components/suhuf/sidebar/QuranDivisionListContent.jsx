@@ -21,6 +21,7 @@ import { useFloatingPosition } from '@/hooks/common/useFloatingPosition.js';
 export const QuranDivisionListContent = ({ panel }) => {
   const {
     surahs = [],
+    juz = [],
     panels = [],
     layout,
     updatePanels,
@@ -65,7 +66,7 @@ export const QuranDivisionListContent = ({ panel }) => {
   const position = useFloatingPosition({
     anchorRef: filterButtonRef,
     isOpen: isFilterOpen,
-    offset: 4,
+    offset: 15,
     direction: 'right',
   });
 
