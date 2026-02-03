@@ -275,8 +275,6 @@ export const QuranDivisionListContent = ({ panel }) => {
             bg={bgContentColor}
             border="1px solid"
             borderColor={borderColor}
-            borderRadius="md"
-            shadow="lg"
           >
             <QuranDivisionFilter />
           </Box>
