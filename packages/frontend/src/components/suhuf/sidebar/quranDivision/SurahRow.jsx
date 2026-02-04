@@ -35,7 +35,7 @@ const SurahRow = ({
           </Flex>
 
           <Flex justify="space-between" align="center">
-            <Tooltip label={surah.meaning} placement="right">
+            <Tooltip variant="inverted" placement="right" label={surah.meaning}>
               <Text
                 color={color}
                 fontSize="9px"
@@ -47,12 +47,21 @@ const SurahRow = ({
               </Text>
             </Tooltip>
 
-            <Flex align="center" fontSize="10px" gap="2px">
-              <Box display="flex" alignItems="center" color={color}>
-                <MdNumbers size={10} />
-              </Box>
-              <Text color={color}>{surah.totalAyat}</Text>
-            </Flex>
+            <Tooltip
+              variant="inverted"
+              placement="right"
+              label={`Total ayat: ${surah.totalAyat}`}
+            >
+              <Flex align="center" color={color} fontSize="10px" gap="2px">
+                <Box display="flex" alignItems="center">
+                  <MdNumbers size={10} />
+                </Box>
+
+                <Text lineHeight="1" color={color}>
+                  {surah.totalAyat}
+                </Text>
+              </Flex>
+            </Tooltip>
           </Flex>
         </Flex>
       </Flex>
