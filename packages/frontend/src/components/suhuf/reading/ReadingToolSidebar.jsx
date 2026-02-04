@@ -1,19 +1,17 @@
-import { Box, Flex, Icon, Tooltip, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Icon, Tooltip } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaComment, FaHighlighter } from 'react-icons/fa';
 import { FaArrowPointer } from 'react-icons/fa6';
 import { RiFullscreenExitFill, RiFullscreenFill } from 'react-icons/ri';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ReadingToolSidebar = ({ onToolSelect }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const { border, surface, icon } = useSemanticColors();
 
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
-  const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
-  const iconHoverGray = useColorModeValue(
-    'wn.icon.hover.light',
-    'wn.icon.hover.dark'
-  );
+  const bgColor = surface.base;
+  const iconColor = icon.default;
+  const iconHoverGray = icon.hover;
 
   const baseTools = [
     { label: 'Select text', id: 'text-select', icon: FaArrowPointer },
@@ -40,7 +38,7 @@ export const ReadingToolSidebar = ({ onToolSelect }) => {
       h="fit-content"
       borderRadius="sm"
       border="1px solid"
-      borderColor={borderColor}
+      borderColor={border.default}
       m="3px"
     >
       <Flex

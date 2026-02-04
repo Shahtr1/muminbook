@@ -1,20 +1,14 @@
-import {
-  Box,
-  Collapse,
-  Flex,
-  Icon,
-  Text,
-  Tooltip,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Collapse, Flex, Icon, Text, Tooltip } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
 import { FileSVG } from '@/components/svgs/FileSVG.jsx';
 import { useReadings } from '@/hooks/reading/useReadings.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ReadingsTree = ({ onSelect }) => {
-  const defaultTextColor = useColorModeValue('text.primary', 'whiteAlpha.900');
+  const { text } = useSemanticColors();
+  const defaultTextColor = text.primary;
   const [isExpanded, setIsExpanded] = useState(false);
 
   const { readings, isPending } = useReadings();

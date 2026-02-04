@@ -25,6 +25,7 @@ import { XRadio } from '@/components/form/XRadio.jsx';
 import { XEyeIcon } from '@/components/form/XEyeIcon.jsx';
 import { XAlert } from '@/components/layout/x/XAlert.jsx';
 import { register } from '@/services/index.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -40,6 +41,8 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
+
+  const { surface } = useSemanticColors();
 
   const { mutate: createAccount, isPending } = useMutation({
     mutationFn: register,
@@ -119,7 +122,7 @@ const Register = () => {
 
           <Stack
             rounded="sm"
-            bg={useColorModeValue('white', 'gray.800')}
+            bg={surface.elevated}
             boxShadow="md"
             p={3}
             minW={{ base: 300, sm: 400 }}

@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Box } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 
 import { useReadingCursor } from '@/hooks/reading/useReadingCursor.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ReadingContentLoader = ({
   source,
@@ -18,12 +19,10 @@ export const ReadingContentLoader = ({
 
   const contentRef = useRef(null);
 
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-  const iconHoverGray = useColorModeValue(
-    'wn.icon.hover.light',
-    'wn.icon.hover.dark'
-  );
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
+  const { border, surface, icon } = useSemanticColors();
+
+  const bgColor = surface.base;
+  const iconHoverGray = icon.hover;
 
   // Reset when file changes
   useEffect(() => {
@@ -90,7 +89,7 @@ export const ReadingContentLoader = ({
           bgColor={bgColor}
           _hover={{ bg: iconHoverGray }}
           border="1px solid"
-          borderColor={borderColor}
+          borderColor={border.default}
         >
           <ChevronUpIcon fontSize="20px" />
         </Box>
@@ -113,7 +112,7 @@ export const ReadingContentLoader = ({
           bgColor={bgColor}
           _hover={{ bg: iconHoverGray }}
           border="1px solid"
-          borderColor={borderColor}
+          borderColor={border.default}
         >
           <ChevronDownIcon fontSize="20px" />
         </Box>

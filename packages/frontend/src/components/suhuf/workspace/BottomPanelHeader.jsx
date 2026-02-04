@@ -1,7 +1,8 @@
-import { Flex, Icon, Text, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Icon, Text } from '@chakra-ui/react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { useCallback } from 'react';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const BottomPanelHeader = ({ hasBorder = false, readings = [] }) => {
   const { layout, updateLayout } = useSuhufWorkspaceContext();
@@ -12,8 +13,8 @@ export const BottomPanelHeader = ({ hasBorder = false, readings = [] }) => {
     updateLayout({ isBottomTabOpen: !isOpen });
   }, [isOpen, updateLayout]);
 
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
-  const boldColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
+  const { border, icon } = useSemanticColors();
+  const boldColor = icon.active;
 
   return (
     <Flex
@@ -24,7 +25,7 @@ export const BottomPanelHeader = ({ hasBorder = false, readings = [] }) => {
       px={2}
       borderBottom="1px solid"
       borderTop={hasBorder ? '1px solid' : 'none'}
-      borderColor={borderColor}
+      borderColor={border.default}
       onClick={toggleBottomTab}
     >
       <Flex w="100%" gap={5} overflowX="auto" flex="1">

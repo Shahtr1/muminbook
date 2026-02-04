@@ -1,4 +1,4 @@
-import { Flex, useColorModeValue } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import QuranDivisionType from '@/constants/QuranDivisionType.js';
 import { QuranContent } from '@/components/suhuf/reading/content/QuranContent.jsx';
@@ -6,8 +6,10 @@ import { ReadingContentLoader } from '@/components/suhuf/reading/ReadingContentL
 import { ReadingSidebarPanel } from '@/components/suhuf/reading/ReadingSidebarPanel.jsx';
 import { ReadingToolSidebar } from '@/components/suhuf/reading/ReadingToolSidebar.jsx';
 import { EnglishContent } from '@/components/suhuf/reading/content/EnglishContent.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ReadingViewPanel = ({ source, direction }) => {
+  const { surface } = useSemanticColors();
   const readingRegistry = {
     uthmani: {
       divisionType: QuranDivisionType.Surah,
@@ -21,10 +23,7 @@ export const ReadingViewPanel = ({ source, direction }) => {
     },
   };
 
-  const bgContentColor = useColorModeValue(
-    'wn.bg_content.light',
-    'wn.bg_content.dark'
-  );
+  const bgContentColor = surface.content;
 
   const renderContent = () => {
     const config = readingRegistry[source?.toLowerCase()];

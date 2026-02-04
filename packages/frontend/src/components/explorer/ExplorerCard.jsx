@@ -1,14 +1,9 @@
 import { useEffect, useState } from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import { CardSVG } from '@/components/svgs/CardSVG.jsx';
 import { ItemToolbar } from '@/components/explorer/toolbar/ItemToolbar.jsx';
 import { ActionItems } from '@/components/explorer/ActionItems.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ExplorerCard = ({
   label,
@@ -18,7 +13,8 @@ export const ExplorerCard = ({
   width,
   svg,
 }) => {
-  const bgColor = useColorModeValue('white', 'gray.800');
+  const { surface } = useSemanticColors();
+  const bgColor = surface.elevated;
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const [hasMounted, setHasMounted] = useState(false);

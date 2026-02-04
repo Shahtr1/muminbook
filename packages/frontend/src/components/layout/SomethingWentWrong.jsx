@@ -6,21 +6,22 @@ import {
   Flex,
   IconButton,
   Text,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { RepeatIcon } from '@chakra-ui/icons';
 import React from 'react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const SomethingWentWrong = ({
   height = '100%',
   width = '100%',
   transparent = false,
 }) => {
+  const { text } = useSemanticColors();
   const handleRefresh = () => {
     window.location.reload();
   };
 
-  const iconColor = useColorModeValue('text.primary', 'whiteAlpha.900');
+  const iconColor = text.primary;
 
   return (
     <Flex width={width} height={height} justify="center" align="center">

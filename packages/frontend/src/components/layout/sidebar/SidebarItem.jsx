@@ -5,10 +5,10 @@ import {
   MenuList,
   Text,
   useBreakpointValue,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { forwardRef } from 'react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const SidebarItem = forwardRef(
   (
@@ -23,11 +23,12 @@ export const SidebarItem = forwardRef(
     },
     ref
   ) => {
+    const { text } = useSemanticColors();
     const handleActionClick = () => {
       if (item.action) item.action();
       else if (item.link) navigate(item.link);
     };
-    const textColor = useColorModeValue('text-primary', 'whiteAlpha.900');
+    const textColor = text.primary;
     const isSmallScreen = useBreakpointValue({ base: true, sm: false });
     const navigate = useNavigate();
 

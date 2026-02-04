@@ -1,17 +1,14 @@
 import { SVG } from '@/components/svgs/SVG.jsx';
-import {
-  Box,
-  Flex,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Flex, useBreakpointValue } from '@chakra-ui/react';
 import {
   absoluteBoxStyles,
   absoluteSvgStyles,
 } from '@/components/svgs/MaleFemaleCommonStyles.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const FemaleSVG = ({ color, dimensions = '25px' }) => {
-  const bgColor = useColorModeValue('white', 'gray.800');
+  const { surface } = useSemanticColors();
+  const bgColor = surface.elevated;
   const isMdScreen = useBreakpointValue({ base: true, md: false });
 
   return (

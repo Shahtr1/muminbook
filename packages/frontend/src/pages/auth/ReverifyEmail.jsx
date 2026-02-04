@@ -13,13 +13,14 @@ import {
   Link as ChakraLink,
   Stack,
   Text,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
 import { XAlert } from '@/components/layout/x/XAlert.jsx';
 import { reverifyEmail } from '@/services/index.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 const ReverifyEmail = () => {
+  const { surface } = useSemanticColors();
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [unknownError, setUnknownError] = useState(false);
@@ -64,7 +65,7 @@ const ReverifyEmail = () => {
           />
           <Stack
             rounded="sm"
-            bg={useColorModeValue('white', 'gray.800')}
+            bg={surface.elevated}
             boxShadow="md"
             p={3}
             minW={{ base: 300, sm: 400 }}

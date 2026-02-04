@@ -1,8 +1,9 @@
-import { useColorModeValue } from '@chakra-ui/react';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const XEyeIcon = ({ show }) => {
-  const iconColor = useColorModeValue('gray.600', 'gray.400');
+  const { icon } = useSemanticColors();
+  const iconColor = icon.muted;
 
   return show ? <GoEyeClosed color={iconColor} /> : <GoEye color={iconColor} />;
 };

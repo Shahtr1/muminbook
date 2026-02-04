@@ -1,20 +1,15 @@
-import {
-  Box,
-  Radio,
-  RadioGroup,
-  Stack,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react';
 
 import {
   QURAN_DIVISION_LABELS,
   QURAN_DIVISION_TYPES,
 } from '@/constants/QuranDivisionType.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const QuranDivisionFilter = ({ value, onChange }) => {
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-  const borderColor = useColorModeValue('gray.200', 'whiteAlpha.300');
+  const { surface, border } = useSemanticColors();
+  const bgColor = surface.base;
+  const borderColor = border.light;
 
   return (
     <Box

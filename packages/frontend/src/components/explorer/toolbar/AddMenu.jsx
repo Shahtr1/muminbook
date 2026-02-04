@@ -9,16 +9,17 @@ import {
   MenuButton,
   MenuList,
   Text,
-  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
 import { FileSVG } from '@/components/svgs/FileSVG.jsx';
 import { useEffect, useState } from 'react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const AddMenu = ({ onCreate }) => {
-  const hoverBg = useColorModeValue('gray.100', 'gray.700');
+  const { surface } = useSemanticColors();
+  const hoverBg = surface.subtle;
 
   const [showFileInput, setShowFileInput] = useState(false);
   const [showFolderInput, setShowFolderInput] = useState(false);

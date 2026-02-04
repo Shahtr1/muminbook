@@ -4,7 +4,6 @@ import {
   Flex,
   Tooltip,
   useBreakpointValue,
-  useColorModeValue,
   useTheme,
   useToken,
 } from '@chakra-ui/react';
@@ -16,18 +15,21 @@ import { SplitHorizontalSVG } from '@/components/svgs/sidebar/SplitHorizontalSVG
 import { useEffect, useMemo } from 'react';
 import { WorkspaceLayout } from '@/components/suhuf/workspace/WorkspaceLayout.jsx';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const SuhufContent = ({ readings }) => {
   const queryClient = useQueryClient();
   const { setNavbarChildren } = useWindowNavbar();
   const theme = useTheme();
 
+  const { icon } = useSemanticColors();
+
   const { layout, toggleSplit, toggleLeftSidebar, toggleBottomPanel, suhuf } =
     useSuhufWorkspaceContext();
 
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
 
-  const iconColorKey = useColorModeValue('wn.bold.light', 'wn.bold.dark');
+  const iconColorKey = icon.active;
 
   const [iconActiveColor] = useToken('colors', [iconColorKey]);
 

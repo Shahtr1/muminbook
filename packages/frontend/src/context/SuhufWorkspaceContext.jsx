@@ -64,35 +64,22 @@ export const SuhufProvider = ({
     updateLayout({ isBottomTabOpen: !layout.isBottomTabOpen });
   }, [layout.isBottomTabOpen, updateLayout]);
 
-  const value = useMemo(
-    () => ({
-      suhuf,
-      layout,
-      panels,
-      surahs,
-      juz,
-      manzil,
-      hizb,
-      ruku,
-      updateLayout,
-      updatePanels,
-      toggleSplit,
-      toggleLeftSidebar,
-      toggleBottomPanel,
-      openFile,
-    }),
-    [
-      suhuf,
-      layout,
-      panels,
-      updateLayout,
-      updatePanels,
-      toggleSplit,
-      toggleLeftSidebar,
-      toggleBottomPanel,
-      openFile,
-    ]
-  );
+  const value = {
+    suhuf,
+    layout,
+    panels,
+    surahs,
+    juz,
+    manzil,
+    hizb,
+    ruku,
+    updateLayout,
+    updatePanels,
+    toggleSplit,
+    toggleLeftSidebar,
+    toggleBottomPanel,
+    openFile,
+  };
 
   return (
     <SuhufWorkspaceContext.Provider value={value}>

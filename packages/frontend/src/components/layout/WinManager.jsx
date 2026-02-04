@@ -5,7 +5,6 @@ import {
   Text,
   Tooltip,
   useBreakpointValue,
-  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
@@ -18,28 +17,21 @@ import { BsPencilFill } from 'react-icons/bs';
 import ConfirmationModal from '@/components/layout/modals/ConfirmationModal.jsx';
 import { useRenameSuhuf } from '@/hooks/suhuf/useRenameSuhuf.js';
 import { getPreviousNonWindowPath } from '@/utils/updateNavigationPath.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const WinManager = ({ onEmpty, closeWindowId, minimizeWindowId }) => {
+  const { text, icon, brand, surface } = useSemanticColors();
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const { mutate: renameSuhuf } = useRenameSuhuf();
   const { mutate: deleteWindow } = useDeleteWindow();
   const navigate = useNavigate();
   const location = useLocation();
   const { isOpen, onOpen: openModal, onClose } = useDisclosure();
-  const textDisabledColor = useColorModeValue(
-    'text.secondary',
-    'text.disabled'
-  );
-  const hoverBg = useColorModeValue('brand.400', 'brand.600');
-  const winModeHoverBg = useColorModeValue(
-    'wn.icon.hover.light',
-    'wn.icon.hover.dark'
-  );
-  const activeWindowColor = useColorModeValue(
-    'wn.bg_content.light',
-    'wn.bg_content.dark'
-  );
-  const inActiveWindowColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
+  const textDisabledColor = text.disabled;
+  const hoverBg = brand.hover;
+  const winModeHoverBg = icon.hover;
+  const activeWindowColor = surface.content;
+  const inActiveWindowColor = surface.base;
   const { windows = [] } = useWindows();
 
   const queryClient = useQueryClient();

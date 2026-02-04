@@ -5,7 +5,6 @@ import {
   FormErrorMessage,
   Input,
   Text,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { XModal } from '@/components/layout/modals/XModal.jsx';
@@ -13,6 +12,7 @@ import { useCopyResource } from '@/hooks/explorer/useCopyResource.js';
 import { useMoveResource } from '@/hooks/explorer/useMoveResource.js';
 import { ResourcesTree } from '@/components/explorer/components/ResourcesTree.jsx';
 import { useLocation } from 'react-router-dom';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 const TransferResourceModal = ({
   isOpen,
@@ -21,7 +21,8 @@ const TransferResourceModal = ({
   id,
   path,
 }) => {
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.300');
+  const { border } = useSemanticColors();
+  const borderColor = border.subtle;
   const location = useLocation();
   const currentPath =
     location.pathname.replace(/^\/reading\//, '') || 'my-files';

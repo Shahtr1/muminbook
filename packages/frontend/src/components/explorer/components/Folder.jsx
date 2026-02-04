@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
-import {
-  Flex,
-  Text,
-  Tooltip,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, Text, Tooltip, useBreakpointValue } from '@chakra-ui/react';
 import { ItemToolbar } from '@/components/explorer/toolbar/ItemToolbar.jsx';
 import { ResourcesActionItems } from '@/components/explorer/components/ResourcesActionItems.jsx';
 import { useAccessTracker } from '@/hooks/explorer/useAccessTracker.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const Folder = ({ onClick, width, folderPath, resource }) => {
+  const { surface } = useSemanticColors();
   const { updateAccessedAt } = useAccessTracker();
   const { id, name = 'My Files', empty = true } = resource;
   const lostAndFound = resource.name === 'lost+found';
@@ -22,7 +18,7 @@ export const Folder = ({ onClick, width, folderPath, resource }) => {
   const isFolderView =
     location.pathname.includes('/reading/my-files') || isTrashView;
 
-  const bgColor = useColorModeValue('white', 'gray.800');
+  const bgColor = surface.elevated;
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
   const dimensions = useBreakpointValue({
     base: '40px',

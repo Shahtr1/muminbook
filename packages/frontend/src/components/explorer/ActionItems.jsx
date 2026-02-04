@@ -1,10 +1,4 @@
-import {
-  Flex,
-  MenuItem,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, MenuItem, Text, useBreakpointValue } from '@chakra-ui/react';
 import {
   HiArrowCircleUp,
   HiDuplicate,
@@ -14,6 +8,7 @@ import {
 } from 'react-icons/hi';
 import { useLocation } from 'react-router-dom';
 import { BsPinAngle, BsPinAngleFill } from 'react-icons/bs';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ActionItems = ({
   variant = 'resources',
@@ -29,7 +24,8 @@ export const ActionItems = ({
   onEmptyTrash,
   onPin,
 }) => {
-  const bg = useColorModeValue('gray.100', 'gray.700');
+  const { surface } = useSemanticColors();
+  const bg = surface.subtle;
   const location = useLocation();
   const isTrashView = location.pathname.includes('/reading/trash');
   const isLostAndFound = location.pathname.includes(
