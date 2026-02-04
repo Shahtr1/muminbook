@@ -4,7 +4,7 @@ import { BsHighlights } from 'react-icons/bs';
 import { useCallback } from 'react';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-import { QuranDivisionListContent } from '@/components/suhuf/sidebar/QuranDivisionListContent.jsx';
+import { QuranDivisionListContent } from '@/components/suhuf/sidebar/quranDivision/QuranDivisionListContent.jsx';
 import { CommentsListContent } from '@/components/suhuf/sidebar/CommentsListContent.jsx';
 import { HighlightsListContent } from '@/components/suhuf/sidebar/HighlightsListContent.jsx';
 
