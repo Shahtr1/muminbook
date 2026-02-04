@@ -78,6 +78,28 @@ export const QuranDivisionListContent = ({ panel }) => {
     setIsFilterOpen((prev) => !prev);
   };
 
+  const handleDivisionTypeChange = (type) => {
+    const newPanels = panels.map((p) =>
+      p.direction === currentPanel?.direction
+        ? {
+            ...p,
+            active: true,
+            division: {
+              divisionType: type,
+              divisionNumber: 1, // reset when switching type
+            },
+          }
+        : {
+            ...p,
+            active: false,
+          }
+    );
+
+    hasInitialScrolled.current = false; // allow re-scroll
+    updatePanels(newPanels);
+    setIsFilterOpen(false);
+  };
+
   /* ============================
      ROW RENDERER
   ============================ */
@@ -277,7 +299,10 @@ export const QuranDivisionListContent = ({ panel }) => {
             border="1px solid"
             borderColor={borderColor}
           >
-            <QuranDivisionFilter />
+            <QuranDivisionFilter
+              value={divisionType}
+              onChange={handleDivisionTypeChange}
+            />
           </Box>
         </Portal>
       )}
