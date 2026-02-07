@@ -18,9 +18,10 @@ import QuranDivisionType from '@/constants/QuranDivisionType.js';
 import { QuranDivisionFilter } from '@/components/suhuf/sidebar/QuranDivisionFilter.jsx';
 import { useClickOutside } from '@/hooks/common/useClickOutside.js';
 import { useFloatingPosition } from '@/hooks/common/useFloatingPosition.js';
-import SimpleDivisionRow from '@/components/suhuf/sidebar/quranDivision/SimpleDivisionRow.jsx';
+import JuzRow from '@/components/suhuf/sidebar/quranDivision/JuzRow.jsx';
 import SurahRow from '@/components/suhuf/sidebar/quranDivision/SurahRow.jsx';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
+import { HifzManzilRukuRow } from '@/components/suhuf/sidebar/quranDivision/HifzManzilRukuRow.jsx';
 
 export const QuranDivisionListContent = ({ panel }) => {
   /* =========================================================
@@ -36,10 +37,10 @@ export const QuranDivisionListContent = ({ panel }) => {
    */
   const {
     surahs = [],
-    juz = [],
-    hizb = [],
-    manzil = [],
-    ruku = [],
+    juzList = [],
+    hizbs = [],
+    manzils = [],
+    rukus = [],
     panels = [],
     layout,
     updatePanels,
@@ -62,10 +63,10 @@ export const QuranDivisionListContent = ({ panel }) => {
      COLOR MODES
      ========================================================= */
 
-  const { border, surface, icon } = useSemanticColors();
+  const { border, surface, icon, text, invert } = useSemanticColors();
 
   const bgContentColor = surface.content;
-  const color = icon.default;
+  const infoColor = icon.default;
   const hoverColor = icon.hover;
   const borderColor = border.default;
 
@@ -104,17 +105,17 @@ export const QuranDivisionListContent = ({ panel }) => {
       case QuranDivisionType.Surah:
         return surahs;
       case QuranDivisionType.Juz:
-        return juz;
+        return juzList;
       case QuranDivisionType.Hizb:
-        return hizb;
+        return hizbs;
       case QuranDivisionType.Manzil:
-        return manzil;
+        return manzils;
       case QuranDivisionType.Ruku:
-        return ruku;
+        return rukus;
       default:
         return surahs;
     }
-  }, [divisionType, surahs, juz, hizb, manzil, ruku]);
+  }, [divisionType, surahs, juzList, hizbs, manzils, rukus]);
 
   /* =========================================================
      LIST REF (react-window imperative API)
@@ -244,19 +245,34 @@ export const QuranDivisionListContent = ({ panel }) => {
             onClick={handleClick}
             borderColor={borderColor}
             hoverColor={hoverColor}
-            color={color}
+            infoColor={infoColor}
+          />
+        );
+      }
+
+      if (divisionType === QuranDivisionType.Juz) {
+        return (
+          <JuzRow
+            item={item}
+            style={style}
+            isSelected={isSelected}
+            onClick={handleClick}
+            borderColor={borderColor}
+            hoverColor={hoverColor}
+            infoColor={infoColor}
           />
         );
       }
 
       return (
-        <SimpleDivisionRow
+        <HifzManzilRukuRow
           item={item}
           style={style}
           isSelected={isSelected}
           onClick={handleClick}
           borderColor={borderColor}
           hoverColor={hoverColor}
+          infoColor={infoColor}
         />
       );
     },
@@ -269,7 +285,7 @@ export const QuranDivisionListContent = ({ panel }) => {
       updatePanels,
       borderColor,
       hoverColor,
-      color,
+      infoColor,
     ]
   );
 

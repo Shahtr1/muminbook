@@ -32,10 +32,11 @@ export const Suhuf = () => {
     isError: isSurahsError,
   } = useSurahs();
 
-  const { juz, isPending: isJuzLoading, isError: isJuzError } = useJuz();
-  const { manzil } = useManzil();
-  const { hizb } = useHizb();
-  const { ruku } = useRuku();
+  const { juzList, isPending: isJuzLoading, isError: isJuzError } = useJuz();
+
+  const { manzils } = useManzil();
+  const { hizbs } = useHizb();
+  const { rukus } = useRuku();
 
   if (isSuhufLoading || isReadingsLoading || isSurahsLoading || isJuzLoading)
     return <Loader height="100dvh" />;
@@ -47,10 +48,10 @@ export const Suhuf = () => {
     <SuhufProvider
       suhuf={suhuf}
       surahs={surahs}
-      juz={juz}
-      manzil={manzil}
-      hizb={hizb}
-      ruku={ruku}
+      juzList={juzList}
+      manzils={manzils}
+      hizbs={hizbs}
+      rukus={rukus}
     >
       <SuhufContent readings={readings} />
     </SuhufProvider>

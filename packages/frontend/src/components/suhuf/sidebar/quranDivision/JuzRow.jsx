@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
 import { MdNumbers } from 'react-icons/md';
 
-const SurahRow = ({
-  surah,
+const JuzRow = ({
+  item,
   style,
   isSelected,
   onClick,
@@ -26,40 +26,32 @@ const SurahRow = ({
         >
           <Flex justify="space-between" align="center">
             <Text whiteSpace="nowrap" fontSize="10px">
-              {surah.uuid}. {surah.transliteration}
-            </Text>
-
-            <Text color={infoColor} fontSize="10px">
-              {surah.revelationPlace === 'mecca' ? 'Meccan' : 'Medinan'}
+              {item.uuid}. {item.transliteration}
             </Text>
           </Flex>
 
           <Flex justify="space-between" align="center">
-            <Tooltip variant="inverted" placement="right" label={surah.meaning}>
-              <Text
-                color={infoColor}
-                fontSize="10px"
-                whiteSpace="nowrap"
-                overflow="hidden"
-                textOverflow="ellipsis"
-              >
-                {surah.meaning}
-              </Text>
-            </Tooltip>
+            <Text
+              fontSize="13px"
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              fontFamily="ArabicFont"
+            >
+              {item.name}
+            </Text>
 
             <Tooltip
               variant="inverted"
               placement="right"
-              label={`Total ayat: ${surah.totalAyat}`}
+              label={`Total ayat: ${item.totalAyat}`}
             >
-              <Flex align="center" color={infoColor} fontSize="10px" gap="2px">
+              <Flex align="center" fontSize="10px" gap="2px" color={infoColor}>
                 <Box display="flex" alignItems="center">
                   <MdNumbers size={10} />
                 </Box>
 
-                <Text lineHeight="1" color={infoColor}>
-                  {surah.totalAyat}
-                </Text>
+                <Text lineHeight="1">{item.totalAyat}</Text>
               </Flex>
             </Tooltip>
           </Flex>
@@ -69,4 +61,4 @@ const SurahRow = ({
   );
 };
 
-export default SurahRow;
+export default JuzRow;

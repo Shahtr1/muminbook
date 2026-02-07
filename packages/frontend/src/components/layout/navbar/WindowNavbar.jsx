@@ -7,11 +7,11 @@ import { XSearch } from '@/components/layout/x/XSearch.jsx';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const WindowNavbar = ({ children, onClose, onMinimize }) => {
-  const { surface, icon } = useSemanticColors();
+  const { surface, icon, invert } = useSemanticColors();
   const bgColor = surface.base;
   const bgContentColor = surface.content;
   const iconActiveColor = icon.active;
-  const invertedIconActiveColor = icon.invertedActive;
+  const invertedIconActiveColor = invert(icon.active);
   const iconHoverGray = icon.hover;
   const { border } = useSemanticColors();
   const navigate = useNavigate();
