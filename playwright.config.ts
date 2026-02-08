@@ -30,7 +30,7 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
     },
     {
-      command: 'npm run frontend',
+      command: 'cross-env VITE_API_URL=http://localhost:4004 npm run frontend',
       port: 5173,
       reuseExistingServer: !process.env.CI,
     },
