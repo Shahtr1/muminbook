@@ -9,8 +9,7 @@ setup('authenticate admin', async ({ page }) => {
 
   await page.getByRole('button', { name: /sign in/i }).click();
 
-  // Wait for redirect (your redirectUrl defaults to '/')
-  await page.waitForURL('/', { timeout: 10000 });
+  await page.waitForLoadState('networkidle');
 
   await expect(page).not.toHaveURL(/login/);
 
