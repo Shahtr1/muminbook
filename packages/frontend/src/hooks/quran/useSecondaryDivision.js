@@ -4,7 +4,6 @@ import { useMemo } from 'react';
  * Manzil (7 sections)
  */
 export const useManzil = (structureManzils = []) => {
-  console.log(structureManzils);
   return useMemo(() => {
     const map = new Map(structureManzils.map((m) => [m.manzil, m.totalAyat]));
 
