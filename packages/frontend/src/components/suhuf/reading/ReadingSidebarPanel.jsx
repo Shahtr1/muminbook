@@ -1,12 +1,13 @@
-import { Flex, Icon, Tooltip, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Icon, Tooltip } from '@chakra-ui/react';
 import { FaComments, FaList } from 'react-icons/fa';
 import { BsHighlights } from 'react-icons/bs';
 import { useCallback } from 'react';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 
-import { QuranDivisionListContent } from '@/components/suhuf/sidebar/QuranDivisionListContent.jsx';
+import { QuranDivisionListContent } from '@/components/suhuf/sidebar/quranDivision/QuranDivisionListContent.jsx';
 import { CommentsListContent } from '@/components/suhuf/sidebar/CommentsListContent.jsx';
 import { HighlightsListContent } from '@/components/suhuf/sidebar/HighlightsListContent.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 const sidebarTabs = [
   { label: 'List', id: 'list', icon: FaList },
@@ -15,6 +16,8 @@ const sidebarTabs = [
 ];
 
 export const ReadingSidebarPanel = ({ direction }) => {
+  const { border, icon, surface } = useSemanticColors();
+
   const { layout, panels, updateLayout } = useSuhufWorkspaceContext();
 
   const readingLayouts = layout?.reading || [];
@@ -25,18 +28,11 @@ export const ReadingSidebarPanel = ({ direction }) => {
   const activeTab = readingState?.sidebar;
   const isOpen = readingState?.sidebarOpen ?? false;
 
-  const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
-  const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
-  const iconHoverGray = useColorModeValue(
-    'wn.icon.hover.light',
-    'wn.icon.hover.dark'
-  );
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-  const bgContentColor = useColorModeValue(
-    'wn.bg_content.light',
-    'wn.bg_content.dark'
-  );
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
+  const iconActiveColor = icon.active;
+  const iconColor = icon.default;
+  const iconHoverGray = icon.hover;
+  const bgColor = surface.base;
+  const bgContentColor = surface.content;
 
   const toggleTab = useCallback(
     (tabKey) => {
@@ -92,7 +88,7 @@ export const ReadingSidebarPanel = ({ direction }) => {
         align="center"
         flexDir="column"
         border="1px solid"
-        borderColor={borderColor}
+        borderColor={border.default}
         gap={2}
         py={2}
         zIndex={2}
@@ -138,7 +134,7 @@ export const ReadingSidebarPanel = ({ direction }) => {
         bgColor={bgColor}
         border="1px solid"
         borderLeft="none"
-        borderColor={borderColor}
+        borderColor={border.default}
         borderTopRightRadius="sm"
         borderBottomRightRadius="sm"
         p={2}

@@ -1,17 +1,19 @@
-import { Box, Flex, Text, Tooltip, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Text, Tooltip } from '@chakra-ui/react';
 import { BsPinAngle, BsPinAngleFill } from 'react-icons/bs';
 import { useTogglePinResource } from '@/hooks/explorer/useTogglePinResource.js';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 const OverviewItem = ({ item, isPinned }) => {
+  const { text, surface } = useSemanticColors();
   const { mutate: togglePinResource } = useTogglePinResource();
   const location = useLocation();
   const activePath = decodeURIComponent(
     location.pathname.replace(/^\/reading\//, '')
   );
   const navigate = useNavigate();
-  const activeBg = useColorModeValue('gray.100', 'gray.700');
-  const textDefaultColor = useColorModeValue('text.primary', 'whiteAlpha.900');
+  const activeBg = surface.subtle;
+  const textDefaultColor = text.primary;
 
   const togglePin = (e) => {
     e.stopPropagation();

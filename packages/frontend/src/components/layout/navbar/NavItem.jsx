@@ -1,16 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  Flex,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const NavItem = ({ item, activeBorderColor, children }) => {
+  const { state } = useSemanticColors();
   const navigate = useNavigate();
-  const activeColor = useColorModeValue('active.light', 'active.dark');
-  const defaultColor = useColorModeValue('default.light', 'default.dark');
+  const activeColor = state.active;
+  const defaultColor = state.default;
   const isMdScreen = useBreakpointValue({ base: true, md: false });
 
   const [hovering, setHovering] = useState(false);

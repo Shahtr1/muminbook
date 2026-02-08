@@ -1,8 +1,8 @@
-import { Flex, Image, useColorMode, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Image } from '@chakra-ui/react';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
 import { NavItem } from '@/components/layout/navbar/NavItem.jsx';
 import { useQueryClient } from '@tanstack/react-query';
-import { AUTH } from '@/hooks/useAuth.js';
+import { AUTH } from '@/hooks/common/useAuth.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Search2Icon } from '@chakra-ui/icons';
@@ -13,18 +13,20 @@ import { UserMenu } from '@/components/layout/navbar/menus/UserMenu.jsx';
 import { FeaturesMenu } from '@/components/layout/navbar/menus/FeaturesMenu.jsx';
 import { navItems } from '@/data/navbarData.js';
 import { XSearch } from '@/components/layout/x/XSearch.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const Navbar = () => {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
-  const { colorMode } = useColorMode();
   const location = useLocation();
   const navigate = useNavigate();
 
+  const { border, state, surface } = useSemanticColors();
+
   const [isFocused, setIsFocused] = useState(false);
 
-  const activeColor = useColorModeValue('active.light', 'active.dark');
-  const defaultColor = useColorModeValue('default.light', 'default.dark');
+  const activeColor = state.active;
+  const defaultColor = state.default;
 
   const searchInputRef = useRef(null);
 
@@ -40,9 +42,9 @@ export const Navbar = () => {
       h="navbar-height"
       inset={0}
       borderBottom="1px solid"
-      borderColor={colorMode === 'light' ? 'gray.300' : 'whiteAlpha.300'}
+      borderColor={border.subtle}
       boxShadow="sm"
-      bg={colorMode === 'light' ? 'white' : 'gray.800'}
+      bg={surface.elevated}
       justify="center"
       zIndex={1100}
     >

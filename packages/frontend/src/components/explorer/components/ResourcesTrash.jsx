@@ -4,7 +4,6 @@ import {
   MenuButton,
   MenuList,
   Text,
-  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import { TrashSVG } from '@/components/svgs/TrashSVG.jsx';
@@ -16,12 +15,14 @@ import { useEmptyTrashResource } from '@/hooks/explorer/trash/useEmptyTrashResou
 import { useIsTrashEmpty } from '@/hooks/explorer/trash/useIsTrashEmpty.js';
 import { useRestoreAllResource } from '@/hooks/explorer/trash/useRestoreAllResource.js';
 import { useState } from 'react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ResourcesTrash = () => {
+  const { text } = useSemanticColors();
   const { emptyTrash } = useIsTrashEmpty();
   const location = useLocation();
   const navigate = useNavigate();
-  const defaultTextColor = useColorModeValue('text.primary', 'whiteAlpha.900');
+  const defaultTextColor = text.primary;
 
   const { mutate: emptyTrashResource } = useEmptyTrashResource();
   const { mutate: restoreAllResource } = useRestoreAllResource();

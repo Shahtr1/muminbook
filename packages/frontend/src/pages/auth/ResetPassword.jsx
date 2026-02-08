@@ -6,14 +6,15 @@ import {
   Link as ChakraLink,
   Stack,
   Text,
-  useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { ResetPasswordForm } from '../../components/form/ResetPasswordForm.jsx';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ResetPassword = () => {
+  const { surface } = useSemanticColors();
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
   const exp = Number(searchParams.get('exp'));
@@ -41,7 +42,7 @@ export const ResetPassword = () => {
           </Alert>
           <Stack
             rounded="sm"
-            bg={useColorModeValue('white', 'gray.800')}
+            bg={surface.elevated}
             boxShadow="md"
             p={3}
             minW={{ base: 300, sm: 400 }}

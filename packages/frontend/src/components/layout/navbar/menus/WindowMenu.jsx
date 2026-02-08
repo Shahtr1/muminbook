@@ -8,26 +8,24 @@ import {
   MenuList,
   Text,
   useBreakpointValue,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { userData } from '@/data/userData.js';
 import { notificationsData } from '@/data/notificationsData.js';
 import { featureData } from '@/data/featureData.js';
-import { AUTH } from '@/hooks/useAuth.js';
+import { AUTH } from '@/hooks/common/useAuth.js';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { IoChevronForwardOutline, IoMenuOutline } from 'react-icons/io5';
 import { navItems } from '@/data/navbarData.js';
 import { logout } from '@/services/index.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const WindowMenu = () => {
+  const { icon, surface, border } = useSemanticColors();
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
-  const hoverGray = useColorModeValue(
-    'wn.icon.hover.light',
-    'wn.icon.hover.dark'
-  );
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-  const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
+  const hoverGray = icon.hover;
+  const bgColor = surface.base;
+  const iconActiveColor = icon.active;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData([AUTH]);
@@ -42,7 +40,7 @@ export const WindowMenu = () => {
     },
   });
 
-  const separatorColor = useColorModeValue('gray.300', 'whiteAlpha.300');
+  const separatorColor = border.subtle;
 
   const handleActionClick = (item) => {
     if (item.action) item.action();

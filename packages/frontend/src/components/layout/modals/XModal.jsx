@@ -7,8 +7,8 @@ import {
   ModalHeader,
   ModalOverlay,
   useBreakpointValue,
-  useColorModeValue,
 } from '@chakra-ui/react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const XModal = ({
   isOpen,
@@ -18,7 +18,7 @@ export const XModal = ({
   footer = null,
   showCloseButton = true,
 }) => {
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
+  const { border } = useSemanticColors();
   const isMobile = useBreakpointValue({ base: true, sm: false });
 
   return (
@@ -46,7 +46,7 @@ export const XModal = ({
             fontSize={{ base: '15px', sm: '17px' }}
             color="brand.500"
             borderBottom="1px solid"
-            borderColor={borderColor}
+            borderColor={border.default}
           >
             {title}
           </ModalHeader>

@@ -1,9 +1,9 @@
-import { Flex, Radio, Text, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Radio, Text } from '@chakra-ui/react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const XRadio = ({ value, label, hasError }) => {
-  const borderColor = hasError
-    ? useColorModeValue('red.500', 'red.300')
-    : useColorModeValue('gray.300', 'whiteAlpha.500');
+  const { border } = useSemanticColors();
+  const borderColor = hasError ? border.error : border.default;
 
   const borderWidth = hasError ? '2px' : '1px';
 

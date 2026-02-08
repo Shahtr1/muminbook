@@ -6,15 +6,16 @@ import {
   Button,
   Flex,
   Text,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const Forbidden = () => {
   const navigate = useNavigate();
-  const iconColor = useColorModeValue('text.primary', 'whiteAlpha.900');
+  const { text } = useSemanticColors();
+  const iconColor = text.primary;
 
   const handleGoBack = () => {
     navigate('/');

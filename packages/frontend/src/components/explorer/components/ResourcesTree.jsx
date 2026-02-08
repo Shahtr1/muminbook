@@ -6,13 +6,13 @@ import {
   Skeleton,
   Text,
   Tooltip,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
 import { useResources } from '@/hooks/explorer/useResources.js';
 import { FolderSVG } from '@/components/svgs/FolderSVG.jsx';
 import { FileSVG } from '@/components/svgs/FileSVG.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 const TreeNode = ({
   path,
@@ -23,7 +23,8 @@ const TreeNode = ({
   showFiles = true,
   windowMode = false,
 }) => {
-  const defaultTextColor = useColorModeValue('text.primary', 'whiteAlpha.900');
+  const { text } = useSemanticColors();
+  const defaultTextColor = text.primary;
   const [isExpanded, setIsExpanded] = useState(false);
   const [shouldFetch, setShouldFetch] = useState(path === 'my-files');
 

@@ -1,25 +1,17 @@
-import {
-  Box,
-  Flex,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import { SuhufSVG } from '@/components/svgs/SuhufSVG.jsx';
 import { sidebarMenuData } from '@/data/sidebarMenuData.js';
-import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig.js';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const WelcomePanel = () => {
+  const { icon, surface } = useSemanticColors();
   const { layout, updateLayout } = useSuhufWorkspaceContext();
 
-  const secondaryColor = useColorModeValue('wn.gutter.light', 'wn.gutter.dark');
+  const secondaryColor = surface.gutter;
   const suhufLogoSize = useBreakpointValue({ base: '90px', sm: '130px' });
-  const primaryColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
-  const bgColor = useColorModeValue(
-    'wn.bg_content.light',
-    'wn.bg_content.dark'
-  );
+  const primaryColor = icon.default;
+  const bgColor = surface.content;
 
   const activeTab = layout.leftTab;
   const isOpen = layout.isLeftTabOpen;

@@ -1,26 +1,19 @@
-import { Flex, Icon, Image, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Icon, Image } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoCloseOutline, IoRemoveOutline } from 'react-icons/io5';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
 import { WindowMenu } from '@/components/layout/navbar/menus/WindowMenu.jsx';
 import { XSearch } from '@/components/layout/x/XSearch.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const WindowNavbar = ({ children, onClose, onMinimize }) => {
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-  const bgContentColor = useColorModeValue(
-    'wn.bg_content.light',
-    'wn.bg_content.dark'
-  );
-  const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
-  const invertedIconActiveColor = useColorModeValue(
-    'wn.bold.dark',
-    'wn.bold.light'
-  );
-  const iconHoverGray = useColorModeValue(
-    'wn.icon.hover.light',
-    'wn.icon.hover.dark'
-  );
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
+  const { surface, icon, invert } = useSemanticColors();
+  const bgColor = surface.base;
+  const bgContentColor = surface.content;
+  const iconActiveColor = icon.active;
+  const invertedIconActiveColor = invert(icon.active);
+  const iconHoverGray = icon.hover;
+  const { border } = useSemanticColors();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -38,7 +31,7 @@ export const WindowNavbar = ({ children, onClose, onMinimize }) => {
       pl={2}
       zIndex={2}
       borderBottom="1px solid"
-      borderColor={borderColor}
+      borderColor={border.default}
     >
       <Flex gap={2} py="2px" align="center" pr={2}>
         <Image

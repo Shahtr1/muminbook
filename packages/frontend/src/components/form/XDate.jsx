@@ -4,9 +4,9 @@ import {
   FormErrorMessage,
   FormLabel,
   Select,
-  useColorModeValue,
 } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const XDate = ({
   errorMessage,
@@ -14,6 +14,7 @@ export const XDate = ({
   gap = 1,
   label,
 }) => {
+  const { text } = useSemanticColors();
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
@@ -35,11 +36,8 @@ export const XDate = ({
   ];
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
-  const placeholderColor = useColorModeValue(
-    'text.secondary',
-    'text.secondary'
-  );
-  const optionColor = useColorModeValue('text.primary', 'whiteAlpha.900');
+  const placeholderColor = 'text.secondary';
+  const optionColor = text.primary;
 
   const sx = {
     option: {

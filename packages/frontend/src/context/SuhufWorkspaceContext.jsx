@@ -1,10 +1,19 @@
-import { createContext, useContext, useMemo, useCallback } from 'react';
+import { createContext, useCallback, useContext, useMemo } from 'react';
 import { useUpdateSuhufConfig } from '@/hooks/suhuf/useUpdateSuhufConfig';
 import { useOpenFile } from '@/hooks/suhuf/useOpenFile.js';
 
 const SuhufWorkspaceContext = createContext(null);
 
-export const SuhufProvider = ({ suhuf, children, surahs }) => {
+export const SuhufProvider = ({
+  suhuf,
+  children,
+  surahs,
+  juzList,
+  manzils,
+  hizbs,
+  rukus,
+  quranStructure,
+}) => {
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
   const openFile = useOpenFile(suhuf._id);
 
@@ -56,31 +65,23 @@ export const SuhufProvider = ({ suhuf, children, surahs }) => {
     updateLayout({ isBottomTabOpen: !layout.isBottomTabOpen });
   }, [layout.isBottomTabOpen, updateLayout]);
 
-  const value = useMemo(
-    () => ({
-      suhuf,
-      layout,
-      panels,
-      surahs,
-      updateLayout,
-      updatePanels,
-      toggleSplit,
-      toggleLeftSidebar,
-      toggleBottomPanel,
-      openFile,
-    }),
-    [
-      suhuf,
-      layout,
-      panels,
-      updateLayout,
-      updatePanels,
-      toggleSplit,
-      toggleLeftSidebar,
-      toggleBottomPanel,
-      openFile,
-    ]
-  );
+  const value = {
+    suhuf,
+    layout,
+    panels,
+    surahs,
+    juzList,
+    manzils,
+    hizbs,
+    rukus,
+    quranStructure,
+    updateLayout,
+    updatePanels,
+    toggleSplit,
+    toggleLeftSidebar,
+    toggleBottomPanel,
+    openFile,
+  };
 
   return (
     <SuhufWorkspaceContext.Provider value={value}>

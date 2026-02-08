@@ -1,15 +1,12 @@
 import React, { Fragment, useMemo } from 'react';
-import {
-  Box,
-  useBreakpointValue,
-  useColorModeValue,
-  useTheme,
-} from '@chakra-ui/react';
+import { Box, useBreakpointValue, useTheme } from '@chakra-ui/react';
 import { Ayah } from '@/components/suhuf/reading/content/Ayah.jsx';
 import { SurahHeader } from '@/components/suhuf/reading/content/SurahHeader.jsx';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const QuranContent = ({ data }) => {
+  const { overlay } = useSemanticColors();
   const { surahs } = useSuhufWorkspaceContext();
 
   const bismalah = 'بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ';
@@ -30,10 +27,7 @@ export const QuranContent = ({ data }) => {
     md: theme.space['ayat-md-height'],
   });
 
-  const ruleColor = useColorModeValue(
-    'rgba(0,0,0,0.15)',
-    'rgba(255,255,255,0.15)'
-  );
+  const ruleColor = overlay.strong;
 
   return (
     <Box

@@ -1,18 +1,15 @@
 import { SVG } from '@/components/svgs/SVG.jsx';
-import {
-  Box,
-  Flex,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Flex, useBreakpointValue } from '@chakra-ui/react';
 import {
   absoluteBoxStyles,
   absoluteSvgStyles,
 } from '@/components/svgs/MaleFemaleCommonStyles.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const MaleSVG = ({ color, dimensions = '25px' }) => {
+  const { surface } = useSemanticColors();
   const isMdScreen = useBreakpointValue({ base: true, md: false });
-  const bgColor = useColorModeValue('white', 'gray.800');
+  const bgColor = surface.elevated;
   return (
     <Flex position="relative" height="100%" width="100%" overflow="hidden">
       <Box

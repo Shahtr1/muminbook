@@ -10,7 +10,6 @@ import {
   Text,
   Tooltip,
   useBreakpointValue,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { useOpenSuhuf } from '@/hooks/suhuf/useOpenSuhuf.js';
@@ -19,13 +18,15 @@ import { SuhufSVG } from '@/components/svgs/SuhufSVG.jsx';
 import { BsPencilFill } from 'react-icons/bs';
 import { useRenameSuhuf } from '@/hooks/suhuf/useRenameSuhuf.js';
 import { IoCheckmarkOutline, IoCloseOutline } from 'react-icons/io5';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const WorkspaceMenu = ({ suhuf }) => {
   const openSuhuf = useOpenSuhuf();
   const { mutate: renameSuhuf } = useRenameSuhuf();
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-  const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
-  const addButtonColor = useColorModeValue('white', 'text.primary');
+  const { surface, icon, text } = useSemanticColors();
+  const bgColor = surface.base;
+  const iconColor = icon.default;
+  const addButtonColor = text.contrast;
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

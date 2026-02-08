@@ -5,12 +5,13 @@ import {
   InputLeftElement,
   InputRightElement,
   Text,
-  useColorModeValue,
   useTheme,
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useClickOutside } from '@/hooks/common/useClickOutside.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const XSearch = ({
   focused = false,
@@ -30,7 +31,8 @@ export const XSearch = ({
   showIcon = true,
   dropdownContent,
 }) => {
-  const xColor = color || useColorModeValue('default.light', 'default.dark');
+  const { state, border } = useSemanticColors();
+  const xColor = color || state.default;
   const searchInputRef = useRef(null);
   const wrapperRef = useRef(null);
   const dropdownRef = useRef(null);
@@ -43,9 +45,7 @@ export const XSearch = ({
   const [search, setSearch] = useState('');
   const debounceRef = useRef(null);
 
-  const dropdownBg = useColorModeValue('white', 'gray.800');
-  const dropdownHover = useColorModeValue('gray.100', 'gray.700');
-  const borderColor = useColorModeValue('gray.200', 'whiteAlpha.300');
+  const borderColor = border.light;
 
   // Sync focus prop
   useEffect(() => {
@@ -57,23 +57,11 @@ export const XSearch = ({
     }
   }, [focused]);
 
-  // Outside click
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target) &&
-        (!dropdownRef.current || !dropdownRef.current.contains(event.target))
-      ) {
-        setIsFocused(false);
-        setSearch('');
-        onFocusChange?.(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [onFocusChange]);
+  useClickOutside([wrapperRef, dropdownRef], () => {
+    setIsFocused(false);
+    setSearch('');
+    onFocusChange?.(false);
+  });
 
   useEffect(() => {
     if (!onSearch) return;

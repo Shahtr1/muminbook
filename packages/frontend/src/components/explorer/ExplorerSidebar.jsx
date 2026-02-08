@@ -1,4 +1,4 @@
-import { Flex, IconButton, useColorModeValue } from '@chakra-ui/react';
+import { Flex, IconButton } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ResourcesTree } from '@/components/explorer/components/ResourcesTree.jsx';
 import { ResourcesTrash } from '@/components/explorer/components/ResourcesTrash.jsx';
@@ -6,11 +6,13 @@ import { ResourcesOverview } from '@/components/explorer/components/ResourcesOve
 import { LuMenu } from 'react-icons/lu';
 import { useState } from 'react';
 import { useReadingLayoutConfig } from '@/hooks/reading/useReadingLayoutConfig.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ExplorerSidebar = ({ overview }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.300');
+  const { border } = useSemanticColors();
+  const borderColor = border.subtle;
 
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);

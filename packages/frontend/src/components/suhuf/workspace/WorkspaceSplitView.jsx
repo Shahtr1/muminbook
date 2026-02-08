@@ -7,7 +7,7 @@ import { ReadingViewPanel } from '@/components/suhuf/panels/ReadingViewPanel.jsx
 import { EditorViewPanel } from '@/components/suhuf/panels/EditorViewPanel.jsx';
 import { WelcomePanel } from '@/components/suhuf/panels/WelcomePanel.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
-import { useSafeBreakpointValue } from '@/hooks/useSafeBreakpointValue.js';
+import { useSafeBreakpointValue } from '@/hooks/common/useSafeBreakpointValue.js';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 import { PanelHeader } from '@/components/suhuf/panels/PanelHeader.jsx';
 

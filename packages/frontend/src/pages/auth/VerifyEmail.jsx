@@ -7,13 +7,13 @@ import {
   Spinner,
   Stack,
   Text,
-  useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { DarkModeToggle } from '@/components/layout/DarkModeToggle.jsx';
 import { verifyEmail } from '@/services/index.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 const VerifyEmail = () => {
   const { code } = useParams();
@@ -22,6 +22,8 @@ const VerifyEmail = () => {
     queryFn: () => verifyEmail(code),
   });
   const navigate = useNavigate();
+
+  const { surface } = useSemanticColors();
   return (
     <>
       <DarkModeToggle position="absolute" inset="10px 20px auto auto" />
@@ -40,7 +42,7 @@ const VerifyEmail = () => {
           </Alert>
           <Stack
             rounded="sm"
-            bg={useColorModeValue('white', 'gray.800')}
+            bg={surface.elevated}
             boxShadow="md"
             p={3}
             minW={{ base: 300, sm: 400 }}

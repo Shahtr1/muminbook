@@ -1,5 +1,5 @@
-import useAuth from '../hooks/useAuth.js';
-import { Flex, useColorModeValue, useTheme } from '@chakra-ui/react';
+import useAuth from '../hooks/common/useAuth.js';
+import { Flex, useTheme } from '@chakra-ui/react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Navbar } from '@/components/layout/navbar/Navbar.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
@@ -10,14 +10,16 @@ import { useWindowNavbar } from '@/context/WindowNavbarContext.jsx';
 import { WinManager } from '@/components/layout/WinManager.jsx';
 import { useEffect, useState } from 'react';
 import { updateNavigationPath } from '@/utils/updateNavigationPath.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const AppContainer = () => {
+  const { surface } = useSemanticColors();
   const { user, isLoading, isError } = useAuth();
   const queryClient = useQueryClient();
   const { navbarChildren } = useWindowNavbar();
   const theme = useTheme();
   const location = useLocation();
-  const windowBgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
+  const windowBgColor = surface.base;
 
   const [winManagerVisible, setWinManagerVisible] = useState(false);
   const [handleWindowClose, setHandleWindowClose] = useState(null);

@@ -1,14 +1,16 @@
-import { Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { NavItem } from '@/components/layout/navbar/NavItem.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const NavMenuItem = ({ item, active, MenuComponent, showIcon }) => {
+  const { state } = useSemanticColors();
   const [openMenu, setOpenMenu] = useState(false);
   const [hoverMenu, setHoverMenu] = useState(false);
 
-  const activeColor = useColorModeValue('active.light', 'active.dark');
-  const defaultColor = useColorModeValue('default.light', 'default.dark');
+  const activeColor = state.active;
+  const defaultColor = state.default;
 
   return (
     <MenuComponent

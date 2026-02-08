@@ -1,5 +1,6 @@
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const SVG = ({
   dimensions,
@@ -18,11 +19,11 @@ export const SVG = ({
     width = widthHeight[0];
     height = widthHeight[1];
   }
-  const defaultActiveColor = useColorModeValue('active.light', 'active.dark');
-  const defaultDefaultColor = useColorModeValue(
-    'default.light',
-    'default.dark'
-  );
+
+  const { state } = useSemanticColors();
+
+  const defaultActiveColor = state.active;
+  const defaultDefaultColor = state.default;
 
   const computedActiveColor = activeColor ?? defaultActiveColor;
   const computedDefaultColor = defaultColor ?? defaultDefaultColor;

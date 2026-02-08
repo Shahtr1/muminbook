@@ -1,21 +1,16 @@
-import {
-  Flex,
-  Text,
-  Tooltip,
-  useColorModeValue,
-  VStack,
-} from '@chakra-ui/react';
-import { useEffect, useMemo, useCallback } from 'react';
+import { Flex, Text, Tooltip, VStack } from '@chakra-ui/react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { sidebarMenuData } from '@/data/sidebarMenuData.js';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const WorkspaceSidebar = () => {
   const { layout, updateLayout } = useSuhufWorkspaceContext();
+  const { border, surface, icon } = useSemanticColors();
 
-  const iconActiveColor = useColorModeValue('wn.bold.light', 'wn.bold.dark');
-  const iconColor = useColorModeValue('wn.icon.light', 'wn.icon.dark');
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.500');
+  const iconActiveColor = icon.active;
+  const iconColor = icon.default;
+  const bgColor = surface.base;
 
   const width = '150px';
 
@@ -74,7 +69,7 @@ export const WorkspaceSidebar = () => {
         pt={5}
         pb={2}
         borderRight="1px solid"
-        borderColor={borderColor}
+        borderColor={border.default}
         zIndex={1}
       >
         <VStack spacing={5} align="center" w="100%" overflow="auto">
@@ -106,7 +101,7 @@ export const WorkspaceSidebar = () => {
         bg={bgColor}
         py={5}
         borderRight="1px solid"
-        borderColor={borderColor}
+        borderColor={border.default}
         transition="margin-left 0.3s ease-in-out"
         marginLeft={isOpen ? '0' : `-${width}`}
         h="100%"

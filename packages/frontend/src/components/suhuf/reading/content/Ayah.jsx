@@ -1,17 +1,16 @@
 import { Box, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import { toArabicNumeral } from '@/utils/toArabicNumeral.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const Ayah = ({ text, ayahNumber, block }) => {
+  const { icon } = useSemanticColors();
   const svgImage = useColorModeValue(
     '/images/frames/ayat-dark.svg',
     '/images/frames/ayat-light.svg'
   );
 
-  const hoverGray = useColorModeValue(
-    'wn.icon.hover.light',
-    'wn.icon.hover.dark'
-  );
+  const hoverGray = icon.hover;
 
   return (
     <Box as={block ? 'div' : 'span'} textAlign={block ? 'center' : 'unset'}>

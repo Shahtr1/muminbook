@@ -12,13 +12,12 @@ import { XSearch } from '@/components/layout/x/XSearch.jsx';
 import { useEffect, useRef, useState } from 'react';
 import { AddMenu } from '@/components/explorer/toolbar/AddMenu.jsx';
 import { useCreateResource } from '@/hooks/explorer/useCreateResource.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ExplorerToolbar = () => {
+  const { overlay } = useSemanticColors();
   const bgColor = useColorModeValue('bg.light', 'bg.dark');
-  const boxShadowColor = useColorModeValue(
-    'rgba(0, 0, 0, 0.1)',
-    'rgba(255, 255, 255, 0.1)'
-  );
+  const boxShadowColor = overlay.subtle;
   const theme = useTheme();
   const headerRef = useRef(null);
 

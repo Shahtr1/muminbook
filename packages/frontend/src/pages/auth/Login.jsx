@@ -9,7 +9,6 @@ import {
   Link as ChakraLink,
   Stack,
   Text,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -19,6 +18,7 @@ import { XEyeIcon } from '@/components/form/XEyeIcon.jsx';
 import { XAlert } from '@/components/layout/x/XAlert.jsx';
 import { XDivider } from '@/components/layout/x/XDivider.jsx';
 import { login } from '@/services/index.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 const Login = () => {
   const location = useLocation();
@@ -26,6 +26,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const { surface } = useSemanticColors();
 
   const redirectUrl = location.state?.redirectUrl || '/';
 
@@ -75,7 +76,7 @@ const Login = () => {
         </Stack>
         <Stack
           rounded="sm"
-          bg={useColorModeValue('white', 'gray.800')}
+          bg={surface.elevated}
           boxShadow="md"
           p={3}
           minW={280}

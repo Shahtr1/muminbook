@@ -1,9 +1,10 @@
-import { Flex, useColorModeValue } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { BottomPanelHeader } from '@/components/suhuf/workspace/BottomPanelHeader.jsx';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const BottomPanelWithHeader = ({ readings }) => {
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-
+  const { surface } = useSemanticColors();
+  const bgColor = surface.base;
   return (
     <Flex h="100%" w="100%" bg={bgColor} flexDir="column">
       <BottomPanelHeader readings={readings} />

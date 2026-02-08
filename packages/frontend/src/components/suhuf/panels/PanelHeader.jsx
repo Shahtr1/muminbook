@@ -8,13 +8,14 @@ import {
   PopoverTrigger,
   Text,
   Tooltip,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { RiCloseCircleFill, RiInformationFill } from 'react-icons/ri';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 import { useQueryClient } from '@tanstack/react-query';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const PanelHeader = ({ id, direction }) => {
+  const { surface, border } = useSemanticColors();
   const queryClient = useQueryClient();
   const readings = queryClient.getQueryData(['readings']) || [];
 
@@ -22,8 +23,8 @@ export const PanelHeader = ({ id, direction }) => {
 
   const { panels, updatePanels } = useSuhufWorkspaceContext();
 
-  const bgColor = useColorModeValue('wn.bg.light', 'wn.bg.dark');
-  const borderColor = useColorModeValue('gray.300', 'whiteAlpha.300');
+  const bgColor = surface.base;
+  const borderColor = border.subtle;
 
   const { label, description } = reading || {};
 

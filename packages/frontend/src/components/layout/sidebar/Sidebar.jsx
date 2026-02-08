@@ -1,18 +1,14 @@
-import {
-  Flex,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-  useTheme,
-} from '@chakra-ui/react';
+import { Flex, Text, useBreakpointValue, useTheme } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { motion } from 'framer-motion';
 import { SidebarItem } from '@/components/layout/sidebar/SidebarItem.jsx';
 import { useWindows } from '@/hooks/useWindows.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const Sidebar = ({ items = [], label, closeable = true }) => {
+  const { surface } = useSemanticColors();
   const location = useLocation();
   const theme = useTheme();
 
@@ -32,7 +28,7 @@ export const Sidebar = ({ items = [], label, closeable = true }) => {
     setIsReady(true);
   }, []);
 
-  const bgColor = useColorModeValue('white', 'gray.800');
+  const bgColor = surface.elevated;
 
   const flexDirection = isSmallScreen ? 'row' : 'column';
   const height = isSmallScreen
