@@ -51,7 +51,6 @@ const quranSchema = new Schema<QuranDocument>(
 );
 
 // Structural reading indexes
-quranSchema.index({ uuid: 1 }, { unique: true });
 quranSchema.index({ surahId: 1, uuid: 1 });
 quranSchema.index({ juzId: 1, uuid: 1 });
 quranSchema.index({ manzil: 1, uuid: 1 });
