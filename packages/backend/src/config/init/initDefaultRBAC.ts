@@ -8,6 +8,7 @@ import {
   ADMIN_GENDER,
   ADMIN_LASTNAME,
   ADMIN_PASSWORD,
+  NODE_ENV,
 } from '../../constants/env';
 import UserRoleModel from '../../models/user-role.model';
 import ResourceModel from '../../models/resource.model';
@@ -26,21 +27,24 @@ const ensureRole = async (type: RoleType, description: string) => {
 };
 
 const ensureAdminUser = async () => {
-  let admin = await UserModel.findOne({ email: ADMIN_EMAIL });
+  const email = NODE_ENV === 'test' ? 'admin.e2e@muminbook.com' : ADMIN_EMAIL;
+
+  const password = NODE_ENV === 'test' ? 'E2ETestPassword123!' : ADMIN_PASSWORD;
+
+  let admin = await UserModel.findOne({ email });
+
   if (!admin) {
     admin = await UserModel.create({
       firstname: ADMIN_FIRSTNAME,
       lastname: ADMIN_LASTNAME,
       dateOfBirth: ADMIN_DATE_OF_BIRTH,
       gender: ADMIN_GENDER,
-      email: ADMIN_EMAIL,
-      password: ADMIN_PASSWORD,
+      email,
+      password,
       verified: true,
     });
-    log.success('Admin user created');
-  } else {
-    log.info('Admin user already exists');
   }
+
   return admin;
 };
 
