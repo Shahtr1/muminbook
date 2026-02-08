@@ -55,6 +55,7 @@ vi.mock('../../../constants/env', () => ({
   ADMIN_GENDER: 'male',
   ADMIN_EMAIL: 'admin@test.com',
   ADMIN_PASSWORD: 'SecurePassword123!',
+  NODE_ENV: 'development',
 }));
 
 /* ------------------ IMPORTS AFTER MOCKS ------------------ */

@@ -43,6 +43,9 @@ const ensureAdminUser = async () => {
       password,
       verified: true,
     });
+    log.success('Admin user created');
+  } else {
+    log.info('Admin user already exists');
   }
 
   return admin;
