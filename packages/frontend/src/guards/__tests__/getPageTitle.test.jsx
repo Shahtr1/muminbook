@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getPageTitleFromPath } from '../App.jsx';
+import { getPageTitleFromPath } from '../../App.jsx';
 
 describe('getPageTitleFromPath', () => {
   it('returns "Home" for root path "/"', () => {

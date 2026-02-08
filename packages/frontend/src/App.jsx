@@ -20,7 +20,7 @@ import ReverifyEmail from '@/pages/auth/ReverifyEmail.jsx';
 import { Forbidden } from '@/pages/auth/Forbidden.jsx';
 import { Features } from '@/pages/features/Features.jsx';
 import { FamilyTree } from '@/pages/features/FamilyTree.jsx';
-import AdminGuard from '@/AdminGuard.jsx';
+import AdminGuard from '@/guards/AdminGuard.jsx';
 import { Admin } from '@/pages/Admin.jsx';
 import { SuperBoard } from '@/components/admin/SuperBoard.jsx';
 import { AdminFamilyTree } from '@/components/admin/AdminFamilyTree.jsx';
