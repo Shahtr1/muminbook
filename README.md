@@ -115,7 +115,7 @@ For package-specific scripts see `packages/backend/package.json` and `packages/f
 Backend environment variables live in `packages/backend/.env` (copy from `packages/backend/sample.env`). Important keys you should set:
 
 - NODE_ENV (development | production | test)
-- PORT (default: 5000)
+- PORT (default: 4004)
 - APP_ORIGIN (frontend origin, e.g. http://localhost:5173)
 - MONGO_URI (mongodb://localhost:27017/muminbook or Atlas URI)
 - JWT_SECRET — access token secret (note: this repository previously referenced `JWT_ACCESS_SECRET`; current code uses `JWT_SECRET`)
@@ -129,7 +129,7 @@ Note: If you have an older `.env` referencing `JWT_ACCESS_SECRET`, rename it to 
 
 Frontend environment variables live in `packages/frontend/.env` (copy from `packages/frontend/sample.env`). Typical value:
 
-- VITE_API_URL — backend API base URL (e.g. http://localhost:5000)
+- VITE_API_URL — backend API base URL (e.g. http://localhost:4004)
 
 ## Testing
 
