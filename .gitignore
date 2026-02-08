@@ -19,7 +19,6 @@ build/
 .env.local
 .env.development
 .env.development.local
-.env.test
 .env.test.local
 .env.production
 .env.production.local
@@ -110,3 +109,8 @@ out
 # Temporary folders
 tmp/
 temp/
+
+# Playwright
+test-results/
+playwright-report/
+e2e/.auth/
