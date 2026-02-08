@@ -49,10 +49,5 @@ export const useUpdateSuhufConfig = (suhufId) => {
       }
       toast.error(error);
     },
-
-    // Optional but recommended: ensure server truth wins
-    onSettled: () => {
-      queryClient.invalidateQueries(['suhuf', suhufId]);
-    },
   });
 };
