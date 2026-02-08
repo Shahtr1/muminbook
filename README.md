@@ -1,5 +1,7 @@
 ![Muminbook logo](./packages/frontend/public/images/logos/logo-with-image.png 'Muminbook')
 
+## Muminbook
+
 **A Modern Islamic Community Platform**
 
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
