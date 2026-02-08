@@ -1,9 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-test('authenticated user can access root route', async ({ page }) => {
+test('authenticated user lands on dashboard', async ({ page }) => {
   await page.goto('/');
 
   await page.waitForLoadState('networkidle');
 
-  await expect(page).not.toHaveURL(/login/);
+  await expect(page).toHaveURL(/dashboard/);
+
+  await expect(page).toHaveTitle('Dashboard');
 });
