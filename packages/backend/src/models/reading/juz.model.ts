@@ -4,6 +4,7 @@ export interface JuzDocument extends Document {
   uuid: number;
   name: string; //  Arabic name
   transliteration: string;
+  totalAyat: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,6 +21,10 @@ const juzSchema = new Schema<JuzDocument>(
     },
     transliteration: {
       type: String,
+      required: true,
+    },
+    totalAyat: {
+      type: Number,
       required: true,
     },
   },

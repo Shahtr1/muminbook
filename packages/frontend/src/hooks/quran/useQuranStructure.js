@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getQuranStructure } from '@/services/quran/quran-structure.service.js';
 
 export const useQuranStructure = () => {
-  const { data, ...rest } = useQuery({
+  const { data = [], ...rest } = useQuery({
     queryKey: ['quran-structure'],
     queryFn: getQuranStructure,
     staleTime: Infinity,
