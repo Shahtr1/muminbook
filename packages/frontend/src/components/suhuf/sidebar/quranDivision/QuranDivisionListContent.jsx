@@ -21,7 +21,7 @@ import { useFloatingPosition } from '@/hooks/common/useFloatingPosition.js';
 import JuzRow from '@/components/suhuf/sidebar/quranDivision/JuzRow.jsx';
 import SurahRow from '@/components/suhuf/sidebar/quranDivision/SurahRow.jsx';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
-import { HifzManzilRukuRow } from '@/components/suhuf/sidebar/quranDivision/HifzManzilRukuRow.jsx';
+import { OtherDivisionRow } from '@/components/suhuf/sidebar/quranDivision/OtherDivisionRow.jsx';
 
 export const QuranDivisionListContent = ({ panel }) => {
   /* =========================================================
@@ -265,7 +265,7 @@ export const QuranDivisionListContent = ({ panel }) => {
       }
 
       return (
-        <HifzManzilRukuRow
+        <OtherDivisionRow
           item={item}
           style={style}
           isSelected={isSelected}

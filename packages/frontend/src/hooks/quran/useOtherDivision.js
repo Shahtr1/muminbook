@@ -5,12 +5,13 @@ import { useMemo } from 'react';
  */
 export const useManzil = () => {
   return useMemo(
-    () =>
-      Array.from({ length: 7 }, (_, i) => ({
+    () => ({
+      manzils: Array.from({ length: 7 }, (_, i) => ({
         uuid: i + 1,
         number: i + 1,
         label: `Manzil ${i + 1}`,
       })),
+    }),
     []
   );
 };
@@ -20,27 +21,28 @@ export const useManzil = () => {
  */
 export const useHizb = () => {
   return useMemo(
-    () =>
-      Array.from({ length: 60 }, (_, i) => ({
+    () => ({
+      hizbs: Array.from({ length: 60 }, (_, i) => ({
         uuid: i + 1,
         number: i + 1,
         label: `Hizb ${i + 1}`,
       })),
+    }),
     []
   );
 };
-
 /**
  * Ruku (558 sections)
  */
 export const useRuku = () => {
   return useMemo(
-    () =>
-      Array.from({ length: 558 }, (_, i) => ({
+    () => ({
+      rukus: Array.from({ length: 558 }, (_, i) => ({
         uuid: i + 1,
         number: i + 1,
         label: `Ruku ${i + 1}`,
       })),
+    }),
     []
   );
 };
