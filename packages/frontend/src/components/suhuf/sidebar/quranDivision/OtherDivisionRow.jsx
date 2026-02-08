@@ -37,7 +37,9 @@ export const OtherDivisionRow = ({
                 <MdNumbers size={10} />
               </Box>
 
-              <Text lineHeight="1">{item.totalAyat}</Text>
+              <Text lineHeight="1" color={infoColor}>
+                {item.totalAyat}
+              </Text>
             </Flex>
           </Tooltip>
         </Flex>

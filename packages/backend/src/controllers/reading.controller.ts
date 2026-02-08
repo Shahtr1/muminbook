@@ -22,5 +22,5 @@ export const getReadingHandler = catchErrors(async (req, res) => {
 
 export const getQuranStructureHandler = catchErrors(async (_req, res) => {
   const counts = await getQuranStructureCounts();
-  return res.status(OK).json({ data: counts });
+  return res.status(OK).json(counts);
 });

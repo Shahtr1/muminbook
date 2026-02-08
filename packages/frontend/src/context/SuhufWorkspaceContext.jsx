@@ -12,6 +12,7 @@ export const SuhufProvider = ({
   manzils,
   hizbs,
   rukus,
+  quranStructure,
 }) => {
   const { mutate: updateConfig } = useUpdateSuhufConfig(suhuf._id);
   const openFile = useOpenFile(suhuf._id);
@@ -73,6 +74,7 @@ export const SuhufProvider = ({
     manzils,
     hizbs,
     rukus,
+    quranStructure,
     updateLayout,
     updatePanels,
     toggleSplit,

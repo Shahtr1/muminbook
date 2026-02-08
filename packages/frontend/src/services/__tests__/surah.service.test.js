@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as surahService from '../surah.service.js';
+import * as surahService from '../quran/surah.service.js';
 
 // Mock the API client
 vi.mock('@/config/apiClient.js', () => ({
