@@ -87,8 +87,8 @@ npm run frontend   # runs frontend dev server in workspace @muminbook/frontend
 Access the apps in your browser:
 
 - Frontend: http://localhost:5173
-- Backend API: http://localhost:5000
-- Health check: http://localhost:5000/
+- Backend API: http://localhost:4004
+- Health check: http://localhost:4004/
 
 ## 📁 Workspace scripts (summary)
 
@@ -106,6 +106,7 @@ The root `package.json` exposes helpful workspace scripts. Key scripts (run from
 - `npm run format` / `npm run format:check` — run Prettier formatting
 - `npm run clean` — remove node_modules folders (note: uses `rm -rf`, run in bash-compatible shells)
 - `npm run test` — run tests across workspaces (if present)
+- `npm run test:e2e` — run end-to-end tests (requires additional setup, see `docs/TESTING.md`)
 
 For package-specific scripts see `packages/backend/package.json` and `packages/frontend/package.json`.
 
@@ -134,6 +135,7 @@ Frontend environment variables live in `packages/frontend/.env` (copy from `pack
 
 - Frontend tests: `cd packages/frontend && npm run test` (or `npm run test:frontend` from repo root)
 - Backend tests: `cd packages/backend && npm run test` (or `npm run test:backend` from repo root)
+- E2E tests: `npm run test:e2e` (requires additional setup, see `docs/TESTING.md`)
 
 Note: The project uses Vitest for testing in both packages.
 
