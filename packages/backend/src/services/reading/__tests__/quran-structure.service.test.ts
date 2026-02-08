@@ -6,7 +6,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { getQuranStructureCounts } from '../get-reading-structure.service';
 import QuranModel from '../../../models/reading/quran.model';
 
-// ✅ FIXED PATH — must match import exactly
 vi.mock('../../../models/reading/quran.model', () => ({
   default: {
     aggregate: vi.fn(),
@@ -29,7 +28,6 @@ describe('Quran Structure Service - getQuranStructureCounts', () => {
       },
     ];
 
-    // ✅ Proper cast
     (QuranModel.aggregate as any).mockResolvedValue(mockResult);
 
     const result = await getQuranStructureCounts();
