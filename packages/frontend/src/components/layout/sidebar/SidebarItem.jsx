@@ -6,7 +6,7 @@ import {
   Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { forwardRef } from 'react';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
@@ -24,6 +24,7 @@ export const SidebarItem = forwardRef(
     ref
   ) => {
     const { text } = useSemanticColors();
+    const location = useLocation();
     const handleActionClick = () => {
       if (item.action) item.action();
       else if (item.link) navigate(item.link);

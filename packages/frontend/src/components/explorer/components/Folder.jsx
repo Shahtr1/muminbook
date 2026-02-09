@@ -5,10 +5,12 @@ import { ItemToolbar } from '@/components/explorer/toolbar/ItemToolbar.jsx';
 import { ResourcesActionItems } from '@/components/explorer/components/ResourcesActionItems.jsx';
 import { useAccessTracker } from '@/hooks/explorer/useAccessTracker.js';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
+import { useLocation } from 'react-router-dom';
 
 export const Folder = ({ onClick, width, folderPath, resource }) => {
   const { surface } = useSemanticColors();
   const { updateAccessedAt } = useAccessTracker();
+  const location = useLocation();
   const { id, name = 'My Files', empty = true } = resource;
   const lostAndFound = resource.name === 'lost+found';
   const myFiles = resource.name === 'my-files' || !resource.name;

@@ -13,10 +13,12 @@ import { useEffect, useRef, useState } from 'react';
 import { AddMenu } from '@/components/explorer/toolbar/AddMenu.jsx';
 import { useCreateResource } from '@/hooks/explorer/useCreateResource.js';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
+import { useLocation } from 'react-router-dom';
 
 export const ExplorerToolbar = () => {
   const { overlay } = useSemanticColors();
   const bgColor = useColorModeValue('bg.light', 'bg.dark');
+  const location = useLocation();
   const boxShadowColor = overlay.subtle;
   const theme = useTheme();
   const headerRef = useRef(null);

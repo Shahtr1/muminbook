@@ -86,10 +86,6 @@ export const AppContainer = () => {
       />
     </Flex>
   ) : (
-    <Navigate
-      to="/login"
-      replace
-      state={{ redirectUrl: window.location.pathname }}
-    />
+    <Navigate to="/login" replace state={{ redirectUrl: location.pathname }} />
   );
 };
