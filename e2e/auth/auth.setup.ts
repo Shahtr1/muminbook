@@ -17,6 +17,6 @@ setup('authenticate admin', async ({ page }) => {
   await page.waitForURL('/');
 
   await page.context().storageState({
-    path: '.auth/admin.json',
+    path: 'e2e/.auth/admin.json',
   });
 });

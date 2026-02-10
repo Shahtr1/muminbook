@@ -18,7 +18,7 @@ export default defineConfig({
       name: 'authenticated',
       dependencies: ['setup'],
       use: {
-        storageState: '.auth/admin.json',
+        storageState: 'e2e/.auth/admin.json',
       },
     },
   ],
