@@ -12,6 +12,7 @@ export const ExplorerCard = ({
   uuid,
   width,
   svg,
+  ...rest
 }) => {
   const { surface } = useSemanticColors();
   const bgColor = surface.elevated;
@@ -42,6 +43,7 @@ export const ExplorerCard = ({
       bgColor={bgColor}
       px={isSmallScreen ? '10px' : 0}
       overflow="hidden"
+      {...rest}
     >
       <ItemToolbar
         zIndex="1010"

@@ -42,12 +42,20 @@ export const ExplorerList = () => {
   const isPending = isMyFilesEmptyPending || isReadingPending;
   const isError = isMyFilesEmptyError || isReadingError;
 
-  if (isPending) return <Loader />;
-  if (isError) return <SomethingWentWrong />;
+  if (isPending) return <Loader data-testid="explorer-loading" />;
+  if (isError) return <SomethingWentWrong data-testid="explorer-error" />;
 
   return (
-    <Flex gap={gapSize} flexWrap="wrap" px={8} py={2} align="center">
+    <Flex
+      data-testid="explorer-list"
+      gap={gapSize}
+      flexWrap="wrap"
+      px={8}
+      py={2}
+      align="center"
+    >
       <Folder
+        data-testid="explorer-my-files"
         onClick={() => navigate('my-files')}
         width={itemWidth}
         resource={{ empty: emptyMyFiles }}
@@ -57,6 +65,7 @@ export const ExplorerList = () => {
         const SvgIcon = readingSvgMap[item.uuid] || BookSVG;
         return (
           <ExplorerCard
+            data-testid="explorer-reading-card"
             key={item._id}
             {...item}
             svg={<SvgIcon dimensions="50px" activeColor={item.color} />}

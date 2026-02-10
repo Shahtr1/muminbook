@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: './e2e',
 
   use: {
-    baseURL: 'http://localhost:5173',
+    baseURL: 'http://localhost:5174',
     headless: !!process.env.CI,
     trace: 'on-first-retry',
   },
@@ -18,7 +18,7 @@ export default defineConfig({
       name: 'authenticated',
       dependencies: ['setup'],
       use: {
-        storageState: 'e2e/.auth/admin.json',
+        storageState: '.auth/admin.json',
       },
     },
   ],
@@ -26,12 +26,12 @@ export default defineConfig({
   webServer: [
     {
       command: 'cross-env NODE_ENV=test npm run backend',
-      port: 4004,
+      port: 4005,
       reuseExistingServer: !process.env.CI,
     },
     {
-      command: 'vite --mode test --host',
-      port: 5173,
+      command: 'vite --mode test --host --port 5174',
+      port: 5174,
       reuseExistingServer: !process.env.CI,
       cwd: 'packages/frontend',
     },

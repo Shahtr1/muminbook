@@ -12,11 +12,11 @@ setup('authenticate admin', async ({ page }) => {
     page.getByRole('button', { name: /sign in/i }).click(),
   ]);
 
-  console.log('Login status:', response.status());
+  expect(response.status()).toBe(200);
 
-  await page.waitForLoadState('networkidle');
+  await page.waitForURL('/');
 
   await page.context().storageState({
-    path: 'e2e/.auth/admin.json',
+    path: '.auth/admin.json',
   });
 });

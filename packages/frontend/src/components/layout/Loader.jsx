@@ -1,7 +1,7 @@
 import { Flex, Image, Spinner } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 
-export const Loader = ({ height = '100%', width = '100%' }) => {
+export const Loader = ({ height = '100%', width = '100%', ...rest }) => {
   const location = useLocation();
   const isSuhuf = location.pathname.startsWith('/suhuf');
   let logoImg = 'logo-image.png';
@@ -15,6 +15,7 @@ export const Loader = ({ height = '100%', width = '100%' }) => {
       justify="center"
       align="center"
       position="relative"
+      {...rest}
     >
       <Spinner
         size="xl"
