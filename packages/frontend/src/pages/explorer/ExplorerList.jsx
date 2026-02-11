@@ -67,9 +67,12 @@ export const ExplorerList = () => {
           <ExplorerCard
             data-testid="explorer-reading-card"
             key={item._id}
-            {...item}
-            svg={<SvgIcon dimensions="50px" activeColor={item.color} />}
             width={itemWidth}
+            uuid={item.uuid}
+            label={item.label}
+            description={item.description}
+            color={item.color}
+            svg={<SvgIcon dimensions="50px" activeColor={item.color} />}
           />
         );
       })}
