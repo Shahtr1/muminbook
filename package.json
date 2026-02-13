@@ -4,8 +4,7 @@
   "description": "A modern MERN-stack web application designed to serve as a community platform for Muslims",
   "private": true,
   "workspaces": [
-    "packages/backend",
-    "packages/frontend"
+    "packages/*"
   ],
   "scripts": {
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
@@ -24,6 +23,7 @@
     "test": "npm run test --workspaces --if-present",
     "test:backend": "npm run test --workspace=@muminbook/backend",
     "test:frontend": "npm run test --workspace=@muminbook/frontend",
+    "test:shared": "npm run test --workspace=@muminbook/shared",
     "test:watch": "npm run test:watch --workspaces --if-present",
     "test:coverage": "npm run test:coverage --workspaces --if-present",
     "test:ui": "npm run test:ui --workspace=@muminbook/frontend",

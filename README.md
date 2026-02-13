@@ -20,6 +20,7 @@ Muminbook is a full-stack MERN monorepo (npm workspaces) that provides a communi
 
 - `packages/backend` — Node.js + Express + TypeScript API server
 - `packages/frontend` — React + Vite single-page application
+- `packages/shared` — Shared JavaScript utilities and types used by backend and frontend
 
 This README has been updated to reflect the current repository state (scripts, environment variables, and documentation links). For deeper technical documentation see the `docs/` folder (linked below).
 
@@ -137,6 +138,7 @@ Frontend environment variables live in `packages/frontend/.env` (copy from `pack
 
 - Frontend tests: `cd packages/frontend && npm run test` (or `npm run test:frontend` from repo root)
 - Backend tests: `cd packages/backend && npm run test` (or `npm run test:backend` from repo root)
+- Shared tests: `cd packages/shared && npm run test` (or `npm run test:shared` from repo root)
 - E2E tests: `npm run test:e2e` (requires additional setup, see `docs/TESTING.md`)
 
 Note: The project uses Vitest for testing in both packages.

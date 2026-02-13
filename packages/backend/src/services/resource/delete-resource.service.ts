@@ -3,7 +3,7 @@ import ResourceModel from '../../models/resource.model';
 import appAssert from '../../utils/appAssert';
 import { NOT_FOUND } from '../../constants/http';
 import ResourceType from '../../constants/types/resourceType';
-import { thirtyDaysAgo } from '../../utils/date';
+import { thirtyDaysAgo } from '@muminbook/shared';
 import {
   assertNotRootFolder,
   findDescendantsByPath,

@@ -9,6 +9,7 @@ import {
   oneMinuteAgo,
   oneHourFromNow,
   ONE_DAY_MS,
+  isWithinLastDays,
 } from '../date';
 
 // Test data constants
@@ -85,6 +86,30 @@ describe('Date Utilities', () => {
 
     it('should have correct value for ONE_DAY_MS constant', () => {
       expect(ONE_DAY_MS).toBe(ONE_DAY_IN_MS);
+    });
+  });
+
+  describe('isWithinLastDays', () => {
+    it('should return true for date within given days', () => {
+      const twoDaysAgo = new Date(Date.now() - 2 * ONE_DAY_MS);
+
+      const result = isWithinLastDays(twoDaysAgo, 5);
+
+      expect(result).toBe(true);
+    });
+
+    it('should return false for date outside given days', () => {
+      const tenDaysAgo = new Date(Date.now() - 10 * ONE_DAY_MS);
+
+      const result = isWithinLastDays(tenDaysAgo, 5);
+
+      expect(result).toBe(false);
+    });
+
+    it('should return false for invalid date', () => {
+      const result = isWithinLastDays('invalid-date', 5);
+
+      expect(result).toBe(false);
     });
   });
 });

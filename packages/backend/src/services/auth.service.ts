@@ -1,11 +1,4 @@
 import UserModel from '../models/user.model';
-import {
-  fiveMinutesAgo,
-  ONE_DAY_MS,
-  oneHourFromNow,
-  oneYearFromNow,
-  thirtyDaysFromNow,
-} from '../utils/date';
 import SessionModel from '../models/session.model';
 import appAssert from '../utils/appAssert';
 import {
@@ -35,6 +28,13 @@ import VerificationCodeModel from '../models/verification-code.model';
 import VerificationCodeType from '../constants/types/verificationCodeType';
 import ResourceModel from '../models/resource.model';
 import ResourceType from '../constants/types/resourceType';
+import {
+  fiveMinutesAgo,
+  ONE_DAY_MS,
+  oneHourFromNow,
+  oneYearFromNow,
+  thirtyDaysFromNow,
+} from '@muminbook/shared';
 
 export type CreateAccountParams = {
   firstname: string;
