@@ -1,18 +1,20 @@
-import { Flex } from '@chakra-ui/react';
-import { ExplorerCard } from '@/components/explorer/ExplorerCard.jsx';
+import { Flex, Box } from '@chakra-ui/react';
 import { useIsMyFilesEmpty } from '@/hooks/explorer/useIsMyFilesEmpty.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { useReadings } from '@/hooks/reading/useReadings.js';
+import Book from '@/components/explorer/Book/Book.jsx';
+import { isWithinLastDays } from '@muminbook/shared';
 
 export const ExplorerList = () => {
-  const gapSize = '25px';
+  const gapSize = '100px';
 
   const {
     emptyMyFiles,
     isPending: isMyFilesEmptyPending,
     isError: isMyFilesEmptyError,
   } = useIsMyFilesEmpty();
+
   const {
     readings,
     isPending: isReadingPending,
@@ -26,16 +28,38 @@ export const ExplorerList = () => {
   if (isError) return <SomethingWentWrong data-testid="explorer-error" />;
 
   return (
-    <Flex data-testid="explorer-list" gap={gapSize} px={8} py={5} width="100%">
+    <Flex
+      data-testid="explorer-list"
+      gap={gapSize}
+      py={5}
+      width="100%"
+      wrap="wrap"
+      justify="center"
+    >
       {readings.map((item) => {
+        const newBook = isWithinLastDays(item.createdAt, 5);
+
         return (
-          <ExplorerCard
-            data-testid="explorer-reading-card"
+          <Box
             key={item._id}
-            uuid={item.uuid}
-            label={item.label}
-            description={item.description}
-          />
+            w={{
+              base: '100%', // mobile → 1 per row
+              md: 'calc(50% - 200.5px)', // desktop/tablet → 2 per row
+            }}
+            display="flex"
+            justifyContent="center"
+          >
+            <Book
+              data-testid="explorer-reading-book"
+              coverColor={item.coverColor}
+              title={item.label}
+              uuid={item.uuid}
+              description={item.description}
+              imageSrc={`/images/book-covers/${item.image}`}
+              ribbon={newBook && 'New'}
+              pageText={item.pageText}
+            />
+          </Box>
         );
       })}
     </Flex>

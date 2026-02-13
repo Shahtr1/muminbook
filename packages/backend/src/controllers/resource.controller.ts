@@ -1,5 +1,5 @@
 import catchErrors from '../utils/catchErrors';
-import { CREATED, NOT_FOUND, OK } from '../constants/http';
+import { CREATED, OK } from '../constants/http';
 import ResourceType from '../constants/types/resourceType';
 import {
   copyResource,
@@ -25,7 +25,6 @@ import {
 import { isTrashEmpty } from '../services/resource/trash/isTrashEmpty-resource.service';
 import { dstPathSchema, resourceSchema } from '../schemas/resource.schema';
 import { renameSchema } from '../schemas/common.schema';
-import appAssert from '../utils/appAssert';
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
