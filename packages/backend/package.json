@@ -4,7 +4,7 @@
   "type": "module",
   "main": "./dist/index.js",
   "scripts": {
-    "backend": "tsx watch src/index.ts",
+    "backend": "tsx watch --clear-screen=false src/index.ts",
     "build": "tsc && node copy-file.mjs",
     "start": "node dist/index.js",
     "test": "vitest --run",

@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --workspace=@muminbook/shared\" \"npm run backend\" \"npm run frontend\"",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "backend": "npm run backend --workspace=@muminbook/backend",
     "frontend": "npm run frontend --workspace=@muminbook/frontend",
     "build": "npm run build --workspaces --if-present",
