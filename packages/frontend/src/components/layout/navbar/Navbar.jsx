@@ -46,7 +46,7 @@ export const Navbar = () => {
       boxShadow="sm"
       bg={surface.elevated}
       justify="center"
-      zIndex={1100}
+      zIndex={9999999999999}
     >
       <Flex
         justify="space-between"

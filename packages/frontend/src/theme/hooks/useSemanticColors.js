@@ -170,6 +170,7 @@ export const useSemanticColors = () => {
     primary: mode(pair('brand.500', 'brand.300')),
     hover: mode(pair('brand.400', 'brand.600')),
     solid: 'brand.500',
+    dark: mode(pair('brand.800', 'brand.500')),
   };
 
   return {

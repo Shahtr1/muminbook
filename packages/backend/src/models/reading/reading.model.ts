@@ -8,6 +8,7 @@ export interface ReadingDocument extends Document {
   description: string;
   pageText: string;
   image: string;
+  author: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +29,10 @@ const ReadingSchema = new Schema<ReadingDocument>(
       required: true,
     },
     coverColor: {
+      type: String,
+      required: true,
+    },
+    author: {
       type: String,
       required: true,
     },

@@ -24,24 +24,6 @@
   list-style: none;
 }
 
-/* ///////////////////////////////////////////////////
-
-HARDCOVER
-Table of Contents
-
-1. container
-2. background & color
-3. opening cover, back cover and pages
-4. position, transform y transition
-5. events
-6. Bonus
-	- Cover design
-	- Ribbon
-	- Figcaption
-7. mini-reset
-
-/////////////////////////////////////////////////////*/
-
 /*
 	1. container
 */
@@ -653,18 +635,6 @@ Table of Contents
   border-right: 20px solid transparent;
 }
 
-/* figcaption */
-
-figcaption {
-  padding-left: 40px;
-  text-align: left;
-  position: absolute;
-  top: 0%;
-  left: 160px;
-  width: 310px;
-  -webkit-backface-visibility: hidden;
-}
-
 .book .page > li {
   overflow: hidden;
 }
@@ -689,4 +659,37 @@ figcaption {
 
 .book .page-content p {
   margin: 0;
+}
+
+/* Disable hover effect on small screens */
+@media (max-width: 768px) {
+  .book:hover > .hardcover_front {
+    transform: rotateY(-34deg) translateZ(8px);
+    z-index: 11;
+  }
+
+  .book:hover > .page li:nth-child(1) {
+    transform: rotateY(-28deg);
+    transition-duration: 0.6s;
+  }
+
+  .book:hover > .page li:nth-child(2) {
+    transform: rotateY(-30deg);
+    transition-duration: 0.6s;
+  }
+
+  .book:hover > .page li:nth-child(3) {
+    transform: rotateY(-32deg);
+    transition-duration: 0.4s;
+  }
+
+  .book:hover > .page li:nth-child(4) {
+    transform: rotateY(-34deg);
+    transition-duration: 0.5s;
+  }
+
+  .book:hover > .page li:nth-child(5) {
+    transform: rotateY(-36deg);
+    transition-duration: 0.6s;
+  }
 }
