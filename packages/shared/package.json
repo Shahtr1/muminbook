@@ -12,6 +12,9 @@
     "test:coverage": "vitest --coverage --run",
     "test:ui": "vitest --ui"
   },
+  "dependencies": {
+    "typescript": "^5.7.3"
+  },
   "devDependencies": {
     "vitest": "^1.6.0"
   }

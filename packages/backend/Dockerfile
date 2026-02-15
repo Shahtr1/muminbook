@@ -1,57 +1,46 @@
-# Stage 1: Dependencies
-FROM node:18.20.5-alpine AS deps
+# -------------------------
+# Stage 1: Builder
+# -------------------------
+FROM node:24-alpine AS builder
+
 WORKDIR /app
 
-# Copy package files
-COPY package.json package-lock.json* ./
+# Copy root package files (workspace-aware)
+COPY package*.json ./
 
-# Install dependencies
-RUN npm install --omit=dev && \
-    npm cache clean --force
+# Copy workspace packages
+COPY packages ./packages
 
-# Stage 2: Builder
-FROM node:18.20.5-alpine AS builder
+# Install dependencies with workspace support
+RUN npm ci
+
+# Build backend only
+RUN npm run build --workspace=@muminbook/backend
+
+
+# -------------------------
+# Stage 2: Production Runner
+# -------------------------
+FROM node:24-alpine
+
 WORKDIR /app
-
-# Copy package files
-COPY package.json package-lock.json* ./
-
-# Install all dependencies (including devDependencies)
-RUN npm install
-
-# Copy source code
-COPY . .
-
-# Build TypeScript
-RUN npm run build
-
-# Stage 3: Runner
-FROM node:18.20.5-alpine AS runner
-WORKDIR /app
-
-# Set NODE_ENV
 ENV NODE_ENV=production
 
 # Create non-root user
-RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 expressuser
+RUN addgroup -S nodejs && adduser -S appuser -G nodejs
 
-# Copy production dependencies from deps stage
-COPY --from=deps --chown=expressuser:nodejs /app/node_modules ./node_modules
+# Copy production node_modules
+COPY --from=builder /app/node_modules ./node_modules
 
-# Copy built application from builder stage
-COPY --from=builder --chown=expressuser:nodejs /app/dist ./dist
-COPY --from=builder --chown=expressuser:nodejs /app/package.json ./package.json
+# Copy built backend
+COPY --from=builder /app/packages/backend/dist ./dist
+COPY --from=builder /app/packages/backend/package.json ./package.json
 
-# Switch to non-root user
-USER expressuser
+# Copy JSON data folder
+COPY --from=builder /app/packages/backend/json ./json
 
-# Expose port
+USER appuser
+
 EXPOSE 4004
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-    CMD node -e "require('http').get('http://127.0.0.1:4004/', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
-
-# Start application
 CMD ["node", "dist/index.js"]
