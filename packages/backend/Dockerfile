@@ -17,7 +17,6 @@ RUN npm ci
 # Build backend only
 RUN npm run build --workspace=@muminbook/backend
 
-
 # -------------------------
 # Stage 2: Production Runner
 # -------------------------
@@ -26,17 +25,22 @@ FROM node:24-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Create non-root user
 RUN addgroup -S nodejs && adduser -S appuser -G nodejs
 
-# Copy production node_modules
+# Copy node_modules (workspace symlinks exist here)
 COPY --from=builder /app/node_modules ./node_modules
 
-# Copy built backend
+# Ensure packages directory exists
+RUN mkdir -p packages
+
+# Copy shared workspace (required for symlink resolution)
+COPY --from=builder /app/packages/shared ./packages/shared
+
+# Copy backend build output
 COPY --from=builder /app/packages/backend/dist ./dist
 COPY --from=builder /app/packages/backend/package.json ./package.json
 
-# Copy JSON data folder
+# Copy JSON data
 COPY --from=builder /app/packages/backend/json ./json
 
 USER appuser
