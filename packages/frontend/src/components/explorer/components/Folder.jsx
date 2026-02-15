@@ -7,11 +7,20 @@ import { useAccessTracker } from '@/hooks/explorer/useAccessTracker.js';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 import { useLocation } from 'react-router-dom';
 
-export const Folder = ({ onClick, width, folderPath, resource, ...rest }) => {
+export const Folder = ({
+  onClick,
+  width,
+  folderPath,
+  resource,
+  dimensions: customDimensions,
+  bgColor,
+  shadow,
+  ...rest
+}) => {
   const { surface } = useSemanticColors();
   const { updateAccessedAt } = useAccessTracker();
   const location = useLocation();
-  const { id, name = 'My Files', empty = true } = resource;
+  const { id, name = '', empty = true } = resource;
   const lostAndFound = resource.name === 'lost+found';
   const myFiles = resource.name === 'my-files' || !resource.name;
   const showItemToolbar = !lostAndFound && !myFiles;
@@ -20,12 +29,16 @@ export const Folder = ({ onClick, width, folderPath, resource, ...rest }) => {
   const isFolderView =
     location.pathname.includes('/reading/my-files') || isTrashView;
 
-  const bgColor = surface.elevated;
+  bgColor = bgColor || surface.elevated;
   const isSmallScreen = useBreakpointValue({ base: true, sm: false });
-  const dimensions = useBreakpointValue({
+  const responsiveDimensions = useBreakpointValue({
     base: '40px',
     sm: isFolderView ? '60px' : '150px',
   });
+
+  const dimensions = customDimensions ?? responsiveDimensions;
+
+  shadow = shadow || (isSmallScreen && !isFolderView ? 'md' : 'none');
 
   const [hasMounted, setHasMounted] = useState(false);
 
@@ -48,7 +61,7 @@ export const Folder = ({ onClick, width, folderPath, resource, ...rest }) => {
       px={isSmallScreen && !isFolderView ? '10px' : 0}
       py={isSmallScreen && !isFolderView ? '5px' : 0}
       borderRadius={isSmallScreen && !isFolderView ? 'lg' : '0'}
-      shadow={isSmallScreen && !isFolderView ? 'md' : 'none'}
+      shadow={shadow}
       bgColor={isSmallScreen && !isFolderView ? bgColor : 'unset'}
       cursor="pointer"
       position="relative"
@@ -75,23 +88,25 @@ export const Folder = ({ onClick, width, folderPath, resource, ...rest }) => {
         overflow="hidden"
       >
         <FolderSVG dimensions={dimensions} empty={empty} />
-        <Tooltip label={name} hasArrow placement="bottom">
-          <Text
-            fontSize={
-              isFolderView
-                ? { base: '10px', sm: '13px' }
-                : { base: '13px', sm: '15px' }
-            }
-            color="brand.500"
-            fontWeight={isFolderView ? 'medium' : 'bold'}
-            overflow="hidden"
-            textOverflow="ellipsis"
-            whiteSpace="nowrap"
-            maxWidth="100%"
-          >
-            {name}
-          </Text>
-        </Tooltip>
+        {name && (
+          <Tooltip label={name} hasArrow placement="bottom">
+            <Text
+              fontSize={
+                isFolderView
+                  ? { base: '10px', sm: '13px' }
+                  : { base: '13px', sm: '15px' }
+              }
+              color="brand.500"
+              fontWeight={isFolderView ? 'medium' : 'bold'}
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+              maxWidth="100%"
+            >
+              {name}
+            </Text>
+          </Tooltip>
+        )}
       </Flex>
     </Flex>
   );
