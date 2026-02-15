@@ -26,14 +26,14 @@ const initServer = async () => {
     await initQuran();
 
     await initContentLayer({
-      folder: '../data/quran',
+      folder: 'json/quran',
       category: 'quran',
       source: 'uthmani',
       locale: 'ar',
     });
 
     await initContentLayer({
-      folder: '../data/sahih-international',
+      folder: 'json/sahih-international',
       category: 'translation',
       source: 'sahih',
       locale: 'en',

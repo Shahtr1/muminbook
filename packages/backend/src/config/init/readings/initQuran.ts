@@ -27,7 +27,7 @@ const initQuranStructure = async (
     return;
   }
 
-  const rawQuran = loadJSONFiles('../data/quran');
+  const rawQuran = loadJSONFiles('json/quran');
 
   const structuralDocs = rawQuran.map((ayah: any) => {
     const surahId = surahMap.get(ayah.surahId);
