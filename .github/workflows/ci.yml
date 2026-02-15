@@ -208,7 +208,7 @@ jobs:
         run: npm run test:e2e
         env:
           NODE_ENV: test
-          MONGO_URI: mongodb://mongo:27017/muminbook_test
+          MONGO_URI: mongodb://localhost:27017/muminbook_test
 
   all-checks-passed:
     name: All Checks Passed
