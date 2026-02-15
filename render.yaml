@@ -3,7 +3,7 @@ services:
     name: muminbook-backend
     runtime: docker
     dockerfilePath: ./packages/backend/Dockerfile
-    dockerContext: ./packages/backend
+    dockerContext: .
     region: singapore
     plan: free
     branch: main
