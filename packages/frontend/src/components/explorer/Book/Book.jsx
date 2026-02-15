@@ -36,11 +36,7 @@ const Book = ({
 
   return (
     <List minW={width} {...rest}>
-      <Flex
-        direction={{ base: 'column', md: 'row' }}
-        align="center"
-        textAlign="center"
-      >
+      <Flex direction={{ base: 'column', md: 'row' }} align="center">
         {/* 3D Book ONLY */}
         <Box
           className={`book ${isDark ? 'dark' : ''} ${uuid}`}
@@ -97,6 +93,7 @@ const Book = ({
 
         <Box
           className="book-caption"
+          textAlign={{ base: 'center', md: 'unset' }}
           mt={{ base: 4, md: 0 }}
           ml={{ base: 0, md: 8 }}
           width={{ base: '100%', md: '310px' }}
@@ -119,7 +116,7 @@ const Book = ({
             mb={2}
           />
 
-          <Text color={text.disabled} fontSize="sm">
+          <Text color={text.disabled} fontSize="sm" mb={1}>
             {author}
           </Text>
 
