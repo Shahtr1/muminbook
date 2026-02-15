@@ -16,7 +16,6 @@ const initServer = async () => {
   await connectToDatabase();
 
   app.listen(Number(PORT), '0.0.0.0', async () => {
-
     log.success(
       `Server is running on port ${PORT} in ${NODE_ENV} environment.`
     );
