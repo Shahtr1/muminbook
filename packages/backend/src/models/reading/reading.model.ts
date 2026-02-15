@@ -2,6 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 export interface ReadingDocument extends Document {
   uuid: string;
+  order: number;
   label: string;
   coverColor: string;
   description: string;
@@ -16,6 +17,11 @@ const ReadingSchema = new Schema<ReadingDocument>(
     uuid: {
       type: String,
       required: true,
+    },
+    order: {
+      type: Number,
+      required: true,
+      index: true,
     },
     label: {
       type: String,

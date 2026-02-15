@@ -1,10 +1,10 @@
-import QuranModel from '../../models/reading/quran.model';
-import { ReadingQuery } from '../../schemas/reading.schema';
-import QuranDivisionType from '../../constants/types/quran/quranDivisionType';
-import SurahModel from '../../models/reading/surah.model';
-import JuzModel from '../../models/reading/juz.model';
-import appAssert from '../../utils/appAssert';
-import { NOT_FOUND } from '../../constants/http';
+import QuranModel from '../../models/reading/quran.model.js';
+import { ReadingQuery } from '../../schemas/reading.schema.js';
+import QuranDivisionType from '../../constants/types/quran/quranDivisionType.js';
+import SurahModel from '../../models/reading/surah.model.js';
+import JuzModel from '../../models/reading/juz.model.js';
+import appAssert from '../../utils/appAssert.js';
+import { NOT_FOUND } from '../../constants/http.js';
 
 export const getReading = async (source: string, query: ReadingQuery) => {
   const {

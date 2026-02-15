@@ -1,6 +1,6 @@
-import { PrimaryId } from '../../../constants/ids';
-import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/types/resourceType';
+import { PrimaryId } from '../../../constants/ids.js';
+import ResourceModel from '../../../models/resource.model.js';
+import ResourceType from '../../../constants/types/resourceType.js';
 
 export const getTrashedResources = async (userId: PrimaryId) => {
   const resources = await ResourceModel.find({

@@ -10,7 +10,7 @@ import {
   oneHourFromNow,
   ONE_DAY_MS,
   isWithinLastDays,
-} from '../date';
+} from '../date.js';
 
 // Test data constants
 const FIVE_MINUTES_IN_MS = 5 * 60 * 1000;
@@ -107,7 +107,7 @@ describe('Date Utilities', () => {
     });
 
     it('should return false for invalid date', () => {
-      const result = isWithinLastDays('invalid-date', 5);
+      const result = isWithinLastDays(new Date('invalid-date'), 5);
 
       expect(result).toBe(false);
     });

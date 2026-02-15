@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
   deleteWindowHandler,
   getWindowsHandler,
-} from '../controllers/window.controller';
+} from '../controllers/window.controller.js';
 
 const windowRoute = Router();
 

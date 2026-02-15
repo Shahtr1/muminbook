@@ -15,8 +15,8 @@ import {
   refreshTokenSignOptions,
   AccessTokenPayload,
   RefreshTokenPayload,
-} from '../jwt';
-import RoleType from '../../constants/types/roleType';
+} from '../jwt.js';
+import RoleType from '../../constants/types/roleType.js';
 import { Types } from 'mongoose';
 
 // Test data constants

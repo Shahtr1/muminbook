@@ -1,13 +1,13 @@
-import { PrimaryId } from '../../constants/ids';
-import ResourceModel from '../../models/resource.model';
-import appAssert from '../../utils/appAssert';
-import { NOT_FOUND } from '../../constants/http';
-import ResourceType from '../../constants/types/resourceType';
+import { PrimaryId } from '../../constants/ids.js';
+import ResourceModel from '../../models/resource.model.js';
+import appAssert from '../../utils/appAssert.js';
+import { NOT_FOUND } from '../../constants/http.js';
+import ResourceType from '../../constants/types/resourceType.js';
 import { thirtyDaysAgo } from '@muminbook/shared';
 import {
   assertNotRootFolder,
   findDescendantsByPath,
-} from './common-resource.service';
+} from './common-resource.service.js';
 
 export const deleteResource = async (
   resourceId: PrimaryId,

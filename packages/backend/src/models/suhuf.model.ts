@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { PrimaryId } from '../constants/ids';
-import FileType from '../constants/types/fileType';
-import Direction from '../constants/types/direction';
+import { PrimaryId } from '../constants/ids.js';
+import FileType from '../constants/types/fileType.js';
+import Direction from '../constants/types/direction.js';
 
 type ReadingLayout = {
   id: string;

@@ -15,16 +15,16 @@ import {
   refreshUserAccessToken,
   verifyEmail,
   resetPassword,
-} from '../auth.service';
-import UserModel from '../../models/user.model';
-import SessionModel from '../../models/session.model';
-import UserRoleModel from '../../models/user-role.model';
-import VerificationCodeModel from '../../models/verification-code.model';
-import { signToken, verifyToken } from '../../utils/jwt';
-import { hashValue } from '../../utils/bcrypt';
+} from '../auth.service.js';
+import UserModel from '../../models/user.model.js';
+import SessionModel from '../../models/session.model.js';
+import UserRoleModel from '../../models/user-role.model.js';
+import VerificationCodeModel from '../../models/verification-code.model.js';
+import { signToken, verifyToken } from '../../utils/jwt.js';
+import { hashValue } from '../../utils/bcrypt.js';
 import { Types } from 'mongoose';
-import RoleType from '../../constants/types/roleType';
-import AppError from '../../utils/AppError';
+import RoleType from '../../constants/types/roleType.js';
+import AppError from '../../utils/AppError.js';
 
 vi.mock('../../models/user.model');
 vi.mock('../../models/session.model');

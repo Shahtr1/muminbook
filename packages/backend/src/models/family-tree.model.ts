@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import LineageType from '../constants/types/lineageType';
-import { PrimaryId } from '../constants/ids';
+import LineageType from '../constants/types/lineageType.js';
+import { PrimaryId } from '../constants/ids.js';
 
 export interface FamilyTreeDocument extends Document {
   uuid: string;

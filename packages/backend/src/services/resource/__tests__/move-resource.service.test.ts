@@ -11,12 +11,12 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
-import { moveResource } from '../move-resource.service';
-import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/types/resourceType';
-import { PrimaryId } from '../../../constants/ids';
-import AppError from '../../../utils/AppError';
-import { NOT_FOUND, BAD_REQUEST, CONFLICT } from '../../../constants/http';
+import { moveResource } from '../move-resource.service.js';
+import ResourceModel from '../../../models/resource.model.js';
+import ResourceType from '../../../constants/types/resourceType.js';
+import { PrimaryId } from '../../../constants/ids.js';
+import AppError from '../../../utils/AppError.js';
+import { NOT_FOUND, BAD_REQUEST, CONFLICT } from '../../../constants/http.js';
 
 vi.mock('../../../models/resource.model', () => {
   const MockResourceModel: any = {
@@ -43,7 +43,7 @@ vi.mock('../common-resource.service', () => ({
 import {
   assertNotRootFolder,
   findDescendantsByPath,
-} from '../common-resource.service';
+} from '../common-resource.service.js';
 
 describe('Move Resource Service', () => {
   const mockUserId = new Types.ObjectId() as PrimaryId;

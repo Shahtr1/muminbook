@@ -1,4 +1,4 @@
-import { JuzDocument } from '../models/reading/juz.model';
+import { JuzDocument } from '../models/reading/juz.model.js';
 
 export const juzListApi: Pick<
   JuzDocument,

@@ -1,12 +1,12 @@
-import SurahModel from '../../../models/reading/surah.model';
-import JuzModel from '../../../models/reading/juz.model';
-import QuranModel from '../../../models/reading/quran.model';
-import { loadJSONFiles } from '../../../utils/loadJSONFiles';
-import { log } from '../../../utils/log';
-import { UuidMap } from '../../../constants/ids';
-import { juzListApi } from '../../../data/juzListApi';
-import { surahsApi } from '../../../data/surahsApi';
-import { initCollection } from './initCollection';
+import SurahModel from '../../../models/reading/surah.model.js';
+import JuzModel from '../../../models/reading/juz.model.js';
+import QuranModel from '../../../models/reading/quran.model.js';
+import { loadJSONFiles } from '../../../utils/loadJSONFiles.js';
+import { log } from '../../../utils/log.js';
+import { UuidMap } from '../../../constants/ids.js';
+import { juzListApi } from '../../../data/juzListApi.js';
+import { surahsApi } from '../../../data/surahsApi.js';
+import { initCollection } from './initCollection.js';
 
 const initJuz = async (): Promise<UuidMap> => {
   return initCollection(JuzModel, juzListApi, 'Juz');

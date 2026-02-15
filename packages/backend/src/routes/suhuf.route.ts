@@ -4,7 +4,7 @@ import {
   createSuhufHandler,
   getSuhufHandler,
   renameSuhufHandler,
-} from '../controllers/suhuf.controller';
+} from '../controllers/suhuf.controller.js';
 
 const suhufRoutes = Router();
 

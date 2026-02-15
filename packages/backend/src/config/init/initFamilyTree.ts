@@ -1,7 +1,7 @@
-import FamilyTreeModel from '../../models/family-tree.model';
-import { familyTreeApi, FamilyTreeEntry } from '../../data/familyTreeApi';
-import { PrimaryId } from '../../constants/ids';
-import { log } from '../../utils/log';
+import FamilyTreeModel from '../../models/family-tree.model.js';
+import { familyTreeApi, FamilyTreeEntry } from '../../data/familyTreeApi.js';
+import { PrimaryId } from '../../constants/ids.js';
+import { log } from '../../utils/log.js';
 
 /**
  * Return document count of FamilyTree collection.

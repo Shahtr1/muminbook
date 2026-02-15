@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { hashValue, compareValue } from '../bcrypt';
+import { hashValue, compareValue } from '../bcrypt.js';
 
 // Test data constants
 const TEST_PASSWORD = 'TestPassword123!';

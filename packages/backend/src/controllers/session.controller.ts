@@ -1,9 +1,9 @@
-import catchErrors from '../utils/catchErrors';
-import SessionModel from '../models/session.model';
-import { NOT_FOUND, OK } from '../constants/http';
+import catchErrors from '../utils/catchErrors.js';
+import SessionModel from '../models/session.model.js';
+import { NOT_FOUND, OK } from '../constants/http.js';
 import { z } from 'zod';
-import appAssert from '../utils/appAssert';
-import { UserDocument } from '../models/user.model';
+import appAssert from '../utils/appAssert.js';
+import { UserDocument } from '../models/user.model.js';
 
 // Not checked carefully yet
 export const getSessionsHandler = catchErrors(async (req, res) => {

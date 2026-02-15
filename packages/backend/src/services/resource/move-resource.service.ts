@@ -1,13 +1,13 @@
-import { PrimaryId } from '../../constants/ids';
-import ResourceModel from '../../models/resource.model';
-import appAssert from '../../utils/appAssert';
-import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../constants/http';
-import ResourceType from '../../constants/types/resourceType';
+import { PrimaryId } from '../../constants/ids.js';
+import ResourceModel from '../../models/resource.model.js';
+import appAssert from '../../utils/appAssert.js';
+import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../constants/http.js';
+import ResourceType from '../../constants/types/resourceType.js';
 import {
   assertNotRootFolder,
   findDescendantsByPath,
-} from './common-resource.service';
-import { normalizeSlashes } from './utils/normalizeSlashes';
+} from './common-resource.service.js';
+import { normalizeSlashes } from './utils/normalizeSlashes.js';
 
 export const moveResource = async (
   resourceId: PrimaryId,

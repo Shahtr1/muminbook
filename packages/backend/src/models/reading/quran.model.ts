@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { PrimaryId } from '../../constants/ids';
+import { PrimaryId } from '../../constants/ids.js';
 
 export interface QuranDocument extends Document {
   uuid: number; // global canonical id (1–6236)

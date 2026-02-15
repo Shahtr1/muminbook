@@ -1,5 +1,5 @@
-import { log } from '../../../utils/log';
-import { UuidMap } from '../../../constants/ids';
+import { log } from '../../../utils/log.js';
+import { UuidMap } from '../../../constants/ids.js';
 
 export const initCollection = async (
   Model: any,

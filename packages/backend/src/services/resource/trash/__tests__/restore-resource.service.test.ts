@@ -14,12 +14,16 @@ import { Types } from 'mongoose';
 import {
   restoreResource,
   restoreAllResources,
-} from '../restore-resource.service';
-import ResourceModel from '../../../../models/resource.model';
-import ResourceType from '../../../../constants/types/resourceType';
-import { PrimaryId } from '../../../../constants/ids';
-import AppError from '../../../../utils/AppError';
-import { NOT_FOUND, BAD_REQUEST, CONFLICT } from '../../../../constants/http';
+} from '../restore-resource.service.js';
+import ResourceModel from '../../../../models/resource.model.js';
+import ResourceType from '../../../../constants/types/resourceType.js';
+import { PrimaryId } from '../../../../constants/ids.js';
+import AppError from '../../../../utils/AppError.js';
+import {
+  NOT_FOUND,
+  BAD_REQUEST,
+  CONFLICT,
+} from '../../../../constants/http.js';
 
 vi.mock('../../../../models/resource.model', () => {
   const MockResourceModel: any = {
@@ -42,7 +46,7 @@ vi.mock('../helpers/findOrCreateLostAndFound', () => ({
   findOrCreateLostAndFound: vi.fn(),
 }));
 
-import { findDescendantsByPath } from '../../common-resource.service';
+import { findDescendantsByPath } from '../../common-resource.service.js';
 
 describe('Restore Resource Service', () => {
   const mockUserId = new Types.ObjectId() as PrimaryId;

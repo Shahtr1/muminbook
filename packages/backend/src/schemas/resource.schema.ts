@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { nameSchema } from './common.schema';
+import { nameSchema } from './common.schema.js';
 
 export const resourceSchema = z.object({
   name: nameSchema,

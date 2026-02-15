@@ -1,7 +1,9 @@
-import { BAD_REQUEST } from '../../constants/http';
-import appAssert from '../../utils/appAssert';
-import ResourceModel, { ResourceDocument } from '../../models/resource.model';
-import { PrimaryId } from '../../constants/ids';
+import { BAD_REQUEST } from '../../constants/http.js';
+import appAssert from '../../utils/appAssert.js';
+import ResourceModel, {
+  ResourceDocument,
+} from '../../models/resource.model.js';
+import { PrimaryId } from '../../constants/ids.js';
 
 export const assertNotRootFolder = (
   resource: ResourceDocument,

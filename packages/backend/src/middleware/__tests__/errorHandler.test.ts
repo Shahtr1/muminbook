@@ -13,18 +13,18 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
-import { errorHandler } from '../errorHandler';
-import AppError from '../../utils/AppError';
-import AppErrorCode from '../../constants/types/appErrorCode';
+import { errorHandler } from '../errorHandler.js';
+import AppError from '../../utils/AppError.js';
+import AppErrorCode from '../../constants/types/appErrorCode.js';
 import {
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,
   UNAUTHORIZED,
   NOT_FOUND,
   CONFLICT,
-} from '../../constants/http';
-import { REFRESH_PATH } from '../../utils/cookies';
-import { log } from '../../utils/log';
+} from '../../constants/http.js';
+import { REFRESH_PATH } from '../../utils/cookies.js';
+import { log } from '../../utils/log.js';
 
 describe('Error Handler Middleware', () => {
   let mockRequest: Partial<Request>;

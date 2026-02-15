@@ -1,9 +1,9 @@
-import { PrimaryId } from '../../constants/ids';
-import SuhufModel from '../../models/suhuf.model';
-import WindowModel from '../../models/window.model';
-import WindowType from '../../constants/types/windowType';
-import appAssert from '../../utils/appAssert';
-import { INTERNAL_SERVER_ERROR } from '../../constants/http';
+import { PrimaryId } from '../../constants/ids.js';
+import SuhufModel from '../../models/suhuf.model.js';
+import WindowModel from '../../models/window.model.js';
+import WindowType from '../../constants/types/windowType.js';
+import appAssert from '../../utils/appAssert.js';
+import { INTERNAL_SERVER_ERROR } from '../../constants/http.js';
 
 type CreateSuhufInput = {
   userId: PrimaryId;

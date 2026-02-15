@@ -5,7 +5,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import catchErrors from '../catchErrors';
+import catchErrors from '../catchErrors.js';
 import { Request, Response, NextFunction } from 'express';
 
 describe('catchErrors', () => {

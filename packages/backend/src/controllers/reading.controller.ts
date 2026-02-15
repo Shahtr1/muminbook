@@ -1,12 +1,12 @@
-import catchErrors from '../utils/catchErrors';
-import { OK } from '../constants/http';
-import ReadingModel from '../models/reading/reading.model';
-import { getReading } from '../services/reading/get-reading.service';
-import { readingSchema } from '../schemas/reading.schema';
-import { getQuranStructureCounts } from '../services/reading/get-reading-structure.service';
+import catchErrors from '../utils/catchErrors.js';
+import { OK } from '../constants/http.js';
+import ReadingModel from '../models/reading/reading.model.js';
+import { getReading } from '../services/reading/get-reading.service.js';
+import { readingSchema } from '../schemas/reading.schema.js';
+import { getQuranStructureCounts } from '../services/reading/get-reading-structure.service.js';
 
 export const getAllReadingsHandler = catchErrors(async (req, res) => {
-  const readings = await ReadingModel.find();
+  const readings = await ReadingModel.find().sort({ order: 1 });
   return res.status(OK).json(readings);
 });
 

@@ -12,7 +12,7 @@ import {
   setAuthCookies,
   clearAuthCookies,
   REFRESH_PATH,
-} from '../cookies';
+} from '../cookies.js';
 
 describe('Cookie Utilities', () => {
   describe('getAccessTokenCookieOptions', () => {

@@ -1,8 +1,8 @@
-import { SessionDocument } from '../models/session.model';
-import { UserDocument } from '../models/user.model';
+import { SessionDocument } from '../models/session.model.js';
+import { UserDocument } from '../models/user.model.js';
 import jwt, { SignOptions, VerifyOptions } from 'jsonwebtoken';
-import { JWT_REFRESH_SECRET, JWT_SECRET } from '../constants/env';
-import RoleType from '../constants/types/roleType';
+import { JWT_REFRESH_SECRET, JWT_SECRET } from '../constants/env.js';
+import RoleType from '../constants/types/roleType.js';
 
 export type RefreshTokenPayload = {
   sessionId: SessionDocument['_id'];

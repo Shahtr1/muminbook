@@ -1,17 +1,18 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+
 # Get current branch name
 branch="$(git rev-parse --abbrev-ref HEAD)"
+
 # Define valid branch name pattern
-# Format: type/description
-# Valid types: feature, fix, hotfix, release, chore, docs, refactor, test
 valid_branch_regex="^(feature|fix|hotfix|release|chore|docs|refactor|test)\/[a-z0-9._-]+$"
-# Allow only main and develop branches (protected branches)
+
+# Allow protected branches
 if [ "$branch" = "main" ] || [ "$branch" = "develop" ]; then
     echo "✅ Pushing to protected branch: $branch (no naming validation)"
     exit 0
 fi
-# Check if branch name matches pattern
+
+# Validate branch name
 if ! echo "$branch" | grep -qE "$valid_branch_regex"; then
     echo ""
     echo "❌ ERROR: Invalid branch name: '$branch'"
@@ -20,27 +21,23 @@ if ! echo "$branch" | grep -qE "$valid_branch_regex"; then
     echo "  <type>/<description>"
     echo ""
     echo "Valid types:"
-    echo "  - feature/  : New features"
-    echo "  - fix/      : Bug fixes"
-    echo "  - hotfix/   : Urgent production fixes"
-    echo "  - release/  : Release branches"
-    echo "  - chore/    : Maintenance tasks"
-    echo "  - docs/     : Documentation updates"
-    echo "  - refactor/ : Code refactoring"
-    echo "  - test/     : Test additions/updates"
+    echo "  - feature/"
+    echo "  - fix/"
+    echo "  - hotfix/"
+    echo "  - release/"
+    echo "  - chore/"
+    echo "  - docs/"
+    echo "  - refactor/"
+    echo "  - test/"
     echo ""
-    echo "Examples:"
-    echo "  ✅ feature/user-authentication"
-    echo "  ✅ fix/login-bug"
-    echo "  ✅ hotfix/payment-error"
-    echo "  ✅ chore/update-dependencies"
+    echo "Example:"
+    echo "  feature/user-authentication"
     echo ""
-    echo "Your branch: ❌ $branch"
-    echo ""
-    echo "To rename your branch:"
+    echo "Rename your branch with:"
     echo "  git branch -m <type>/<description>"
     echo ""
     exit 1
 fi
+
 echo "✅ Branch name is valid: $branch"
 exit 0

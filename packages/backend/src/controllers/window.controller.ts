@@ -1,9 +1,9 @@
-import catchErrors from '../utils/catchErrors';
-import { OK } from '../constants/http';
-import { getUserId } from '../utils/getUserId';
-import WindowModel from '../models/window.model';
-import { SuhufDocument } from '../models/suhuf.model';
-import { deleteWindow } from '../services/window/delete-window.service';
+import catchErrors from '../utils/catchErrors.js';
+import { OK } from '../constants/http.js';
+import { getUserId } from '../utils/getUserId.js';
+import WindowModel from '../models/window.model.js';
+import { SuhufDocument } from '../models/suhuf.model.js';
+import { deleteWindow } from '../services/window/delete-window.service.js';
 
 export const getWindowsHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);

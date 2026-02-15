@@ -60,14 +60,14 @@ vi.mock('../../../constants/env', () => ({
 
 /* ------------------ IMPORTS AFTER MOCKS ------------------ */
 
-import initDefaultRBAC from '../initDefaultRBAC';
-import RoleModel from '../../../models/role.model';
-import UserModel from '../../../models/user.model';
-import UserRoleModel from '../../../models/user-role.model';
-import ResourceModel from '../../../models/resource.model';
-import RoleType from '../../../constants/types/roleType';
-import ResourceType from '../../../constants/types/resourceType';
-import { log } from '../../../utils/log';
+import initDefaultRBAC from '../initDefaultRBAC.js';
+import RoleModel from '../../../models/role.model.js';
+import UserModel from '../../../models/user.model.js';
+import UserRoleModel from '../../../models/user-role.model.js';
+import ResourceModel from '../../../models/resource.model.js';
+import RoleType from '../../../constants/types/roleType.js';
+import ResourceType from '../../../constants/types/resourceType.js';
+import { log } from '../../../utils/log.js';
 
 /* ========================================================= */
 

@@ -3,8 +3,8 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { getQuranStructureCounts } from '../get-reading-structure.service';
-import QuranModel from '../../../models/reading/quran.model';
+import { getQuranStructureCounts } from '../get-reading-structure.service.js';
+import QuranModel from '../../../models/reading/quran.model.js';
 
 vi.mock('../../../models/reading/quran.model', () => ({
   default: {

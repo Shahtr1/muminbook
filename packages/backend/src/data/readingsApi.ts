@@ -1,4 +1,4 @@
-import { ReadingDocument } from '../models/reading/reading.model';
+import { ReadingDocument } from '../models/reading/reading.model.js';
 
 export const readingsApi: Partial<ReadingDocument>[] = [
   {

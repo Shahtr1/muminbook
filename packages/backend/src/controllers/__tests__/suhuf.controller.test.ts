@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { configSuhufHandler } from '../suhuf.controller';
-import SuhufModel from '../../models/suhuf.model';
-import * as getUserIdUtil from '../../utils/getUserId';
-import { OK } from '../../constants/http';
-import FileType from '../../constants/types/fileType';
-import Direction from '../../constants/types/direction';
+import { configSuhufHandler } from '../suhuf.controller.js';
+import SuhufModel from '../../models/suhuf.model.js';
+import * as getUserIdUtil from '../../utils/getUserId.js';
+import { OK } from '../../constants/http.js';
+import FileType from '../../constants/types/fileType.js';
+import Direction from '../../constants/types/direction.js';
 
 vi.mock('../../models/suhuf.model');
 vi.mock('../../utils/getUserId');
