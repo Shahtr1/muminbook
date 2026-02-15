@@ -4,7 +4,7 @@
   "type": "module",
   "main": "./dist/index.js",
   "scripts": {
-    "backend": "cross-env NODE_OPTIONS=--dns-result-order=ipv4first tsx watch src/index.ts",
+    "backend": "tsx watch src/index.ts",
     "build": "tsc && node copy-file.js",
     "start": "node dist/index.js",
     "test": "vitest --run",
