@@ -14,7 +14,7 @@ export default defineConfig({
         'src/__tests__/',
         '*.config.ts',
         'src/index.ts',
-        'copy-file.js',
+        'copy-file.mjs',
         'src/data/**',
         'src/jobs/**',
         'src/models/**',
