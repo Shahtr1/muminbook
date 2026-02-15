@@ -47,6 +47,12 @@ const styles = {
         fontStyle: 'normal',
         fontDisplay: 'swap',
       },
+      {
+        fontFamily: 'QuattrocentoRegular',
+        src: "url('/fonts/Quattrocento/Quattrocento-Regular.ttf') format('truetype')",
+        fontStyle: 'normal',
+        fontDisplay: 'swap',
+      },
     ],
   }),
 };

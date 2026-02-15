@@ -1,4 +1,4 @@
-import { Flex, Box } from '@chakra-ui/react';
+import { Flex, Box, useBreakpointValue } from '@chakra-ui/react';
 import { useIsMyFilesEmpty } from '@/hooks/explorer/useIsMyFilesEmpty.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
@@ -7,7 +7,7 @@ import Book from '@/components/explorer/Book/Book.jsx';
 import { isWithinLastDays } from '@muminbook/shared';
 
 export const ExplorerList = () => {
-  const gapSize = '100px';
+  const gapSize = useBreakpointValue({ base: '80px', md: '100px' });
 
   const {
     emptyMyFiles,
@@ -43,8 +43,8 @@ export const ExplorerList = () => {
           <Box
             key={item._id}
             w={{
-              base: '100%', // mobile → 1 per row
-              md: 'calc(50% - 200.5px)', // desktop/tablet → 2 per row
+              base: '100%',
+              '1250px': 'calc(50% - 50px)',
             }}
             display="flex"
             justifyContent="center"
@@ -52,12 +52,13 @@ export const ExplorerList = () => {
             <Book
               data-testid="explorer-reading-book"
               coverColor={item.coverColor}
-              title={item.label}
+              captionTitle={item.label}
               uuid={item.uuid}
               description={item.description}
               imageSrc={`/images/book-covers/${item.image}`}
               ribbon={newBook && 'New'}
               pageText={item.pageText}
+              author={item.author}
             />
           </Box>
         );

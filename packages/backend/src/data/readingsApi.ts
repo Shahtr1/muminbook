@@ -13,6 +13,7 @@ export const readingsApi: Partial<ReadingDocument>[] = [
       'Revealed over 1,400 years ago, it serves as the ultimate source\n' +
       'of guidance, wisdom, and mercy for all of humanity.\n' +
       'Recited, memorized, and revered by millions across generations.',
+    author: 'Allah SWT',
   },
   {
     uuid: 'sahih',
@@ -26,6 +27,7 @@ export const readingsApi: Partial<ReadingDocument>[] = [
       'valued for its clarity, simplicity, and faithfulness to the original Arabic.\n' +
       'Ideal for readers seeking a balance between literal meaning\n' +
       'and accessible language for reflection and study.',
+    author: 'Saheeh International',
   },
   {
     uuid: 'sealed-nectar',
@@ -44,6 +46,7 @@ export const readingsApi: Partial<ReadingDocument>[] = [
       'offering a detailed and authentic account of his noble life.\n' +
       'Widely recognized as one of the best resources for\n' +
       'understanding the life, mission, and character of the Messenger.',
+    author: 'Safiyyur Rahman Mubarakpuri',
   },
   {
     uuid: 'sahih-bukhari',
@@ -62,6 +65,7 @@ export const readingsApi: Partial<ReadingDocument>[] = [
       'It contains sayings, actions, and approvals of Prophet Muhammad ﷺ,\n' +
       'painstakingly verified to ensure authenticity and reliability.\n' +
       'Essential for every serious student of Islamic knowledge.',
+    author: 'Imam Muhammad ibn Ismail al-Bukhari',
   },
   {
     uuid: 'sahih-muslim',
@@ -81,5 +85,6 @@ export const readingsApi: Partial<ReadingDocument>[] = [
       'Second only to Sahih al-Bukhari in authenticity,\n' +
       'it offers profound insights into the teachings and practices\n' +
       'of the Prophet Muhammad ﷺ.',
+    author: 'Imam Muslim ibn al-Hajjaj',
   },
 ];

@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
-import { Box, Image, List, useColorMode } from '@chakra-ui/react';
+import { Box, Flex, Image, List, Text, useColorMode } from '@chakra-ui/react';
 import './Book.css';
 import { useColorShades } from '@/theme/useColorShades.js';
+import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 const Book = ({
   coverColor,
@@ -21,10 +22,10 @@ const Book = ({
   const { colorMode } = useColorMode();
   const isDark = colorMode === 'dark';
   const shades = useColorShades(coverColor, isDark);
+  const { brand, text } = useSemanticColors();
+
   const filledText = useMemo(() => {
     if (!pageText) return '';
-
-    // repeat text enough times to look dense
     return Array(20).fill(pageText).join(' ');
   }, [pageText]);
 
@@ -35,8 +36,13 @@ const Book = ({
 
   return (
     <List minW={width} {...rest}>
-      <div className="book-wrapper">
-        <figure
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        align="center"
+        textAlign="center"
+      >
+        {/* 3D Book ONLY */}
+        <Box
           className={`book ${isDark ? 'dark' : ''} ${uuid}`}
           style={{
             '--cover-light': shades?.light,
@@ -44,7 +50,6 @@ const Book = ({
             '--cover-dark': shades?.dark,
           }}
         >
-          {/* Front */}
           <ul className="hardcover_front">
             <Box as="li">
               {imageSrc ? (
@@ -55,7 +60,7 @@ const Book = ({
                   height="100%"
                 />
               ) : (
-                <Box as="div" className={`coverDesign`}>
+                <Box as="div" className="coverDesign">
                   {ribbon && (
                     <Box as="span" className="ribbon">
                       {ribbon}
@@ -66,10 +71,9 @@ const Book = ({
                 </Box>
               )}
             </Box>
-            <Box as="li"></Box>
+            <Box as="li" />
           </ul>
 
-          {/* Pages */}
           <ul className="page">
             {pages.map((text, pageIndex) => (
               <Box as="li" key={pageIndex}>
@@ -80,24 +84,61 @@ const Book = ({
             ))}
           </ul>
 
-          {/* Back */}
           <ul className="hardcover_back">
-            <Box as="li"></Box>
-            <Box as="li"></Box>
+            <Box as="li" />
+            <Box as="li" />
           </ul>
 
           <ul className="book_spine">
             <Box as="li" />
             <Box as="li" />
           </ul>
+        </Box>
 
-          <figcaption>
-            <h1>{captionTitle}</h1>
-            <span>{author}</span>
-            <p>{description}</p>
-          </figcaption>
-        </figure>
-      </div>
+        <Box
+          className="book-caption"
+          mt={{ base: 4, md: 0 }}
+          ml={{ base: 0, md: 8 }}
+          width={{ base: '100%', md: '310px' }}
+        >
+          <Text
+            fontFamily="QuattrocentoRegular"
+            fontSize="35px"
+            color={brand.dark}
+          >
+            {captionTitle}
+          </Text>
+
+          <Box
+            display={{ base: 'none', md: 'block' }}
+            width="100%"
+            height="2px"
+            bgGradient={`linear(to-l, ${
+              isDark ? 'bg.dark' : 'bg.light'
+            }, ${brand.dark})`}
+            mb={2}
+          />
+
+          <Text color={text.disabled} fontSize="sm">
+            {author}
+          </Text>
+
+          <Box
+            display={{ base: 'none', md: 'block' }}
+            maxH="120px"
+            overflowY="auto"
+            sx={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+            }}
+          >
+            <Text>{description}</Text>
+          </Box>
+        </Box>
+      </Flex>
     </List>
   );
 };
