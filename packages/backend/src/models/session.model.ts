@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { thirtyDaysFromNow } from '../utils/date';
-import { PrimaryId } from '../constants/ids';
+import { thirtyDaysFromNow } from '@muminbook/shared';
+import { PrimaryId } from '../constants/ids.js';
 
 export interface SessionDocument extends mongoose.Document {
   userId: PrimaryId;

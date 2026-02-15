@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getSurahHandler } from '../controllers/surah.controller';
+import { getSurahHandler } from '../controllers/surah.controller.js';
 
 const surahRoutes = Router();
 

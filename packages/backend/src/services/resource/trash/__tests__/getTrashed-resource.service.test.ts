@@ -10,10 +10,10 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
-import { getTrashedResources } from '../getTrashed-resource.service';
-import ResourceModel from '../../../../models/resource.model';
-import ResourceType from '../../../../constants/types/resourceType';
-import { PrimaryId } from '../../../../constants/ids';
+import { getTrashedResources } from '../getTrashed-resource.service.js';
+import ResourceModel from '../../../../models/resource.model.js';
+import ResourceType from '../../../../constants/types/resourceType.js';
+import { PrimaryId } from '../../../../constants/ids.js';
 
 vi.mock('../../../../models/resource.model', () => {
   const MockResourceModel: any = {

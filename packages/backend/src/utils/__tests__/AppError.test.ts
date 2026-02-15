@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import AppError from '../AppError';
+import AppError from '../AppError.js';
 import {
   BAD_REQUEST,
   NOT_FOUND,
   UNAUTHORIZED,
   INTERNAL_SERVER_ERROR,
-} from '../../constants/http';
+} from '../../constants/http.js';
 
 // Test data constants
 const TEST_ERROR_MESSAGE = 'Test error';

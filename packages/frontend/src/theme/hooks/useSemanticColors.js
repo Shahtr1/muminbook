@@ -23,6 +23,8 @@ export const useSemanticColors = () => {
 
   const mode = (tokenPair) => (isLight ? tokenPair.light : tokenPair.dark);
 
+  const winPair = (win, normal) => ({ win, normal });
+
   /* =========================================================
      TOKEN PAIRS (SOURCE OF TRUTH)
      ========================================================= */
@@ -46,10 +48,36 @@ export const useSemanticColors = () => {
   };
 
   /* =========================================================
-     BUILD INVERSION MAP
+     WIN ↔ NON-WIN PAIRS
      ========================================================= */
 
-  const inversionMap = useMemo(() => {
+  const winTokens = {
+    surfaceBase: winPair(
+      pair('wn.bg.light', 'wn.bg.dark'),
+      pair('gray.50', 'gray.900')
+    ),
+
+    surfaceContent: winPair(
+      pair('wn.bg_content.light', 'wn.bg_content.dark'),
+      pair('white', 'gray.800')
+    ),
+
+    iconDefault: winPair(
+      pair('wn.icon.light', 'wn.icon.dark'),
+      pair('gray.700', 'gray.300')
+    ),
+
+    iconHover: winPair(
+      pair('wn.icon.hover.light', 'wn.icon.hover.dark'),
+      pair('gray.200', 'gray.600')
+    ),
+  };
+
+  /* =========================================================
+     MODE INVERSION MAP (light ↔ dark)
+     ========================================================= */
+
+  const modeInverseMap = useMemo(() => {
     const map = new Map();
 
     Object.values(tokens).forEach(({ light, dark }) => {
@@ -60,7 +88,27 @@ export const useSemanticColors = () => {
     return map;
   }, []);
 
-  const invert = (token) => inversionMap.get(token) ?? token;
+  const invert = (token) => modeInverseMap.get(token) ?? token;
+
+  /* =========================================================
+     WIN INVERSION MAP (win ↔ non-win)
+     ========================================================= */
+
+  const winInverseMap = useMemo(() => {
+    const map = new Map();
+
+    Object.values(winTokens).forEach(({ win, normal }) => {
+      map.set(win.light, normal.light);
+      map.set(normal.light, win.light);
+
+      map.set(win.dark, normal.dark);
+      map.set(normal.dark, win.dark);
+    });
+
+    return map;
+  }, []);
+
+  const invertWin = (token) => winInverseMap.get(token) ?? token;
 
   /* =========================================================
      RESOLVED SEMANTIC GROUPS
@@ -132,7 +180,10 @@ export const useSemanticColors = () => {
     state,
     overlay,
     brand,
-    invert,
+
+    invert, // light <-> dark
+    invertWin, // win <-> non-win
+
     isWin,
   };
 };

@@ -1,9 +1,10 @@
-import catchErrors from '../utils/catchErrors';
-import { CREATED, NOT_FOUND, OK } from '../constants/http';
-import ResourceType from '../constants/types/resourceType';
+import catchErrors from '../utils/catchErrors.js';
+import { CREATED, OK } from '../constants/http.js';
+import ResourceType from '../constants/types/resourceType.js';
 import {
   copyResource,
   createResource,
+  CreateResourceParams,
   deleteResource,
   getResourceChildren,
   getTrashedResources,
@@ -13,19 +14,18 @@ import {
   renameResource,
   restoreAllResources,
   restoreResource,
-} from '../services/resource';
+} from '../services/resource/index.js';
 import mongoose from 'mongoose';
-import { getUserId } from '../utils/getUserId';
-import { isMyFilesEmpty } from '../services/resource/isMyFilesEmpty-resource.service';
+import { getUserId } from '../utils/getUserId.js';
+import { isMyFilesEmpty } from '../services/resource/isMyFilesEmpty-resource.service.js';
 import {
   getOverview,
   togglePinResource,
   updateAccessedAt,
-} from '../services/resource/overview.service';
-import { isTrashEmpty } from '../services/resource/trash/isTrashEmpty-resource.service';
-import { dstPathSchema, resourceSchema } from '../schemas/resource.schema';
-import { renameSchema } from '../schemas/common.schema';
-import appAssert from '../utils/appAssert';
+} from '../services/resource/overview.service.js';
+import { isTrashEmpty } from '../services/resource/trash/isTrashEmpty-resource.service.js';
+import { dstPathSchema, resourceSchema } from '../schemas/resource.schema.js';
+import { renameSchema } from '../schemas/common.schema.js';
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
@@ -45,7 +45,7 @@ export const createResourceHandler = catchErrors(async (req, res) => {
   const resourceInput = {
     ...parsed,
     type: parsed.type as ResourceType,
-  };
+  } as CreateResourceParams;
 
   const response = await createResource(resourceInput, userId);
 

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { compareValue, hashValue } from '../utils/bcrypt';
-import GenderType from '../constants/types/genderType';
+import { compareValue, hashValue } from '../utils/bcrypt.js';
+import GenderType from '../constants/types/genderType.js';
 
 export interface UserDocument extends mongoose.Document {
   firstname: string;

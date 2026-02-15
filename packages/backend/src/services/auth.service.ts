@@ -1,40 +1,46 @@
-import UserModel from '../models/user.model';
-import {
-  fiveMinutesAgo,
-  ONE_DAY_MS,
-  oneHourFromNow,
-  oneYearFromNow,
-  thirtyDaysFromNow,
-} from '../utils/date';
-import SessionModel from '../models/session.model';
-import appAssert from '../utils/appAssert';
+import UserModel from '../models/user.model.js';
+import SessionModel from '../models/session.model.js';
+import appAssert from '../utils/appAssert.js';
+
 import {
   CONFLICT,
   INTERNAL_SERVER_ERROR,
   NOT_FOUND,
   TOO_MANY_REQUESTS,
   UNAUTHORIZED,
-} from '../constants/http';
+} from '../constants/http.js';
+
 import {
   RefreshTokenPayload,
   refreshTokenSignOptions,
   signToken,
   verifyToken,
-} from '../utils/jwt';
-import { sendMail } from '../utils/sendMail';
+} from '../utils/jwt.js';
+
+import { sendMail } from '../utils/sendMail.js';
+
 import {
   getPasswordResetTemplate,
   getVerifyEmailTemplate,
-} from '../utils/emailTemplates';
-import { APP_ORIGIN } from '../constants/env';
-import { hashValue } from '../utils/bcrypt';
-import RoleModel, { RoleDocument } from '../models/role.model';
-import RoleType from '../constants/types/roleType';
-import UserRoleModel from '../models/user-role.model';
-import VerificationCodeModel from '../models/verification-code.model';
-import VerificationCodeType from '../constants/types/verificationCodeType';
-import ResourceModel from '../models/resource.model';
-import ResourceType from '../constants/types/resourceType';
+} from '../utils/emailTemplates.js';
+
+import { APP_ORIGIN } from '../constants/env.js';
+import { hashValue } from '../utils/bcrypt.js';
+
+import RoleModel, { RoleDocument } from '../models/role.model.js';
+import RoleType from '../constants/types/roleType.js';
+import UserRoleModel from '../models/user-role.model.js';
+import VerificationCodeModel from '../models/verification-code.model.js';
+import VerificationCodeType from '../constants/types/verificationCodeType.js';
+import ResourceModel from '../models/resource.model.js';
+import ResourceType from '../constants/types/resourceType.js';
+import {
+  fiveMinutesAgo,
+  ONE_DAY_MS,
+  oneHourFromNow,
+  oneYearFromNow,
+  thirtyDaysFromNow,
+} from '@muminbook/shared';
 
 export type CreateAccountParams = {
   firstname: string;

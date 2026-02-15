@@ -9,14 +9,14 @@
  * - Updates descendants paths and deleted status
  */
 
-import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/types/resourceType';
-import { PrimaryId } from '../../../constants/ids';
-import appAssert from '../../../utils/appAssert';
-import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../../constants/http';
-import { findOrCreateLostAndFound } from '../utils/findOrCreateLostAndFound';
-import { findDescendantsByPath } from '../common-resource.service';
-import { normalizeSlashes } from '../utils/normalizeSlashes';
+import ResourceModel from '../../../models/resource.model.js';
+import ResourceType from '../../../constants/types/resourceType.js';
+import { PrimaryId } from '../../../constants/ids.js';
+import appAssert from '../../../utils/appAssert.js';
+import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../../constants/http.js';
+import { findOrCreateLostAndFound } from '../utils/findOrCreateLostAndFound.js';
+import { findDescendantsByPath } from '../common-resource.service.js';
+import { normalizeSlashes } from '../utils/normalizeSlashes.js';
 
 const hasConflict = async (path: string, userId: PrimaryId) => {
   return ResourceModel.findOne({

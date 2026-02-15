@@ -25,14 +25,14 @@ import {
   restoreResourceHandler,
   togglePinResourceHandler,
   updateAccessedAtHandler,
-} from '../resource.controller';
-import * as resourceService from '../../services/resource';
-import * as resourceIsMyFilesEmptyService from '../../services/resource/isMyFilesEmpty-resource.service';
-import * as resourceOverviewService from '../../services/resource/overview.service';
-import * as resourceIsTrashEmptyService from '../../services/resource/trash/isTrashEmpty-resource.service';
-import * as getUserIdUtil from '../../utils/getUserId';
-import { CREATED, OK } from '../../constants/http';
-import ResourceType from '../../constants/types/resourceType';
+} from '../resource.controller.js';
+import { CREATED, OK } from '../../constants/http.js';
+import ResourceType from '../../constants/types/resourceType.js';
+import * as resourceService from '../../services/resource/index.js';
+import * as resourceIsMyFilesEmptyService from '../../services/resource/isMyFilesEmpty-resource.service.js';
+import * as resourceOverviewService from '../../services/resource/overview.service.js';
+import * as resourceIsTrashEmptyService from '../../services/resource/trash/isTrashEmpty-resource.service.js';
+import * as getUserIdUtil from '../../utils/getUserId.js';
 
 vi.mock('../../services/resource');
 vi.mock('../../services/resource/isMyFilesEmpty-resource.service');

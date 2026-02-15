@@ -1,5 +1,5 @@
 import { CookieOptions, Response } from 'express';
-import { fifteenMinutesFromNow, thirtyDaysFromNow } from './date';
+import { fifteenMinutesFromNow, thirtyDaysFromNow } from '@muminbook/shared';
 
 const secure = process.env.NODE_ENV !== 'development';
 const sameSite = process.env.NODE_ENV === 'development' ? 'strict' : 'none';

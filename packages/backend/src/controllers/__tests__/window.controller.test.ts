@@ -8,13 +8,16 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { deleteWindowHandler, getWindowsHandler } from '../window.controller';
-import WindowModel from '../../models/window.model';
-import * as getUserIdUtil from '../../utils/getUserId';
-import * as deleteWindowService from '../../services/window/delete-window.service';
-import { NOT_FOUND, OK } from '../../constants/http';
-import WindowType from '../../constants/types/windowType';
-import AppError from '../../utils/AppError';
+import {
+  deleteWindowHandler,
+  getWindowsHandler,
+} from '../window.controller.js';
+import WindowModel from '../../models/window.model.js';
+import * as getUserIdUtil from '../../utils/getUserId.js';
+import * as deleteWindowService from '../../services/window/delete-window.service.js';
+import { NOT_FOUND, OK } from '../../constants/http.js';
+import WindowType from '../../constants/types/windowType.js';
+import AppError from '../../utils/AppError.js';
 
 vi.mock('../../models/window.model');
 vi.mock('../../utils/getUserId');

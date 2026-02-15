@@ -1,11 +1,11 @@
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import mongoose from 'mongoose';
 
-import * as svc from '../get-resource.service';
-import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/types/resourceType';
-import { NOT_FOUND } from '../../../constants/http';
-import { ResourcePreview } from '../get-resource.service';
+import * as svc from '../get-resource.service.js';
+import ResourceModel from '../../../models/resource.model.js';
+import ResourceType from '../../../constants/types/resourceType.js';
+import { NOT_FOUND } from '../../../constants/http.js';
+import { ResourcePreview } from '../get-resource.service.js';
 
 const oid = () => new mongoose.Types.ObjectId();
 

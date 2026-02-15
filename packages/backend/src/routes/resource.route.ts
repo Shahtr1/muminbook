@@ -16,7 +16,7 @@ import {
   restoreResourceHandler,
   togglePinResourceHandler,
   updateAccessedAtHandler,
-} from '../controllers/resource.controller';
+} from '../controllers/resource.controller.js';
 
 const resourceRoutes = Router();
 

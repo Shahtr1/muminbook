@@ -1,5 +1,7 @@
 ![Muminbook logo](./packages/frontend/public/images/logos/logo-with-image.png 'Muminbook')
 
+## Muminbook
+
 **A Modern Islamic Community Platform**
 
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
@@ -18,6 +20,7 @@ Muminbook is a full-stack MERN monorepo (npm workspaces) that provides a communi
 
 - `packages/backend` — Node.js + Express + TypeScript API server
 - `packages/frontend` — React + Vite single-page application
+- `packages/shared` — Shared JavaScript utilities and types used by backend and frontend
 
 This README has been updated to reflect the current repository state (scripts, environment variables, and documentation links). For deeper technical documentation see the `docs/` folder (linked below).
 
@@ -87,8 +90,8 @@ npm run frontend   # runs frontend dev server in workspace @muminbook/frontend
 Access the apps in your browser:
 
 - Frontend: http://localhost:5173
-- Backend API: http://localhost:5000
-- Health check: http://localhost:5000/
+- Backend API: http://localhost:4004
+- Health check: http://localhost:4004/
 
 ## 📁 Workspace scripts (summary)
 
@@ -106,6 +109,7 @@ The root `package.json` exposes helpful workspace scripts. Key scripts (run from
 - `npm run format` / `npm run format:check` — run Prettier formatting
 - `npm run clean` — remove node_modules folders (note: uses `rm -rf`, run in bash-compatible shells)
 - `npm run test` — run tests across workspaces (if present)
+- `npm run test:e2e` — run end-to-end tests (requires additional setup, see `docs/TESTING.md`)
 
 For package-specific scripts see `packages/backend/package.json` and `packages/frontend/package.json`.
 
@@ -114,7 +118,7 @@ For package-specific scripts see `packages/backend/package.json` and `packages/f
 Backend environment variables live in `packages/backend/.env` (copy from `packages/backend/sample.env`). Important keys you should set:
 
 - NODE_ENV (development | production | test)
-- PORT (default: 5000)
+- PORT (default: 4004)
 - APP_ORIGIN (frontend origin, e.g. http://localhost:5173)
 - MONGO_URI (mongodb://localhost:27017/muminbook or Atlas URI)
 - JWT_SECRET — access token secret (note: this repository previously referenced `JWT_ACCESS_SECRET`; current code uses `JWT_SECRET`)
@@ -128,12 +132,14 @@ Note: If you have an older `.env` referencing `JWT_ACCESS_SECRET`, rename it to 
 
 Frontend environment variables live in `packages/frontend/.env` (copy from `packages/frontend/sample.env`). Typical value:
 
-- VITE_API_URL — backend API base URL (e.g. http://localhost:5000)
+- VITE_API_URL — backend API base URL (e.g. http://localhost:4004)
 
 ## Testing
 
 - Frontend tests: `cd packages/frontend && npm run test` (or `npm run test:frontend` from repo root)
 - Backend tests: `cd packages/backend && npm run test` (or `npm run test:backend` from repo root)
+- Shared tests: `cd packages/shared && npm run test` (or `npm run test:shared` from repo root)
+- E2E tests: `npm run test:e2e` (requires additional setup, see `docs/TESTING.md`)
 
 Note: The project uses Vitest for testing in both packages.
 

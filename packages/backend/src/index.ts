@@ -1,44 +1,39 @@
-import dotenv from 'dotenv';
-import path from 'path';
+// VERY IMPORTANT: load env first
+import './config/loadEnv.js';
 
-const envFile = process.env.NODE_ENV === 'test' ? '.env.test' : '.env';
+import connectToDatabase from './config/db.js';
+import { NODE_ENV, PORT } from './constants/env.js';
+import app from './app.js';
+import { log } from './utils/log.js';
 
-dotenv.config({
-  path: path.resolve(__dirname, '..', envFile),
-});
-
-import connectToDatabase from './config/db';
-
-import { NODE_ENV, PORT } from './constants/env';
-
-import app from './app';
-import { log } from './utils/log';
-
-import initDefaultRBAC from './config/init/initDefaultRBAC';
-import initFamilyTree from './config/init/initFamilyTree';
-import initReadings from './config/init/readings/initReadings';
-import initContentLayer from './config/init/readings/initContentLayer';
-import initQuran from './config/init/readings/initQuran';
+import initDefaultRBAC from './config/init/initDefaultRBAC.js';
+import initFamilyTree from './config/init/initFamilyTree.js';
+import initReadings from './config/init/readings/initReadings.js';
+import initContentLayer from './config/init/readings/initContentLayer.js';
+import initQuran from './config/init/readings/initQuran.js';
 
 const initServer = async () => {
+  await connectToDatabase();
+
   app.listen(Number(PORT), '0.0.0.0', async () => {
-    await connectToDatabase();
     log.success(
       `Server is running on port ${PORT} in ${NODE_ENV} environment.`
     );
+
     await initDefaultRBAC();
     await initFamilyTree();
     await initReadings();
     await initQuran();
+
     await initContentLayer({
-      folder: '../data/quran',
+      folder: 'json/quran',
       category: 'quran',
       source: 'uthmani',
       locale: 'ar',
     });
 
     await initContentLayer({
-      folder: '../data/sahih-international',
+      folder: 'json/sahih-international',
       category: 'translation',
       source: 'sahih',
       locale: 'en',
@@ -47,4 +42,4 @@ const initServer = async () => {
   });
 };
 
-initServer().then();
+initServer();

@@ -1,9 +1,9 @@
-import catchErrors from '../utils/catchErrors';
-import UserModel from '../models/user.model';
-import appAssert from '../utils/appAssert';
-import { NOT_FOUND, OK } from '../constants/http';
-import UserRoleModel from '../models/user-role.model';
-import { RoleDocument } from '../models/role.model';
+import catchErrors from '../utils/catchErrors.js';
+import UserModel from '../models/user.model.js';
+import appAssert from '../utils/appAssert.js';
+import { NOT_FOUND, OK } from '../constants/http.js';
+import UserRoleModel from '../models/user-role.model.js';
+import { RoleDocument } from '../models/role.model.js';
 
 export const getUserHandler = catchErrors(async (req, res) => {
   const user = await UserModel.findById(req.userId);

@@ -3,7 +3,7 @@ import {
   getAllReadingsHandler,
   getReadingHandler,
   getQuranStructureHandler,
-} from '../controllers/reading.controller';
+} from '../controllers/reading.controller.js';
 
 const readingRoutes = Router();
 

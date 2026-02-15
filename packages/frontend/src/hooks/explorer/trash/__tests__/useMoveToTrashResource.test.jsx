@@ -5,6 +5,7 @@ import { useMoveToTrashResource } from '../useMoveToTrashResource.js';
 import * as services from '@/services/index.js';
 import { useXToast } from '@/components/layout/toast/useXToast.jsx';
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@/services/index.js', () => ({
   moveToTrash: vi.fn(),
@@ -13,14 +14,6 @@ vi.mock('@/services/index.js', () => ({
 vi.mock('@/components/layout/toast/useXToast.jsx', () => ({
   useXToast: vi.fn(),
 }));
-
-// Mock location
-Object.defineProperty(window, 'location', {
-  value: {
-    pathname: '/reading/my-files',
-  },
-  writable: true,
-});
 
 describe('useMoveToTrashResource', () => {
   let mockToast;
@@ -42,20 +35,20 @@ describe('useMoveToTrashResource', () => {
         mutations: { retry: false },
       },
     });
-
-    window.location.pathname = '/reading/my-files';
   });
 
-  const wrapper = ({ children }) => (
-    <QueryClientProvider client={testQueryClient}>
-      {children}
-    </QueryClientProvider>
-  );
+  const createWrapper = (initialPath = '/reading/my-files') => {
+    return ({ children }) => (
+      <QueryClientProvider client={testQueryClient}>
+        <MemoryRouter initialEntries={[initialPath]}>{children}</MemoryRouter>
+      </QueryClientProvider>
+    );
+  };
 
   describe('basic functionality', () => {
     it('should return mutation object', () => {
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       expect(result.current.mutate).toBeDefined();
@@ -68,7 +61,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockResolvedValue({ id: '123', trashed: true });
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('123');
@@ -82,7 +75,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockResolvedValue({ id: '1' });
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -99,7 +92,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockResolvedValue(mockResponse);
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('456');
@@ -117,7 +110,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockResolvedValue({ id: '1' });
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -139,7 +132,7 @@ describe('useMoveToTrashResource', () => {
       testQueryClient.setQueryData(['resources', 'my-files'], oldData);
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('2');
@@ -159,7 +152,7 @@ describe('useMoveToTrashResource', () => {
       const invalidateSpy = vi.spyOn(testQueryClient, 'invalidateQueries');
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -177,7 +170,7 @@ describe('useMoveToTrashResource', () => {
       const invalidateSpy = vi.spyOn(testQueryClient, 'invalidateQueries');
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -195,7 +188,7 @@ describe('useMoveToTrashResource', () => {
       const invalidateSpy = vi.spyOn(testQueryClient, 'invalidateQueries');
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -213,7 +206,7 @@ describe('useMoveToTrashResource', () => {
       testQueryClient.setQueryData(['resources', 'my-files'], null);
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -233,7 +226,7 @@ describe('useMoveToTrashResource', () => {
       testQueryClient.setQueryData(['resources', 'my-files'], oldData);
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate(null);
@@ -250,7 +243,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockResolvedValue({ id: '1' });
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -267,7 +260,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockRejectedValue(error);
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -282,7 +275,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockRejectedValue(new Error('Failed'));
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -296,7 +289,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockRejectedValue(new Error('Error'));
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -309,14 +302,13 @@ describe('useMoveToTrashResource', () => {
 
   describe('path extraction', () => {
     it('should extract path from /reading/ route', async () => {
-      window.location.pathname = '/reading/documents/work';
       services.moveToTrash.mockResolvedValue({ id: '1' });
 
       const oldData = [{ _id: '1', name: 'File' }];
       testQueryClient.setQueryData(['resources', 'documents/work'], oldData);
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper('/reading/documents/work'),
       });
 
       result.current.mutate('1');
@@ -333,11 +325,10 @@ describe('useMoveToTrashResource', () => {
     });
 
     it('should handle root reading path', async () => {
-      window.location.pathname = '/reading/';
       services.moveToTrash.mockResolvedValue({ id: '1' });
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -356,7 +347,7 @@ describe('useMoveToTrashResource', () => {
       );
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('1');
@@ -372,7 +363,7 @@ describe('useMoveToTrashResource', () => {
 
     it('should have isIdle true initially', () => {
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       expect(result.current.isIdle).toBe(true);
@@ -392,7 +383,7 @@ describe('useMoveToTrashResource', () => {
       const invalidateSpy = vi.spyOn(testQueryClient, 'invalidateQueries');
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('100');
@@ -427,7 +418,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockResolvedValue({ id: 123 });
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate(123);
@@ -441,7 +432,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockResolvedValue({ success: true });
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate('');
@@ -456,7 +447,7 @@ describe('useMoveToTrashResource', () => {
       services.moveToTrash.mockResolvedValue({ id: uuid });
 
       const { result } = renderHook(() => useMoveToTrashResource(), {
-        wrapper,
+        wrapper: createWrapper(),
       });
 
       result.current.mutate(uuid);

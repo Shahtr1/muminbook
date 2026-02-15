@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getFamilyTreeHandler } from '../controllers/family-tree.controller';
+import { getFamilyTreeHandler } from '../controllers/family-tree.controller.js';
 
 const familyTreeRoutes = Router();
 

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import type { Db } from 'mongodb';
-import appAssert from './appAssert';
-import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../constants/http';
+import appAssert from './appAssert.js';
+import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../constants/http.js';
 
 /**
  * Returns:

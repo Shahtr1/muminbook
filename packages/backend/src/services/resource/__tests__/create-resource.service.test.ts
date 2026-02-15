@@ -11,11 +11,11 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
-import { createResource } from '../create-resource.service';
-import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/types/resourceType';
-import { PrimaryId } from '../../../constants/ids';
-import { CONFLICT, NOT_FOUND } from '../../../constants/http';
+import { createResource } from '../create-resource.service.js';
+import ResourceModel from '../../../models/resource.model.js';
+import ResourceType from '../../../constants/types/resourceType.js';
+import { PrimaryId } from '../../../constants/ids.js';
+import { CONFLICT, NOT_FOUND } from '../../../constants/http.js';
 
 vi.mock('../../../models/resource.model', () => {
   const MockResourceModel: any = {

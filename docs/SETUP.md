@@ -298,7 +298,7 @@ npm run frontend
 **Backend:**
 
 ```
-> ts-node-dev --files src/index.ts index.d.ts
+> ts-node-dev --files src/index.ts express.d.ts
 
 [INFO] Server started on http://localhost:5000
 [INFO] Database connected successfully

@@ -1,10 +1,10 @@
 import { Types } from 'mongoose';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/types/resourceType';
-import { renameResource } from '../rename-resource.service';
-import * as commonService from '../common-resource.service';
+import ResourceModel from '../../../models/resource.model.js';
+import ResourceType from '../../../constants/types/resourceType.js';
+import { renameResource } from '../rename-resource.service.js';
+import * as commonService from '../common-resource.service.js';
 
 vi.mock('../../../models/resource.model', () => {
   const MockResourceModel: any = {

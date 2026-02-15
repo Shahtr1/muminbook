@@ -1,9 +1,9 @@
-import { PrimaryId } from '../../constants/ids';
-import ResourceModel from '../../models/resource.model';
-import ResourceType from '../../constants/types/resourceType';
-import appAssert from '../../utils/appAssert';
-import { BAD_REQUEST, NOT_FOUND } from '../../constants/http';
-import { fiveMinutes } from '../../utils/date';
+import { PrimaryId } from '../../constants/ids.js';
+import ResourceModel from '../../models/resource.model.js';
+import ResourceType from '../../constants/types/resourceType.js';
+import appAssert from '../../utils/appAssert.js';
+import { BAD_REQUEST, NOT_FOUND } from '../../constants/http.js';
+import { fiveMinutes } from '@muminbook/shared';
 
 export const getOverview = async (userId: PrimaryId) => {
   const pinned = await ResourceModel.find({

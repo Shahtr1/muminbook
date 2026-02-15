@@ -1,7 +1,7 @@
-import QuranContentModel from '../../../models/reading/quran-content.model';
-import QuranModel from '../../../models/reading/quran.model';
-import { log } from '../../../utils/log';
-import { loadJSONFiles } from '../../../utils/loadJSONFiles';
+import QuranContentModel from '../../../models/reading/quran-content.model.js';
+import QuranModel from '../../../models/reading/quran.model.js';
+import { log } from '../../../utils/log.js';
+import { loadJSONFiles } from '../../../utils/loadJSONFiles.js';
 
 interface InitContentLayerOptions {
   folder: string;

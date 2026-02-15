@@ -1,8 +1,10 @@
-import { PrimaryId } from '../../constants/ids';
-import ResourceModel, { ResourceDocument } from '../../models/resource.model';
-import ResourceType from '../../constants/types/resourceType';
-import appAssert from '../../utils/appAssert';
-import { NOT_FOUND } from '../../constants/http';
+import { PrimaryId } from '../../constants/ids.js';
+import ResourceModel, {
+  ResourceDocument,
+} from '../../models/resource.model.js';
+import ResourceType from '../../constants/types/resourceType.js';
+import appAssert from '../../utils/appAssert.js';
+import { NOT_FOUND } from '../../constants/http.js';
 
 export type ResourcePreview = Pick<
   ResourceDocument,

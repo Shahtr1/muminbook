@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import FileType from '../constants/types/fileType';
-import Direction from '../constants/types/direction';
-import SuhufSidebar from '../constants/types/suhufSidebar';
-import QuranDivisionType from '../constants/types/quran/quranDivisionType';
+import FileType from '../constants/types/fileType.js';
+import Direction from '../constants/types/direction.js';
+import SuhufSidebar from '../constants/types/suhufSidebar.js';
+import QuranDivisionType from '../constants/types/quran/quranDivisionType.js';
 
 export const readingLayoutSchema = z.object({
   direction: z.nativeEnum(Direction),

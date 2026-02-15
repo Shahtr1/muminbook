@@ -15,6 +15,7 @@ export const SomethingWentWrong = ({
   height = '100%',
   width = '100%',
   transparent = false,
+  ...rest
 }) => {
   const { text } = useSemanticColors();
   const handleRefresh = () => {
@@ -24,7 +25,13 @@ export const SomethingWentWrong = ({
   const iconColor = text.primary;
 
   return (
-    <Flex width={width} height={height} justify="center" align="center">
+    <Flex
+      width={width}
+      height={height}
+      justify="center"
+      align="center"
+      {...rest}
+    >
       <Alert
         status="error"
         w="fit-content"

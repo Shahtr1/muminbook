@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import WindowType from '../constants/types/windowType';
-import { PrimaryId } from '../constants/ids';
-import './suhuf.model';
+import WindowType from '../constants/types/windowType.js';
+import { PrimaryId } from '../constants/ids.js';
+import './suhuf.model.js';
 
 export interface WindowDocument extends mongoose.Document {
   userId: PrimaryId;

@@ -5,10 +5,10 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { getUserId } from '../getUserId';
-import UserModel from '../../models/user.model';
-import AppError from '../AppError';
-import { NOT_FOUND } from '../../constants/http';
+import { getUserId } from '../getUserId.js';
+import UserModel from '../../models/user.model.js';
+import AppError from '../AppError.js';
+import { NOT_FOUND } from '../../constants/http.js';
 import { Types } from 'mongoose';
 
 // Mock the UserModel

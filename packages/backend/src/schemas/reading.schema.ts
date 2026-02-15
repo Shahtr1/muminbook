@@ -1,6 +1,6 @@
 import z from 'zod';
-import QuranDivisionType from '../constants/types/quran/quranDivisionType';
-import QuranCategoryType from '../constants/types/quran/quranCategoryType';
+import QuranDivisionType from '../constants/types/quran/quranDivisionType.js';
+import QuranCategoryType from '../constants/types/quran/quranCategoryType.js';
 
 export const readingSchema = z
   .object({

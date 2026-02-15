@@ -1,13 +1,13 @@
-import catchErrors from '../utils/catchErrors';
-import { CREATED, NOT_FOUND, OK } from '../constants/http';
-import { getUserId } from '../utils/getUserId';
-import { createSuhuf } from '../services/suhuf/create-suhuf.service';
+import catchErrors from '../utils/catchErrors.js';
+import { CREATED, NOT_FOUND, OK } from '../constants/http.js';
+import { getUserId } from '../utils/getUserId.js';
+import { createSuhuf } from '../services/suhuf/create-suhuf.service.js';
 import mongoose from 'mongoose';
-import SuhufModel from '../models/suhuf.model';
-import appAssert from '../utils/appAssert';
-import { renameSuhuf } from '../services/suhuf/rename-suhuf.service';
-import { suhufConfigSchema } from '../schemas/suhuf-config.schema';
-import { createSuhufSchema, titleSchema } from '../schemas/suhuf.schema';
+import SuhufModel from '../models/suhuf.model.js';
+import appAssert from '../utils/appAssert.js';
+import { renameSuhuf } from '../services/suhuf/rename-suhuf.service.js';
+import { suhufConfigSchema } from '../schemas/suhuf-config.schema.js';
+import { createSuhufSchema, titleSchema } from '../schemas/suhuf.schema.js';
 
 export const createSuhufHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);
@@ -45,7 +45,7 @@ export const renameSuhufHandler = catchErrors(async (req, res) => {
 
   const { id } = req.params;
 
-  const { message } = await renameSuhuf(id, userId, title);
+  const { message } = await renameSuhuf(id, userId, title as string);
 
   return res.status(OK).json({ message });
 });

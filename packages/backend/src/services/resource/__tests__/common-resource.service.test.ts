@@ -11,14 +11,14 @@ import { Types } from 'mongoose';
 import {
   assertNotRootFolder,
   findDescendantsByPath,
-} from '../common-resource.service';
+} from '../common-resource.service.js';
 import ResourceModel, {
   ResourceDocument,
-} from '../../../models/resource.model';
-import ResourceType from '../../../constants/types/resourceType';
-import { PrimaryId } from '../../../constants/ids';
-import AppError from '../../../utils/AppError';
-import { BAD_REQUEST } from '../../../constants/http';
+} from '../../../models/resource.model.js';
+import ResourceType from '../../../constants/types/resourceType.js';
+import { PrimaryId } from '../../../constants/ids.js';
+import AppError from '../../../utils/AppError.js';
+import { BAD_REQUEST } from '../../../constants/http.js';
 
 vi.mock('../../../models/resource.model', () => {
   const MockResourceModel: any = {

@@ -1,8 +1,8 @@
-import ResourceModel from '../../../models/resource.model';
-import { PrimaryId } from '../../../constants/ids';
-import ResourceType from '../../../constants/types/resourceType';
-import appAssert from '../../../utils/appAssert';
-import { NOT_FOUND } from '../../../constants/http';
+import ResourceModel from '../../../models/resource.model.js';
+import { PrimaryId } from '../../../constants/ids.js';
+import ResourceType from '../../../constants/types/resourceType.js';
+import appAssert from '../../../utils/appAssert.js';
+import { NOT_FOUND } from '../../../constants/http.js';
 
 export const findOrCreateLostAndFound = async (userId: PrimaryId) => {
   const rootFolder = await ResourceModel.findOne({

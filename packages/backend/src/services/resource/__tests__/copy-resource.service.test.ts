@@ -11,12 +11,12 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
-import { copyResource } from '../copy-resource.service';
-import ResourceModel from '../../../models/resource.model';
-import ResourceType from '../../../constants/types/resourceType';
-import { PrimaryId } from '../../../constants/ids';
-import AppError from '../../../utils/AppError';
-import { NOT_FOUND, BAD_REQUEST } from '../../../constants/http';
+import { copyResource } from '../copy-resource.service.js';
+import ResourceModel from '../../../models/resource.model.js';
+import ResourceType from '../../../constants/types/resourceType.js';
+import { PrimaryId } from '../../../constants/ids.js';
+import AppError from '../../../utils/AppError.js';
+import { NOT_FOUND, BAD_REQUEST } from '../../../constants/http.js';
 
 vi.mock('../../../models/resource.model', () => {
   const MockResourceModel: any = {
@@ -49,12 +49,12 @@ vi.mock('../utils/copyUtils', () => ({
 import {
   assertNotRootFolder,
   findDescendantsByPath,
-} from '../common-resource.service';
+} from '../common-resource.service.js';
 import {
   generateCopyName,
   buildClonedRootResource,
   buildClonedDescendants,
-} from '../utils/copyUtils';
+} from '../utils/copyUtils.js';
 
 describe('Copy Resource Service', () => {
   const mockUserId = new Types.ObjectId() as PrimaryId;

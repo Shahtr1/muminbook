@@ -2,9 +2,12 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 export interface ReadingDocument extends Document {
   uuid: string;
+  order: number;
   label: string;
-  color: string;
+  coverColor: string;
   description: string;
+  pageText: string;
+  image: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -15,15 +18,28 @@ const ReadingSchema = new Schema<ReadingDocument>(
       type: String,
       required: true,
     },
+    order: {
+      type: Number,
+      required: true,
+      index: true,
+    },
     label: {
       type: String,
       required: true,
     },
-    color: {
+    coverColor: {
       type: String,
       required: true,
     },
     description: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    pageText: {
       type: String,
       required: true,
     },

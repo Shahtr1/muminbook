@@ -1,4 +1,4 @@
-import RevelationPlace from './revelationPlace';
+import RevelationPlace from './revelationPlace.js';
 
 export type Surah = {
   uuid: number;

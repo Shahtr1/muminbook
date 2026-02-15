@@ -5,15 +5,15 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import appAssert from '../appAssert';
-import AppError from '../AppError';
+import appAssert from '../appAssert.js';
+import AppError from '../AppError.js';
 import {
   BAD_REQUEST,
   FORBIDDEN,
   NOT_FOUND,
   UNAUTHORIZED,
-} from '../../constants/http';
-import AppErrorCode from '../../constants/types/appErrorCode';
+} from '../../constants/http.js';
+import AppErrorCode from '../../constants/types/appErrorCode.js';
 
 describe('appAssert', () => {
   describe('when condition is true', () => {

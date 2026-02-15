@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import RoleType from '../constants/types/roleType';
+import RoleType from '../constants/types/roleType.js';
 
 export interface RoleDocument extends mongoose.Document {
   type: RoleType;

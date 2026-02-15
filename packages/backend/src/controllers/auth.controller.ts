@@ -1,4 +1,4 @@
-import catchErrors from '../utils/catchErrors';
+import catchErrors from '../utils/catchErrors.js';
 import {
   createAccount,
   loginUser,
@@ -7,24 +7,24 @@ import {
   sendPasswordResetEmail,
   sendVerifyEmailLink,
   verifyEmail,
-} from '../services/auth.service';
-import { CREATED, OK, UNAUTHORIZED } from '../constants/http';
+} from '../services/auth.service.js';
+import { CREATED, OK, UNAUTHORIZED } from '../constants/http.js';
 import {
   clearAuthCookies,
   getAccessTokenCookieOptions,
   getRefreshTokenCookieOptions,
   setAuthCookies,
-} from '../utils/cookies';
+} from '../utils/cookies.js';
 import {
   emailSchema,
   loginSchema,
   registerSchema,
   resetPasswordSchema,
   verificationCodeSchema,
-} from '../schemas/auth.schema';
-import { verifyToken } from '../utils/jwt';
-import SessionModel from '../models/session.model';
-import appAssert from '../utils/appAssert';
+} from '../schemas/auth.schema.js';
+import { verifyToken } from '../utils/jwt.js';
+import SessionModel from '../models/session.model.js';
+import appAssert from '../utils/appAssert.js';
 
 export const registerHandler = catchErrors(async (req, res) => {
   const request = registerSchema.parse({

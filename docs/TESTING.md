@@ -10,11 +10,13 @@ This document provides comprehensive guidance on testing practices across the Mu
 - [Frontend Testing](#frontend-testing)
 - [Writing Tests](#writing-tests)
 - [Coverage Reports](#coverage-reports)
+- [End-to-End (E2E) Testing](#end-to-end-e2e-testing)
 - [Best Practices](#best-practices)
 
 ## Overview
 
-Muminbook uses [Vitest](https://vitest.dev/) as the primary testing framework for both backend and frontend packages. Vitest provides:
+Muminbook uses [Vitest](https://vitest.dev/) as the primary testing framework for both backend and frontend packages.
+Vitest provides:
 
 - ⚡ Fast execution with native ESM support
 - 🔧 Compatible with Jest API
@@ -130,7 +132,6 @@ packages/backend/src/
 │   │   ├── bcrypt.test.ts
 │   │   ├── jwt.test.ts
 │   │   ├── AppError.test.ts
-│   │   └── date.test.ts
 │   ├── bcrypt.ts
 │   ├── jwt.ts
 │   └── ...
@@ -256,7 +257,8 @@ describe('Button Component', () => {
 
 ### Test Data Constants
 
-**IMPORTANT:** Always define test data as constants at the top of the test file. This makes tests maintainable and allows changing test values in one place.
+**IMPORTANT:** Always define test data as constants at the top of the test file. This makes tests maintainable and
+allows changing test values in one place.
 
 ```typescript
 // ✅ Good - Define constants at the top
@@ -451,16 +453,71 @@ Aim for these minimum thresholds:
 - Utilities: 85%+
 - UI components: 70%+
 
+## End-to-End (E2E) Testing
+
+In addition to unit and component testing with Vitest, Muminbook includes browser-based end-to-end (E2E) tests powered
+by Playwright
+
+### E2E Testing Stack
+
+- Framework: Playwright
+- Browser: Chromium (headless in CI)
+- Backend Mode: NODE_ENV=test
+- Frontend Mode: Vite --mode test
+- Database (Local): MongoDB via Docker
+- Database (CI): Mongo service container (GitHub Actions)
+
+### Environment Separation
+
+E2E runs in an isolated test environment:
+
+| Environment | Database                        |
+| ----------- | ------------------------------- |
+| Development | MongoDB Atlas (or local)        |
+| E2E (Local) | Docker Mongo (`muminbook_test`) |
+| E2E (CI)    | Mongo service container         |
+
+- Backend Test Environment
+  - `packages/backend/.env.test`
+- Frontend Test Environment
+  - `packages/frontend/.env.test`
+
+### Running E2E Locally
+
+1. Start Mongo (Docker required)
+
+```bash
+docker run -d -p 27017:27017 --name muminbook-e2e mongo:7
+```
+
+2. Run E2E Tests
+   From repo root:
+
+```bash
+npm run test:e2e
+```
+
+3. Running E2E in CI
+   GitHub Actions starts Mongo as a service container:
+
+```yaml
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - 27017:27017
+```
+
+CI runs Playwright in headless mode automatically.
+
 ## Best Practices
 
 ### General
 
-1. **Write tests first** when adding new features (TDD)
-2. **Keep tests independent** - no shared state between tests
-3. **Use descriptive names** - tests serve as documentation
-4. **Test behavior, not implementation** - focus on what, not how
-5. **Mock external dependencies** - database, APIs, file system
-6. **Run tests frequently** - use watch mode during development
+1. **Keep tests independent** - no shared state between tests
+2. **Use descriptive names** - tests serve as documentation
+3. **Test behavior, not implementation** - focus on what, not how
+4. **Mock external dependencies** - database, APIs, file system
 
 ### Backend Specific
 
@@ -477,6 +534,14 @@ Aim for these minimum thresholds:
 3. **Mock API calls** - don't make real HTTP requests
 4. **Test loading states** - async UI behavior
 5. **Avoid implementation details** - don't test internal state
+
+### E2E Best Practices
+
+1. Assert user-visible behavior
+2. Prefer role-based queries (getByRole)
+3. Avoid brittle selectors (no class-based queries)
+4. Keep tests deterministic
+5. Use test-specific environment config
 
 ### Don't Test
 
@@ -537,4 +602,5 @@ import { something } from './module'; // ✅
 
 ---
 
-**Remember:** Good tests make better software and give confidence when refactoring or adding features. Test with care and excellence (Ihsan)! 🚀
+**Remember:** Good tests make better software and give confidence when refactoring or adding features. Test with care
+and excellence (Ihsan)! 🚀

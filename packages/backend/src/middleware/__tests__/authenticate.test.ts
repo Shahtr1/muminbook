@@ -10,12 +10,12 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Request, Response, NextFunction } from 'express';
-import authenticate from '../authenticate';
-import { verifyToken } from '../../utils/jwt';
-import AppError from '../../utils/AppError';
-import { UNAUTHORIZED, FORBIDDEN } from '../../constants/http';
-import AppErrorCode from '../../constants/types/appErrorCode';
-import RoleType from '../../constants/types/roleType';
+import authenticate from '../authenticate.js';
+import { verifyToken } from '../../utils/jwt.js';
+import AppError from '../../utils/AppError.js';
+import { UNAUTHORIZED, FORBIDDEN } from '../../constants/http.js';
+import AppErrorCode from '../../constants/types/appErrorCode.js';
+import RoleType from '../../constants/types/roleType.js';
 import { Types } from 'mongoose';
 
 vi.mock('../../utils/jwt');

@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import mongoose from 'mongoose';
-import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../../constants/http';
-import AppError from '../../utils/AppError';
-import { getDbOrAssertCollection } from '../dbHelper';
+import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '../../constants/http.js';
+import AppError from '../../utils/AppError.js';
+import { getDbOrAssertCollection } from '../dbHelper.js';
 
 // Helper to create a fake db with listCollections
 function makeFakeDb(collectionNames: string[] = []) {

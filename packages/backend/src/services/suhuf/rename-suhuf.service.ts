@@ -1,7 +1,7 @@
-import { PrimaryId } from '../../constants/ids';
-import SuhufModel from '../../models/suhuf.model';
-import appAssert from '../../utils/appAssert';
-import { CONFLICT, NOT_FOUND } from '../../constants/http';
+import { PrimaryId } from '../../constants/ids.js';
+import SuhufModel from '../../models/suhuf.model.js';
+import appAssert from '../../utils/appAssert.js';
+import { CONFLICT, NOT_FOUND } from '../../constants/http.js';
 
 export const renameSuhuf = async (
   suhufId: string,

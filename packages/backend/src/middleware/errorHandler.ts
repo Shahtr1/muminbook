@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../constants/http';
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../constants/http.js';
 import { z } from 'zod';
-import AppError from '../utils/AppError';
-import { clearAuthCookies, REFRESH_PATH } from '../utils/cookies';
-import { log } from '../utils/log';
+import AppError from '../utils/AppError.js';
+import { clearAuthCookies, REFRESH_PATH } from '../utils/cookies.js';
+import { log } from '../utils/log.js';
 
 function handleZodError(res: Response, error: z.ZodError) {
   const errors = error.issues.map((err) => ({

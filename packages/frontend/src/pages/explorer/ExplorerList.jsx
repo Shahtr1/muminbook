@@ -1,38 +1,20 @@
-import { Flex, useBreakpointValue } from '@chakra-ui/react';
-import { Folder } from '@/components/explorer/components/Folder.jsx';
-import { ExplorerCard } from '@/components/explorer/ExplorerCard.jsx';
-import { useNavigate } from 'react-router-dom';
+import { Flex, Box } from '@chakra-ui/react';
 import { useIsMyFilesEmpty } from '@/hooks/explorer/useIsMyFilesEmpty.js';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { useReadings } from '@/hooks/reading/useReadings.js';
-import { QuranSVG } from '@/components/svgs/QuranSVG.jsx';
-import { ArabicEnglishSVG } from '@/components/svgs/ArabicEnglishSVG.jsx';
-import { BookSVG } from '@/components/svgs/BookSVG.jsx';
-import { StorySVG } from '@/components/svgs/StorySVG.jsx';
+import Book from '@/components/explorer/Book/Book.jsx';
+import { isWithinLastDays } from '@muminbook/shared';
 
 export const ExplorerList = () => {
-  const readingSvgMap = {
-    quran: QuranSVG,
-    'sealed-nectar': StorySVG,
-    'sahih-bukhari': StorySVG,
-    'sahih-muslim': StorySVG,
-    'sahih-international': ArabicEnglishSVG,
-  };
-  const gapSize = '25px';
-  const itemWidth = useBreakpointValue({
-    base: `100%`,
-    sm: `calc(50% - ${gapSize})`,
-    md: `calc(33.33% - ${gapSize})`,
-    lg: `calc(25% - ${gapSize})`,
-  });
+  const gapSize = '100px';
 
-  const navigate = useNavigate();
   const {
     emptyMyFiles,
     isPending: isMyFilesEmptyPending,
     isError: isMyFilesEmptyError,
   } = useIsMyFilesEmpty();
+
   const {
     readings,
     isPending: isReadingPending,
@@ -42,26 +24,42 @@ export const ExplorerList = () => {
   const isPending = isMyFilesEmptyPending || isReadingPending;
   const isError = isMyFilesEmptyError || isReadingError;
 
-  if (isPending) return <Loader />;
-  if (isError) return <SomethingWentWrong />;
+  if (isPending) return <Loader data-testid="explorer-loading" />;
+  if (isError) return <SomethingWentWrong data-testid="explorer-error" />;
 
   return (
-    <Flex gap={gapSize} flexWrap="wrap" px={8} py={2} align="center">
-      <Folder
-        onClick={() => navigate('my-files')}
-        width={itemWidth}
-        resource={{ empty: emptyMyFiles }}
-      />
-
+    <Flex
+      data-testid="explorer-list"
+      gap={gapSize}
+      py={5}
+      width="100%"
+      wrap="wrap"
+      justify="center"
+    >
       {readings.map((item) => {
-        const SvgIcon = readingSvgMap[item.uuid] || BookSVG;
+        const newBook = isWithinLastDays(item.createdAt, 5);
+
         return (
-          <ExplorerCard
+          <Box
             key={item._id}
-            {...item}
-            svg={<SvgIcon dimensions="50px" activeColor={item.color} />}
-            width={itemWidth}
-          />
+            w={{
+              base: '100%', // mobile → 1 per row
+              md: 'calc(50% - 200.5px)', // desktop/tablet → 2 per row
+            }}
+            display="flex"
+            justifyContent="center"
+          >
+            <Book
+              data-testid="explorer-reading-book"
+              coverColor={item.coverColor}
+              title={item.label}
+              uuid={item.uuid}
+              description={item.description}
+              imageSrc={`/images/book-covers/${item.image}`}
+              ribbon={newBook && 'New'}
+              pageText={item.pageText}
+            />
+          </Box>
         );
       })}
     </Flex>

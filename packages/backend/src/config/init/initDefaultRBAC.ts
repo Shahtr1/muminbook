@@ -1,6 +1,6 @@
-import RoleModel from '../../models/role.model';
-import RoleType from '../../constants/types/roleType';
-import UserModel from '../../models/user.model';
+import RoleModel from '../../models/role.model.js';
+import RoleType from '../../constants/types/roleType.js';
+import UserModel from '../../models/user.model.js';
 import {
   ADMIN_DATE_OF_BIRTH,
   ADMIN_EMAIL,
@@ -9,11 +9,11 @@ import {
   ADMIN_LASTNAME,
   ADMIN_PASSWORD,
   NODE_ENV,
-} from '../../constants/env';
-import UserRoleModel from '../../models/user-role.model';
-import ResourceModel from '../../models/resource.model';
-import ResourceType from '../../constants/types/resourceType';
-import { log } from '../../utils/log';
+} from '../../constants/env.js';
+import UserRoleModel from '../../models/user-role.model.js';
+import ResourceModel from '../../models/resource.model.js';
+import ResourceType from '../../constants/types/resourceType.js';
+import { log } from '../../utils/log.js';
 
 const ensureRole = async (type: RoleType, description: string) => {
   let role = await RoleModel.findOne({ type });

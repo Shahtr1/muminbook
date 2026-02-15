@@ -1,4 +1,4 @@
-import QuranModel from '../../models/reading/quran.model';
+import QuranModel from '../../models/reading/quran.model.js';
 
 export interface QuranStructureCounts {
   surah: { surah: number; totalAyat: number }[];

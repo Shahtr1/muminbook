@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useXToast } from '@/components/layout/toast/useXToast.jsx';
 import { togglePin } from '@/services/index.js';
+import { useLocation } from 'react-router-dom';
 
 export const useTogglePinResource = () => {
   const toast = useXToast();
   const queryClient = useQueryClient();
+  const location = useLocation();
   const path = location.pathname.replace('/reading/', '');
 
   return useMutation({

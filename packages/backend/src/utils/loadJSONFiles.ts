@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 export const loadJSONFiles = (relativePath: string): any[] => {
-  const dir = path.join(__dirname, relativePath);
+  const dir = path.resolve(process.cwd(), relativePath);
 
   if (!fs.existsSync(dir)) {
     throw new Error(`Directory not found: ${dir}`);

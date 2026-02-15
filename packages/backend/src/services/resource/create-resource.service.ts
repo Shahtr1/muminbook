@@ -1,9 +1,9 @@
-import ResourceType from '../../constants/types/resourceType';
-import { PrimaryId } from '../../constants/ids';
-import ResourceModel from '../../models/resource.model';
-import appAssert from '../../utils/appAssert';
-import { CONFLICT, NOT_FOUND } from '../../constants/http';
-import { normalizeSlashes } from './utils/normalizeSlashes';
+import ResourceType from '../../constants/types/resourceType.js';
+import { PrimaryId } from '../../constants/ids.js';
+import ResourceModel from '../../models/resource.model.js';
+import appAssert from '../../utils/appAssert.js';
+import { CONFLICT, NOT_FOUND } from '../../constants/http.js';
+import { normalizeSlashes } from './utils/normalizeSlashes.js';
 
 export type CreateResourceParams = {
   name: string;

@@ -16,14 +16,14 @@ import {
   reverifyEmailHandler,
   sendPasswordResetHandler,
   resetPasswordHandler,
-} from '../auth.controller';
-import * as authService from '../../services/auth.service';
-import * as cookieUtils from '../../utils/cookies';
-import { verifyToken } from '../../utils/jwt';
-import SessionModel from '../../models/session.model';
+} from '../auth.controller.js';
+import * as authService from '../../services/auth.service.js';
+import * as cookieUtils from '../../utils/cookies.js';
+import { verifyToken } from '../../utils/jwt.js';
 import { Types } from 'mongoose';
-import { CREATED, OK } from '../../constants/http';
-import { UserDocument } from '../../models/user.model';
+import { CREATED, OK } from '../../constants/http.js';
+import { UserDocument } from '../../models/user.model.js';
+import SessionModel from '../../models/session.model.js';
 
 vi.mock('../../services/auth.service');
 vi.mock('../../utils/cookies');
