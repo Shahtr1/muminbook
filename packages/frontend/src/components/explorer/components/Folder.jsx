@@ -44,7 +44,7 @@ export const Folder = ({
 
   const handleClick = () => {
     if (!lostAndFound && !myFiles && !isTrashView) updateAccessedAt(id);
-    onClick();
+    if (onClick) onClick();
   };
 
   useEffect(() => {
