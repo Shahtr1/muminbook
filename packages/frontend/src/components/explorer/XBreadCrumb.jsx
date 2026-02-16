@@ -5,7 +5,6 @@ import {
   Flex,
   Icon,
   Text,
-  useTheme,
 } from '@chakra-ui/react';
 import {
   ArrowBackIcon,
@@ -26,7 +25,6 @@ const labelMap = {
 export const XBreadCrumb = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const theme = useTheme();
   const originalPath = location.state?.originalPath;
 
   const isTrashView = location.pathname.includes('/reading/trash');
@@ -35,6 +33,7 @@ export const XBreadCrumb = () => {
     location.pathname.includes('/reading/my-files') || isTrashView;
 
   const segments = location.pathname.split('/').filter(Boolean);
+
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
   const forwardRef = useRef([]);
@@ -85,12 +84,14 @@ export const XBreadCrumb = () => {
     }
 
     const label = labelMap[segment]?.label || decodeURIComponent(segment);
-    const Icon = labelMap[segment]?.icon;
+
+    const SegmentIcon = labelMap[segment]?.icon;
+
     const isLast = index === segments.length - 1;
 
     return {
       label,
-      Icon,
+      SegmentIcon,
       path: basePath,
       state: partialOriginalPath
         ? { originalPath: partialOriginalPath }
@@ -135,7 +136,9 @@ export const XBreadCrumb = () => {
       <Breadcrumb
         as={Flex}
         spacing="5px"
-        separator={<ChevronRightIcon color="brand.500" />}
+        separator={
+          <ChevronRightIcon color="brand.500" transform="translateY(-1px)" />
+        }
         fontWeight="medium"
         fontSize={{ base: '12px', sm: '13px' }}
         overflowX="auto"
@@ -146,7 +149,7 @@ export const XBreadCrumb = () => {
           msOverflowStyle: 'none',
         }}
       >
-        {breadcrumbItems.map(({ path, state, label, Icon, isLast }) => (
+        {breadcrumbItems.map(({ path, state, label, SegmentIcon, isLast }) => (
           <BreadcrumbItem key={path} isCurrentPage={isLast}>
             <BreadcrumbLink
               onClick={() => navigate(path, { state })}
@@ -154,10 +157,13 @@ export const XBreadCrumb = () => {
               fontWeight="semibold"
               cursor="pointer"
             >
-              <Flex align="center" gap={1}>
-                {Icon && (
+              <Flex align="center" gap={1} lineHeight="1">
+                {SegmentIcon && (
                   <Icon
-                    color={theme.colors.brand['500']}
+                    as={SegmentIcon}
+                    boxSize="14px"
+                    color="brand.500"
+                    transform="translateY(-1px)"
                     style={{ strokeWidth: 1.5 }}
                   />
                 )}
@@ -167,6 +173,7 @@ export const XBreadCrumb = () => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                   whiteSpace="nowrap"
+                  lineHeight="1"
                 >
                   {label}
                 </Text>
