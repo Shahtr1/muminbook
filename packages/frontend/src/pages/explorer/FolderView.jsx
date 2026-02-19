@@ -20,6 +20,7 @@ import ConfirmationModal from '@/components/layout/modals/ConfirmationModal.jsx'
 import { useState } from 'react';
 import RenameResourceModal from '@/components/layout/modals/RenameResourceModal.jsx';
 import TransferResourceModal from '@/components/layout/modals/TransferResourceModal.jsx';
+import { ResourceItem } from '@/components/explorer/components/ResourceItem.jsx';
 
 export const FolderView = () => {
   const location = useLocation();
@@ -33,6 +34,21 @@ export const FolderView = () => {
   const { mutate: deleteResource } = useDeleteResource();
 
   const itemWidth = useBreakpointValue({ base: '70px', sm: '100px' });
+
+  const openModal = (type) => (resource) => {
+    setSelectedResource(resource);
+    setModalType(type);
+  };
+
+  const commonHandlers = {
+    onRename: openModal('rename'),
+    onMoveToTrash: openModal('trash'),
+    onRestore: openModal('restore'),
+    onDelete: openModal('delete'),
+    onMove: openModal('move'),
+    onCopy: openModal('copy'),
+  };
+
   const originalPath = location.state?.originalPath;
 
   const pathSegments = location.pathname.split('/').filter(Boolean);
@@ -95,76 +111,6 @@ export const FolderView = () => {
               return null;
             }
 
-            if (res.type === 'folder') {
-              return (
-                <Flex
-                  flexDir="column"
-                  key={res._id}
-                  justify="center"
-                  align="center"
-                >
-                  <Folder
-                    width={itemWidth}
-                    folderPath={folderPath}
-                    resource={{ ...res, id: res._id }}
-                    onClick={() => {
-                      navigate(
-                        `/reading/${baseSegment}/${[
-                          ...pathSegments.slice(folderPathIndex + 1),
-                          encodeURIComponent(res.name),
-                        ].join('/')}`,
-                        isTrashView
-                          ? { state: { originalPath: res.path } }
-                          : undefined
-                      );
-                    }}
-                    onRename={(r) => {
-                      setSelectedResource(r);
-                      setModalType('rename');
-                    }}
-                    onMoveToTrash={(r) => {
-                      setSelectedResource(r);
-                      setModalType('trash');
-                    }}
-                    onRestore={(r) => {
-                      setSelectedResource(r);
-                      setModalType('restore');
-                    }}
-                    onDelete={(r) => {
-                      setSelectedResource(r);
-                      setModalType('delete');
-                    }}
-                    onMove={(r) => {
-                      setSelectedResource(r);
-                      setModalType('move');
-                    }}
-                    onCopy={(r) => {
-                      setSelectedResource(r);
-                      setModalType('copy');
-                    }}
-                  />
-
-                  {isTrashView && (
-                    <Tooltip
-                      label={pathWithoutMyFiles}
-                      hasArrow
-                      placement="bottom"
-                    >
-                      <Text
-                        fontSize={{ base: '9px', sm: '12px' }}
-                        maxW={itemWidth}
-                        overflowX="auto"
-                        whiteSpace="nowrap"
-                        pb={2}
-                      >
-                        {pathWithoutMyFiles}
-                      </Text>
-                    </Tooltip>
-                  )}
-                </Flex>
-              );
-            }
-
             return (
               <Flex
                 flexDir="column"
@@ -172,10 +118,23 @@ export const FolderView = () => {
                 justify="center"
                 align="center"
               >
-                <File
+                <ResourceItem
+                  key={res._id}
+                  resource={{ ...res, id: res._id }}
                   folderPath={folderPath}
                   width={itemWidth}
-                  resource={{ ...res, id: res._id }}
+                  onClickFolder={() => {
+                    navigate(
+                      `/reading/${baseSegment}/${[
+                        ...pathSegments.slice(folderPathIndex + 1),
+                        encodeURIComponent(res.name),
+                      ].join('/')}`,
+                      isTrashView
+                        ? { state: { originalPath: res.path } }
+                        : undefined
+                    );
+                  }}
+                  {...commonHandlers}
                 />
                 {isTrashView && (
                   <Tooltip
