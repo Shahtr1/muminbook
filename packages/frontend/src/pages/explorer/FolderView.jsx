@@ -51,8 +51,6 @@ export const FolderView = () => {
     setSelectedResource(null);
   };
 
-  console.log('modalType:', modalType);
-
   if (isPending) return <Loader />;
   if (isError) return <SomethingWentWrong />;
 
