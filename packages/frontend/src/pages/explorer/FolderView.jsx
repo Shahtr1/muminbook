@@ -7,8 +7,6 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Folder } from '@/components/explorer/components/Folder.jsx';
-import { File } from '@/components/explorer/components/File.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { useResources } from '@/hooks/explorer/useResources.js';
@@ -16,38 +14,23 @@ import { useTrashResource } from '@/hooks/explorer/trash/useTrashResource.js';
 import { useMoveToTrashResource } from '@/hooks/explorer/trash/useMoveToTrashResource.js';
 import { useRestoreFromTrashResource } from '@/hooks/explorer/trash/useRestoreFromTrashResource.js';
 import { useDeleteResource } from '@/hooks/explorer/trash/useDeleteResource.js';
-import ConfirmationModal from '@/components/layout/modals/ConfirmationModal.jsx';
 import { useState } from 'react';
 import RenameResourceModal from '@/components/layout/modals/RenameResourceModal.jsx';
 import TransferResourceModal from '@/components/layout/modals/TransferResourceModal.jsx';
 import { ResourceItem } from '@/components/explorer/components/ResourceItem.jsx';
+import { useXModal } from '@/context/ModalContext.jsx';
 
 export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [selectedResource, setSelectedResource] = useState(null);
-  const [modalType, setModalType] = useState(null);
+  const { confirm } = useXModal();
 
   const { mutate: trashResource } = useMoveToTrashResource();
   const { mutate: restoreResource } = useRestoreFromTrashResource();
   const { mutate: deleteResource } = useDeleteResource();
 
   const itemWidth = useBreakpointValue({ base: '70px', sm: '100px' });
-
-  const openModal = (type) => (resource) => {
-    setSelectedResource(resource);
-    setModalType(type);
-  };
-
-  const commonHandlers = {
-    onRename: openModal('rename'),
-    onMoveToTrash: openModal('trash'),
-    onRestore: openModal('restore'),
-    onDelete: openModal('delete'),
-    onMove: openModal('move'),
-    onCopy: openModal('copy'),
-  };
 
   const originalPath = location.state?.originalPath;
 
@@ -62,9 +45,63 @@ export const FolderView = () => {
     ? useTrashResource(folderPath, originalPath)
     : useResources(folderPath);
 
-  const closeModal = () => {
-    setModalType(null);
-    setSelectedResource(null);
+  const [selectedResource, setSelectedResource] = useState(null);
+  const [transferMode, setTransferMode] = useState(null);
+
+  const handleMoveToTrash = async (resource) => {
+    const ok = await confirm({
+      title: 'Move to Trash',
+      body: 'Are you sure you want to move it to trash?',
+      yesLabel: 'Yes',
+      yesVariant: 'danger',
+    });
+
+    if (ok) {
+      trashResource(resource._id);
+    }
+  };
+
+  const handleRestore = async (resource) => {
+    const ok = await confirm({
+      title: 'Restore Resource',
+      body: 'Do you want to restore this resource?',
+      yesLabel: 'Restore',
+    });
+
+    if (ok) {
+      restoreResource({
+        id: resource._id,
+        path: resource.path,
+      });
+    }
+  };
+
+  const handleDelete = async (resource) => {
+    const ok = await confirm({
+      title: 'Delete Permanently',
+      body: 'This action will permanently delete the resource.',
+      yesLabel: 'Delete',
+      yesVariant: 'danger',
+    });
+
+    if (ok) {
+      deleteResource(resource._id);
+    }
+  };
+
+  const commonHandlers = {
+    onRename: setSelectedResource,
+    onMove: (r) => {
+      setSelectedResource(r);
+      setTransferMode('move');
+    },
+    onCopy: (r) => {
+      setSelectedResource(r);
+      setTransferMode('copy');
+    },
+    onMoveToTrash: handleMoveToTrash,
+    onRestore: handleRestore,
+    onDelete: handleDelete,
   };
 
   if (isPending) return <Loader />;
@@ -161,67 +198,23 @@ export const FolderView = () => {
 
       {/* SINGLE GLOBAL MODALS */}
 
-      <ConfirmationModal
-        isOpen={modalType === 'trash'}
-        onClose={closeModal}
-        title="Move to Trash"
-        yesLabel="Yes"
-        noLabel="Cancel"
-        yesVariant="danger"
-        onSave={() => {
-          trashResource(selectedResource?._id);
-          closeModal();
-        }}
-      >
-        <Text>Are you sure you want to move it to trash?</Text>
-      </ConfirmationModal>
-
-      <ConfirmationModal
-        isOpen={modalType === 'restore'}
-        onClose={closeModal}
-        title="Restore Resource"
-        yesLabel="Restore"
-        noLabel="Cancel"
-        onSave={() => {
-          restoreResource({
-            id: selectedResource?._id,
-            path: selectedResource?.path,
-          });
-          closeModal();
-        }}
-      >
-        <Text>Do you want to restore this resource?</Text>
-      </ConfirmationModal>
-
-      <ConfirmationModal
-        isOpen={modalType === 'delete'}
-        onClose={closeModal}
-        title="Delete Permanently"
-        yesLabel="Delete"
-        noLabel="Cancel"
-        yesVariant="danger"
-        onSave={() => {
-          deleteResource(selectedResource?._id);
-          closeModal();
-        }}
-      >
-        <Text>This action will permanently delete the resource.</Text>
-      </ConfirmationModal>
-
       <RenameResourceModal
-        isOpen={modalType === 'rename'}
-        onClose={closeModal}
+        isOpen={!!selectedResource && !transferMode}
+        onClose={() => setSelectedResource(null)}
         id={selectedResource?._id}
         type={selectedResource?.type}
         name={selectedResource?.name}
       />
 
       <TransferResourceModal
-        isOpen={modalType === 'move' || modalType === 'copy'}
-        onClose={closeModal}
+        isOpen={!!transferMode}
+        onClose={() => {
+          setSelectedResource(null);
+          setTransferMode(null);
+        }}
         id={selectedResource?._id}
         path={folderPath}
-        isCopy={modalType === 'copy'}
+        isCopy={transferMode === 'copy'}
       />
     </>
   );

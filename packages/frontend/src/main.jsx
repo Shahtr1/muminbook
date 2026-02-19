@@ -10,6 +10,7 @@ import theme from './theme/index.js';
 import { HelmetProvider } from 'react-helmet-async';
 import { WindowNavbarProvider } from '@/context/WindowNavbarContext.jsx';
 import './styles/split.css';
+import { ModalProvider } from '@/context/ModalContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -18,9 +19,11 @@ createRoot(document.getElementById('root')).render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <HelmetProvider>
-            <WindowNavbarProvider>
-              <App />
-            </WindowNavbarProvider>
+            <ModalProvider>
+              <WindowNavbarProvider>
+                <App />
+              </WindowNavbarProvider>
+            </ModalProvider>
           </HelmetProvider>
           <ReactQueryDevtools position="bottom" initialIsOpen={false} />
         </BrowserRouter>
