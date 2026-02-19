@@ -15,6 +15,12 @@ export const Folder = ({
   dimensions: customDimensions,
   bgColor,
   shadow,
+  onRename,
+  onMoveToTrash,
+  onRestore,
+  onDelete,
+  onMove,
+  onCopy,
   ...rest
 }) => {
   const { surface } = useSemanticColors();
@@ -55,6 +61,7 @@ export const Folder = ({
 
   return (
     <Flex
+      data-testid="folder-item"
       width={width}
       align="center"
       justify="center"
@@ -74,6 +81,12 @@ export const Folder = ({
             <ResourcesActionItems
               resource={resource}
               pathFromUrl={folderPath}
+              onRename={onRename}
+              onMoveToTrash={onMoveToTrash}
+              onRestore={onRestore}
+              onDelete={onDelete}
+              onMove={onMove}
+              onCopy={onCopy}
             />
           }
         />

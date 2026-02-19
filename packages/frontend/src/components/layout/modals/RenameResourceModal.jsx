@@ -11,8 +11,11 @@ import { XModal } from '@/components/layout/modals/XModal.jsx';
 import { useRenameResource } from '@/hooks/explorer/useRenameResource.js';
 
 const RenameResourceModal = ({ isOpen, onClose, id, type, name }) => {
-  name = type === 'file' ? name.replace(/\.txt$/, '') : name;
-  const [newName, setNewName] = useState(name);
+  const baseName =
+    type === 'file' && name ? name.replace(/\.txt$/, '') : (name ?? '');
+
+  const [newName, setNewName] = useState(baseName);
+
   const [errors, setErrors] = useState({});
 
   const { mutate: renameResource } = useRenameResource();
@@ -21,10 +24,10 @@ const RenameResourceModal = ({ isOpen, onClose, id, type, name }) => {
 
   useEffect(() => {
     if (isOpen) {
-      setNewName(name);
+      setNewName(baseName);
       setErrors({});
     }
-  }, [isOpen]);
+  }, [isOpen, baseName]);
 
   const removeError = (field) => {
     setErrors((prev) => {

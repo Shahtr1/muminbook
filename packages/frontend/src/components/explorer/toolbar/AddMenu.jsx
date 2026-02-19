@@ -17,7 +17,7 @@ import { FileSVG } from '@/components/svgs/FileSVG.jsx';
 import { useEffect, useState } from 'react';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
-export const AddMenu = ({ onCreate }) => {
+export const AddMenu = ({ onCreate, ...rest }) => {
   const { surface } = useSemanticColors();
   const hoverBg = surface.subtle;
 
@@ -62,6 +62,7 @@ export const AddMenu = ({ onCreate }) => {
         height="100%"
         onClick={isOpen ? onClose : onOpen}
         sx={{ '> span': { height: '100%' } }}
+        {...rest}
       >
         <Flex
           align="center"
@@ -98,6 +99,7 @@ export const AddMenu = ({ onCreate }) => {
           <Box px={2} py={1} display="flex" gap={1} alignItems="center">
             <InputGroup size={{ base: 'xs', sm: 'sm' }} flex="1">
               <Input
+                data-testid="add-input"
                 placeholder={showFileInput ? 'File name' : 'Folder name'}
                 autoFocus
                 value={inputValue}
@@ -113,6 +115,7 @@ export const AddMenu = ({ onCreate }) => {
               {showFileInput && <InputRightAddon>.txt</InputRightAddon>}
             </InputGroup>
             <Button
+              data-testid="confirm-create"
               size={{ base: 'xs', sm: 'sm' }}
               colorScheme="brand"
               onClick={handleCreate}
@@ -124,6 +127,7 @@ export const AddMenu = ({ onCreate }) => {
         ) : (
           <>
             <Box
+              data-testid="add-file-option"
               as="button"
               px={3}
               py={2}
@@ -141,6 +145,7 @@ export const AddMenu = ({ onCreate }) => {
               <Text fontSize={{ base: '12px', sm: '13px' }}>File</Text>
             </Box>
             <Box
+              data-testid="add-folder-option"
               as="button"
               px={3}
               py={2}

@@ -39,13 +39,21 @@ export const ActionItems = ({
   const gapSize = useBreakpointValue({ base: 1, sm: 2 });
   const paddingY = useBreakpointValue({ base: 1, sm: 2 });
 
-  const renderItem = (icon, label, color, onClick, isDisabled = false) => (
+  const renderItem = (
+    testId,
+    icon,
+    label,
+    color,
+    onClick,
+    isDisabled = false
+  ) => (
     <MenuItem
       onClick={onClick}
       isDisabled={isDisabled}
       py={paddingY}
       _hover={{ bg, color }}
       color={color}
+      data-testid={testId}
     >
       <Flex align="center" gap={gapSize}>
         {icon}
@@ -61,6 +69,7 @@ export const ActionItems = ({
     return (
       <>
         {renderItem(
+          'restore-all',
           <HiArrowCircleUp
             size={iconSize}
             color="var(--chakra-colors-green-500)"
@@ -70,6 +79,7 @@ export const ActionItems = ({
           onRestoreAll
         )}
         {renderItem(
+          'empty-trash',
           <HiTrash size={iconSize} color="var(--chakra-colors-red-500)" />,
           'Empty Trash',
           'red.500',
@@ -84,6 +94,7 @@ export const ActionItems = ({
     return (
       <>
         {renderItem(
+          'coming-soon',
           <HiPencilAlt size={iconSize} />,
           'Coming Soon',
           undefined,
@@ -100,6 +111,7 @@ export const ActionItems = ({
       {currentIsTrash ? (
         <>
           {renderItem(
+            'restore',
             <HiArrowCircleUp
               size={iconSize}
               color="var(--chakra-colors-green-500)"
@@ -109,6 +121,7 @@ export const ActionItems = ({
             onRestore
           )}
           {renderItem(
+            'delete',
             <HiTrash size={iconSize} color="var(--chakra-colors-red-500)" />,
             'Delete',
             'red.500',
@@ -118,6 +131,7 @@ export const ActionItems = ({
       ) : (
         <>
           {renderItem(
+            'rename',
             <HiPencilAlt size={iconSize} />,
             'Rename',
             undefined,
@@ -125,6 +139,7 @@ export const ActionItems = ({
           )}
           {type === 'folder' &&
             renderItem(
+              'pin',
               pinned ? (
                 <BsPinAngleFill size={iconSize} />
               ) : (
@@ -137,18 +152,21 @@ export const ActionItems = ({
 
           {!isLostAndFound &&
             renderItem(
+              'copy',
               <HiDuplicate size={iconSize} />,
               'Copy',
               undefined,
               onCopy
             )}
           {renderItem(
+            'move-to-folder',
             <HiFolder size={iconSize} />,
             'Move to Folder',
             undefined,
             onMoveToFolder
           )}
           {renderItem(
+            'move-to-trash',
             <HiTrash size={iconSize} color="var(--chakra-colors-red-500)" />,
             'Move to Trash',
             'red.500',
