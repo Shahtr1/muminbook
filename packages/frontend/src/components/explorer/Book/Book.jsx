@@ -35,7 +35,7 @@ const Book = ({
   );
 
   return (
-    <List minW={width} {...rest}>
+    <List minW={width} {...rest} className="book-wrapper">
       <Flex direction={{ base: 'column', md: 'row' }} align="center">
         {/* 3D Book ONLY */}
         <Box
