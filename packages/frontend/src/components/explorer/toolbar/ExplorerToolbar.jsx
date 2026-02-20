@@ -79,7 +79,7 @@ export const ExplorerToolbar = () => {
         <Flex w="auto">
           {isMyFilesView && (
             <Flex justify="end">
-              <AddMenu onCreate={addNew} />
+              <AddMenu data-testid="explorer-add" onCreate={addNew} />
             </Flex>
           )}
           <Icon

@@ -7,17 +7,31 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Folder } from '@/components/explorer/components/Folder.jsx';
-import { File } from '@/components/explorer/components/File.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { useResources } from '@/hooks/explorer/useResources.js';
 import { useTrashResource } from '@/hooks/explorer/trash/useTrashResource.js';
+import { useMoveToTrashResource } from '@/hooks/explorer/trash/useMoveToTrashResource.js';
+import { useRestoreFromTrashResource } from '@/hooks/explorer/trash/useRestoreFromTrashResource.js';
+import { useDeleteResource } from '@/hooks/explorer/trash/useDeleteResource.js';
+import { useState } from 'react';
+import RenameResourceModal from '@/components/layout/modals/RenameResourceModal.jsx';
+import TransferResourceModal from '@/components/layout/modals/TransferResourceModal.jsx';
+import { ResourceItem } from '@/components/explorer/components/ResourceItem.jsx';
+import { useXModal } from '@/context/ModalContext.jsx';
 
 export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { confirm } = useXModal();
+
+  const { mutate: trashResource } = useMoveToTrashResource();
+  const { mutate: restoreResource } = useRestoreFromTrashResource();
+  const { mutate: deleteResource } = useDeleteResource();
+
   const itemWidth = useBreakpointValue({ base: '70px', sm: '100px' });
+
   const originalPath = location.state?.originalPath;
 
   const pathSegments = location.pathname.split('/').filter(Boolean);
@@ -31,50 +45,109 @@ export const FolderView = () => {
     ? useTrashResource(folderPath, originalPath)
     : useResources(folderPath);
 
+  const [selectedResource, setSelectedResource] = useState(null);
+  const [transferMode, setTransferMode] = useState(null);
+
+  const handleMoveToTrash = async (resource) => {
+    const ok = await confirm({
+      title: 'Move to Trash',
+      body: 'Are you sure you want to move it to trash?',
+      yesLabel: 'Yes',
+      yesVariant: 'danger',
+    });
+
+    if (ok) {
+      trashResource(resource._id);
+    }
+  };
+
+  const handleRestore = async (resource) => {
+    const ok = await confirm({
+      title: 'Restore Resource',
+      body: 'Do you want to restore this resource?',
+      yesLabel: 'Restore',
+    });
+
+    if (ok) {
+      restoreResource({
+        id: resource._id,
+        path: resource.path,
+      });
+    }
+  };
+
+  const handleDelete = async (resource) => {
+    const ok = await confirm({
+      title: 'Delete Permanently',
+      body: 'This action will permanently delete the resource.',
+      yesLabel: 'Delete',
+      yesVariant: 'danger',
+    });
+
+    if (ok) {
+      deleteResource(resource._id);
+    }
+  };
+
+  const commonHandlers = {
+    onRename: setSelectedResource,
+    onMove: (r) => {
+      setSelectedResource(r);
+      setTransferMode('move');
+    },
+    onCopy: (r) => {
+      setSelectedResource(r);
+      setTransferMode('copy');
+    },
+    onMoveToTrash: handleMoveToTrash,
+    onRestore: handleRestore,
+    onDelete: handleDelete,
+  };
+
   if (isPending) return <Loader />;
   if (isError) return <SomethingWentWrong />;
 
   return (
-    <Flex
-      flexDir={isTrashView ? 'column' : 'row'}
-      w="100%"
-      height="fit-content"
-      overflow="visible"
-      css={{
-        '&::-webkit-scrollbar': { display: 'none' },
-        scrollbarWidth: 'none',
-        msOverflowStyle: 'none',
-      }}
-    >
-      {isTrashView && (
-        <Flex px={3} w="95%" align="center" mt={1} mb={2} mx="auto">
-          <Alert
-            status="info"
-            variant="left-accent"
-            fontSize={{ base: '10px', sm: 'sm' }}
-            h={{ base: '40px', sm: '50px' }}
-          >
-            <AlertIcon />
-            <Text>
-              Items in trash will be automatically deleted after 30 days
-            </Text>
-          </Alert>
-        </Flex>
-      )}
+    <>
       <Flex
-        flexWrap="wrap"
-        gap={{ base: 5, sm: 12 }}
-        p="10px 25px"
+        flexDir={isTrashView ? 'column' : 'row'}
+        w="100%"
+        height="fit-content"
         overflow="visible"
+        css={{
+          '&::-webkit-scrollbar': { display: 'none' },
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
       >
-        {resources.map((res) => {
-          const pathWithoutMyFiles = res.path?.replace(/^\/?my-files\//, '');
+        {isTrashView && (
+          <Flex px={3} w="95%" align="center" mt={1} mb={2} mx="auto">
+            <Alert
+              status="info"
+              variant="left-accent"
+              fontSize={{ base: '10px', sm: 'sm' }}
+              h={{ base: '40px', sm: '50px' }}
+            >
+              <AlertIcon />
+              <Text>
+                Items in trash will be automatically deleted after 30 days
+              </Text>
+            </Alert>
+          </Flex>
+        )}
 
-          if (res.type === 'folder' && res.name === 'lost+found' && res.empty) {
-            return null;
-          }
+        <Flex flexWrap="wrap" gap={{ base: 5, sm: 12 }} p="10px 25px">
+          {resources.map((res) => {
+            const pathWithoutMyFiles = res.path?.replace(/^\/?my-files\//, '');
 
-          if (res.type === 'folder') {
+            if (
+              res.type === 'folder' &&
+              res.name === 'lost+found' &&
+              res.empty
+            ) {
+              return null;
+            }
+
             return (
               <Flex
                 flexDir="column"
@@ -82,8 +155,12 @@ export const FolderView = () => {
                 justify="center"
                 align="center"
               >
-                <Folder
-                  onClick={() => {
+                <ResourceItem
+                  key={res._id}
+                  resource={{ ...res, id: res._id }}
+                  folderPath={folderPath}
+                  width={itemWidth}
+                  onClickFolder={() => {
                     navigate(
                       `/reading/${baseSegment}/${[
                         ...pathSegments.slice(folderPathIndex + 1),
@@ -94,9 +171,7 @@ export const FolderView = () => {
                         : undefined
                     );
                   }}
-                  width={itemWidth}
-                  folderPath={folderPath}
-                  resource={{ ...res, id: res._id }}
+                  {...commonHandlers}
                 />
                 {isTrashView && (
                   <Tooltip
@@ -117,40 +192,30 @@ export const FolderView = () => {
                 )}
               </Flex>
             );
-          }
-
-          return (
-            <Flex
-              flexDir="column"
-              key={res._id}
-              justify="center"
-              align="center"
-            >
-              <File
-                folderPath={folderPath}
-                onClick={() => {
-                  // TODO: handle file open here
-                }}
-                width={itemWidth}
-                resource={{ ...res, id: res._id }}
-              />
-              {isTrashView && (
-                <Tooltip label={pathWithoutMyFiles} hasArrow placement="bottom">
-                  <Text
-                    fontSize={{ base: '9px', sm: '12px' }}
-                    maxW={itemWidth}
-                    overflowX="auto"
-                    whiteSpace="nowrap"
-                    pb={2}
-                  >
-                    {pathWithoutMyFiles}
-                  </Text>
-                </Tooltip>
-              )}
-            </Flex>
-          );
-        })}
+          })}
+        </Flex>
       </Flex>
-    </Flex>
+
+      {/* SINGLE GLOBAL MODALS */}
+
+      <RenameResourceModal
+        isOpen={!!selectedResource && !transferMode}
+        onClose={() => setSelectedResource(null)}
+        id={selectedResource?._id}
+        type={selectedResource?.type}
+        name={selectedResource?.name}
+      />
+
+      <TransferResourceModal
+        isOpen={!!transferMode}
+        onClose={() => {
+          setSelectedResource(null);
+          setTransferMode(null);
+        }}
+        id={selectedResource?._id}
+        path={folderPath}
+        isCopy={transferMode === 'copy'}
+      />
+    </>
   );
 };

@@ -14,6 +14,7 @@ import spacings from '@/theme/spacings.js';
 import menuItemTheme from '@/theme/menuItemTheme.js';
 import skeletonTheme from '@/theme/skeletonTheme.js';
 import { tooltipTheme } from '@/theme/tooltipTheme.js';
+import modalTheme from '@/theme/modalTheme.js';
 
 const config = {
   initialColorMode: 'light',
@@ -70,6 +71,7 @@ const components = {
   Menu: menuItemTheme,
   Skeleton: skeletonTheme,
   Tooltip: tooltipTheme,
+  Modal: modalTheme,
 };
 
 const theme = extendTheme({

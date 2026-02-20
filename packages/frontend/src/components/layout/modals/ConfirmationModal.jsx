@@ -19,6 +19,7 @@ const ConfirmationModal = ({
   const footer = (
     <>
       <Button
+        data-testid="confirm-cancel"
         onClick={onClose}
         variant="ghost"
         mr={3}
@@ -27,6 +28,7 @@ const ConfirmationModal = ({
         {noLabel}
       </Button>
       <Button
+        data-testid="confirm-submit"
         onClick={handleSave}
         size={{ base: 'sm', sm: 'md' }}
         variant={yesVariant}

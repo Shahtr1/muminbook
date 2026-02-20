@@ -44,6 +44,7 @@ export const ItemToolbar = ({
       <Menu placement="bottom-start">
         <MenuButton
           as={Flex}
+          data-testid="item-toolbar-menu"
           align="center"
           cursor="pointer"
           height="100%"

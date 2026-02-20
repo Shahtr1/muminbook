@@ -18,7 +18,6 @@ export const XModal = ({
   footer = null,
   showCloseButton = true,
 }) => {
-  const { border } = useSemanticColors();
   const isMobile = useBreakpointValue({ base: true, sm: false });
 
   return (
@@ -44,15 +43,13 @@ export const XModal = ({
         {title && (
           <ModalHeader
             fontSize={{ base: '15px', sm: '17px' }}
-            color="brand.500"
             borderBottom="1px solid"
-            borderColor={border.default}
           >
             {title}
           </ModalHeader>
         )}
 
-        {showCloseButton && <ModalCloseButton color="brand.500" />}
+        {showCloseButton && <ModalCloseButton />}
 
         <ModalBody display="flex">{children}</ModalBody>
 

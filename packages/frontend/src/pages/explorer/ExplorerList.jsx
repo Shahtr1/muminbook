@@ -106,6 +106,7 @@ export const ExplorerList = () => {
         onClick={() => navigate('my-files')}
       >
         <Folder
+          data-testid="explorer-reading-folder"
           dimensions="90px"
           resource={{ empty: emptyMyFiles }}
           bgColor="unset"

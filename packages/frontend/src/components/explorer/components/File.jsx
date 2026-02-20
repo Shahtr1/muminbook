@@ -4,7 +4,18 @@ import { FileSVG } from '@/components/svgs/FileSVG.jsx';
 import { ItemToolbar } from '@/components/explorer/toolbar/ItemToolbar.jsx';
 import { ResourcesActionItems } from '@/components/explorer/components/ResourcesActionItems.jsx';
 
-export const File = ({ onClick, width, folderPath, resource }) => {
+export const File = ({
+  onClick,
+  width,
+  folderPath,
+  resource,
+  onRename,
+  onMoveToTrash,
+  onRestore,
+  onDelete,
+  onMove,
+  onCopy,
+}) => {
   const dimensions = useBreakpointValue({
     base: '40px',
     sm: '60px',
@@ -28,7 +39,16 @@ export const File = ({ onClick, width, folderPath, resource }) => {
     >
       <ItemToolbar
         children={
-          <ResourcesActionItems resource={resource} pathFromUrl={folderPath} />
+          <ResourcesActionItems
+            resource={resource}
+            pathFromUrl={folderPath}
+            onRename={onRename}
+            onMoveToTrash={onMoveToTrash}
+            onRestore={onRestore}
+            onDelete={onDelete}
+            onMove={onMove}
+            onCopy={onCopy}
+          />
         }
       />
       <Flex
