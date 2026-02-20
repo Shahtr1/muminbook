@@ -15,6 +15,7 @@ export const File = ({
   onDelete,
   onMove,
   onCopy,
+  ...rest
 }) => {
   const dimensions = useBreakpointValue({
     base: '40px',
@@ -31,11 +32,13 @@ export const File = ({
 
   return (
     <Flex
+      data-testid="file-item"
       width={width}
       cursor="pointer"
       position="relative"
       justify="center"
       align="center"
+      {...rest}
     >
       <ItemToolbar
         children={
