@@ -10,11 +10,15 @@ import {
   Divider,
   useColorModeValue,
   Spinner,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import { Folder } from '@/components/explorer/components/Folder.jsx';
+import { useIsMyFilesEmpty } from '@/hooks/explorer/useIsMyFilesEmpty.js';
+import { useNavigate } from 'react-router-dom';
 
 dayjs.extend(duration);
 
@@ -168,6 +172,16 @@ export const Dashboard = () => {
   const { surface, text, border, brand } = useSemanticColors();
   const bgColor = useColorModeValue('bg.light', 'bg.dark');
 
+  const { emptyMyFiles, isPending: isMyFilesEmptyPending } =
+    useIsMyFilesEmpty();
+
+  const dimensions = useBreakpointValue({
+    base: '100px',
+    sm: '150px',
+  });
+
+  const navigate = useNavigate();
+
   const now = useClock();
   const coords = useLocation();
   const prayerData = usePrayerData(coords?.lat, coords?.lng);
@@ -281,7 +295,7 @@ export const Dashboard = () => {
         </Tile>
 
         {/* Prayer Progress (Mock) */}
-        <Tile rowSpan={2}>
+        <Tile rowSpan={1}>
           <Flex direction="column" align="center" justify="center" h="100%">
             <Text
               fontSize="10px"
@@ -305,6 +319,20 @@ export const Dashboard = () => {
               </CircularProgressLabel>
             </CircularProgress>
           </Flex>
+        </Tile>
+
+        <Tile rowSpan={1}>
+          {isMyFilesEmptyPending ? (
+            <Spinner size="sm" />
+          ) : (
+            <Folder
+              dimensions={dimensions}
+              resource={{ empty: emptyMyFiles }}
+              bgColor="unset"
+              shadow="none"
+              onClick={() => navigate('/reading/my-files')}
+            />
+          )}
         </Tile>
 
         {/* Next Prayer */}
