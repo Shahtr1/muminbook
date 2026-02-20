@@ -1,15 +1,14 @@
 import {
-  Grid,
-  GridItem,
+  Badge,
   Box,
-  Text,
-  Flex,
   CircularProgress,
   CircularProgressLabel,
-  Badge,
   Divider,
-  useColorModeValue,
+  Flex,
+  Grid,
+  GridItem,
   Spinner,
+  Text,
 } from '@chakra-ui/react';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 import { useEffect, useState } from 'react';
@@ -166,7 +165,6 @@ const Tile = ({ children, colSpan = 1, rowSpan = 1 }) => {
 
 export const Dashboard = () => {
   const { surface, text, border, brand } = useSemanticColors();
-  const bgColor = useColorModeValue('bg.light', 'bg.dark');
 
   const now = useClock();
   const coords = useLocation();
