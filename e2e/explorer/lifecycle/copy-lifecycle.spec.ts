@@ -12,21 +12,22 @@ test.describe('Copy Explorer Lifecycle', () => {
 
   test('copied file lifecycle → trash copy → restore', async ({ page }) => {});
 
-  test('copied folder lifecycle → trash copy → delete', async ({ page }) => {});
-
-  test('copy folder into same directory → auto append (Copy) -> again -> auto append (Copy 2) -> again -> auto append (Copy 3)', async ({
+  test('copy folder into same directory → auto-rename with (1) → (2) → (3)', async ({
     page,
   }) => {});
-
-  test('copy file into same directory → auto append (Copy) -> again -> auto append (Copy 2) -> again -> auto append (Copy 3)', async ({
+  test('copy file into same directory → auto-rename with (1) → (2) → (3)', async ({
     page,
   }) => {});
-
-  test('copy folder into another directory with same resource name → auto append (Copy) -> again -> auto append (Copy 2) -> again -> auto append (Copy 3)', async ({
+  test('copy item at max length boundary → base truncated to fit (1) suffix', async ({
     page,
   }) => {});
-
-  test('copy file into another directory with same resource name → auto append (Copy) -> again -> auto append (Copy 2) -> again -> auto append (Copy 3)', async ({
+  test('copy item when (1) exists → uses max + 1 strategy', async ({
+    page,
+  }) => {});
+  test('copy item respects normalization before conflict detection', async ({
+    page,
+  }) => {});
+  test('copy item when truncated base conflicts → increments suffix deterministically', async ({
     page,
   }) => {});
 });

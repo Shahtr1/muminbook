@@ -1,35 +1,25 @@
 import { test } from '@playwright/test';
-import { explorer } from '../actions/explorer-actions';
 
-test.describe('Trash Explorer Lifecycle', () => {
-  test('resource lifecycle → create → trash → restore → trash again → delete', async ({
+test.describe('Trash Conflict & Rename Semantics', () => {
+  test('trash folder → recreate same name → trash again → trash allows duplicates', async ({
     page,
   }) => {});
 
-  test('resource lifecycle → create → trash → restore to original path', async ({
+  test('restore folder when active name conflict exists → auto-rename with (1)', async ({
     page,
   }) => {});
 
-  test('resource lifecycle → create → trash → navigate trash → restore from nested view', async ({
+  test('restore folder when (1) exists → auto-increment using max + 1 strategy', async ({
     page,
   }) => {});
 
-  // You must validate restore works by ID, not name.
-  test(
-    'trash folder → recreate same name → trash again → trash contains duplicates, restore first duplicate → correct instance restored,' +
-      ' restore second duplicate -> conflict',
-    async ({ page }) => {}
-  );
-
-  test('restore folder when name exists → conflict', async ({ page }) => {});
-
-  test('restore file when name exists → conflict', async ({ page }) => {});
-
-  test('restore all with mixed conflicts → partial restore + conflict reporting', async ({
+  test('restore folder respects normalization before conflict detection', async ({
     page,
   }) => {});
 
-  test('restore orphan into lost+found with name conflict, should have duplicates', async ({
+  test('restore folder respects case sensitivity', async ({ page }) => {});
+
+  test('restore at max length boundary → base truncated to fit suffix', async ({
     page,
   }) => {});
 });

@@ -123,4 +123,16 @@ test.describe('Create Folder Explorer Lifecycle', () => {
   test('create folder with dash and underscore anywhere', async ({
     page,
   }) => {});
+  test('create folder with same name as sibling file → allowed', async ({
+    page,
+  }) => {});
+  test('rename folder to same name as sibling folder → allowed', async ({
+    page,
+  }) => {});
+  test('move folder into directory containing file with same name → allowed', async ({
+    page,
+  }) => {});
+  test('restore folder when file with same name exists → allowed', async ({
+    page,
+  }) => {});
 });

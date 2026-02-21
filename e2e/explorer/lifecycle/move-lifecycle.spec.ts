@@ -29,4 +29,8 @@ test.describe('Move Explorer Lifecycle', () => {
   test('move folder into same parent → no-op or conflict', async ({
     page,
   }) => {});
+
+  test('move item → trash → restore without parent rename/move → restores to original parent', async ({
+    page,
+  }) => {});
 });

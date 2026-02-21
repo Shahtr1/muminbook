@@ -108,4 +108,13 @@ test.describe('Create File Explorer Lifecycle', () => {
   test('create file with mixed case name', async ({ page }) => {});
   test('create file trims leading and trailing spaces', async ({ page }) => {});
   test('create file with dash and underscore anywhere', async ({ page }) => {});
+  test('create file with same name as sibling folder → allowed', async ({
+    page,
+  }) => {});
+  test('move file into directory containing folder with same name → allowed', async ({
+    page,
+  }) => {});
+  test('restore file when folder with same name exists → allowed', async ({
+    page,
+  }) => {});
 });

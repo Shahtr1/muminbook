@@ -1,40 +1,26 @@
 import { test } from '@playwright/test';
 import { explorer } from '../actions/explorer-actions';
 
-test.describe('Lost+Found Explorer Lifecycle', () => {
-  test('parent trashed → restore child individually → child moves to lost+found', async ({
+test.describe('Lost+Found Semantics', () => {
+  test('restore orphan preserves subtree structure', async ({ page }) => {});
+
+  test('restore orphan when conflict exists in lost+found → auto-rename applied', async ({
     page,
   }) => {});
 
-  test('restore parent after child orphaned → child remains in lost+found', async ({
-    page,
-  }) => {});
-
-  test('restore orphan manually back under parent → succeeds explicitly', async ({
-    page,
-  }) => {});
-
-  test('child trashed → parent renamed → restore child → moves to lost+found', async ({
-    page,
-  }) => {});
-
-  test('child trashed → parent permanently deleted → restore child → moves to lost+found', async ({
-    page,
-  }) => {});
-
-  test('restore orphan → appears in lost+found root', async ({ page }) => {});
+  test('lost+found renders only when orphan exists', async ({ page }) => {});
 
   test('lost+found empty should not render', async ({ page }) => {});
 
-  test('lost+found renders when orphan exists', async ({ page }) => {});
-
-  test('orphan folder restore preserves subtree', async ({ page }) => {});
-
-  test('multiple orphan restores accumulate under lost+found', async ({
+  test('system recreates lost+found automatically when needed', async ({
     page,
   }) => {});
 
-  test('delete lost+found → system recreates automatically when needed', async ({
+  test('parent renamed without cascading path update → restore child → child moves to lost+found', async ({
+    page,
+  }) => {});
+
+  test('move parent after child trashed without cascading path update → restore child → moves to lost+found', async ({
     page,
   }) => {});
 });
