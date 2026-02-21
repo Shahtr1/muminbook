@@ -1,16 +1,17 @@
 import {
-  Grid,
-  GridItem,
+  Badge,
   Box,
-  Text,
-  Flex,
   CircularProgress,
   CircularProgressLabel,
-  Badge,
   Divider,
-  useColorModeValue,
+  Flex,
+  Grid,
+  GridItem,
+  Image,
   Spinner,
+  Text,
   useBreakpointValue,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 import { useEffect, useState } from 'react';
@@ -19,6 +20,7 @@ import duration from 'dayjs/plugin/duration';
 import { Folder } from '@/components/explorer/components/Folder.jsx';
 import { useIsMyFilesEmpty } from '@/hooks/explorer/useIsMyFilesEmpty.js';
 import { useNavigate } from 'react-router-dom';
+import { useOpenSuhuf } from '@/hooks/suhuf/useOpenSuhuf.js';
 
 dayjs.extend(duration);
 
@@ -43,12 +45,17 @@ const useLocation = () => {
   const [coords, setCoords] = useState(null);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      setCoords({
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude,
-      });
-    });
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setCoords({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        });
+      },
+      (err) => {
+        console.warn('Location denied');
+      }
+    );
   }, []);
 
   return coords;
@@ -70,14 +77,16 @@ const usePrayerData = (lat, lng) => {
   return data;
 };
 
-const useHijri = (date) => {
+const useHijri = (dateString) => {
   const [hijri, setHijri] = useState(null);
 
   useEffect(() => {
-    fetch(`https://api.aladhan.com/v1/gToH?date=${date.format('DD-MM-YYYY')}`)
+    fetch(
+      `https://api.aladhan.com/v1/gToH?date=${dayjs(dateString).format('DD-MM-YYYY')}`
+    )
       .then((res) => res.json())
       .then((res) => setHijri(res.data.hijri));
-  }, [date]);
+  }, [dateString]);
 
   return hijri;
 };
@@ -131,6 +140,47 @@ const getRemaining = (target, now) => {
   return `${d.hours()}h ${d.minutes()}m remaining`;
 };
 
+const ClockTile = ({ prayerData, hijri, text }) => {
+  const now = useClock();
+
+  const nextPrayer = prayerData ? getNextPrayer(prayerData.timings, now) : null;
+
+  return (
+    <>
+      <Text fontSize="6xl" fontWeight="700" fontFamily="mono">
+        {now.format('HH:mm')}
+      </Text>
+
+      <Text fontSize="sm" color={text.secondary} as="span">
+        {now.format('ddd, MMM D')} •{' '}
+        {hijri ? `${hijri.day} ${hijri.month.en}` : <Spinner size="xs" />}
+      </Text>
+
+      <Text fontSize="sm">
+        {nextPrayer ? getRemaining(nextPrayer.time, now) : ''}
+      </Text>
+    </>
+  );
+};
+
+const NextPrayerTile = ({ prayerData, text }) => {
+  const now = useClock();
+
+  const nextPrayer = prayerData ? getNextPrayer(prayerData.timings, now) : null;
+
+  return (
+    <>
+      <Text fontSize="3xl" fontWeight="700" color={text.primary}>
+        {nextPrayer ? nextPrayer.name : <Spinner size="sm" />}
+      </Text>
+
+      <Text fontSize="sm" color={text.secondary}>
+        {nextPrayer ? getRemaining(nextPrayer.time, now) : ''}
+      </Text>
+    </>
+  );
+};
+
 /* ===============================
    Tile
 ================================ */
@@ -170,6 +220,7 @@ const Tile = ({ children, colSpan = 1, rowSpan = 1 }) => {
 
 export const Dashboard = () => {
   const { surface, text, border, brand } = useSemanticColors();
+  const openSuhuf = useOpenSuhuf();
   const bgColor = useColorModeValue('bg.light', 'bg.dark');
 
   const { emptyMyFiles, isPending: isMyFilesEmptyPending } =
@@ -182,18 +233,12 @@ export const Dashboard = () => {
 
   const navigate = useNavigate();
 
-  const now = useClock();
   const coords = useLocation();
   const prayerData = usePrayerData(coords?.lat, coords?.lng);
-  const hijri = useHijri(now);
+  const hijri = useHijri(dayjs().format('YYYY-MM-DD'));
   const qibla = useQibla(coords?.lat, coords?.lng);
   const ayah = useDailyAyah();
 
-  const nextPrayer = prayerData && getNextPrayer(prayerData.timings, now);
-
-  /* Mock User State */
-  const dhikrCount = 124;
-  const dhikrTarget = 200;
   const prayersCompleted = 3;
 
   return (
@@ -230,19 +275,7 @@ export const Dashboard = () => {
               Current Time
             </Text>
 
-            <Text
-              fontSize="6xl"
-              fontWeight="700"
-              fontFamily="mono"
-              color={text.primary}
-            >
-              {now.format('HH:mm')}
-            </Text>
-
-            <Text fontSize="sm" color={text.secondary}>
-              {now.format('ddd, MMM D')} •{' '}
-              {hijri ? `${hijri.day} ${hijri.month.en}` : <Spinner size="xs" />}
-            </Text>
+            <ClockTile prayerData={prayerData} hijri={hijri} text={text} />
           </Box>
 
           <Flex justify="space-between" fontSize="xs" color={text.secondary}>
@@ -262,7 +295,7 @@ export const Dashboard = () => {
             Hijri Date
           </Text>
 
-          <Text fontSize="lg" fontWeight="600" color={text.primary}>
+          <Text fontSize="lg" fontWeight="600" color={text.primary} as="span">
             {hijri ? (
               `${hijri.day} ${hijri.month.en} ${hijri.year} AH`
             ) : (
@@ -273,25 +306,120 @@ export const Dashboard = () => {
           <Divider my={2} borderColor={border.subtle} />
         </Tile>
 
-        {/* Dhikr (Mock) */}
+        {/* Family Tree */}
         <Tile>
-          <Text
-            fontSize="10px"
-            letterSpacing="2px"
-            textTransform="uppercase"
-            color={text.secondary}
+          <Flex
+            direction="column"
+            align="center"
+            justify="space-between"
+            h="100%"
+            onClick={() => navigate('/features/family-tree')}
+            cursor="pointer"
           >
-            Dhikr
-          </Text>
+            <Text
+              fontSize="10px"
+              letterSpacing="2px"
+              textTransform="uppercase"
+              color={text.secondary}
+              mb={4}
+            >
+              family tree
+            </Text>
 
-          <Text fontSize="4xl" fontWeight="bold" color={text.primary}>
-            {dhikrCount}
-          </Text>
+            <Image
+              src={`/images/logos/family-tree.svg`}
+              alt="Logo"
+              boxSize="30px"
+              w={{ base: '100px', sm: '140px' }}
+              h={{ base: '100px', sm: '140px' }}
+            />
+          </Flex>
+        </Tile>
 
-          <Text fontSize="xs" color={text.secondary}>
-            Target: {dhikrTarget} •{' '}
-            {Math.round((dhikrCount / dhikrTarget) * 100)}% completed
-          </Text>
+        <Tile rowSpan={1}>
+          <Flex
+            direction="column"
+            align="center"
+            justify="space-between"
+            h="100%"
+            cursor="pointer"
+            onClick={openSuhuf}
+          >
+            <Text
+              fontSize="10px"
+              letterSpacing="2px"
+              textTransform="uppercase"
+              color={text.secondary}
+              mb={4}
+            >
+              Suhuf
+            </Text>
+
+            {isMyFilesEmptyPending ? (
+              <Spinner size="sm" />
+            ) : (
+              <Image
+                src={`/images/logos/suhuf-logo.png`}
+                alt="Logo"
+                boxSize="30px"
+                w={{ base: '100px', sm: '140px' }}
+                h={{ base: '100px', sm: '140px' }}
+              />
+            )}
+          </Flex>
+        </Tile>
+        <Tile rowSpan={1}>
+          <Flex
+            direction="column"
+            align="center"
+            justify="space-between"
+            h="100%"
+            onClick={() => navigate('/reading/my-files')}
+            cursor="pointer"
+          >
+            <Text
+              fontSize="10px"
+              letterSpacing="2px"
+              textTransform="uppercase"
+              color={text.secondary}
+              mb={4}
+            >
+              My files
+            </Text>
+
+            {isMyFilesEmptyPending ? (
+              <Spinner size="sm" />
+            ) : (
+              <Folder
+                dimensions={dimensions}
+                resource={{ empty: emptyMyFiles }}
+                bgColor="unset"
+                shadow="none"
+              />
+            )}
+          </Flex>
+        </Tile>
+
+        <Tile colSpan={2}>
+          <Box>
+            <Text
+              fontSize="10px"
+              letterSpacing="2px"
+              textTransform="uppercase"
+              color={text.secondary}
+            >
+              Next Prayer
+            </Text>
+
+            <NextPrayerTile prayerData={prayerData} text={text} />
+          </Box>
+
+          <Divider borderColor={border.subtle} />
+
+          <Flex justify="space-between" fontSize="xs" color={text.secondary}>
+            <Text>Isha {prayerData?.timings?.Isha || '--:--'}</Text>
+            <Text>Maghrib {prayerData?.timings?.Maghrib || '--:--'}</Text>
+          </Flex>
         </Tile>
 
         {/* Prayer Progress (Mock) */}
@@ -321,46 +449,33 @@ export const Dashboard = () => {
           </Flex>
         </Tile>
 
-        <Tile rowSpan={1}>
-          {isMyFilesEmptyPending ? (
-            <Spinner size="sm" />
-          ) : (
-            <Folder
-              dimensions={dimensions}
-              resource={{ empty: emptyMyFiles }}
-              bgColor="unset"
-              shadow="none"
-              onClick={() => navigate('/reading/my-files')}
-            />
-          )}
-        </Tile>
+        {/* Qibla */}
+        <Tile>
+          <Text
+            fontSize="10px"
+            letterSpacing="2px"
+            textTransform="uppercase"
+            color={text.secondary}
+          >
+            Qibla
+          </Text>
 
-        {/* Next Prayer */}
-        <Tile colSpan={2}>
-          <Box>
-            <Text
-              fontSize="10px"
-              letterSpacing="2px"
-              textTransform="uppercase"
-              color={text.secondary}
+          <Flex align="center" justify="center" flex={1}>
+            <Box
+              w="80px"
+              h="80px"
+              borderRadius="full"
+              border="2px solid"
+              borderColor={border.default}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              fontWeight="bold"
+              fontSize="lg"
+              color={text.primary}
             >
-              Next Prayer
-            </Text>
-
-            <Text fontSize="3xl" fontWeight="700" color={text.primary}>
-              {nextPrayer ? nextPrayer.name : <Spinner size="sm" />}
-            </Text>
-
-            <Text fontSize="sm" color={text.secondary}>
-              {nextPrayer ? getRemaining(nextPrayer.time, now) : ''}
-            </Text>
-          </Box>
-
-          <Divider borderColor={border.subtle} />
-
-          <Flex justify="space-between" fontSize="xs" color={text.secondary}>
-            <Text>Isha {prayerData?.timings?.Isha || '--:--'}</Text>
-            <Text>Maghrib {prayerData?.timings?.Maghrib || '--:--'}</Text>
+              {qibla ? `${Math.round(qibla)}°` : <Spinner size="sm" />}
+            </Box>
           </Flex>
         </Tile>
 
@@ -376,7 +491,13 @@ export const Dashboard = () => {
               Daily Ayah
             </Text>
 
-            <Text fontSize="lg" fontWeight="500" mt={3} color={text.primary}>
+            <Text
+              fontSize="lg"
+              fontWeight="500"
+              mt={3}
+              color={text.primary}
+              as="span"
+            >
               {ayah ? `“${ayah.text}”` : <Spinner size="sm" />}
             </Text>
           </Box>
@@ -419,36 +540,6 @@ export const Dashboard = () => {
             <Text mt={3} fontSize="xs" color={text.secondary}>
               12 / 30 Juz completed
             </Text>
-          </Flex>
-        </Tile>
-
-        {/* Qibla */}
-        <Tile>
-          <Text
-            fontSize="10px"
-            letterSpacing="2px"
-            textTransform="uppercase"
-            color={text.secondary}
-          >
-            Qibla
-          </Text>
-
-          <Flex align="center" justify="center" flex={1}>
-            <Box
-              w="80px"
-              h="80px"
-              borderRadius="full"
-              border="2px solid"
-              borderColor={border.default}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              fontWeight="bold"
-              fontSize="lg"
-              color={text.primary}
-            >
-              {qibla ? `${Math.round(qibla)}°` : <Spinner size="sm" />}
-            </Box>
           </Flex>
         </Tile>
 

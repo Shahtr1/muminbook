@@ -3,6 +3,9 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './e2e',
 
+  workers: 1,
+  fullyParallel: false, // prevent per-file parallelism
+
   use: {
     baseURL: 'http://localhost:5174',
     headless: !!process.env.CI,
@@ -15,7 +18,7 @@ export default defineConfig({
       testMatch: /auth\.setup\.ts/,
     },
     {
-      name: 'authenticated',
+      name: 'default',
       dependencies: ['setup'],
       use: {
         storageState: 'e2e/.auth/admin.json',
