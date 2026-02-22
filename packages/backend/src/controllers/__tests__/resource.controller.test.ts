@@ -169,7 +169,7 @@ describe('Resource Controller', () => {
 
     it('should create a new file resource', async () => {
       const resourceData = {
-        name: 'document.pdf',
+        name: 'document',
         type: ResourceType.File,
         path: '/documents',
         fileUrl: 'https://example.com/file.pdf',
@@ -300,12 +300,24 @@ describe('Resource Controller', () => {
       expect(mockResponse.status).not.toHaveBeenCalled();
     });
 
-    it('should pass validation error to next() for name with leading/trailing spaces', async () => {
+    it('should sanitize name with leading/trailing spaces', async () => {
       mockRequest.body = {
         name: ' Folder with spaces ',
         type: ResourceType.Folder,
         path: '/documents',
       };
+
+      const mockCreatedResource = {
+        _id: mockResourceId,
+        name: 'Folder with spaces', // sanitized
+        type: ResourceType.Folder,
+        path: '/documents',
+        userId: mockUserId,
+      };
+
+      vi.mocked(resourceService.createResource).mockResolvedValue(
+        mockCreatedResource as any
+      );
 
       await createResourceHandler(
         mockRequest as Request,
@@ -313,9 +325,14 @@ describe('Resource Controller', () => {
         mockNext
       );
 
-      expect(mockNext).toHaveBeenCalled();
-      expect(mockNext.mock.calls[0][0]).toBeInstanceOf(Error);
-      expect(resourceService.createResource).not.toHaveBeenCalled();
+      expect(resourceService.createResource).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: 'Folder with spaces',
+        }),
+        mockUserId
+      );
+
+      expect(mockNext).not.toHaveBeenCalled();
     });
   });
 
@@ -577,7 +594,7 @@ describe('Resource Controller', () => {
 
   describe('renameResourceHandler', () => {
     it('should rename a resource', async () => {
-      const newName = 'renamed-file.txt';
+      const newName = 'renamed-file';
       mockRequest.params = { id: mockResourceId.toString() };
       mockRequest.body = { name: newName };
 
@@ -670,11 +687,12 @@ describe('Resource Controller', () => {
 
     it('should pass service error to next() when name already exists', async () => {
       mockRequest.params = { id: mockResourceId.toString() };
-      mockRequest.body = { name: 'existing-name.txt' };
+      mockRequest.body = { name: 'existing-name' };
 
       const serviceError = new Error(
         'A resource with this name already exists'
       );
+
       vi.mocked(resourceService.renameResource).mockRejectedValue(serviceError);
 
       await renameResourceHandler(
@@ -683,15 +701,17 @@ describe('Resource Controller', () => {
         mockNext
       );
 
+      expect(resourceService.renameResource).toHaveBeenCalled(); // important
       expect(mockNext).toHaveBeenCalledWith(serviceError);
       expect(mockResponse.status).not.toHaveBeenCalled();
     });
 
     it('should pass service error to next() for non-existent resource', async () => {
       mockRequest.params = { id: mockResourceId.toString() };
-      mockRequest.body = { name: 'new-name.txt' };
+      mockRequest.body = { name: 'new-name' };
 
       const serviceError = new Error('Resource not found');
+
       vi.mocked(resourceService.renameResource).mockRejectedValue(serviceError);
 
       await renameResourceHandler(
@@ -700,6 +720,7 @@ describe('Resource Controller', () => {
         mockNext
       );
 
+      expect(resourceService.renameResource).toHaveBeenCalled();
       expect(mockNext).toHaveBeenCalledWith(serviceError);
     });
   });
