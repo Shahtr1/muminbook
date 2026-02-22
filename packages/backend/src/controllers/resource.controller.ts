@@ -25,7 +25,7 @@ import {
 } from '../services/resource/overview.service.js';
 import { isTrashEmpty } from '../services/resource/trash/isTrashEmpty-resource.service.js';
 import { dstPathSchema, resourceSchema } from '../schemas/resource.schema.js';
-import { renameSchema } from '../schemas/common.schema.js';
+import { renameSchema } from '../schemas/name.schema.js';
 
 export const getResourceHandler = catchErrors(async (req, res) => {
   const userId = await getUserId(req);

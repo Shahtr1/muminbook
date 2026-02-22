@@ -1,6 +1,15 @@
 import { Page, Locator, expect } from '@playwright/test';
 
 /* -------------------------------------------------- */
+/* Helpers */
+
+/* -------------------------------------------------- */
+
+function fileName(base: string) {
+  return `${base}.txt`;
+}
+
+/* -------------------------------------------------- */
 /* Navigation */
 /* -------------------------------------------------- */
 
@@ -27,6 +36,10 @@ const locators = {
   file(page: Page, name: string): Locator {
     return page.getByTestId('file-item').filter({ hasText: name });
   },
+
+  toast(page: Page, message: string): Locator {
+    return page.locator('.chakra-alert').filter({ hasText: message });
+  },
 };
 
 /* -------------------------------------------------- */
@@ -44,10 +57,10 @@ const create = {
     await confirmBtn.click();
   },
 
-  async file(page: Page, name: string) {
+  async file(page: Page, baseName: string) {
     await page.getByTestId('explorer-add').click();
     await page.getByTestId('add-file-option').click();
-    await page.getByTestId('add-input').fill(name);
+    await page.getByTestId('add-input').fill(baseName);
 
     const confirmBtn = page.getByTestId('confirm-create');
     await expect(confirmBtn).toBeVisible();
@@ -56,8 +69,7 @@ const create = {
 };
 
 /* -------------------------------------------------- */
-/* Safe Menu Click */
-
+/* Menu Helpers */
 /* -------------------------------------------------- */
 
 async function openItemMenu(item: Locator) {
@@ -66,14 +78,8 @@ async function openItemMenu(item: Locator) {
   await menuButton.click();
 }
 
-/* -------------------------------------------------- */
-/* Safe Menu Item Click */
-
-/* -------------------------------------------------- */
-
 async function clickMenuItem(page: Page, name: string) {
   const menuItem = page.getByRole('menuitem', { name });
-
   await expect(menuItem).toBeVisible();
   await menuItem.click();
 }
@@ -89,7 +95,6 @@ async function maybeConfirm(page: Page) {
   // Wait briefly to see if confirmation appears
   try {
     await confirmBtn.waitFor({ state: 'visible', timeout: 1000 });
-
     await expect(confirmBtn).toBeEnabled();
     await confirmBtn.click();
 
@@ -133,16 +138,22 @@ const expectors = {
     await expect(locators.folder(page, name)).toBeVisible();
   },
 
-  async fileVisible(page: Page, name: string) {
-    await expect(locators.file(page, name)).toBeVisible();
+  async fileVisible(page: Page, baseName: string) {
+    await expect(locators.file(page, fileName(baseName))).toBeVisible();
   },
 
   async folderNotVisible(page: Page, name: string) {
     await expect(locators.folder(page, name)).toHaveCount(0);
   },
 
-  async fileNotVisible(page: Page, name: string) {
-    await expect(locators.file(page, name)).toHaveCount(0);
+  async fileNotVisible(page: Page, baseName: string) {
+    await expect(locators.file(page, fileName(baseName))).toHaveCount(0);
+  },
+
+  async toastVisible(page: Page, message: string) {
+    await expect(
+      page.locator('.chakra-alert').filter({ hasText: message })
+    ).toBeVisible();
   },
 };
 

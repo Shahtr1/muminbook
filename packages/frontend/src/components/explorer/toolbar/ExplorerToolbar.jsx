@@ -52,8 +52,6 @@ export const ExplorerToolbar = () => {
       path = path.replace('/reading/', '');
     }
 
-    if (type === 'file') name += '.txt';
-
     createResource({ name, type, path });
   };
 
