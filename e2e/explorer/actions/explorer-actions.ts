@@ -179,6 +179,7 @@ const edit = {
     const moveBtn = page.getByRole('button', { name: 'Move' });
     await expect(moveBtn).toBeVisible();
     await moveBtn.click();
+    await input.waitFor({ state: 'hidden', timeout: 5000 });
   },
 
   async copy(page: Page, item: Locator, destinationPath: string) {
