@@ -130,6 +130,38 @@ const trash = {
 };
 
 /* -------------------------------------------------- */
+/* Rename / Move */
+/* -------------------------------------------------- */
+
+const edit = {
+  async rename(page: Page, item: Locator, newName: string) {
+    await openItemMenu(item);
+    await clickMenuItem(page, 'Rename');
+
+    const input = page.getByPlaceholder('New name');
+    await expect(input).toBeVisible();
+    await input.fill(newName);
+
+    const renameBtn = page.getByRole('button', { name: 'Rename' });
+    await expect(renameBtn).toBeVisible();
+    await renameBtn.click();
+  },
+
+  async move(page: Page, item: Locator, destinationPath: string) {
+    await openItemMenu(item);
+    await clickMenuItem(page, 'Move to Folder');
+
+    const input = page.getByPlaceholder('Enter destination path');
+    await expect(input).toBeVisible();
+    await input.fill(destinationPath);
+
+    const moveBtn = page.getByRole('button', { name: 'Move' });
+    await expect(moveBtn).toBeVisible();
+    await moveBtn.click();
+  },
+};
+
+/* -------------------------------------------------- */
 /* Expectations */
 /* -------------------------------------------------- */
 
@@ -162,5 +194,6 @@ export const explorer = {
   locators,
   create,
   trash,
+  edit,
   expect: expectors,
 };
