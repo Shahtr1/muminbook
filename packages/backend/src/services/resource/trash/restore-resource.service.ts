@@ -51,6 +51,37 @@ const shouldRestoreAsLostAndFound = async (
   return !parentFolder;
 };
 
+const restoreDeletedParentChainIfNeeded = async (
+  resource: any,
+  userId: PrimaryId
+) => {
+  const updates: any[] = [];
+  let parentPath = resource.path.split('/').slice(0, -1).join('/');
+
+  while (parentPath) {
+    const parentFolder = await ResourceModel.findOne({
+      path: parentPath,
+      type: ResourceType.Folder,
+      userId,
+    });
+
+    if (!parentFolder || !parentFolder.deleted) break;
+
+    updates.push({
+      updateOne: {
+        filter: { _id: parentFolder._id },
+        update: { $set: { deleted: false, deletedAt: null } },
+      },
+    });
+
+    parentPath = parentPath.split('/').slice(0, -1).join('/');
+  }
+
+  if (updates.length > 0) {
+    await ResourceModel.bulkWrite(updates);
+  }
+};
+
 const buildRestoreUpdates = async ({
   resource,
   userId,
@@ -118,6 +149,9 @@ export const restoreResource = async (
   const resource = await ResourceModel.findOne({ _id: resourceId, userId });
   appAssert(resource, NOT_FOUND, 'Resource not found');
   appAssert(resource.deleted, BAD_REQUEST, 'Resource is not in trash');
+
+  // If parent folder exists but is soft-deleted, restore parent chain first.
+  await restoreDeletedParentChainIfNeeded(resource, userId);
 
   if (await shouldRestoreAsLostAndFound(resource, userId)) {
     const lostAndFound = await findOrCreateLostAndFound(userId);
