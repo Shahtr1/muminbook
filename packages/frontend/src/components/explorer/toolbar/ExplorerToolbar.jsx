@@ -13,12 +13,13 @@ import { useEffect, useRef, useState } from 'react';
 import { AddMenu } from '@/components/explorer/toolbar/AddMenu.jsx';
 import { useCreateResource } from '@/hooks/explorer/useCreateResource.js';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 export const ExplorerToolbar = () => {
   const { overlay } = useSemanticColors();
   const bgColor = useColorModeValue('bg.light', 'bg.dark');
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const boxShadowColor = overlay.subtle;
   const theme = useTheme();
   const headerRef = useRef(null);
@@ -27,6 +28,7 @@ export const ExplorerToolbar = () => {
 
   const [isSticky, setIsSticky] = useState(false);
   const [showExtras, setShowExtras] = useState(false);
+  const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +41,10 @@ export const ExplorerToolbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    setSearchValue(searchParams.get('q') || '');
+  }, [searchParams]);
 
   const isMyFilesView = location.pathname.includes('/reading/my-files');
   const isTrashView = location.pathname.includes('/reading/trash');
@@ -53,6 +59,19 @@ export const ExplorerToolbar = () => {
     }
 
     createResource({ name, type, path });
+  };
+
+  const updateSearchQuery = (query) => {
+    const nextQuery = query.trim();
+    const nextParams = new URLSearchParams(searchParams);
+
+    if (nextQuery) {
+      nextParams.set('q', nextQuery);
+    } else {
+      nextParams.delete('q');
+    }
+
+    setSearchParams(nextParams, { replace: true });
   };
 
   return (
@@ -124,6 +143,11 @@ export const ExplorerToolbar = () => {
           width={120}
           parentWidth="auto"
           expand={false}
+          value={searchValue}
+          onChange={setSearchValue}
+          onSearch={updateSearchQuery}
+          onSubmit={updateSearchQuery}
+          onClear={() => updateSearchQuery('')}
         />
       </Flex>
     </Flex>
