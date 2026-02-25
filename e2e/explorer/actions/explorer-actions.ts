@@ -166,6 +166,11 @@ const edit = {
     const renameBtn = page.getByRole('button', { name: 'Rename' });
     await expect(renameBtn).toBeVisible();
     await renameBtn.click();
+    try {
+      await input.waitFor({ state: 'hidden', timeout: 5000 });
+    } catch {
+      // Validation errors keep modal open; caller assertions handle this path.
+    }
   },
 
   async move(page: Page, item: Locator, destinationPath: string) {

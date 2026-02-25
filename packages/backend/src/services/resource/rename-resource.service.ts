@@ -24,6 +24,10 @@ export const renameResource = async (
 
   assertNotRootFolder(resource);
 
+  if (resource.type === ResourceType.File && !newName.endsWith('.txt')) {
+    newName = `${newName}.txt`;
+  }
+
   const oldPath = resource.path;
   const parentPath = oldPath.split('/').slice(0, -1).join('/');
   const newPath = normalizeSlashes(`${parentPath}/${newName}`);

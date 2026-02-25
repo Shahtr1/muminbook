@@ -20,7 +20,15 @@ export const useRenameResource = () => {
         if (!oldData) return oldData;
 
         return oldData.map((item) =>
-          item._id === variables.id ? { ...item, name: variables.name } : item
+          item._id === variables.id
+            ? {
+                ...item,
+                name:
+                  item.type === 'file' && !variables.name.endsWith('.txt')
+                    ? `${variables.name}.txt`
+                    : variables.name,
+              }
+            : item
         );
       });
     },
