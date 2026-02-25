@@ -18,12 +18,21 @@ import { findOrCreateLostAndFound } from '../utils/findOrCreateLostAndFound.js';
 import { findDescendantsByPath } from '../common-resource.service.js';
 import { normalizeSlashes } from '../utils/normalizeSlashes.js';
 
+const MAX_NAME_LENGTH = 100;
+
 const hasConflict = async (path: string, userId: PrimaryId) => {
   return ResourceModel.findOne({
     path,
     userId,
     deleted: false,
   });
+};
+
+const withIndexedSuffix = (name: string, index: number) => {
+  const suffix = ` (${index})`;
+  const maxBaseLength = Math.max(1, MAX_NAME_LENGTH - suffix.length);
+  const base = name.slice(0, maxBaseLength).trimEnd();
+  return `${base}${suffix}`;
 };
 
 const shouldRestoreAsLostAndFound = async (
@@ -47,11 +56,13 @@ const buildRestoreUpdates = async ({
   userId,
   newBasePath,
   newParentId,
+  newName,
 }: {
   resource: any;
   userId: PrimaryId;
   newBasePath: string;
   newParentId: PrimaryId;
+  newName?: string;
 }) => {
   const updates: any[] = [];
 
@@ -91,6 +102,7 @@ const buildRestoreUpdates = async ({
           deletedAt: null,
           path: newBasePath,
           parent: newParentId,
+          ...(newName ? { name: newName } : {}),
         },
       },
     },
@@ -109,14 +121,22 @@ export const restoreResource = async (
 
   if (await shouldRestoreAsLostAndFound(resource, userId)) {
     const lostAndFound = await findOrCreateLostAndFound(userId);
-    const newBasePath = normalizeSlashes(
-      `${lostAndFound.path}/${resource.name}`
-    );
+    let restoredName = resource.name;
+    let newBasePath = normalizeSlashes(`${lostAndFound.path}/${restoredName}`);
+    let index = 1;
+
+    while (await hasConflict(newBasePath, userId)) {
+      restoredName = withIndexedSuffix(resource.name, index);
+      newBasePath = normalizeSlashes(`${lostAndFound.path}/${restoredName}`);
+      index++;
+    }
+
     const updates = await buildRestoreUpdates({
       resource,
       userId,
       newBasePath,
       newParentId: lostAndFound._id as PrimaryId,
+      newName: restoredName !== resource.name ? restoredName : undefined,
     });
 
     await ResourceModel.bulkWrite(updates);
