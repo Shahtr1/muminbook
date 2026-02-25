@@ -25,7 +25,10 @@ test.describe('Copy Explorer Lifecycle', () => {
     await expect(explorer.locators.file(page, `${base}.txt`)).toBeVisible();
     await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
 
-    await explorer.trash.move(page, explorer.locators.file(page, `${base}.txt`));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, `${base}.txt`)
+    );
     await expect(explorer.locators.file(page, `${base}.txt`)).toHaveCount(0);
     await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
 
@@ -89,14 +92,12 @@ test.describe('Copy Explorer Lifecycle', () => {
       page,
       explorer.locators.file(page, `${base}.txt (1)`)
     );
-    await expect(
-      explorer.locators.file(page, `${base}.txt (1)`)
-    ).toHaveCount(0);
+    await expect(explorer.locators.file(page, `${base}.txt (1)`)).toHaveCount(
+      0
+    );
 
     await explorer.navigation.goToTrash(page);
-    await expect(
-      explorer.locators.file(page, `${base}.txt (1)`)
-    ).toBeVisible();
+    await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
 
     await explorer.trash.restore(
       page,
@@ -160,15 +161,9 @@ test.describe('Copy Explorer Lifecycle', () => {
       'my-files'
     );
 
-    await expect(
-      explorer.locators.file(page, `${base}.txt (1)`)
-    ).toBeVisible();
-    await expect(
-      explorer.locators.file(page, `${base}.txt (2)`)
-    ).toBeVisible();
-    await expect(
-      explorer.locators.file(page, `${base}.txt (3)`)
-    ).toBeVisible();
+    await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
+    await expect(explorer.locators.file(page, `${base}.txt (2)`)).toBeVisible();
+    await expect(explorer.locators.file(page, `${base}.txt (3)`)).toBeVisible();
   });
 
   test('copy item at max length boundary → base truncated to fit (1) suffix', async ({

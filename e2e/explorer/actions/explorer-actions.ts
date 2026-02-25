@@ -93,11 +93,7 @@ async function openItemMenu(item: Locator) {
   return fallbackMenu;
 }
 
-async function clickMenuItem(
-  menu: Locator,
-  name: string,
-  testId?: string
-) {
+async function clickMenuItem(menu: Locator, name: string, testId?: string) {
   const menuItem = testId
     ? menu.getByTestId(testId).first()
     : menu.getByRole('menuitem', { name }).first();

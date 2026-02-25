@@ -17,7 +17,10 @@ export const generateCopyName = async (
   userId: PrimaryId
 ): Promise<string> => {
   const MAX_NAME_LENGTH = 100;
-  const originalPath = `${destinationPath}/${resourceName}`.replace(/\/+/g, '/');
+  const originalPath = `${destinationPath}/${resourceName}`.replace(
+    /\/+/g,
+    '/'
+  );
   const hasOriginalConflict = await ResourceModel.findOne({
     path: originalPath,
     userId,

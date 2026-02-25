@@ -33,7 +33,10 @@ test.describe('Move Explorer Lifecycle', () => {
     await openFolder(page, target);
     await explorer.expect.fileVisible(page, fileBase);
 
-    await explorer.trash.move(page, explorer.locators.file(page, `${fileBase}.txt`));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, `${fileBase}.txt`)
+    );
     await explorer.expect.fileNotVisible(page, fileBase);
 
     await explorer.navigation.goToTrash(page);
@@ -72,7 +75,10 @@ test.describe('Move Explorer Lifecycle', () => {
     await openFolder(page, target);
     await explorer.expect.folderVisible(page, movedFolder);
 
-    await explorer.trash.move(page, explorer.locators.folder(page, movedFolder));
+    await explorer.trash.move(
+      page,
+      explorer.locators.folder(page, movedFolder)
+    );
     await explorer.expect.folderNotVisible(page, movedFolder);
 
     await explorer.navigation.goToTrash(page);
@@ -107,7 +113,10 @@ test.describe('Move Explorer Lifecycle', () => {
     await openFolder(page, target);
     await explorer.expect.fileVisible(page, fileBase);
 
-    await explorer.trash.move(page, explorer.locators.file(page, `${fileBase}.txt`));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, `${fileBase}.txt`)
+    );
 
     await explorer.navigation.goToTrash(page);
     await explorer.trash.delete(
@@ -144,7 +153,10 @@ test.describe('Move Explorer Lifecycle', () => {
     await openFolder(page, target);
     await explorer.expect.folderVisible(page, movedFolder);
 
-    await explorer.trash.move(page, explorer.locators.folder(page, movedFolder));
+    await explorer.trash.move(
+      page,
+      explorer.locators.folder(page, movedFolder)
+    );
 
     await explorer.navigation.goToTrash(page);
     await explorer.trash.delete(
@@ -269,7 +281,10 @@ test.describe('Move Explorer Lifecycle', () => {
     await openFolder(page, target);
     await explorer.expect.fileVisible(page, fileBase);
 
-    await explorer.trash.move(page, explorer.locators.file(page, `${fileBase}.txt`));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, `${fileBase}.txt`)
+    );
 
     await explorer.navigation.goToTrash(page);
     await explorer.trash.restore(

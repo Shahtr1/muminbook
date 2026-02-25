@@ -53,7 +53,10 @@ test.describe('Lost+Found Semantics', () => {
 
     await page.goto(`/reading/my-files/${encodeURIComponent(parent)}`);
     await explorer.create.file(page, child);
-    await explorer.trash.move(page, explorer.locators.file(page, `${child}.txt`));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, `${child}.txt`)
+    );
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.edit.rename(
@@ -63,7 +66,10 @@ test.describe('Lost+Found Semantics', () => {
     );
 
     await explorer.navigation.goToTrash(page);
-    await explorer.trash.restore(page, explorer.locators.file(page, `${child}.txt`));
+    await explorer.trash.restore(
+      page,
+      explorer.locators.file(page, `${child}.txt`)
+    );
 
     return { child };
   }
@@ -91,7 +97,10 @@ test.describe('Lost+Found Semantics', () => {
 
     await page.goto(`/reading/my-files/${encodeURIComponent(parent)}`);
     await explorer.expect.folderVisible(page, orphanFolder);
-    await explorer.trash.move(page, explorer.locators.folder(page, orphanFolder));
+    await explorer.trash.move(
+      page,
+      explorer.locators.folder(page, orphanFolder)
+    );
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.edit.rename(
@@ -245,7 +254,10 @@ test.describe('Lost+Found Semantics', () => {
 
     await page.goto(`/reading/my-files/${encodeURIComponent(parent)}`);
     await explorer.create.file(page, child);
-    await explorer.trash.move(page, explorer.locators.file(page, `${child}.txt`));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, `${child}.txt`)
+    );
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.edit.move(
@@ -255,7 +267,10 @@ test.describe('Lost+Found Semantics', () => {
     );
 
     await explorer.navigation.goToTrash(page);
-    await explorer.trash.restore(page, explorer.locators.file(page, `${child}.txt`));
+    await explorer.trash.restore(
+      page,
+      explorer.locators.file(page, `${child}.txt`)
+    );
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.expect.folderVisible(page, 'lost+found');

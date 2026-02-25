@@ -10,7 +10,11 @@ test.describe('Rename Explorer Lifecycle', () => {
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.folder(page, oldName);
 
-    await explorer.edit.rename(page, explorer.locators.folder(page, oldName), newName);
+    await explorer.edit.rename(
+      page,
+      explorer.locators.folder(page, oldName),
+      newName
+    );
 
     await explorer.expect.folderNotVisible(page, oldName);
     await explorer.expect.folderVisible(page, newName);
@@ -100,7 +104,11 @@ test.describe('Rename Explorer Lifecycle', () => {
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.folder(page, oldName);
 
-    await explorer.edit.rename(page, explorer.locators.folder(page, oldName), '     ');
+    await explorer.edit.rename(
+      page,
+      explorer.locators.folder(page, oldName),
+      '     '
+    );
 
     await expect(page.getByText('Name is required.')).toBeVisible();
     await explorer.expect.folderVisible(page, oldName);
@@ -117,7 +125,11 @@ test.describe('Rename Explorer Lifecycle', () => {
     await explorer.create.folder(page, source);
     await explorer.create.folder(page, sibling);
 
-    await explorer.edit.rename(page, explorer.locators.folder(page, source), sibling);
+    await explorer.edit.rename(
+      page,
+      explorer.locators.folder(page, source),
+      sibling
+    );
 
     await explorer.expect.toastVisible(
       page,
@@ -274,7 +286,11 @@ test.describe('Rename Explorer Lifecycle', () => {
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.folder(page, oldName);
 
-    await explorer.edit.rename(page, explorer.locators.folder(page, oldName), renamed);
+    await explorer.edit.rename(
+      page,
+      explorer.locators.folder(page, oldName),
+      renamed
+    );
     await explorer.expect.folderVisible(page, renamed);
 
     await explorer.trash.move(page, explorer.locators.folder(page, renamed));
@@ -304,7 +320,10 @@ test.describe('Rename Explorer Lifecycle', () => {
     );
     await explorer.expect.fileVisible(page, renamedBase);
 
-    await explorer.trash.move(page, explorer.locators.file(page, `${renamedBase}.txt`));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, `${renamedBase}.txt`)
+    );
     await explorer.expect.fileNotVisible(page, renamedBase);
 
     await explorer.navigation.goToTrash(page);
@@ -327,7 +346,11 @@ test.describe('Rename Explorer Lifecycle', () => {
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.folder(page, oldName);
 
-    await explorer.edit.rename(page, explorer.locators.folder(page, oldName), renamed);
+    await explorer.edit.rename(
+      page,
+      explorer.locators.folder(page, oldName),
+      renamed
+    );
     await explorer.trash.move(page, explorer.locators.folder(page, renamed));
 
     await explorer.navigation.goToTrash(page);
@@ -352,7 +375,10 @@ test.describe('Rename Explorer Lifecycle', () => {
       explorer.locators.file(page, `${oldBase}.txt`),
       renamedBase
     );
-    await explorer.trash.move(page, explorer.locators.file(page, `${renamedBase}.txt`));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, `${renamedBase}.txt`)
+    );
 
     await explorer.navigation.goToTrash(page);
     await explorer.trash.delete(

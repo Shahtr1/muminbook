@@ -433,7 +433,9 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(null) // Parent chain check
         .mockResolvedValueOnce(null); // Parent does not exist
 
-      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(
+        lostAndFound as any
+      );
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await restoreResource(mockResourceId, mockUserId);
@@ -470,7 +472,9 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(null)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(
+        lostAndFound as any
+      );
       vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
@@ -515,7 +519,9 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(null)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(
+        lostAndFound as any
+      );
       vi.mocked(findDescendantsByPath).mockResolvedValue([child] as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
@@ -546,7 +552,9 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(null)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(
+        lostAndFound as any
+      );
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreResource(mockResourceId, mockUserId);
@@ -675,7 +683,9 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(null) // orphan1 parent missing
         .mockResolvedValueOnce(null); // orphan2 parent missing
 
-      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(
+        lostAndFound as any
+      );
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await restoreAllResources(mockUserId);
@@ -715,7 +725,9 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(null) // normal file has no conflict
         .mockResolvedValueOnce(null); // orphan parent missing
 
-      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(
+        lostAndFound as any
+      );
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreAllResources(mockUserId);
@@ -889,7 +901,9 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(null)
         .mockResolvedValueOnce(null);
 
-      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(
+        lostAndFound as any
+      );
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreResource(mockResourceId, mockUserId);

@@ -50,7 +50,10 @@ test.describe('Nested Explorer Lifecycle', () => {
     await explorer.create.file(page, fileBase);
     await explorer.expect.fileVisible(page, fileBase);
 
-    await explorer.trash.move(page, explorer.locators.file(page, `${fileBase}.txt`));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, `${fileBase}.txt`)
+    );
     await explorer.expect.fileNotVisible(page, fileBase);
 
     await explorer.navigation.openReadingRoot(page);
