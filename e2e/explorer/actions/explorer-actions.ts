@@ -78,19 +78,33 @@ const create = {
 
 async function openItemMenu(item: Locator) {
   const menuButton = item.getByTestId('item-toolbar-menu').first();
-  await expect(menuButton).toBeVisible();
-  await menuButton.click({ force: true });
+  await expect(menuButton).toBeVisible({ timeout: 10000 });
 
-  const menuId = await menuButton.getAttribute('aria-controls');
-  if (menuId) {
-    const scopedMenu = item.page().locator(`[id="${menuId}"]`);
-    await expect(scopedMenu).toBeVisible();
-    return scopedMenu;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await menuButton.click();
+
+    const menuId = await menuButton.getAttribute('aria-controls');
+    if (menuId) {
+      const scopedMenu = item.page().locator(`[id="${menuId}"]`);
+      try {
+        await expect(scopedMenu).toBeVisible({ timeout: 1200 });
+        return scopedMenu;
+      } catch {
+        // Fallback below if this specific menu is not visible yet.
+      }
+    }
+
+    const fallbackMenu = item.page().locator('[role="menu"]:visible').last();
+    if ((await fallbackMenu.count()) > 0) {
+      await expect(fallbackMenu).toBeVisible({ timeout: 1200 });
+      return fallbackMenu;
+    }
+
+    await item.page().keyboard.press('Escape').catch(() => {});
+    await item.page().waitForTimeout(100);
   }
 
-  const fallbackMenu = item.page().locator('[role="menu"]').last();
-  await expect(fallbackMenu).toBeVisible();
-  return fallbackMenu;
+  throw new Error('Failed to open item menu after retries');
 }
 
 async function clickMenuItem(menu: Locator, name: string, testId?: string) {
