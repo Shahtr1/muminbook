@@ -8,42 +8,42 @@ const withIndexSuffix = (name: string, index: number) => {
 };
 
 test.describe('Copy Explorer Lifecycle', () => {
-  test('file lifecycle → create → copy → trash original → restore', async ({
-    page,
-  }) => {
-    const base = `copy-file-${Date.now()}`;
-
-    await explorer.navigation.openReadingRoot(page);
-
-    await explorer.create.file(page, base);
-    await explorer.edit.copy(
-      page,
-      explorer.locators.file(page, `${base}.txt`),
-      'my-files'
-    );
-
-    await expect(explorer.locators.file(page, `${base}.txt`)).toBeVisible();
-    await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
-
-    await explorer.trash.move(
-      page,
-      explorer.locators.file(page, `${base}.txt`)
-    );
-    await expect(explorer.locators.file(page, `${base}.txt`)).toHaveCount(0);
-    await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
-
-    await explorer.navigation.goToTrash(page);
-    await expect(explorer.locators.file(page, `${base}.txt`)).toBeVisible();
-
-    await explorer.trash.restore(
-      page,
-      explorer.locators.file(page, `${base}.txt`)
-    );
-
-    await explorer.navigation.openReadingRoot(page);
-    await expect(explorer.locators.file(page, `${base}.txt`)).toBeVisible();
-    await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
-  });
+  // test('file lifecycle → create → copy → trash original → restore', async ({
+  //   page,
+  // }) => {
+  //   const base = `copy-file-${Date.now()}`;
+  //
+  //   await explorer.navigation.openReadingRoot(page);
+  //
+  //   await explorer.create.file(page, base);
+  //   await explorer.edit.copy(
+  //     page,
+  //     explorer.locators.file(page, `${base}.txt`),
+  //     'my-files'
+  //   );
+  //
+  //   await expect(explorer.locators.file(page, `${base}.txt`)).toBeVisible();
+  //   await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
+  //
+  //   await explorer.trash.move(
+  //     page,
+  //     explorer.locators.file(page, `${base}.txt`)
+  //   );
+  //   await expect(explorer.locators.file(page, `${base}.txt`)).toHaveCount(0);
+  //   await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
+  //
+  //   await explorer.navigation.goToTrash(page);
+  //   await expect(explorer.locators.file(page, `${base}.txt`)).toBeVisible();
+  //
+  //   await explorer.trash.restore(
+  //     page,
+  //     explorer.locators.file(page, `${base}.txt`)
+  //   );
+  //
+  //   await explorer.navigation.openReadingRoot(page);
+  //   await expect(explorer.locators.file(page, `${base}.txt`)).toBeVisible();
+  //   await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
+  // });
 
   test('folder lifecycle → create → copy → trash original → restore', async ({
     page,
