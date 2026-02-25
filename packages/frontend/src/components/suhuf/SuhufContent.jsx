@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { useWindowNavbar } from '@/context/WindowNavbarContext.jsx';
 import {
   Flex,
@@ -18,7 +17,6 @@ import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const SuhufContent = ({ readings }) => {
-  const queryClient = useQueryClient();
   const { setNavbarChildren } = useWindowNavbar();
   const theme = useTheme();
 
@@ -94,14 +92,6 @@ export const SuhufContent = ({ readings }) => {
       iconActiveColor,
     ]
   );
-
-  useEffect(() => {
-    queryClient.setQueryData(['windowMode'], true);
-
-    return () => {
-      queryClient.setQueryData(['windowMode'], false);
-    };
-  }, [queryClient]);
 
   useEffect(() => {
     setNavbarChildren(navbarContent);

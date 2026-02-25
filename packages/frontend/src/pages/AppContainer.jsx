@@ -29,6 +29,14 @@ export const AppContainer = () => {
     updateNavigationPath(location.pathname);
   }, [location.pathname]);
 
+  useEffect(() => {
+    // Keep window mode in sync with route so we do not flicker while Suhuf data is loading.
+    queryClient.setQueryData(
+      ['windowMode'],
+      location.pathname.startsWith('/suhuf/')
+    );
+  }, [location.pathname, queryClient]);
+
   const winManagerHeight = winManagerVisible
     ? parseInt(theme.space['win-manager-height'])
     : 0;
