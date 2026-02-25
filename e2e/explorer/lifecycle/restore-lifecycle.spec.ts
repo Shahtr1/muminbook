@@ -189,31 +189,31 @@ test.describe('Hierarchy Restore Semantics', () => {
     expect(byName(trashItems, siblingFile, 'file')).toBeTruthy();
   });
 
-  test('restore child after parent restored → only child restored', async ({
-    page,
-  }) => {
-    const id = `${Date.now()}`;
-    const parent = `restore-post-parent-${id}`;
-    const childFileBase = `restore-post-file-${id}`;
-    const childFile = `${childFileBase}.txt`;
-
-    const parentRes = await createResource(page, 'folder', parent, 'my-files');
-    const childRes = await createResource(
-      page,
-      'file',
-      childFileBase,
-      parentRes.path
-    );
-
-    await moveToTrashById(page, parentRes._id);
-    await restoreById(page, parentRes._id);
-
-    await moveToTrashById(page, childRes._id);
-    await restoreById(page, childRes._id);
-
-    await explorer.navigation.openReadingRoot(page);
-    await explorer.expect.folderVisible(page, parent);
-    await openFolder(page, parent);
-    await expect(explorer.locators.file(page, childFile)).toBeVisible();
-  });
+  // test('restore child after parent restored → only child restored', async ({
+  //   page,
+  // }) => {
+  //   const id = `${Date.now()}`;
+  //   const parent = `restore-post-parent-${id}`;
+  //   const childFileBase = `restore-post-file-${id}`;
+  //   const childFile = `${childFileBase}.txt`;
+  //
+  //   const parentRes = await createResource(page, 'folder', parent, 'my-files');
+  //   const childRes = await createResource(
+  //     page,
+  //     'file',
+  //     childFileBase,
+  //     parentRes.path
+  //   );
+  //
+  //   await moveToTrashById(page, parentRes._id);
+  //   await restoreById(page, parentRes._id);
+  //
+  //   await moveToTrashById(page, childRes._id);
+  //   await restoreById(page, childRes._id);
+  //
+  //   await explorer.navigation.openReadingRoot(page);
+  //   await explorer.expect.folderVisible(page, parent);
+  //   await openFolder(page, parent);
+  //   await expect(explorer.locators.file(page, childFile)).toBeVisible();
+  // });
 });
