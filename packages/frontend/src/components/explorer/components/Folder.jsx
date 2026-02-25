@@ -62,6 +62,8 @@ export const Folder = ({
   return (
     <Flex
       data-testid="folder-item"
+      data-resource-id={id}
+      data-resource-name={name}
       width={width}
       align="center"
       justify="center"

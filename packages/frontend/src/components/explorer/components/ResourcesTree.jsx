@@ -54,6 +54,8 @@ const TreeNode = ({
   return (
     <Box pl={level * 2}>
       <Flex
+        data-testid="resource-tree-node"
+        data-path={path}
         align="center"
         p={1}
         cursor="pointer"

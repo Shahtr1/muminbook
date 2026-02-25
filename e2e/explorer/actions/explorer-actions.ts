@@ -30,11 +30,15 @@ const navigation = {
 
 const locators = {
   folder(page: Page, name: string): Locator {
-    return page.getByTestId('folder-item').filter({ hasText: name });
+    return page.locator(
+      `[data-testid="folder-item"][data-resource-name="${name}"]`
+    );
   },
 
   file(page: Page, name: string): Locator {
-    return page.getByTestId('file-item').filter({ hasText: name });
+    return page.locator(
+      `[data-testid="file-item"][data-resource-name="${name}"]`
+    );
   },
 
   toast(page: Page, message: string): Locator {
@@ -73,15 +77,32 @@ const create = {
 /* -------------------------------------------------- */
 
 async function openItemMenu(item: Locator) {
-  const menuButton = item.getByTestId('item-toolbar-menu');
+  const menuButton = item.getByTestId('item-toolbar-menu').first();
   await expect(menuButton).toBeVisible();
-  await menuButton.click();
+  await menuButton.click({ force: true });
+
+  const menuId = await menuButton.getAttribute('aria-controls');
+  if (menuId) {
+    const scopedMenu = item.page().locator(`[id="${menuId}"]`);
+    await expect(scopedMenu).toBeVisible();
+    return scopedMenu;
+  }
+
+  const fallbackMenu = item.page().locator('[role="menu"]').last();
+  await expect(fallbackMenu).toBeVisible();
+  return fallbackMenu;
 }
 
-async function clickMenuItem(page: Page, name: string) {
-  const menuItem = page.getByRole('menuitem', { name });
+async function clickMenuItem(
+  menu: Locator,
+  name: string,
+  testId?: string
+) {
+  const menuItem = testId
+    ? menu.getByTestId(testId).first()
+    : menu.getByRole('menuitem', { name }).first();
   await expect(menuItem).toBeVisible();
-  await menuItem.click();
+  await menuItem.click({ force: true });
 }
 
 /* -------------------------------------------------- */
@@ -111,20 +132,20 @@ async function maybeConfirm(page: Page) {
 
 const trash = {
   async move(page: Page, item: Locator) {
-    await openItemMenu(item);
-    await clickMenuItem(page, 'Move to Trash');
+    const menu = await openItemMenu(item);
+    await clickMenuItem(menu, 'Move to Trash', 'move-to-trash');
     await maybeConfirm(page);
   },
 
   async restore(page: Page, item: Locator) {
-    await openItemMenu(item);
-    await clickMenuItem(page, 'Restore');
+    const menu = await openItemMenu(item);
+    await clickMenuItem(menu, 'Restore', 'restore');
     await maybeConfirm(page);
   },
 
   async delete(page: Page, item: Locator) {
-    await openItemMenu(item);
-    await clickMenuItem(page, 'Delete');
+    const menu = await openItemMenu(item);
+    await clickMenuItem(menu, 'Delete', 'delete');
     await maybeConfirm(page);
   },
 };
@@ -135,8 +156,8 @@ const trash = {
 
 const edit = {
   async rename(page: Page, item: Locator, newName: string) {
-    await openItemMenu(item);
-    await clickMenuItem(page, 'Rename');
+    const menu = await openItemMenu(item);
+    await clickMenuItem(menu, 'Rename', 'rename');
 
     const input = page.getByPlaceholder('New name');
     await expect(input).toBeVisible();
@@ -148,8 +169,8 @@ const edit = {
   },
 
   async move(page: Page, item: Locator, destinationPath: string) {
-    await openItemMenu(item);
-    await clickMenuItem(page, 'Move to Folder');
+    const menu = await openItemMenu(item);
+    await clickMenuItem(menu, 'Move to Folder', 'move-to-folder');
 
     const input = page.getByPlaceholder('Enter destination path');
     await expect(input).toBeVisible();
@@ -158,6 +179,31 @@ const edit = {
     const moveBtn = page.getByRole('button', { name: 'Move' });
     await expect(moveBtn).toBeVisible();
     await moveBtn.click();
+  },
+
+  async copy(page: Page, item: Locator, destinationPath: string) {
+    const input = page.getByTestId('transfer-destination-input');
+    let opened = false;
+
+    for (let attempt = 0; attempt < 3 && !opened; attempt++) {
+      const menu = await openItemMenu(item);
+      await clickMenuItem(menu, 'Copy', 'copy');
+
+      try {
+        await input.waitFor({ state: 'visible', timeout: 1500 });
+        opened = true;
+      } catch {
+        // Retry opening copy modal if menu click did not trigger it.
+      }
+    }
+
+    await expect(input).toBeVisible();
+    await input.fill(destinationPath);
+
+    const copyBtn = page.getByTestId('transfer-copy-submit');
+    await expect(copyBtn).toBeVisible();
+    await copyBtn.click();
+    await input.waitFor({ state: 'hidden', timeout: 5000 });
   },
 };
 
