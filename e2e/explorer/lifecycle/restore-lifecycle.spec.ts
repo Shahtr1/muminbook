@@ -87,7 +87,12 @@ test.describe('Hierarchy Restore Semantics', () => {
 
     const parentRes = await createResource(page, 'folder', parent, 'my-files');
     await createResource(page, 'folder', childFolder, parentRes.path);
-    await createResource(page, 'file', nestedFileBase, `${parentRes.path}/${childFolder}`);
+    await createResource(
+      page,
+      'file',
+      nestedFileBase,
+      `${parentRes.path}/${childFolder}`
+    );
 
     await moveToTrashById(page, parentRes._id);
     await restoreById(page, parentRes._id);
@@ -97,7 +102,10 @@ test.describe('Hierarchy Restore Semantics', () => {
     await openFolder(page, parent, childFolder);
     await explorer.expect.fileVisible(page, nestedFileBase);
 
-    const children = await getChildren(page, `${parentRes.path}/${childFolder}`);
+    const children = await getChildren(
+      page,
+      `${parentRes.path}/${childFolder}`
+    );
     expect(byName(children, nestedFile, 'file')).toBeTruthy();
   });
 
@@ -112,7 +120,12 @@ test.describe('Hierarchy Restore Semantics', () => {
     const fileB = `${fileBBase}.txt`;
 
     const parentRes = await createResource(page, 'folder', parent, 'my-files');
-    const fileARes = await createResource(page, 'file', fileABase, parentRes.path);
+    const fileARes = await createResource(
+      page,
+      'file',
+      fileABase,
+      parentRes.path
+    );
     await createResource(page, 'file', fileBBase, parentRes.path);
 
     await moveToTrashById(page, parentRes._id);
@@ -141,8 +154,18 @@ test.describe('Hierarchy Restore Semantics', () => {
     const siblingFile = `${siblingFileBase}.txt`;
 
     const parentRes = await createResource(page, 'folder', parent, 'my-files');
-    const level1Res = await createResource(page, 'folder', level1, parentRes.path);
-    const level2Res = await createResource(page, 'folder', level2, level1Res.path);
+    const level1Res = await createResource(
+      page,
+      'folder',
+      level1,
+      parentRes.path
+    );
+    const level2Res = await createResource(
+      page,
+      'folder',
+      level2,
+      level1Res.path
+    );
     const deepFileRes = await createResource(
       page,
       'file',
@@ -175,7 +198,12 @@ test.describe('Hierarchy Restore Semantics', () => {
     const childFile = `${childFileBase}.txt`;
 
     const parentRes = await createResource(page, 'folder', parent, 'my-files');
-    const childRes = await createResource(page, 'file', childFileBase, parentRes.path);
+    const childRes = await createResource(
+      page,
+      'file',
+      childFileBase,
+      parentRes.path
+    );
 
     await moveToTrashById(page, parentRes._id);
     await restoreById(page, parentRes._id);

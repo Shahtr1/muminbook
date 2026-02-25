@@ -100,7 +100,10 @@ async function openItemMenu(item: Locator) {
       return fallbackMenu;
     }
 
-    await item.page().keyboard.press('Escape').catch(() => {});
+    await item
+      .page()
+      .keyboard.press('Escape')
+      .catch(() => {});
     await item.page().waitForTimeout(100);
   }
 
