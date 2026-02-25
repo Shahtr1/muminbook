@@ -38,15 +38,16 @@ vi.mock('../../../../models/resource.model', () => {
   };
 });
 
-vi.mock('../../common-resource.service', () => ({
+vi.mock('../../common-resource.service.js', () => ({
   findDescendantsByPath: vi.fn(),
 }));
 
-vi.mock('../helpers/findOrCreateLostAndFound', () => ({
+vi.mock('../../utils/findOrCreateLostAndFound.js', () => ({
   findOrCreateLostAndFound: vi.fn(),
 }));
 
 import { findDescendantsByPath } from '../../common-resource.service.js';
+import { findOrCreateLostAndFound } from '../../utils/findOrCreateLostAndFound.js';
 
 describe('Restore Resource Service', () => {
   const mockUserId = new Types.ObjectId() as PrimaryId;
@@ -55,7 +56,7 @@ describe('Restore Resource Service', () => {
   const mockLostAndFoundId = new Types.ObjectId() as PrimaryId;
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.resetAllMocks();
   });
 
   const createMockResource = (overrides: any = {}) => ({
@@ -144,8 +145,9 @@ describe('Restore Resource Service', () => {
 
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(file as any) // First call: get resource
-        .mockResolvedValueOnce(parentFolder as any) // Second call: check parent exists
-        .mockResolvedValueOnce(null); // Third call: no conflict
+        .mockResolvedValueOnce(parentFolder as any) // Second call: parent chain check
+        .mockResolvedValueOnce(parentFolder as any) // Third call: check parent exists
+        .mockResolvedValueOnce(null); // Fourth call: no conflict
 
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
@@ -190,6 +192,7 @@ describe('Restore Resource Service', () => {
 
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(file as any) // Get resource
+        .mockResolvedValueOnce(parentFolder as any) // Parent chain check
         .mockResolvedValueOnce(parentFolder as any) // Check parent exists
         .mockResolvedValueOnce(conflictingFile as any) // First hasConflict check
         .mockResolvedValueOnce(conflictingFile as any); // Second hasConflict check
@@ -224,6 +227,7 @@ describe('Restore Resource Service', () => {
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(folder as any)
         .mockResolvedValueOnce(parentFolder as any)
+        .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(conflictingFolder as any)
         .mockResolvedValueOnce(conflictingFolder as any);
 
@@ -252,6 +256,7 @@ describe('Restore Resource Service', () => {
 
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(folder as any)
+        .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
@@ -303,6 +308,7 @@ describe('Restore Resource Service', () => {
 
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(folder as any)
+        .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
@@ -422,20 +428,12 @@ describe('Restore Resource Service', () => {
       });
 
       const lostAndFound = createMockLostAndFound();
-      const rootFolder = {
-        _id: new Types.ObjectId(),
-        path: 'my-files',
-        type: ResourceType.Folder,
-      };
-
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(file as any) // Get resource
-        .mockResolvedValueOnce(null) // Parent does not exist
-        .mockResolvedValueOnce(rootFolder as any); // Root folder for findOrCreateLostAndFound
+        .mockResolvedValueOnce(null) // Parent chain check
+        .mockResolvedValueOnce(null); // Parent does not exist
 
-      vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
-        lostAndFound as any
-      );
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await restoreResource(mockResourceId, mockUserId);
@@ -467,20 +465,12 @@ describe('Restore Resource Service', () => {
       });
 
       const lostAndFound = createMockLostAndFound();
-      const rootFolder = {
-        _id: new Types.ObjectId(),
-        path: 'my-files',
-        type: ResourceType.Folder,
-      };
-
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(folder as any)
         .mockResolvedValueOnce(null)
-        .mockResolvedValueOnce(rootFolder as any);
+        .mockResolvedValueOnce(null);
 
-      vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
-        lostAndFound as any
-      );
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
       vi.mocked(findDescendantsByPath).mockResolvedValue([]);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
@@ -520,20 +510,12 @@ describe('Restore Resource Service', () => {
       };
 
       const lostAndFound = createMockLostAndFound();
-      const rootFolder = {
-        _id: new Types.ObjectId(),
-        path: 'my-files',
-        type: ResourceType.Folder,
-      };
-
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(folder as any)
         .mockResolvedValueOnce(null)
-        .mockResolvedValueOnce(rootFolder as any);
+        .mockResolvedValueOnce(null);
 
-      vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
-        lostAndFound as any
-      );
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
       vi.mocked(findDescendantsByPath).mockResolvedValue([child] as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
@@ -559,20 +541,12 @@ describe('Restore Resource Service', () => {
       });
 
       const lostAndFound = createMockLostAndFound();
-      const rootFolder = {
-        _id: new Types.ObjectId(),
-        path: 'my-files',
-        type: ResourceType.Folder,
-      };
-
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(file as any)
         .mockResolvedValueOnce(null)
-        .mockResolvedValueOnce(rootFolder as any);
+        .mockResolvedValueOnce(null);
 
-      vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
-        lostAndFound as any
-      );
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreResource(mockResourceId, mockUserId);
@@ -693,25 +667,15 @@ describe('Restore Resource Service', () => {
       });
 
       const lostAndFound = createMockLostAndFound();
-      const rootFolder = {
-        _id: new Types.ObjectId(),
-        path: 'my-files',
-        type: ResourceType.Folder,
-      };
-
       vi.mocked(ResourceModel.find).mockResolvedValue([
         orphan1,
         orphan2,
       ] as any);
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(null) // orphan1 parent missing
-        .mockResolvedValueOnce(rootFolder as any) // Root folder for first lost+found
-        .mockResolvedValueOnce(null) // orphan2 parent missing
-        .mockResolvedValueOnce(rootFolder as any); // Root folder for second lost+found
+        .mockResolvedValueOnce(null); // orphan2 parent missing
 
-      vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
-        lostAndFound as any
-      );
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       const result = await restoreAllResources(mockUserId);
@@ -742,12 +706,6 @@ describe('Restore Resource Service', () => {
       };
 
       const lostAndFound = createMockLostAndFound();
-      const rootFolder = {
-        _id: new Types.ObjectId(),
-        path: 'my-files',
-        type: ResourceType.Folder,
-      };
-
       vi.mocked(ResourceModel.find).mockResolvedValue([
         normalFile,
         orphanFile,
@@ -755,12 +713,9 @@ describe('Restore Resource Service', () => {
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null) // normal file has no conflict
-        .mockResolvedValueOnce(null) // orphan parent missing
-        .mockResolvedValueOnce(rootFolder as any); // Root folder for lost+found
+        .mockResolvedValueOnce(null); // orphan parent missing
 
-      vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
-        lostAndFound as any
-      );
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreAllResources(mockUserId);
@@ -843,6 +798,7 @@ describe('Restore Resource Service', () => {
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(file as any)
         .mockResolvedValueOnce(parentFolder as any)
+        .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
@@ -877,6 +833,7 @@ describe('Restore Resource Service', () => {
 
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(folder as any)
+        .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
@@ -923,24 +880,16 @@ describe('Restore Resource Service', () => {
     it('should handle resource with empty name', async () => {
       const file = createMockResource({
         name: '',
-        path: '/documents/',
+        path: '/missing/',
       });
 
       const lostAndFound = createMockLostAndFound();
-      const rootFolder = {
-        _id: new Types.ObjectId(),
-        path: 'my-files',
-        type: ResourceType.Folder,
-      };
-
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(file as any)
         .mockResolvedValueOnce(null)
-        .mockResolvedValueOnce(rootFolder as any);
+        .mockResolvedValueOnce(null);
 
-      vi.mocked(ResourceModel.findOneAndUpdate).mockResolvedValue(
-        lostAndFound as any
-      );
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(lostAndFound as any);
       vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
       await restoreResource(mockResourceId, mockUserId);
@@ -981,6 +930,7 @@ describe('Restore Resource Service', () => {
 
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(folder as any)
+        .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
@@ -1024,13 +974,14 @@ describe('Restore Resource Service', () => {
       });
 
       const parentFolder = {
-        path: '',
+        path: '/documents',
         type: ResourceType.Folder,
         deleted: false,
       };
 
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(folder as any)
+        .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
@@ -1069,6 +1020,7 @@ describe('Restore Resource Service', () => {
 
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce(file as any)
+        .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(null);
 
