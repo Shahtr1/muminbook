@@ -578,7 +578,9 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(file as any) // Get resource
         .mockResolvedValueOnce(null) // Parent chain check
         .mockResolvedValueOnce(null) // Parent does not exist
-        .mockResolvedValueOnce({ path: 'my-files/lost+found/orphan.pdf' } as any) // Conflict on original name
+        .mockResolvedValueOnce({
+          path: 'my-files/lost+found/orphan.pdf',
+        } as any) // Conflict on original name
         .mockResolvedValueOnce(null); // No conflict on indexed name
 
       vi.mocked(findOrCreateLostAndFound).mockResolvedValue(
