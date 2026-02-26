@@ -41,6 +41,7 @@ export const moveToTrashResource = async (
     path: target.path,
     userId,
     deleted: true,
+    _id: { $ne: target._id },
   });
 
   // Step 2: If it's a folder, mark its descendants as trashed
@@ -54,6 +55,7 @@ export const moveToTrashResource = async (
         path: child.path,
         userId,
         deleted: true,
+        _id: { $ne: child._id },
       });
 
       // Schedule descendant soft-delete update

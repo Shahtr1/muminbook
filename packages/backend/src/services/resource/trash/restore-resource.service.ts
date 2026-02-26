@@ -13,7 +13,7 @@ import ResourceModel from '../../../models/resource.model.js';
 import ResourceType from '../../../constants/types/resourceType.js';
 import { PrimaryId } from '../../../constants/ids.js';
 import appAssert from '../../../utils/appAssert.js';
-import { BAD_REQUEST, CONFLICT, NOT_FOUND } from '../../../constants/http.js';
+import { BAD_REQUEST, NOT_FOUND } from '../../../constants/http.js';
 import { findOrCreateLostAndFound } from '../utils/findOrCreateLostAndFound.js';
 import { findDescendantsByPath } from '../common-resource.service.js';
 import { normalizeSlashes } from '../utils/normalizeSlashes.js';
@@ -35,11 +35,59 @@ const withIndexedPrefix = (name: string, index: number) => {
   return `${prefix}${base}`;
 };
 
+const getParentPath = (path: string) => path.split('/').slice(0, -1).join('/');
+
+const getNextRestoreName = async (
+  originalName: string,
+  parentPath: string,
+  userId: PrimaryId
+) => {
+  const originalPath = normalizeSlashes(`${parentPath}/${originalName}`);
+  const hasOriginalConflict = await hasConflict(originalPath, userId);
+  if (!hasOriginalConflict) return originalName;
+
+  const escapedParentPath = parentPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const siblings = await ResourceModel.find({
+    userId,
+    deleted: false,
+    path: new RegExp(`^${escapedParentPath}/[^/]+$`),
+  }).select('name');
+
+  const siblingNames = new Set(siblings.map((s: any) => s.name));
+  let maxIndex = 0;
+
+  for (const name of siblingNames) {
+    if (name === originalName) {
+      maxIndex = Math.max(maxIndex, 0);
+      continue;
+    }
+
+    const match = name.match(/^\((\d+)\)\s+(.+)$/);
+    if (!match) continue;
+
+    const index = Number(match[1]);
+    if (Number.isNaN(index) || index < 1) continue;
+
+    if (withIndexedPrefix(originalName, index) === name) {
+      maxIndex = Math.max(maxIndex, index);
+    }
+  }
+
+  let index = maxIndex + 1;
+  while (true) {
+    const candidateName = withIndexedPrefix(originalName, index);
+    const candidatePath = normalizeSlashes(`${parentPath}/${candidateName}`);
+    const conflict = await hasConflict(candidatePath, userId);
+    if (!conflict) return candidateName;
+    index++;
+  }
+};
+
 const shouldRestoreAsLostAndFound = async (
   resource: any,
   userId: PrimaryId
 ) => {
-  const parentPath = resource.path.split('/').slice(0, -1).join('/');
+  const parentPath = getParentPath(resource.path);
 
   const parentFolder = await ResourceModel.findOne({
     path: parentPath,
@@ -56,7 +104,7 @@ const restoreDeletedParentChainIfNeeded = async (
   userId: PrimaryId
 ) => {
   const updates: any[] = [];
-  let parentPath = resource.path.split('/').slice(0, -1).join('/');
+  let parentPath = getParentPath(resource.path);
 
   while (parentPath) {
     const parentFolder = await ResourceModel.findOne({
@@ -177,20 +225,16 @@ export const restoreResource = async (
     return { message: 'Restored to lost+found' };
   }
 
-  if (await hasConflict(resource.path, userId)) {
-    const conflict = await hasConflict(resource.path, userId);
-    appAssert(
-      !conflict,
-      CONFLICT,
-      `A ${conflict?.type === 'file' ? 'file' : 'folder'} with this name already exists in the destination path`
-    );
-  }
+  const parentPath = getParentPath(resource.path);
+  const restoredName = await getNextRestoreName(resource.name, parentPath, userId);
+  const restoredPath = normalizeSlashes(`${parentPath}/${restoredName}`);
 
   const updates = await buildRestoreUpdates({
     resource,
     userId,
-    newBasePath: resource.path,
+    newBasePath: restoredPath,
     newParentId: resource.parent as PrimaryId,
+    newName: restoredName !== resource.name ? restoredName : undefined,
   });
 
   await ResourceModel.bulkWrite(updates);
@@ -199,7 +243,9 @@ export const restoreResource = async (
 
 export const restoreAllResources = async (userId: PrimaryId) => {
   const resources = await ResourceModel.find({ userId, deleted: true });
-  appAssert(resources.length > 0, NOT_FOUND, 'No trashed resources found');
+  if (resources.length === 0) {
+    return { message: 'All possible resources restored from trash' };
+  }
 
   for (const resource of resources) {
     const isLostAndFound = await shouldRestoreAsLostAndFound(resource, userId);

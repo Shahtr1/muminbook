@@ -216,4 +216,43 @@ test.describe('Hierarchy Restore Semantics', () => {
     await openFolder(page, parent);
     await expect(explorer.locators.file(page, childFile)).toBeVisible();
   });
+
+  test('restore child then re-trash parent → restored child returns to trash with sibling', async ({
+    page,
+  }) => {
+    const id = `${Date.now()}`;
+    const parent = `restore-retrash-parent-${id}`;
+    const fileABase = `restore-retrash-a-${id}`;
+    const fileBBase = `restore-retrash-b-${id}`;
+    const fileA = `${fileABase}.txt`;
+    const fileB = `${fileBBase}.txt`;
+
+    const parentRes = await createResource(page, 'folder', parent, 'my-files');
+    const fileARes = await createResource(
+      page,
+      'file',
+      fileABase,
+      parentRes.path
+    );
+    await createResource(page, 'file', fileBBase, parentRes.path);
+
+    await moveToTrashById(page, parentRes._id);
+    await restoreById(page, fileARes._id);
+
+    await explorer.navigation.openReadingRoot(page);
+    await explorer.expect.folderVisible(page, parent);
+    await openFolder(page, parent);
+    await expect(explorer.locators.file(page, fileA)).toBeVisible();
+    await expect(explorer.locators.file(page, fileB)).toHaveCount(0);
+
+    await moveToTrashById(page, parentRes._id);
+
+    await explorer.navigation.openReadingRoot(page);
+    await explorer.expect.folderNotVisible(page, parent);
+
+    const trashItems = await getTrashItems(page);
+    expect(byName(trashItems, parent, 'folder')).toBeTruthy();
+    expect(byName(trashItems, fileA, 'file')).toBeTruthy();
+    expect(byName(trashItems, fileB, 'file')).toBeTruthy();
+  });
 });
