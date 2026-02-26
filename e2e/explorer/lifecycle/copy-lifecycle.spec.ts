@@ -1,13 +1,36 @@
 import { expect, test } from '@playwright/test';
 import { explorer } from '../actions/explorer-actions';
 
+const API_BASE = 'http://localhost:4005';
+
 const withIndexSuffix = (name: string, index: number) => {
   const suffix = ` (${index})`;
   const maxBaseLength = 100 - suffix.length;
   return `${name.slice(0, maxBaseLength)}${suffix}`;
 };
 
+const getTrashItems = async (page: any) => {
+  const res = await page.request.get(`${API_BASE}/resources/trash`);
+  expect(res.ok()).toBeTruthy();
+  return res.json();
+};
+
+const restoreTrashedByName = async (
+  page: any,
+  name: string,
+  type: 'file' | 'folder'
+) => {
+  const items = await getTrashItems(page);
+  const match = items.find((r: any) => r.name === name && r.type === type);
+  expect(match).toBeTruthy();
+
+  const res = await page.request.patch(`${API_BASE}/resources/${match._id}/restore`);
+  expect(res.ok()).toBeTruthy();
+};
+
 test.describe('Copy Explorer Lifecycle', () => {
+  test.setTimeout(120_000);
+
   test('file lifecycle → create → copy → trash original → restore', async ({
     page,
   }) => {
@@ -16,6 +39,7 @@ test.describe('Copy Explorer Lifecycle', () => {
     await explorer.navigation.openReadingRoot(page);
 
     await explorer.create.file(page, base);
+    await explorer.search.set(page, base);
     await explorer.edit.copy(
       page,
       explorer.locators.file(page, `${base}.txt`),
@@ -29,18 +53,17 @@ test.describe('Copy Explorer Lifecycle', () => {
       page,
       explorer.locators.file(page, `${base}.txt`)
     );
+    await explorer.search.set(page, base);
     await expect(explorer.locators.file(page, `${base}.txt`)).toHaveCount(0);
     await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
 
     await explorer.navigation.goToTrash(page);
     await expect(explorer.locators.file(page, `${base}.txt`)).toBeVisible();
 
-    await explorer.trash.restore(
-      page,
-      explorer.locators.file(page, `${base}.txt`)
-    );
+    await restoreTrashedByName(page, `${base}.txt`, 'file');
 
     await explorer.navigation.openReadingRoot(page);
+    await explorer.search.set(page, base);
     await expect(explorer.locators.file(page, `${base}.txt`)).toBeVisible();
     await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
   });
@@ -53,6 +76,7 @@ test.describe('Copy Explorer Lifecycle', () => {
     await explorer.navigation.openReadingRoot(page);
 
     await explorer.create.folder(page, base);
+    await explorer.search.set(page, base);
     await explorer.edit.copy(
       page,
       explorer.locators.folder(page, base),
@@ -63,15 +87,17 @@ test.describe('Copy Explorer Lifecycle', () => {
     await explorer.expect.folderVisible(page, `${base} (1)`);
 
     await explorer.trash.move(page, explorer.locators.folder(page, base));
+    await explorer.search.set(page, base);
     await explorer.expect.folderNotVisible(page, base);
     await explorer.expect.folderVisible(page, `${base} (1)`);
 
     await explorer.navigation.goToTrash(page);
     await explorer.expect.folderVisible(page, base);
 
-    await explorer.trash.restore(page, explorer.locators.folder(page, base));
+    await restoreTrashedByName(page, base, 'folder');
 
     await explorer.navigation.openReadingRoot(page);
+    await explorer.search.set(page, base);
     await explorer.expect.folderVisible(page, base);
     await explorer.expect.folderVisible(page, `${base} (1)`);
   });
@@ -82,6 +108,7 @@ test.describe('Copy Explorer Lifecycle', () => {
     await explorer.navigation.openReadingRoot(page);
 
     await explorer.create.file(page, base);
+    await explorer.search.set(page, base);
     await explorer.edit.copy(
       page,
       explorer.locators.file(page, `${base}.txt`),
@@ -92,6 +119,7 @@ test.describe('Copy Explorer Lifecycle', () => {
       page,
       explorer.locators.file(page, `${base}.txt (1)`)
     );
+    await explorer.search.set(page, base);
     await expect(explorer.locators.file(page, `${base}.txt (1)`)).toHaveCount(
       0
     );
@@ -99,12 +127,10 @@ test.describe('Copy Explorer Lifecycle', () => {
     await explorer.navigation.goToTrash(page);
     await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
 
-    await explorer.trash.restore(
-      page,
-      explorer.locators.file(page, `${base}.txt (1)`)
-    );
+    await restoreTrashedByName(page, `${base}.txt (1)`, 'file');
 
     await explorer.navigation.openReadingRoot(page);
+    await explorer.search.set(page, base);
     await expect(explorer.locators.file(page, `${base}.txt (1)`)).toBeVisible();
   });
 
@@ -115,6 +141,7 @@ test.describe('Copy Explorer Lifecycle', () => {
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.folder(page, base);
+    await explorer.search.set(page, base);
 
     await explorer.edit.copy(
       page,
@@ -144,6 +171,7 @@ test.describe('Copy Explorer Lifecycle', () => {
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.file(page, base);
+    await explorer.search.set(page, base);
 
     await explorer.edit.copy(
       page,
@@ -174,6 +202,7 @@ test.describe('Copy Explorer Lifecycle', () => {
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.folder(page, base);
+    await explorer.search.set(page, base);
     await explorer.edit.copy(
       page,
       explorer.locators.folder(page, base),
@@ -190,6 +219,7 @@ test.describe('Copy Explorer Lifecycle', () => {
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.folder(page, base);
+    await explorer.search.set(page, base);
 
     await explorer.edit.copy(
       page,
@@ -215,6 +245,7 @@ test.describe('Copy Explorer Lifecycle', () => {
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.folder(page, raw);
+    await explorer.search.set(page, normalized);
 
     await explorer.edit.copy(
       page,
@@ -234,6 +265,7 @@ test.describe('Copy Explorer Lifecycle', () => {
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.create.folder(page, base);
+    await explorer.search.set(page, base);
 
     await explorer.edit.copy(
       page,

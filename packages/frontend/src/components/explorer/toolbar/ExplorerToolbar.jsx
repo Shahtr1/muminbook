@@ -138,6 +138,8 @@ export const ExplorerToolbar = () => {
         )}
 
         <XSearch
+          inputTestId="explorer-search-input"
+          clearButtonTestId="explorer-search-clear"
           bgColor={bgColor}
           size="xs"
           width={120}
