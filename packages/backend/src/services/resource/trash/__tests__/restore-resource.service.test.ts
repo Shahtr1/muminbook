@@ -565,6 +565,47 @@ describe('Restore Resource Service', () => {
         'my-files/lost+found/file.pdf'
       );
     });
+
+    it('should prefix index when lost+found name conflict exists', async () => {
+      const file = createMockResource({
+        name: 'orphan.pdf',
+        path: '/deleted-folder/orphan.pdf',
+        deleted: true,
+      });
+
+      const lostAndFound = createMockLostAndFound();
+      vi.mocked(ResourceModel.findOne)
+        .mockResolvedValueOnce(file as any) // Get resource
+        .mockResolvedValueOnce(null) // Parent chain check
+        .mockResolvedValueOnce(null) // Parent does not exist
+        .mockResolvedValueOnce({ path: 'my-files/lost+found/orphan.pdf' } as any) // Conflict on original name
+        .mockResolvedValueOnce(null); // No conflict on indexed name
+
+      vi.mocked(findOrCreateLostAndFound).mockResolvedValue(
+        lostAndFound as any
+      );
+      vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
+
+      const result = await restoreResource(mockResourceId, mockUserId);
+
+      expect(result).toEqual({ message: 'Restored to lost+found' });
+      expect(ResourceModel.bulkWrite).toHaveBeenCalledWith([
+        {
+          updateOne: {
+            filter: { _id: file._id },
+            update: {
+              $set: {
+                deleted: false,
+                deletedAt: null,
+                path: 'my-files/lost+found/(1) orphan.pdf',
+                parent: mockLostAndFoundId,
+                name: '(1) orphan.pdf',
+              },
+            },
+          },
+        },
+      ]);
+    });
   });
 
   describe('restoreAllResources - Basic functionality', () => {

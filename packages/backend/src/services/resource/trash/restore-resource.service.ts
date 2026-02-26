@@ -28,11 +28,11 @@ const hasConflict = async (path: string, userId: PrimaryId) => {
   });
 };
 
-const withIndexedSuffix = (name: string, index: number) => {
-  const suffix = ` (${index})`;
-  const maxBaseLength = Math.max(1, MAX_NAME_LENGTH - suffix.length);
+const withIndexedPrefix = (name: string, index: number) => {
+  const prefix = `(${index}) `;
+  const maxBaseLength = Math.max(1, MAX_NAME_LENGTH - prefix.length);
   const base = name.slice(0, maxBaseLength).trimEnd();
-  return `${base}${suffix}`;
+  return `${prefix}${base}`;
 };
 
 const shouldRestoreAsLostAndFound = async (
@@ -160,7 +160,7 @@ export const restoreResource = async (
     let index = 1;
 
     while (await hasConflict(newBasePath, userId)) {
-      restoredName = withIndexedSuffix(resource.name, index);
+      restoredName = withIndexedPrefix(resource.name, index);
       newBasePath = normalizeSlashes(`${lostAndFound.path}/${restoredName}`);
       index++;
     }
