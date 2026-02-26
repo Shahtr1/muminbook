@@ -19,11 +19,7 @@ import ResourceModel from '../../../../models/resource.model.js';
 import ResourceType from '../../../../constants/types/resourceType.js';
 import { PrimaryId } from '../../../../constants/ids.js';
 import AppError from '../../../../utils/AppError.js';
-import {
-  NOT_FOUND,
-  BAD_REQUEST,
-  CONFLICT,
-} from '../../../../constants/http.js';
+import { NOT_FOUND, BAD_REQUEST } from '../../../../constants/http.js';
 
 vi.mock('../../../../models/resource.model', () => {
   const MockResourceModel: any = {
@@ -171,8 +167,9 @@ describe('Restore Resource Service', () => {
       ]);
     });
 
-    it('should throw CONFLICT when file already exists at destination', async () => {
+    it('should auto-rename file with (1) when destination name already exists', async () => {
       const file = createMockResource({
+        name: 'report.pdf',
         path: '/documents/report.pdf',
         type: ResourceType.File,
         deleted: true,
@@ -194,19 +191,37 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(file as any) // Get resource
         .mockResolvedValueOnce(parentFolder as any) // Parent chain check
         .mockResolvedValueOnce(parentFolder as any) // Check parent exists
-        .mockResolvedValueOnce(conflictingFile as any) // First hasConflict check
-        .mockResolvedValueOnce(conflictingFile as any); // Second hasConflict check
+        .mockResolvedValueOnce(conflictingFile as any) // Original path conflict
+        .mockResolvedValueOnce(null); // No conflict on "(1)" candidate
+      vi.mocked(ResourceModel.find).mockResolvedValue([
+        { name: 'report.pdf' },
+      ] as any);
+      vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
-      await expect(
-        restoreResource(mockResourceId, mockUserId)
-      ).rejects.toMatchObject({
-        statusCode: CONFLICT,
-        message: 'A file with this name already exists in the destination path',
-      });
+      const result = await restoreResource(mockResourceId, mockUserId);
+
+      expect(result).toEqual({ message: 'Restored successfully' });
+      expect(ResourceModel.bulkWrite).toHaveBeenCalledWith([
+        {
+          updateOne: {
+            filter: { _id: file._id },
+            update: {
+              $set: {
+                deleted: false,
+                deletedAt: null,
+                path: '/documents/(1) report.pdf',
+                parent: mockParentId,
+                name: '(1) report.pdf',
+              },
+            },
+          },
+        },
+      ]);
     });
 
-    it('should throw CONFLICT with correct message for folder conflict', async () => {
+    it('should auto-rename folder with (1) when destination name already exists', async () => {
       const folder = createMockResource({
+        name: 'folder',
         path: '/documents/folder',
         type: ResourceType.Folder,
         deleted: true,
@@ -228,16 +243,33 @@ describe('Restore Resource Service', () => {
         .mockResolvedValueOnce(folder as any)
         .mockResolvedValueOnce(parentFolder as any)
         .mockResolvedValueOnce(parentFolder as any)
-        .mockResolvedValueOnce(conflictingFolder as any)
-        .mockResolvedValueOnce(conflictingFolder as any);
+        .mockResolvedValueOnce(conflictingFolder as any) // Original path conflict
+        .mockResolvedValueOnce(null); // No conflict on "(1)" candidate
+      vi.mocked(ResourceModel.find).mockResolvedValue([
+        { name: 'folder' },
+      ] as any);
+      vi.mocked(findDescendantsByPath).mockResolvedValue([]);
+      vi.mocked(ResourceModel.bulkWrite).mockResolvedValue({} as any);
 
-      await expect(
-        restoreResource(mockResourceId, mockUserId)
-      ).rejects.toMatchObject({
-        statusCode: CONFLICT,
-        message:
-          'A folder with this name already exists in the destination path',
-      });
+      const result = await restoreResource(mockResourceId, mockUserId);
+
+      expect(result).toEqual({ message: 'Restored successfully' });
+      expect(ResourceModel.bulkWrite).toHaveBeenCalledWith([
+        {
+          updateOne: {
+            filter: { _id: folder._id },
+            update: {
+              $set: {
+                deleted: false,
+                deletedAt: null,
+                path: '/documents/(1) folder',
+                parent: mockParentId,
+                name: '(1) folder',
+              },
+            },
+          },
+        },
+      ]);
     });
 
     it('should restore empty folder to original location', async () => {
@@ -611,20 +643,18 @@ describe('Restore Resource Service', () => {
   });
 
   describe('restoreAllResources - Basic functionality', () => {
-    it('should throw NOT_FOUND when no trashed resources exist', async () => {
+    it('should return success no-op when no trashed resources exist', async () => {
       vi.mocked(ResourceModel.find).mockResolvedValue([]);
 
-      await expect(restoreAllResources(mockUserId)).rejects.toThrow(AppError);
-
-      await expect(restoreAllResources(mockUserId)).rejects.toMatchObject({
-        statusCode: NOT_FOUND,
-        message: 'No trashed resources found',
+      await expect(restoreAllResources(mockUserId)).resolves.toEqual({
+        message: 'All possible resources restored from trash',
       });
 
       expect(ResourceModel.find).toHaveBeenCalledWith({
         userId: mockUserId,
         deleted: true,
       });
+      expect(ResourceModel.bulkWrite).not.toHaveBeenCalled();
     });
 
     it('should restore all trashed resources when no conflicts exist', async () => {

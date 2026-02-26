@@ -39,19 +39,20 @@ const getParentPath = (path: string) => path.split('/').slice(0, -1).join('/');
 
 const getNextRestoreName = async (
   originalName: string,
+  originalPath: string,
   parentPath: string,
   userId: PrimaryId
 ) => {
-  const originalPath = normalizeSlashes(`${parentPath}/${originalName}`);
   const hasOriginalConflict = await hasConflict(originalPath, userId);
-  if (!hasOriginalConflict) return originalName;
+  if (!hasOriginalConflict) return null;
 
   const escapedParentPath = parentPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const siblings = await ResourceModel.find({
-    userId,
-    deleted: false,
-    path: new RegExp(`^${escapedParentPath}/[^/]+$`),
-  }).select('name');
+  const siblings =
+    (await ResourceModel.find({
+      userId,
+      deleted: false,
+      path: new RegExp(`^${escapedParentPath}/[^/]+$`),
+    })) ?? [];
 
   const siblingNames = new Set(siblings.map((s: any) => s.name));
   let maxIndex = 0;
@@ -228,17 +229,20 @@ export const restoreResource = async (
   const parentPath = getParentPath(resource.path);
   const restoredName = await getNextRestoreName(
     resource.name,
+    resource.path,
     parentPath,
     userId
   );
-  const restoredPath = normalizeSlashes(`${parentPath}/${restoredName}`);
+  const restoredPath = restoredName
+    ? normalizeSlashes(`${parentPath}/${restoredName}`)
+    : resource.path;
 
   const updates = await buildRestoreUpdates({
     resource,
     userId,
     newBasePath: restoredPath,
     newParentId: resource.parent as PrimaryId,
-    newName: restoredName !== resource.name ? restoredName : undefined,
+    newName: restoredName ?? undefined,
   });
 
   await ResourceModel.bulkWrite(updates);
