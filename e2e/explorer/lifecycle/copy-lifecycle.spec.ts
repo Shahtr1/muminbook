@@ -9,6 +9,39 @@ const withIndexPrefix = (name: string, index: number) => {
   return `${prefix}${name.slice(0, maxBaseLength).trimEnd()}`;
 };
 
+const copyNTimes = async (
+  page: any,
+  item: any,
+  destinationPath: string,
+  n: number
+) => {
+  for (let i = 0; i < n; i++) {
+    await explorer.edit.copy(page, item, destinationPath);
+  }
+};
+
+const expectIndexedFoldersVisible = async (
+  page: any,
+  base: string,
+  indexes: number[]
+) => {
+  for (const i of indexes) {
+    await explorer.expect.folderVisible(page, `(${i}) ${base}`);
+  }
+};
+
+const expectIndexedFilesVisible = async (
+  page: any,
+  base: string,
+  indexes: number[]
+) => {
+  for (const i of indexes) {
+    await expect(
+      explorer.locators.file(page, `(${i}) ${base}.txt`)
+    ).toBeVisible();
+  }
+};
+
 const getTrashItems = async (page: any) => {
   const res = await page.request.get(`${API_BASE}/resources/trash`);
   expect(res.ok()).toBeTruthy();
@@ -145,25 +178,9 @@ test.describe('Copy Explorer Lifecycle', () => {
     await explorer.create.folder(page, base);
     await explorer.search.set(page, base);
 
-    await explorer.edit.copy(
-      page,
-      explorer.locators.folder(page, base),
-      'my-files'
-    );
-    await explorer.edit.copy(
-      page,
-      explorer.locators.folder(page, base),
-      'my-files'
-    );
-    await explorer.edit.copy(
-      page,
-      explorer.locators.folder(page, base),
-      'my-files'
-    );
+    await copyNTimes(page, explorer.locators.folder(page, base), 'my-files', 3);
 
-    await explorer.expect.folderVisible(page, `(1) ${base}`);
-    await explorer.expect.folderVisible(page, `(2) ${base}`);
-    await explorer.expect.folderVisible(page, `(3) ${base}`);
+    await expectIndexedFoldersVisible(page, base, [1, 2, 3]);
   });
 
   test('copy file into same directory → auto-rename with (1) prefix → (2) prefix → (3) prefix', async ({
@@ -175,25 +192,14 @@ test.describe('Copy Explorer Lifecycle', () => {
     await explorer.create.file(page, base);
     await explorer.search.set(page, base);
 
-    await explorer.edit.copy(
+    await copyNTimes(
       page,
       explorer.locators.file(page, `${base}.txt`),
-      'my-files'
-    );
-    await explorer.edit.copy(
-      page,
-      explorer.locators.file(page, `${base}.txt`),
-      'my-files'
-    );
-    await explorer.edit.copy(
-      page,
-      explorer.locators.file(page, `${base}.txt`),
-      'my-files'
+      'my-files',
+      3
     );
 
-    await expect(explorer.locators.file(page, `(1) ${base}.txt`)).toBeVisible();
-    await expect(explorer.locators.file(page, `(2) ${base}.txt`)).toBeVisible();
-    await expect(explorer.locators.file(page, `(3) ${base}.txt`)).toBeVisible();
+    await expectIndexedFilesVisible(page, base, [1, 2, 3]);
   });
 
   test('copy item at max length boundary → base truncated to fit (1) prefix', async ({
@@ -223,19 +229,9 @@ test.describe('Copy Explorer Lifecycle', () => {
     await explorer.create.folder(page, base);
     await explorer.search.set(page, base);
 
-    await explorer.edit.copy(
-      page,
-      explorer.locators.folder(page, base),
-      'my-files'
-    );
-    await explorer.edit.copy(
-      page,
-      explorer.locators.folder(page, base),
-      'my-files'
-    );
+    await copyNTimes(page, explorer.locators.folder(page, base), 'my-files', 2);
 
-    await explorer.expect.folderVisible(page, `(1) ${base}`);
-    await explorer.expect.folderVisible(page, `(2) ${base}`);
+    await expectIndexedFoldersVisible(page, base, [1, 2]);
   });
 
   test('copy item respects normalization before conflict detection', async ({
@@ -269,21 +265,7 @@ test.describe('Copy Explorer Lifecycle', () => {
     await explorer.create.folder(page, base);
     await explorer.search.set(page, base);
 
-    await explorer.edit.copy(
-      page,
-      explorer.locators.folder(page, base),
-      'my-files'
-    );
-    await explorer.edit.copy(
-      page,
-      explorer.locators.folder(page, base),
-      'my-files'
-    );
-    await explorer.edit.copy(
-      page,
-      explorer.locators.folder(page, base),
-      'my-files'
-    );
+    await copyNTimes(page, explorer.locators.folder(page, base), 'my-files', 3);
 
     await explorer.expect.folderVisible(page, withIndexPrefix(base, 1));
     await explorer.expect.folderVisible(page, withIndexPrefix(base, 2));
