@@ -21,7 +21,8 @@ async function gotoWithRetry(page: Page, url: string) {
     } catch (error: any) {
       const message = String(error?.message ?? '');
       const retryable =
-        message.includes('ERR_ABORTED') || message.includes('frame was detached');
+        message.includes('ERR_ABORTED') ||
+        message.includes('frame was detached');
       if (!retryable || attempt === 2) throw error;
       await page.waitForTimeout(250);
     }
@@ -62,7 +63,9 @@ const locators = {
 
   searchInput(page: Page): Locator {
     return page
-      .locator('[data-testid="explorer-search-input"], input[placeholder="Search"]')
+      .locator(
+        '[data-testid="explorer-search-input"], input[placeholder="Search"]'
+      )
       .last();
   },
 };
@@ -126,7 +129,10 @@ async function openItemMenu(item: Locator) {
 
   if ((await blockingModal.count()) > 0) {
     await page.keyboard.press('Escape').catch(() => {});
-    await blockingModal.first().waitFor({ state: 'hidden', timeout: 1500 }).catch(() => {});
+    await blockingModal
+      .first()
+      .waitFor({ state: 'hidden', timeout: 1500 })
+      .catch(() => {});
   }
 
   const menuButton = item.getByTestId('item-toolbar-menu').first();

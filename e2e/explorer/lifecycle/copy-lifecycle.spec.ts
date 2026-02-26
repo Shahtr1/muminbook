@@ -24,7 +24,9 @@ const restoreTrashedByName = async (
   const match = items.find((r: any) => r.name === name && r.type === type);
   expect(match).toBeTruthy();
 
-  const res = await page.request.patch(`${API_BASE}/resources/${match._id}/restore`);
+  const res = await page.request.patch(
+    `${API_BASE}/resources/${match._id}/restore`
+  );
   expect(res.ok()).toBeTruthy();
 };
 
