@@ -66,7 +66,10 @@ test.describe('Parent-Child Trash Semantics', () => {
     await explorer.create.file(page, childFile);
     await explorer.expect.fileVisible(page, childFile);
 
-    await explorer.trash.move(page, explorer.locators.file(page, childFileWithExt));
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, childFileWithExt)
+    );
     await explorer.expect.fileNotVisible(page, childFile);
 
     await explorer.navigation.openReadingRoot(page);

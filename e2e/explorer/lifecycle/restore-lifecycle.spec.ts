@@ -342,9 +342,24 @@ test.describe('Hierarchy Restore Semantics', () => {
     const young = `folderYoungChild-${id}`;
 
     const parentRes = await createResource(page, 'folder', parent, 'my-files');
-    const fileRes = await createResource(page, 'file', fileBase, parentRes.path);
-    const elderRes = await createResource(page, 'folder', elder, parentRes.path);
-    const youngRes = await createResource(page, 'folder', young, parentRes.path);
+    const fileRes = await createResource(
+      page,
+      'file',
+      fileBase,
+      parentRes.path
+    );
+    const elderRes = await createResource(
+      page,
+      'folder',
+      elder,
+      parentRes.path
+    );
+    const youngRes = await createResource(
+      page,
+      'folder',
+      young,
+      parentRes.path
+    );
 
     // 1) Trash parent: all three children become trashed.
     await moveToTrashById(page, parentRes._id);
@@ -505,8 +520,7 @@ test.describe('Hierarchy Restore Semantics', () => {
     for (const item of rootChildren) {
       if (
         (item.type === 'folder' && item.name === parent) ||
-        (item.type === 'file' &&
-          (item.name === file1 || item.name === file2))
+        (item.type === 'file' && (item.name === file1 || item.name === file2))
       ) {
         await deleteById(page, item._id);
       }
@@ -515,8 +529,7 @@ test.describe('Hierarchy Restore Semantics', () => {
     for (const item of trashBefore) {
       if (
         (item.type === 'folder' && item.name === parent) ||
-        (item.type === 'file' &&
-          (item.name === file1 || item.name === file2))
+        (item.type === 'file' && (item.name === file1 || item.name === file2))
       ) {
         await deleteById(page, item._id);
       }

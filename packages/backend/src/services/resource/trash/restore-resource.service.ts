@@ -226,7 +226,11 @@ export const restoreResource = async (
   }
 
   const parentPath = getParentPath(resource.path);
-  const restoredName = await getNextRestoreName(resource.name, parentPath, userId);
+  const restoredName = await getNextRestoreName(
+    resource.name,
+    parentPath,
+    userId
+  );
   const restoredPath = normalizeSlashes(`${parentPath}/${restoredName}`);
 
   const updates = await buildRestoreUpdates({
