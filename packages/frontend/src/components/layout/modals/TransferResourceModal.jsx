@@ -79,6 +79,7 @@ const TransferResourceModal = ({
         colorScheme="blue"
         onClick={handleSave}
         size={{ base: 'sm', sm: 'md' }}
+        data-testid={isCopy ? 'transfer-copy-submit' : 'transfer-move-submit'}
       >
         {isCopy ? 'Copy' : 'Move'}
       </Button>
@@ -95,6 +96,7 @@ const TransferResourceModal = ({
       <Flex flexDir="column" w="100%" gap={2}>
         <FormControl id="destinationPath" isInvalid={!!errors?.destinationPath}>
           <Input
+            data-testid="transfer-destination-input"
             autoFocus
             value={destinationPath}
             onChange={(e) => {

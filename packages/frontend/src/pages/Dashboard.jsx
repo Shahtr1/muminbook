@@ -374,8 +374,6 @@ export const Dashboard = () => {
             align="center"
             justify="space-between"
             h="100%"
-            onClick={() => navigate('/reading/my-files')}
-            cursor="pointer"
           >
             <Text
               fontSize="10px"
@@ -392,9 +390,11 @@ export const Dashboard = () => {
             ) : (
               <Folder
                 dimensions={dimensions}
-                resource={{ empty: emptyMyFiles }}
+                resource={{ name: 'My Files', empty: emptyMyFiles }}
+                isMainEntry
                 bgColor="unset"
                 shadow="none"
+                showLabel={false}
               />
             )}
           </Flex>

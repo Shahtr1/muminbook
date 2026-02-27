@@ -33,6 +33,8 @@ export const File = ({
   return (
     <Flex
       data-testid="file-item"
+      data-resource-id={resource.id ?? resource._id}
+      data-resource-name={resource.name}
       width={width}
       cursor="pointer"
       position="relative"

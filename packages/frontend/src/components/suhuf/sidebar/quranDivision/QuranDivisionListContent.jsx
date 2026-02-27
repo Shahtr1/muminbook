@@ -14,7 +14,9 @@ import { VscFilterFilled } from 'react-icons/vsc';
 
 import { XSearch } from '@/components/layout/x/XSearch.jsx';
 import { useSuhufWorkspaceContext } from '@/context/SuhufWorkspaceContext.jsx';
-import QuranDivisionType from '@/constants/QuranDivisionType.js';
+import QuranDivisionType, {
+  QURAN_DIVISION_LABELS,
+} from '@/constants/QuranDivisionType.js';
 import { QuranDivisionFilter } from '@/components/suhuf/sidebar/QuranDivisionFilter.jsx';
 import { useClickOutside } from '@/hooks/common/useClickOutside.js';
 import { useFloatingPosition } from '@/hooks/common/useFloatingPosition.js';
@@ -22,6 +24,7 @@ import JuzRow from '@/components/suhuf/sidebar/quranDivision/JuzRow.jsx';
 import SurahRow from '@/components/suhuf/sidebar/quranDivision/SurahRow.jsx';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 import { OtherDivisionRow } from '@/components/suhuf/sidebar/quranDivision/OtherDivisionRow.jsx';
+import { NoMatchingResults } from '@/components/layout/NoMatchingResults.jsx';
 
 export const QuranDivisionListContent = ({ panel }) => {
   /* =========================================================
@@ -63,7 +66,7 @@ export const QuranDivisionListContent = ({ panel }) => {
      COLOR MODES
      ========================================================= */
 
-  const { border, surface, icon, text, invert } = useSemanticColors();
+  const { border, surface, icon } = useSemanticColors();
 
   const bgContentColor = surface.content;
   const infoColor = icon.default;
@@ -92,6 +95,8 @@ export const QuranDivisionListContent = ({ panel }) => {
   const divisionNumber = currentPanel?.division?.divisionNumber || 1;
   const divisionType =
     currentPanel?.division?.divisionType || QuranDivisionType.Surah;
+  const selectedDivisionLabel =
+    QURAN_DIVISION_LABELS[divisionType] || 'Quran division';
 
   /* =========================================================
      SELECT DATASET BASED ON DIVISION TYPE
@@ -124,39 +129,11 @@ export const QuranDivisionListContent = ({ panel }) => {
   const listRef = useRef(null);
 
   /* =========================================================
-     SCROLL EFFECT
-     ========================================================= */
-
-  /**
-   * This effect scrolls to the currently active division.
-   *
-   * It runs when:
-   * - divisionNumber changes
-   * - divisionType changes
-   * - items array changes
-   * - listHeight becomes available
-   *
-   * Guards prevent premature scrolling.
-   */
-  useEffect(() => {
-    if (!listRef.current) return; // List not mounted yet
-    if (!items.length) return; // No data yet
-    if (!listHeight) return; // Height not measured yet
-
-    const index = items.findIndex(
-      (i) => String(i.uuid) === String(divisionNumber)
-    );
-
-    if (index >= 0) {
-      listRef.current.scrollToItem(index, 'smart');
-    }
-  }, [divisionNumber, divisionType, items, listHeight]);
-
-  /* =========================================================
      FILTER STATE
      ========================================================= */
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const filterButtonRef = useRef(null);
   const filterPanelRef = useRef(null);
@@ -199,7 +176,60 @@ export const QuranDivisionListContent = ({ panel }) => {
 
     updatePanels(newPanels);
     setIsFilterOpen(false);
+    setSearchQuery('');
   };
+
+  const filteredItems = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return items;
+
+    return items.filter((item) => {
+      const searchableText = [
+        item?.uuid,
+        item?.number,
+        item?.transliteration,
+        item?.name,
+        item?.meaning,
+        item?.label,
+        item?.revelationPlace,
+        item?.totalAyat,
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+
+      return searchableText.includes(query);
+    });
+  }, [items, searchQuery]);
+
+  /* =========================================================
+     SCROLL EFFECT
+     ========================================================= */
+
+  /**
+   * This effect scrolls to the currently active division.
+   *
+   * It runs when:
+   * - divisionNumber changes
+   * - divisionType changes
+   * - filtered items change
+   * - listHeight becomes available
+   *
+   * Guards prevent premature scrolling.
+   */
+  useEffect(() => {
+    if (!listRef.current) return; // List not mounted yet
+    if (!filteredItems.length) return; // No data yet
+    if (!listHeight) return; // Height not measured yet
+
+    const index = filteredItems.findIndex(
+      (i) => String(i.uuid) === String(divisionNumber)
+    );
+
+    if (index >= 0) {
+      listRef.current.scrollToItem(index, 'smart');
+    }
+  }, [divisionNumber, divisionType, filteredItems, listHeight]);
 
   /* =========================================================
      ROW RENDERER (Virtualized)
@@ -211,7 +241,7 @@ export const QuranDivisionListContent = ({ panel }) => {
    */
   const Row = useCallback(
     ({ index, style }) => {
-      const item = items[index];
+      const item = filteredItems[index];
       if (!item) return null;
 
       const isSelected = String(item.uuid) === String(divisionNumber);
@@ -277,7 +307,7 @@ export const QuranDivisionListContent = ({ panel }) => {
       );
     },
     [
-      items,
+      filteredItems,
       divisionNumber,
       divisionType,
       panels,
@@ -305,6 +335,9 @@ export const QuranDivisionListContent = ({ panel }) => {
             size="xs"
             expand={false}
             placeholder="Search"
+            value={searchQuery}
+            onChange={setSearchQuery}
+            onClear={() => setSearchQuery('')}
           />
 
           <Box
@@ -333,15 +366,28 @@ export const QuranDivisionListContent = ({ panel }) => {
               }
 
               return (
-                <List
-                  ref={listRef}
-                  height={height}
-                  width={width}
-                  itemCount={items.length}
-                  itemSize={ITEM_SIZE}
-                >
-                  {Row}
-                </List>
+                <>
+                  {filteredItems.length === 0 && searchQuery.trim() ? (
+                    <Flex h={height} w={width} align="center" justify="center">
+                      <NoMatchingResults
+                        height="100%"
+                        width="100%"
+                        title={`No matching ${selectedDivisionLabel}`}
+                        fontSize="sm"
+                      />
+                    </Flex>
+                  ) : (
+                    <List
+                      ref={listRef}
+                      height={height}
+                      width={width}
+                      itemCount={filteredItems.length}
+                      itemSize={ITEM_SIZE}
+                    >
+                      {Row}
+                    </List>
+                  )}
+                </>
               );
             }}
           </AutoSizer>

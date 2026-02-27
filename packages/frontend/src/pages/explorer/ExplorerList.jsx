@@ -12,7 +12,6 @@ import { useReadings } from '@/hooks/reading/useReadings.js';
 import Book from '@/components/explorer/Book/Book.jsx';
 import { isWithinLastDays } from '@muminbook/shared';
 import { Folder } from '@/components/explorer/components/Folder.jsx';
-import { useNavigate } from 'react-router-dom';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
 
 export const ExplorerList = () => {
@@ -33,8 +32,6 @@ export const ExplorerList = () => {
     isPending: isReadingPending,
     isError: isReadingError,
   } = useReadings();
-
-  const navigate = useNavigate();
 
   const theme = useTheme();
 
@@ -103,12 +100,12 @@ export const ExplorerList = () => {
         borderBottomRadius={{ base: 'none' }}
         borderStyle="solid"
         borderColor={border.default}
-        onClick={() => navigate('my-files')}
       >
         <Folder
           data-testid="explorer-reading-folder"
           dimensions="90px"
-          resource={{ empty: emptyMyFiles }}
+          resource={{ name: 'My Files', empty: emptyMyFiles }}
+          isMainEntry
           bgColor="unset"
           shadow="none"
         />

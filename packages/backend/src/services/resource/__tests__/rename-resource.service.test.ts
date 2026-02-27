@@ -111,7 +111,7 @@ describe('renameResource service', () => {
     expect(mockedResourceModel.bulkWrite).toHaveBeenCalledTimes(1);
     const ops = (mockedResourceModel.bulkWrite as any).mock.calls[0][0];
     expect(ops).toHaveLength(1);
-    expect(ops[0].updateOne.update.$set.path).toBe('/a/new');
+    expect(ops[0].updateOne.update.$set.path).toBe('/a/new.txt');
   });
 
   it('renames a folder and updates descendants', async () => {

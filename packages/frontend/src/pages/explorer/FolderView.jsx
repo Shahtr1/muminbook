@@ -6,7 +6,7 @@ import {
   Tooltip,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { useResources } from '@/hooks/explorer/useResources.js';
@@ -14,15 +14,17 @@ import { useTrashResource } from '@/hooks/explorer/trash/useTrashResource.js';
 import { useMoveToTrashResource } from '@/hooks/explorer/trash/useMoveToTrashResource.js';
 import { useRestoreFromTrashResource } from '@/hooks/explorer/trash/useRestoreFromTrashResource.js';
 import { useDeleteResource } from '@/hooks/explorer/trash/useDeleteResource.js';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import RenameResourceModal from '@/components/layout/modals/RenameResourceModal.jsx';
 import TransferResourceModal from '@/components/layout/modals/TransferResourceModal.jsx';
 import { ResourceItem } from '@/components/explorer/components/ResourceItem.jsx';
 import { useXModal } from '@/context/ModalContext.jsx';
+import { NoMatchingResults } from '@/components/layout/NoMatchingResults.jsx';
 
 export const FolderView = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const { confirm } = useXModal();
 
@@ -44,6 +46,20 @@ export const FolderView = () => {
   const { resources, isPending, isError } = isTrashView
     ? useTrashResource(folderPath, originalPath)
     : useResources(folderPath);
+  const searchQuery = (searchParams.get('q') || '').trim().toLowerCase();
+
+  const filteredResources = useMemo(() => {
+    if (!searchQuery) return resources;
+
+    return resources.filter((resource) => {
+      const searchableText = [resource?.name, resource?.path, resource?.type]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+
+      return searchableText.includes(searchQuery);
+    });
+  }, [resources, searchQuery]);
 
   const [selectedResource, setSelectedResource] = useState(null);
   const [transferMode, setTransferMode] = useState(null);
@@ -136,64 +152,76 @@ export const FolderView = () => {
           </Flex>
         )}
 
-        <Flex flexWrap="wrap" gap={{ base: 5, sm: 12 }} p="10px 25px">
-          {resources.map((res) => {
-            const pathWithoutMyFiles = res.path?.replace(/^\/?my-files\//, '');
+        {searchQuery && filteredResources.length === 0 ? (
+          <NoMatchingResults
+            width="100%"
+            height="100%"
+            title="No matching files or folders"
+            description="Try a different name."
+          />
+        ) : (
+          <Flex flexWrap="wrap" gap={{ base: 5, sm: 12 }} p="10px 25px">
+            {filteredResources.map((res) => {
+              const pathWithoutMyFiles = res.path?.replace(
+                /^\/?my-files\//,
+                ''
+              );
 
-            if (
-              res.type === 'folder' &&
-              res.name === 'lost+found' &&
-              res.empty
-            ) {
-              return null;
-            }
+              if (
+                res.type === 'folder' &&
+                res.name === 'lost+found' &&
+                res.empty
+              ) {
+                return null;
+              }
 
-            return (
-              <Flex
-                flexDir="column"
-                key={res._id}
-                justify="center"
-                align="center"
-              >
-                <ResourceItem
+              return (
+                <Flex
+                  flexDir="column"
                   key={res._id}
-                  resource={{ ...res, id: res._id }}
-                  folderPath={folderPath}
-                  width={itemWidth}
-                  onClickFolder={() => {
-                    navigate(
-                      `/reading/${baseSegment}/${[
-                        ...pathSegments.slice(folderPathIndex + 1),
-                        encodeURIComponent(res.name),
-                      ].join('/')}`,
-                      isTrashView
-                        ? { state: { originalPath: res.path } }
-                        : undefined
-                    );
-                  }}
-                  {...commonHandlers}
-                />
-                {isTrashView && (
-                  <Tooltip
-                    label={pathWithoutMyFiles}
-                    hasArrow
-                    placement="bottom"
-                  >
-                    <Text
-                      fontSize={{ base: '9px', sm: '12px' }}
-                      maxW={itemWidth}
-                      overflowX="auto"
-                      whiteSpace="nowrap"
-                      pb={2}
+                  justify="center"
+                  align="center"
+                >
+                  <ResourceItem
+                    key={res._id}
+                    resource={{ ...res, id: res._id }}
+                    folderPath={folderPath}
+                    width={itemWidth}
+                    onClickFolder={() => {
+                      navigate(
+                        `/reading/${baseSegment}/${[
+                          ...pathSegments.slice(folderPathIndex + 1),
+                          encodeURIComponent(res.name),
+                        ].join('/')}`,
+                        isTrashView
+                          ? { state: { originalPath: res.path } }
+                          : undefined
+                      );
+                    }}
+                    {...commonHandlers}
+                  />
+                  {isTrashView && (
+                    <Tooltip
+                      label={pathWithoutMyFiles}
+                      hasArrow
+                      placement="bottom"
                     >
-                      {pathWithoutMyFiles}
-                    </Text>
-                  </Tooltip>
-                )}
-              </Flex>
-            );
-          })}
-        </Flex>
+                      <Text
+                        fontSize={{ base: '9px', sm: '12px' }}
+                        maxW={itemWidth}
+                        overflowX="auto"
+                        whiteSpace="nowrap"
+                        pb={2}
+                      >
+                        {pathWithoutMyFiles}
+                      </Text>
+                    </Tooltip>
+                  )}
+                </Flex>
+              );
+            })}
+          </Flex>
+        )}
       </Flex>
 
       {/* SINGLE GLOBAL MODALS */}

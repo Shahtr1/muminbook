@@ -16,21 +16,44 @@ export const generateCopyName = async (
   destinationPath: string,
   userId: PrimaryId
 ): Promise<string> => {
-  let copyName = resourceName;
+  const MAX_NAME_LENGTH = 100;
+  const originalPath = `${destinationPath}/${resourceName}`.replace(
+    /\/+/g,
+    '/'
+  );
+  const hasOriginalConflict = await ResourceModel.findOne({
+    path: originalPath,
+    userId,
+    deleted: false,
+  });
+
+  if (!hasOriginalConflict) {
+    return resourceName;
+  }
+
   let counter = 1;
 
-  while (
-    await ResourceModel.findOne({
+  const buildCandidate = (baseName: string, index: number) => {
+    const prefix = `(${index}) `;
+    const maxBaseLength = Math.max(1, MAX_NAME_LENGTH - prefix.length);
+    const truncated = baseName.slice(0, maxBaseLength).trimEnd();
+    return `${prefix}${truncated}`;
+  };
+
+  while (true) {
+    const copyName = buildCandidate(resourceName, counter);
+    const conflict = await ResourceModel.findOne({
       path: `${destinationPath}/${copyName}`.replace(/\/+/g, '/'),
       userId,
       deleted: false,
-    })
-  ) {
-    copyName = `${resourceName} (Copy${counter === 1 ? '' : ` ${counter}`})`;
+    });
+
+    if (!conflict) {
+      return copyName;
+    }
+
     counter++;
   }
-
-  return copyName;
 };
 
 export const buildClonedRootResource = (

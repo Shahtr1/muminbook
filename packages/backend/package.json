@@ -7,9 +7,9 @@
     "backend": "tsx watch --clear-screen=false src/index.ts",
     "build": "tsc && node copy-file.mjs",
     "start": "node dist/index.js",
-    "test": "vitest --run",
+    "test": "node scripts/run-vitest-sequential.mjs",
     "test:watch": "vitest --watch",
-    "test:coverage": "vitest --coverage --run"
+    "test:coverage": "vitest --coverage --run --maxWorkers=1"
   },
   "keywords": [],
   "author": "",

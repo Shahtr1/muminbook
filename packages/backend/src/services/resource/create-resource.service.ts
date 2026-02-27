@@ -17,9 +17,9 @@ export const createResource = async (
   data: CreateResourceParams,
   userId: PrimaryId
 ) => {
-  const { name, type, path, fileUrl, contentType } = data;
+  let { name, type, path, fileUrl, contentType } = data;
+
   const parentPath = decodeURIComponent(path);
-  const fullPath = normalizeSlashes(`${parentPath}/${name}`);
 
   const parentFolder = await ResourceModel.findOne({
     path: parentPath,
@@ -30,17 +30,28 @@ export const createResource = async (
 
   appAssert(parentFolder, NOT_FOUND, 'Parent folder not found');
 
-  const alreadyExists = await ResourceModel.findOne({
+  // Handle extension for file
+  if (type === ResourceType.File && !name.endsWith('.txt')) {
+    name = `${name}.txt`;
+  }
+
+  const fullPath = normalizeSlashes(`${parentPath}/${name}`);
+
+  // Conflict rule:
+  // Same name + same parent + same type → conflict
+  // Cross-type allowed
+  const existing = await ResourceModel.findOne({
+    parent: parentFolder._id,
     name,
-    path: fullPath,
+    type,
     userId,
     deleted: false,
   });
 
   appAssert(
-    !alreadyExists,
+    !existing,
     CONFLICT,
-    `A ${alreadyExists?.type === 'file' ? 'file' : 'folder'} with this name already exists`
+    `A ${type === ResourceType.File ? 'file' : 'folder'} with this name already exists`
   );
 
   const resource = await ResourceModel.create({

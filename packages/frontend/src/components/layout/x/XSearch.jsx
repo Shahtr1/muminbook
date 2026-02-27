@@ -1,5 +1,6 @@
 import {
   Flex,
+  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
@@ -7,7 +8,7 @@ import {
   Text,
   useTheme,
 } from '@chakra-ui/react';
-import { Search2Icon } from '@chakra-ui/icons';
+import { CloseIcon, Search2Icon } from '@chakra-ui/icons';
 import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useClickOutside } from '@/hooks/common/useClickOutside.js';
@@ -17,6 +18,10 @@ export const XSearch = ({
   focused = false,
   onFocusChange,
   onSearch,
+  onSubmit,
+  value,
+  onChange,
+  onClear,
   expand = false,
   display = 'flex',
   bgColor,
@@ -29,7 +34,11 @@ export const XSearch = ({
   debounceDelay = 300,
   placeholder = 'Search',
   showIcon = true,
+  showClearButton = true,
+  clearOnBlur = false,
   dropdownContent,
+  inputTestId,
+  clearButtonTestId,
 }) => {
   const { state, border } = useSemanticColors();
   const xColor = color || state.default;
@@ -42,12 +51,33 @@ export const XSearch = ({
   const windowMode = queryClient.getQueryData(['windowMode']) || false;
 
   const [isFocused, setIsFocused] = useState(focused);
-  const [search, setSearch] = useState('');
+  const [internalSearch, setInternalSearch] = useState('');
   const debounceRef = useRef(null);
 
   const borderColor = border.light;
+  const isControlled = value !== undefined;
+  const searchValue = isControlled ? value : internalSearch;
+  const normalizedSearchValue =
+    typeof searchValue === 'string' ? searchValue : '';
+  const shouldShowClearButton =
+    showClearButton && normalizedSearchValue.length > 0;
+  const clearButtonSize = size === 'xs' ? 'xs' : 'sm';
+  const clearIconSize = size === 'xs' ? 2 : 2.5;
 
-  // Sync focus prop
+  const setSearchValue = (nextValue) => {
+    if (!isControlled) {
+      setInternalSearch(nextValue);
+    }
+
+    onChange?.(nextValue);
+  };
+
+  const clearSearch = () => {
+    setSearchValue('');
+    onClear?.();
+  };
+
+  // Keep internal focus state in sync with controlled `focused` prop and focus the input after render.
   useEffect(() => {
     setIsFocused(focused);
     if (focused) {
@@ -58,47 +88,30 @@ export const XSearch = ({
   }, [focused]);
 
   useClickOutside([wrapperRef, dropdownRef], () => {
+    // Close when clicking outside; optionally clear the current value.
     setIsFocused(false);
-    setSearch('');
+    if (clearOnBlur) {
+      clearSearch();
+    }
     onFocusChange?.(false);
   });
 
   useEffect(() => {
     if (!onSearch) return;
 
+    // Debounce search callbacks so parent consumers are not called on every keystroke.
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
     debounceRef.current = setTimeout(() => {
-      onSearch(search);
+      onSearch(normalizedSearchValue);
     }, debounceDelay);
 
     return () => clearTimeout(debounceRef.current);
-  }, [search]);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        setIsFocused(false);
-        setSearch('');
-        onFocusChange?.(false);
-        searchInputRef.current?.blur();
-      }
-    };
-
-    const inputEl = searchInputRef.current;
-    if (inputEl) {
-      inputEl.addEventListener('keydown', handleKeyDown);
-    }
-
-    return () => {
-      if (inputEl) {
-        inputEl.removeEventListener('keydown', handleKeyDown);
-      }
-    };
-  }, [onFocusChange]);
+  }, [normalizedSearchValue, onSearch, debounceDelay]);
 
   useEffect(() => {
     if (variant !== 'dropdown' || !isNavSearch) return;
+    // Global shortcut for navbar dropdown search.
     const handleGlobalKeydown = (e) => {
       if (e.ctrlKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -115,11 +128,26 @@ export const XSearch = ({
     return () => {
       window.removeEventListener('keydown', handleGlobalKeydown);
     };
-  }, [onFocusChange]);
+  }, [variant, isNavSearch, onFocusChange]);
 
   const handleFocus = () => {
     setIsFocused(true);
     onFocusChange?.(true);
+  };
+
+  const handleInputKeyDown = (e) => {
+    // Support closing the search quickly with Escape while focused in the input.
+    if (e.key === 'Escape') {
+      setIsFocused(false);
+      clearSearch();
+      onFocusChange?.(false);
+      searchInputRef.current?.blur();
+      return;
+    }
+
+    if (e.key === 'Enter') {
+      onSubmit?.(normalizedSearchValue, e);
+    }
   };
 
   const dropdown = () => (
@@ -127,6 +155,7 @@ export const XSearch = ({
       id="dropdown"
       ref={dropdownRef}
       direction="column"
+      // Use fixed positioning for nav search so the dropdown anchors below the navbar.
       pos={isNavSearch ? 'fixed' : 'unset'}
       top={windowMode ? '30px' : `${theme.sizes['navbar-height']}`}
       left={isNavSearch ? '50%' : 'unset'}
@@ -141,6 +170,7 @@ export const XSearch = ({
       mt={1}
     >
       {dropdownContent ??
+        // Surface missing dropdown content only in development to avoid noisy production UI.
         (import.meta.env.VITE_NODE_ENV === 'development' && (
           <Text
             fontSize="xs"
@@ -172,17 +202,38 @@ export const XSearch = ({
       )}
       <Input
         ref={searchInputRef}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        data-testid={inputTestId}
+        value={normalizedSearchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
         placeholder={placeholder}
         size={size}
         onFocus={handleFocus}
+        onKeyDown={handleInputKeyDown}
         transition="all 0.3s ease-in-out"
         bgColor={bgColor}
         _placeholder={{ color: color }}
         width={width}
       />
-      {isNavSearch && !isFocused && (
+      {shouldShowClearButton && (
+        <InputRightElement
+          height="100%"
+          pr={1}
+          pointerEvents="auto"
+          w={size === 'xs' ? 7 : undefined}
+        >
+          <IconButton
+            data-testid={clearButtonTestId}
+            aria-label="Clear search"
+            icon={<CloseIcon boxSize={clearIconSize} />}
+            size={clearButtonSize}
+            variant="ghost"
+            minW={size === 'xs' ? 5 : undefined}
+            h={size === 'xs' ? 5 : undefined}
+            onClick={clearSearch}
+          />
+        </InputRightElement>
+      )}
+      {!shouldShowClearButton && isNavSearch && !isFocused && (
         <InputRightElement
           height="100%"
           pr={3}

@@ -9,24 +9,31 @@ import {
 import { XBreadCrumb } from '@/components/explorer/XBreadCrumb.jsx';
 import { ChevronDownIcon, ChevronUpIcon, StarIcon } from '@chakra-ui/icons';
 import { XSearch } from '@/components/layout/x/XSearch.jsx';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AddMenu } from '@/components/explorer/toolbar/AddMenu.jsx';
 import { useCreateResource } from '@/hooks/explorer/useCreateResource.js';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const ExplorerToolbar = () => {
   const { overlay } = useSemanticColors();
   const bgColor = useColorModeValue('bg.light', 'bg.dark');
   const location = useLocation();
+  const navigate = useNavigate();
   const boxShadowColor = overlay.subtle;
   const theme = useTheme();
   const headerRef = useRef(null);
+  // Keep the latest route path in a ref so delayed search callbacks
+  // (debounced in XSearch) never use an outdated folder path.
+  const latestPathRef = useRef(location.pathname);
 
   const navbarHeight = parseInt(theme.space['navbar-height']);
 
   const [isSticky, setIsSticky] = useState(false);
   const [showExtras, setShowExtras] = useState(false);
+  const [searchValue, setSearchValue] = useState(
+    new URLSearchParams(location.search).get('q') || ''
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +47,12 @@ export const ExplorerToolbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Sync both UI state and ref on every route/search change.
+    latestPathRef.current = location.pathname;
+    setSearchValue(new URLSearchParams(location.search).get('q') || '');
+  }, [location.pathname, location.search]);
+
   const isMyFilesView = location.pathname.includes('/reading/my-files');
   const isTrashView = location.pathname.includes('/reading/trash');
 
@@ -52,10 +65,34 @@ export const ExplorerToolbar = () => {
       path = path.replace('/reading/', '');
     }
 
-    if (type === 'file') name += '.txt';
-
     createResource({ name, type, path });
   };
+
+  const updateSearchQuery = useCallback(
+    (query) => {
+      // Always build the next URL from the current path (ref), not from a stale closure.
+      const pathname = latestPathRef.current;
+      const nextQuery = query.trim();
+      const nextParams = new URLSearchParams(window.location.search);
+
+      if (nextQuery) {
+        nextParams.set('q', nextQuery);
+      } else {
+        nextParams.delete('q');
+      }
+
+      const nextSearch = nextParams.toString();
+      // Explicitly navigate with pathname + query so replace does not rewrite the route.
+      navigate(
+        {
+          pathname,
+          search: nextSearch ? `?${nextSearch}` : '',
+        },
+        { replace: true }
+      );
+    },
+    [navigate]
+  );
 
   return (
     <Flex
@@ -121,11 +158,18 @@ export const ExplorerToolbar = () => {
         )}
 
         <XSearch
+          inputTestId="explorer-search-input"
+          clearButtonTestId="explorer-search-clear"
           bgColor={bgColor}
           size="xs"
           width={120}
           parentWidth="auto"
           expand={false}
+          value={searchValue}
+          onChange={setSearchValue}
+          onSearch={updateSearchQuery}
+          onSubmit={updateSearchQuery}
+          onClear={() => updateSearchQuery('')}
         />
       </Flex>
     </Flex>

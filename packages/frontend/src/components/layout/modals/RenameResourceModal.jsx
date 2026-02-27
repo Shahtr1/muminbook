@@ -43,7 +43,7 @@ const RenameResourceModal = ({ isOpen, onClose, id, type, name }) => {
       return;
     }
 
-    renameResource({ id, name: type === 'file' ? newName + '.txt' : newName });
+    renameResource({ id, name: newName });
     onClose();
   };
 

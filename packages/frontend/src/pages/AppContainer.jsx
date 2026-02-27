@@ -4,7 +4,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Navbar } from '@/components/layout/navbar/Navbar.jsx';
 import { Loader } from '@/components/layout/Loader.jsx';
 import { SomethingWentWrong } from '@/components/layout/SomethingWentWrong.jsx';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { WindowNavbar } from '@/components/layout/navbar/WindowNavbar.jsx';
 import { useWindowNavbar } from '@/context/WindowNavbarContext.jsx';
 import { WinManager } from '@/components/layout/WinManager.jsx';
@@ -20,6 +20,7 @@ export const AppContainer = () => {
   const theme = useTheme();
   const location = useLocation();
   const windowBgColor = surface.base;
+  const isWindowRoute = location.pathname.startsWith('/suhuf/');
 
   const [winManagerVisible, setWinManagerVisible] = useState(false);
   const [handleWindowClose, setHandleWindowClose] = useState(null);
@@ -29,15 +30,14 @@ export const AppContainer = () => {
     updateNavigationPath(location.pathname);
   }, [location.pathname]);
 
+  useEffect(() => {
+    // Keep window mode in sync with route so we do not flicker while Suhuf data is loading.
+    queryClient.setQueryData(['windowMode'], isWindowRoute);
+  }, [isWindowRoute, queryClient]);
+
   const winManagerHeight = winManagerVisible
     ? parseInt(theme.space['win-manager-height'])
     : 0;
-
-  const { data: windowMode } = useQuery({
-    queryKey: ['windowMode'],
-    queryFn: () => queryClient.getQueryData(['windowMode']) || false,
-    staleTime: 0,
-  });
 
   if (isError) return <SomethingWentWrong height="100dvh" />;
   if (isLoading) return <Loader height="100dvh" />;
@@ -48,16 +48,16 @@ export const AppContainer = () => {
       minH="100dvh"
       h="100dvh"
       overflow="hidden"
-      backgroundColor={windowMode ? windowBgColor : 'unset'}
+      backgroundColor={isWindowRoute ? windowBgColor : 'unset'}
     >
       <Flex
         direction="column"
         minH={`calc(100dvh - ${winManagerHeight}px)`}
         h={`calc(100dvh - ${winManagerHeight}px)`}
         overflow="auto"
-        pt={windowMode ? undefined : 'navbar-height'}
+        pt={isWindowRoute ? undefined : 'navbar-height'}
       >
-        {windowMode ? (
+        {isWindowRoute ? (
           <WindowNavbar
             onClose={(id) => {
               setHandleWindowClose(id);

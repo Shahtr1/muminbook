@@ -34,12 +34,10 @@ export const AddMenu = ({ onCreate, ...rest }) => {
   };
 
   const handleCreate = () => {
-    if (!inputValue.trim()) return;
-
     if (onCreate) {
       onCreate({
         type: showFileInput ? 'file' : 'folder',
-        name: inputValue.trim(),
+        name: inputValue,
       });
     }
 

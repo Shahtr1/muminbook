@@ -54,7 +54,7 @@ describe('Copy Helpers', () => {
       });
     });
 
-    it('should append (Copy) when single conflict exists', async () => {
+    it('should prefix (1) when single conflict exists', async () => {
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce({ name: 'MyDocument' } as any) // First call finds conflict
         .mockResolvedValueOnce(null); // Second call no conflict
@@ -65,11 +65,11 @@ describe('Copy Helpers', () => {
         mockUserId
       );
 
-      expect(result).toBe('MyDocument (Copy)');
+      expect(result).toBe('(1) MyDocument');
       expect(ResourceModel.findOne).toHaveBeenCalledTimes(2);
     });
 
-    it('should append (Copy 2) when two conflicts exist', async () => {
+    it('should prefix (2) when two conflicts exist', async () => {
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce({ name: 'MyDocument' } as any)
         .mockResolvedValueOnce({ name: 'MyDocument (Copy)' } as any)
@@ -81,7 +81,7 @@ describe('Copy Helpers', () => {
         mockUserId
       );
 
-      expect(result).toBe('MyDocument (Copy 2)');
+      expect(result).toBe('(2) MyDocument');
       expect(ResourceModel.findOne).toHaveBeenCalledTimes(3);
     });
 
@@ -99,7 +99,7 @@ describe('Copy Helpers', () => {
         mockUserId
       );
 
-      expect(result).toBe('MyDocument (Copy 4)');
+      expect(result).toBe('(4) MyDocument');
       expect(ResourceModel.findOne).toHaveBeenCalledTimes(5);
     });
 
@@ -175,7 +175,7 @@ describe('Copy Helpers', () => {
       expect(result).toBe('My Document (v1.0)');
     });
 
-    it('should handle base name with existing (Copy) pattern', async () => {
+    it('should handle base name with existing copy suffix pattern', async () => {
       vi.mocked(ResourceModel.findOne)
         .mockResolvedValueOnce({ name: 'File (Copy)' } as any)
         .mockResolvedValueOnce(null);
@@ -186,7 +186,7 @@ describe('Copy Helpers', () => {
         mockUserId
       );
 
-      expect(result).toBe('File (Copy) (Copy)');
+      expect(result).toBe('(1) File (Copy)');
     });
 
     it('should handle empty destination path', async () => {
