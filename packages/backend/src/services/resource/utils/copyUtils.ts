@@ -34,10 +34,10 @@ export const generateCopyName = async (
   let counter = 1;
 
   const buildCandidate = (baseName: string, index: number) => {
-    const suffix = ` (${index})`;
-    const maxBaseLength = Math.max(1, MAX_NAME_LENGTH - suffix.length);
+    const prefix = `(${index}) `;
+    const maxBaseLength = Math.max(1, MAX_NAME_LENGTH - prefix.length);
     const truncated = baseName.slice(0, maxBaseLength).trimEnd();
-    return `${truncated}${suffix}`;
+    return `${prefix}${truncated}`;
   };
 
   while (true) {

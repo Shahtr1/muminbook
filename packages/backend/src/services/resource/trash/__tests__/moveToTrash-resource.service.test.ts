@@ -162,6 +162,7 @@ describe('moveToTrashResource', () => {
         path: '/documents/report.pdf',
         userId: mockUserId,
         deleted: true,
+        _id: { $ne: file._id },
       });
     });
 
@@ -266,6 +267,7 @@ describe('moveToTrashResource', () => {
         path: '/documents/folder',
         userId: mockUserId,
         deleted: true,
+        _id: { $ne: folder._id },
       });
     });
   });
@@ -414,11 +416,13 @@ describe('moveToTrashResource', () => {
         path: '/documents',
         userId: mockUserId,
         deleted: true,
+        _id: { $ne: folder._id },
       });
       expect(ResourceModel.deleteMany).toHaveBeenCalledWith({
         path: '/documents/file.pdf',
         userId: mockUserId,
         deleted: true,
+        _id: { $ne: child._id },
       });
     });
 
@@ -556,6 +560,7 @@ describe('moveToTrashResource', () => {
         path: '/folder/file (with) [special] chars.pdf',
         userId: mockUserId,
         deleted: true,
+        _id: { $ne: file._id },
       });
     });
 
@@ -580,6 +585,7 @@ describe('moveToTrashResource', () => {
         path: longPath,
         userId: mockUserId,
         deleted: true,
+        _id: { $ne: file._id },
       });
     });
 

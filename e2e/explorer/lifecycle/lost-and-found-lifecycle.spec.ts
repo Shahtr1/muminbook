@@ -123,7 +123,8 @@ test.describe('Lost+Found Semantics', () => {
     const restoredFolder = lostItems.find(
       (r: any) =>
         r.type === 'folder' &&
-        (r.name === orphanFolder || r.name.startsWith(`${orphanFolder} (`))
+        (r.name === orphanFolder ||
+          (/^\(\d+\)\s/.test(r.name) && r.name.endsWith(` ${orphanFolder}`)))
     );
     expect(restoredFolder).toBeTruthy();
     await explorer.expect.folderVisible(page, restoredFolder.name);
@@ -176,7 +177,7 @@ test.describe('Lost+Found Semantics', () => {
     await page.goto('/reading/my-files/lost%2Bfound');
     await explorer.expect.fileVisible(page, fixedName);
     await expect(
-      explorer.locators.file(page, `${fixedName}.txt (1)`)
+      explorer.locators.file(page, `(1) ${fixedName}.txt`)
     ).toBeVisible();
   });
 

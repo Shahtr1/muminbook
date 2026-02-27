@@ -8,6 +8,10 @@ test.describe('Parent-Child Trash Semantics', () => {
     const encoded = segments.map((s) => encodeURIComponent(s)).join('/');
     await page.goto(`/reading/my-files/${encoded}`);
   };
+  const openTrashFolder = async (page: Page, ...segments: string[]) => {
+    const encoded = segments.map((s) => encodeURIComponent(s)).join('/');
+    await page.goto(`/reading/trash/${encoded}`);
+  };
 
   const getTrashItems = async (page: Page) => {
     const res = await page.request.get(`${API_BASE}/resources/trash`);
@@ -45,6 +49,51 @@ test.describe('Parent-Child Trash Semantics', () => {
 
     await explorer.navigation.openReadingRoot(page);
     await explorer.expect.folderVisible(page, parent);
+  });
+
+  test('child trashed first then parent trashed → child consolidates under trashed parent', async ({
+    page,
+  }) => {
+    const id = `${Date.now()}`;
+    const parent = `pct-chain-parent-${id}`;
+    const childFile = `pct-chain-child-${id}`;
+    const childFileWithExt = `${childFile}.txt`;
+
+    await explorer.navigation.openReadingRoot(page);
+    await explorer.create.folder(page, parent);
+
+    await openFolder(page, parent);
+    await explorer.create.file(page, childFile);
+    await explorer.expect.fileVisible(page, childFile);
+
+    await explorer.trash.move(
+      page,
+      explorer.locators.file(page, childFileWithExt)
+    );
+    await explorer.expect.fileNotVisible(page, childFile);
+
+    await explorer.navigation.openReadingRoot(page);
+    await explorer.expect.folderVisible(page, parent);
+    await explorer.trash.move(page, explorer.locators.folder(page, parent));
+    await explorer.expect.folderNotVisible(page, parent);
+
+    const trashItems = await getTrashItems(page);
+    const trashedParents = trashItems.filter(
+      (r: any) => r.name === parent && r.type === 'folder'
+    );
+    const trashedChildren = trashItems.filter(
+      (r: any) => r.name === childFileWithExt && r.type === 'file'
+    );
+
+    expect(trashedParents).toHaveLength(1);
+    expect(trashedChildren).toHaveLength(1);
+
+    await explorer.navigation.goToTrash(page);
+    await explorer.expect.folderVisible(page, parent);
+    await explorer.expect.fileNotVisible(page, childFile);
+
+    await openTrashFolder(page, parent);
+    await explorer.expect.fileVisible(page, childFile);
   });
 
   test('parent trash → children implicitly softDeleted', async ({ page }) => {

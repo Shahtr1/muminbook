@@ -74,33 +74,32 @@ export const ResourcesTrash = () => {
           <TrashSVG dimensions="50px" empty={emptyTrash} />
         </Flex>
 
-        {!emptyTrash && (
-          <Menu isLazy placement="right-start">
-            <MenuButton
-              as={Flex}
-              align="center"
-              cursor="pointer"
-              height="100%"
-              sx={{
-                '> span': {
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                },
-              }}
-            >
-              <HiDotsVertical fontSize="15px" />
-            </MenuButton>
+        <Menu isLazy placement="right-start">
+          <MenuButton
+            as={Flex}
+            align="center"
+            cursor="pointer"
+            height="100%"
+            data-testid="trash-actions-menu"
+            sx={{
+              '> span': {
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+              },
+            }}
+          >
+            <HiDotsVertical fontSize="15px" />
+          </MenuButton>
 
-            <MenuList minW="fit-content" maxW="fit-content">
-              <ActionItems
-                variant="trash"
-                onEmptyTrash={() => openModal('empty')}
-                onRestoreAll={() => openModal('restore')}
-              />
-            </MenuList>
-          </Menu>
-        )}
+          <MenuList minW="fit-content" maxW="fit-content">
+            <ActionItems
+              variant="trash"
+              onEmptyTrash={() => openModal('empty')}
+              onRestoreAll={() => openModal('restore')}
+            />
+          </MenuList>
+        </Menu>
       </Flex>
 
       <ConfirmationModal

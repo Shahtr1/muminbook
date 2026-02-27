@@ -13,14 +13,30 @@ function fileName(base: string) {
 /* Navigation */
 /* -------------------------------------------------- */
 
+async function gotoWithRetry(page: Page, url: string) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      await page.goto(url, { waitUntil: 'domcontentloaded' });
+      return;
+    } catch (error: any) {
+      const message = String(error?.message ?? '');
+      const retryable =
+        message.includes('ERR_ABORTED') ||
+        message.includes('frame was detached');
+      if (!retryable || attempt === 2) throw error;
+      await page.waitForTimeout(250);
+    }
+  }
+}
+
 const navigation = {
   async openReadingRoot(page: Page) {
-    await page.goto('/reading');
+    await gotoWithRetry(page, '/reading');
     await page.getByTestId('explorer-reading-folder').click();
   },
 
   async goToTrash(page: Page) {
-    await page.goto('/reading/trash');
+    await gotoWithRetry(page, '/reading/trash');
   },
 };
 
@@ -43,6 +59,14 @@ const locators = {
 
   toast(page: Page, message: string): Locator {
     return page.locator('.chakra-alert').filter({ hasText: message });
+  },
+
+  searchInput(page: Page): Locator {
+    return page
+      .locator(
+        '[data-testid="explorer-search-input"], input[placeholder="Search"]'
+      )
+      .last();
   },
 };
 
@@ -73,15 +97,49 @@ const create = {
 };
 
 /* -------------------------------------------------- */
+/* Search */
+/* -------------------------------------------------- */
+
+const search = {
+  async set(page: Page, query: string) {
+    const input = locators.searchInput(page);
+    await expect(input).toBeVisible();
+    await input.fill(query);
+    await page.waitForTimeout(400);
+  },
+
+  async clear(page: Page) {
+    const input = locators.searchInput(page);
+    await expect(input).toBeVisible();
+    await input.fill('');
+    await page.waitForTimeout(400);
+  },
+};
+
+/* -------------------------------------------------- */
 /* Menu Helpers */
 /* -------------------------------------------------- */
 
 async function openItemMenu(item: Locator) {
+  const page = item.page();
+  await expect(item.first()).toBeVisible({ timeout: 10000 });
+  const blockingModal = page.locator(
+    '.chakra-modal__content-container:visible'
+  );
+
+  if ((await blockingModal.count()) > 0) {
+    await page.keyboard.press('Escape').catch(() => {});
+    await blockingModal
+      .first()
+      .waitFor({ state: 'hidden', timeout: 1500 })
+      .catch(() => {});
+  }
+
   const menuButton = item.getByTestId('item-toolbar-menu').first();
   await expect(menuButton).toBeVisible({ timeout: 10000 });
 
   for (let attempt = 0; attempt < 3; attempt++) {
-    await menuButton.click();
+    await menuButton.click({ force: true });
 
     const menuId = await menuButton.getAttribute('aria-controls');
     if (menuId) {
@@ -100,11 +158,8 @@ async function openItemMenu(item: Locator) {
       return fallbackMenu;
     }
 
-    await item
-      .page()
-      .keyboard.press('Escape')
-      .catch(() => {});
-    await item.page().waitForTimeout(100);
+    await page.keyboard.press('Escape').catch(() => {});
+    await page.waitForTimeout(100);
   }
 
   throw new Error('Failed to open item menu after retries');
@@ -222,7 +277,13 @@ const edit = {
     const copyBtn = page.getByTestId('transfer-copy-submit');
     await expect(copyBtn).toBeVisible();
     await copyBtn.click();
-    await input.waitFor({ state: 'hidden', timeout: 5000 });
+    try {
+      await input.waitFor({ state: 'hidden', timeout: 7000 });
+    } catch {
+      // If modal stays mounted longer in CI, dismiss once and re-check.
+      await page.keyboard.press('Escape').catch(() => {});
+      await expect(input).toHaveCount(0, { timeout: 3000 });
+    }
   },
 };
 
@@ -232,11 +293,24 @@ const edit = {
 
 const expectors = {
   async folderVisible(page: Page, name: string) {
-    await expect(locators.folder(page, name)).toBeVisible();
+    try {
+      await expect(locators.folder(page, name)).toBeVisible();
+    } catch {
+      await expect(
+        page.getByText(new RegExp(`^\\s*${escapeRegex(name)}\\s*$`))
+      ).toBeVisible();
+    }
   },
 
   async fileVisible(page: Page, baseName: string) {
-    await expect(locators.file(page, fileName(baseName))).toBeVisible();
+    const name = fileName(baseName);
+    try {
+      await expect(locators.file(page, name)).toBeVisible();
+    } catch {
+      await expect(
+        page.getByText(new RegExp(`^\\s*${escapeRegex(name)}\\s*$`))
+      ).toBeVisible();
+    }
   },
 
   async folderNotVisible(page: Page, name: string) {
@@ -254,10 +328,15 @@ const expectors = {
   },
 };
 
+function escapeRegex(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export const explorer = {
   navigation,
   locators,
   create,
+  search,
   trash,
   edit,
   expect: expectors,

@@ -5,7 +5,7 @@ import { ItemToolbar } from '@/components/explorer/toolbar/ItemToolbar.jsx';
 import { ResourcesActionItems } from '@/components/explorer/components/ResourcesActionItems.jsx';
 import { useAccessTracker } from '@/hooks/explorer/useAccessTracker.js';
 import { useSemanticColors } from '@/theme/hooks/useSemanticColors.js';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Folder = ({
   onClick,
@@ -21,14 +21,17 @@ export const Folder = ({
   onDelete,
   onMove,
   onCopy,
+  isMainEntry = false,
+  showLabel = true,
   ...rest
 }) => {
   const { surface } = useSemanticColors();
   const { updateAccessedAt } = useAccessTracker();
   const location = useLocation();
+  const navigate = useNavigate();
   const { id, name = '', empty = true } = resource;
   const lostAndFound = resource.name === 'lost+found';
-  const myFiles = resource.name === 'my-files' || !resource.name;
+  const myFiles = isMainEntry || resource.name === 'my-files' || !resource.name;
   const showItemToolbar = !lostAndFound && !myFiles;
 
   const isTrashView = location.pathname.includes('/reading/trash');
@@ -50,6 +53,10 @@ export const Folder = ({
 
   const handleClick = () => {
     if (!lostAndFound && !myFiles && !isTrashView) updateAccessedAt(id);
+    if (isMainEntry) {
+      navigate('/reading/my-files');
+      return;
+    }
     if (onClick) onClick();
   };
 
@@ -103,7 +110,7 @@ export const Folder = ({
         overflow="hidden"
       >
         <FolderSVG dimensions={dimensions} empty={empty} />
-        {name && (
+        {showLabel && name && (
           <Tooltip label={name} hasArrow placement="bottom">
             <Text
               fontSize={

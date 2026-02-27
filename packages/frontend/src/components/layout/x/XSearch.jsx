@@ -37,6 +37,8 @@ export const XSearch = ({
   showClearButton = true,
   clearOnBlur = false,
   dropdownContent,
+  inputTestId,
+  clearButtonTestId,
 }) => {
   const { state, border } = useSemanticColors();
   const xColor = color || state.default;
@@ -200,6 +202,7 @@ export const XSearch = ({
       )}
       <Input
         ref={searchInputRef}
+        data-testid={inputTestId}
         value={normalizedSearchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         placeholder={placeholder}
@@ -219,6 +222,7 @@ export const XSearch = ({
           w={size === 'xs' ? 7 : undefined}
         >
           <IconButton
+            data-testid={clearButtonTestId}
             aria-label="Clear search"
             icon={<CloseIcon boxSize={clearIconSize} />}
             size={clearButtonSize}
