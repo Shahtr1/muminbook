@@ -104,7 +104,7 @@ export const ExplorerList = () => {
         <Folder
           data-testid="explorer-reading-folder"
           dimensions="90px"
-          resource={{ name: 'My Files', empty: emptyMyFiles }}
+          resource={{ empty: emptyMyFiles }}
           isMainEntry
           bgColor="unset"
           shadow="none"
